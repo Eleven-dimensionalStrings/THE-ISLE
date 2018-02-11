@@ -1,19 +1,21 @@
 #pragma once
-#include "handlers.h"
-#include "buff.h"
-#include <queue>
+#include "managers.h"
+#include "message.h"
 
-class game_entity : public message_handler , buff_handler
+//the definition of base class game_entity
+
+class game_entity : public message_manager , buff_manager
 {
 public:
-	virtual std::string deal_damage() = 0;
-	virtual std::string recieve_damage() = 0;
-	virtual std::string acquire_hit_points() = 0;
-	virtual std::string remove_hit_points() = 0;
-	virtual std::string kill() = 0;
-	virtual std::string add_buff() = 0;
-	virtual std::string remove_buff() = 0;
-	virtual std::string next_turn() = 0;
+	virtual bool instantiate() = 0;
+	virtual message deal_damage(damage*) = 0;
+	virtual message receive_damage(damage*) = 0;
+	virtual message acquire_hit_points() = 0;
+	virtual message remove_hit_points() = 0;
+	virtual message kill() = 0;
+	virtual message add_buff() = 0;
+	virtual message remove_buff() = 0;
+	virtual message next_turn() = 0;
 	virtual bool has_buff() = 0;
 	virtual bool is_alive() = 0;
 	virtual bool send_message() = 0;
@@ -24,28 +26,30 @@ protected:
 	int current_hit_points;
 	int max_action_points;
 	int current_action_points;
-	
-	//some re-designed container to hold the buffs
-	std::priority_queue<buff> buff_list;
 
-	virtual std::string create_message() = 0;
+	virtual message create_message() = 0;
 	virtual bool interpret_message() = 0;
 };
 
-class player : public game_entity 
+
+//definition of the player class
+
+
+class player : public game_entity
 {
 public:
-	std::string deal_damage();
-	std::string recieve_damage();
-	std::string acquire_hit_points();
-	std::string remove_hit_points();
-	std::string kill();
-	std::string add_buff();
-	std::string remove_buff();
-	std::string next_turn();
-	bool has_buff();
-	bool is_alive();
-	bool send_message();
+	virtual bool instantiate();
+	virtual message deal_damage(change_value_set*);
+	virtual message receive_damage(change_value_set*);
+	virtual message acquire_hit_points();
+	virtual message remove_hit_points();
+	virtual message kill();
+	virtual message add_buff();
+	virtual message remove_buff();
+	virtual message next_turn();
+	virtual bool has_buff();
+	virtual bool is_alive();
+	virtual bool send_message();
 
 protected:
 	bool living_state;
@@ -54,9 +58,37 @@ protected:
 	int max_action_points;
 	int current_action_points;
 
-	//some re-designed container to hold the buffs
-	std::priority_queue<buff> buff_list;
+	virtual message create_message();
+	virtual bool interpret_message();
+};
 
-	std::string create_message();
-	bool interpret_message();
+
+//definition of the enemy class
+
+
+class enemy : public game_entity
+{
+public:
+	virtual bool instantiate();
+	virtual message deal_damage(game_entity*, int);
+	virtual message receive_damage(game_entity*, int);
+	virtual message acquire_hit_points();
+	virtual message remove_hit_points();
+	virtual message kill();
+	virtual message add_buff();
+	virtual message remove_buff();
+	virtual message next_turn();
+	virtual bool has_buff();
+	virtual bool is_alive();
+	virtual bool send_message();
+
+protected:
+	bool living_state;
+	int max_hit_points;
+	int current_hit_points;
+	int max_action_points;
+	int current_action_points;
+
+	virtual message create_message();
+	virtual bool interpret_message();
 };
