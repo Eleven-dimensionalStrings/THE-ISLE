@@ -41,5 +41,11 @@
     <ClInclude Include="managers.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="explore_system.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="event_cards.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

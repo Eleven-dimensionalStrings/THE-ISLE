@@ -5,9 +5,9 @@
 #include <stack>
 #include <string>
 
-struct action
+struct explore_system_action
 {
-	action(size_t id)
+	explore_system_action(size_t id)
 		:action_name(" "), caller(NULL), listener(NULL), action_id(id), value()
 	{};
 	std::string action_name;
@@ -20,11 +20,11 @@ struct action
 class battle_system : public message_manager
 {
 public:
-	bool send_message(message);
+	bool send_message(info_to_battle_system);
 protected:
-	message create_message();
-	bool interpret_message(message);
+	info* create_message();
+	bool interpret_message(info_to_battle_system);
 private:
-	std::stack<action> process_stack;
+	std::stack<explore_system_action> process_stack;
 	void process();
 };

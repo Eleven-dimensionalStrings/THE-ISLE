@@ -17,15 +17,21 @@ namespace damage_type
 #include "game_entity.h"
 #include <queue>
 
-struct message
+class info
 {
+public:
 	size_t sender_id;
 	std::queue<size_t> action_id;
 	std::queue<std::string> action_name;
+	virtual void next_message() = 0;
+};
+
+class info_to_battle_system : public info
+{
+public:
 	std::queue<game_entity*> caller;
 	std::queue<game_entity*> listener;
 	std::queue<int> value;
-
 	void next_message()
 	{
 		action_id.pop();
@@ -34,6 +40,11 @@ struct message
 		listener.pop();
 		value.pop();
 	}
+};
+
+struct info_to_explore_system : public info
+{
+
 };
 
 class change_value_set

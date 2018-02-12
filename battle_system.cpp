@@ -16,13 +16,13 @@ namespace action_type
 #include <iostream>
 #include <sstream>
 
-bool battle_system::send_message(message input)
+bool battle_system::send_message(info_to_battle_system input)
 {
 	battle_system::interpret_message(input);
 	//send back something afterwards
 }
 
-bool battle_system::interpret_message(message input)
+bool battle_system::interpret_message(info_to_battle_system input)
 {
 	while (!input.action_id.empty())
 	{
@@ -30,7 +30,7 @@ bool battle_system::interpret_message(message input)
 		{
 		case action_type::DEALING_DAMAGE:
 		{
-			action next_action(action_type::DEALING_DAMAGE);
+			explore_system_action next_action(action_type::DEALING_DAMAGE);
 			next_action.action_name = input.action_name.front();
 			next_action.caller = input.caller.front();
 			next_action.listener = input.listener.front();
@@ -41,7 +41,7 @@ bool battle_system::interpret_message(message input)
 		}
 		case action_type::RECEIVING_DAMAGE:
 		{
-			action next_action(action_type::RECEIVING_DAMAGE);
+			explore_system_action next_action(action_type::RECEIVING_DAMAGE);
 			next_action.action_name = input.action_name.front();
 			next_action.caller = input.caller.front();
 			next_action.listener = input.listener.front();
@@ -56,7 +56,7 @@ bool battle_system::interpret_message(message input)
 	}
 }
 
-message battle_system::create_message()
+info_to_battle_system battle_system::create_message()
 {
 
 }
@@ -65,7 +65,7 @@ void battle_system::process()
 {
 	while (!process_stack.empty())
 	{
-		action temp = process_stack.top();
+		explore_system_action temp = process_stack.top();
 		process_stack.pop();
 		switch (temp.action_id)
 		{

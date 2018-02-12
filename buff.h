@@ -27,5 +27,4 @@ class buff_burning : public buff
 public:
 	void on_create() ;
 	void on_delete() ;
-	void 
 };
