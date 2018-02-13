@@ -44,7 +44,14 @@ public:
 
 struct info_to_explore_system : public info
 {
-
+public:
+	std::queue<int> value;
+	void next_message()
+	{
+		action_id.pop();
+		action_name.pop();
+		value.pop();
+	}
 };
 
 class change_value_set

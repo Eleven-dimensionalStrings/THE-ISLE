@@ -8,8 +8,8 @@ class game_entity : public message_dispatcher , buff_manager
 {
 public:
 	virtual bool instantiate() = 0;
-	virtual info_to_battle_system deal_damage(damage*) = 0;
-	virtual info_to_battle_system receive_damage(damage*) = 0;
+	virtual info_to_battle_system deal_damage(change_value_set*) = 0;
+	virtual info_to_battle_system receive_damage(change_value_set*) = 0;
 	virtual info_to_battle_system acquire_hit_points() = 0;
 	virtual info_to_battle_system remove_hit_points() = 0;
 	virtual info_to_battle_system kill() = 0;
@@ -53,8 +53,7 @@ protected:
 	int current_hit_points;
 	int max_action_points;
 	int current_action_points;
-
-	virtual info_to_battle_system* create_message();
+	virtual info* create_message() = 0;
 };
 
 
@@ -65,8 +64,8 @@ class enemy : public game_entity
 {
 public:
 	virtual bool instantiate();
-	virtual info_to_battle_system deal_damage(game_entity*, int);
-	virtual info_to_battle_system receive_damage(game_entity*, int);
+	virtual info_to_battle_system deal_damage(change_value_set*);
+	virtual info_to_battle_system receive_damage(change_value_set*);
 	virtual info_to_battle_system acquire_hit_points();
 	virtual info_to_battle_system remove_hit_points();
 	virtual info_to_battle_system kill();
@@ -83,7 +82,5 @@ protected:
 	int current_hit_points;
 	int max_action_points;
 	int current_action_points;
-
-	virtual info_to_battle_system* create_message();
-	virtual bool interpret_message();
+	virtual info* create_message() = 0;
 };

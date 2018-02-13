@@ -21,6 +21,9 @@
     <ClCompile Include="game_entity.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="explore_system.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_entity.h">
@@ -45,6 +48,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="event_cards.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="player_stats.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="artifacts.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

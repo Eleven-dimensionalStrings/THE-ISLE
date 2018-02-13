@@ -37,17 +37,3 @@ protected:
 	//some re-designed container to hold the buffs
 	std::priority_queue<buff*> buff_list;
 };
-
-class event_dispatcher
-{
-private:
-	//some re-designed container to hold the observers
-	std::priority_queue<buff> observers;
-public:
-
-};
-
-class event_observer
-{
-	
-};

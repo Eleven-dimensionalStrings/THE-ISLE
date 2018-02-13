@@ -113,9 +113,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="battle_system.cpp" />
+    <ClCompile Include="explore_system.cpp" />
     <ClCompile Include="game_entity.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="artifacts.h" />
     <ClInclude Include="battle_system.h" />
     <ClInclude Include="buff.h" />
     <ClInclude Include="cards.h" />
@@ -124,6 +126,7 @@
     <ClInclude Include="game_entity.h" />
     <ClInclude Include="managers.h" />
     <ClInclude Include="message.h" />
+    <ClInclude Include="player_stats.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
