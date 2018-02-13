@@ -42,7 +42,7 @@ public:
 	}
 };
 
-struct info_to_explore_system : public info
+class info_to_explore_system : public info
 {
 public:
 	std::queue<int> value;

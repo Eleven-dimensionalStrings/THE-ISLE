@@ -24,6 +24,9 @@
     <ClCompile Include="explore_system.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="player_stats.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game_entity.h">
