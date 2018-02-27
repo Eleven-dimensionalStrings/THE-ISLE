@@ -7,38 +7,34 @@
 
 namespace battle_action_type
 {
-	const int INSTANTIATE = 99;
-	const int NEXT_TURN = 100;
-	const int DEALING_DAMAGE = 1;
-	const int RECEIVING_DAMAGE = 2;
-	const int AQUIREING_HITPOINTS = 3;
-	const int REMOVING_HITPOINTS = 4;
-	const int KILL = 5;
-	const int ADD_BUFF = 11;
-	const int REMOVE_BUFF = 12;
+	const unsigned int INSTANTIATE = 99;
+	const unsigned int NEXT_TURN = 100;
+	const unsigned int CALLING_CHANGE = 1;
+	const unsigned int RECEIVING_CHANGE = 2;
+	const unsigned int KILL = 5;
+	const unsigned int ADD_BUFF = 11;
+	const unsigned int REMOVE_BUFF = 12;
 }
 
-
-struct explore_system_action
+struct battle_system_action
 {
-	explore_system_action(size_t id)
-		:action_name(" "), caller(NULL), listener(NULL), action_id(id), value()
-	{};
+	battle_system_action(std::size_t id, std::string tname, game_entity* tcaller, game_entity* tlistener,
+		change tvalue);
 	std::string action_name;
 	game_entity* caller;
 	game_entity* listener;
-	size_t action_id;
-	change_value_set* value;
+	std::size_t action_id;
+	change value;
 };
 
 class battle_system : public message_manager
 {
 public:
-	bool send_message(info_to_battle_system);
+	bool send_message(info_to_battle_sys&);
 protected:
-	info* create_message();
-	bool interpret_message(info_to_battle_system);
+	info * create_message();
+	bool interpret_message(info_to_battle_sys&);
 private:
-	std::stack<explore_system_action> process_stack;
+	std::stack<battle_system_action> process_stack;
 	void process();
 };

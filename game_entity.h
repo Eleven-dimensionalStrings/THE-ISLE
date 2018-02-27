@@ -1,31 +1,38 @@
 #pragma once
 #include "managers.h"
 #include "message.h"
+#include "cards.h"
+#include "artifacts.h"
+#include "buff.h"
 
 //the definition of base class game_entity
 
-class game_entity : public message_dispatcher , buff_manager
+class game_entity : public message_dispatcher, buff_manager
 {
 public:
-	virtual bool instantiate() = 0;
-	virtual info_to_battle_system deal_damage(change_value_set*) = 0;
-	virtual info_to_battle_system receive_damage(change_value_set*) = 0;
-	virtual info_to_battle_system acquire_hit_points() = 0;
-	virtual info_to_battle_system remove_hit_points() = 0;
-	virtual info_to_battle_system kill() = 0;
-	virtual info_to_battle_system add_buff() = 0;
-	virtual info_to_battle_system remove_buff() = 0;
-	virtual info_to_battle_system next_turn() = 0;
-	virtual bool has_buff() = 0;
-	virtual bool is_alive() = 0;
+	virtual void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list) = 0;
+	virtual info_to_battle_sys calling_change(change);
+	virtual info_to_battle_sys receiving_change(change);
+	virtual info_to_battle_sys kill() = 0;
+	virtual info_to_battle_sys add_buff(buff t);
+	virtual info_to_battle_sys remove_buff(std::size_t buff_id);
+	bool is_alive();
+	virtual info_to_battle_sys on_turn_begin() = 0;
+	virtual info_to_battle_sys on_turn_end() = 0;
 
-protected:
+
 	bool living_state;
 	int max_hit_points;
 	int current_hit_points;
 	int max_action_points;
 	int current_action_points;
-	virtual info* create_message() = 0;
+	std::vector<card> cards_deck;//战斗时牌库
+	std::vector<card> cards_grave;//弃牌堆
+	std::vector<card> cards_in_hand;//手牌
+	std::vector<card> cards_removed;//除外区
+	std::vector<card> cards_equiped;//装备区
+	std::vector<buff> buff_pool;//buff区
+	virtual info_to_battle_sys create_message_to_battle_sys() = 0;
 };
 
 
@@ -35,25 +42,15 @@ protected:
 class player : public game_entity
 {
 public:
-	virtual bool instantiate();
-	virtual info_to_battle_system deal_damage(change_value_set*);
-	virtual info_to_battle_system receive_damage(change_value_set*);
-	virtual info_to_battle_system acquire_hit_points();
-	virtual info_to_battle_system remove_hit_points();
-	virtual info_to_battle_system kill();
-	virtual info_to_battle_system add_buff();
-	virtual info_to_battle_system remove_buff();
-	virtual info_to_battle_system next_turn();
-	virtual bool has_buff();
-	virtual bool is_alive();
+	void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list);
+	info_to_battle_sys kill();
+	info_to_battle_sys on_turn_begin();
+	info_to_battle_sys on_turn_end();
+	//bool has_buff();
+	std::size_t gold;
+	std::size_t food;
 
-protected:
-	bool living_state;
-	int max_hit_points;
-	int current_hit_points;
-	int max_action_points;
-	int current_action_points;
-	virtual info* create_message() = 0;
+	info_to_battle_sys create_message_to_battle_sys();
 };
 
 
@@ -63,24 +60,13 @@ protected:
 class enemy : public game_entity
 {
 public:
-	virtual bool instantiate();
-	virtual info_to_battle_system deal_damage(change_value_set*);
-	virtual info_to_battle_system receive_damage(change_value_set*);
-	virtual info_to_battle_system acquire_hit_points();
-	virtual info_to_battle_system remove_hit_points();
-	virtual info_to_battle_system kill();
-	virtual info_to_battle_system add_buff();
-	virtual info_to_battle_system remove_buff();
-	virtual info_to_battle_system next_turn();
+	void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list);
+	virtual info_to_battle_sys kill();
+	virtual info_to_battle_sys next_turn();
 	virtual bool has_buff();
-	virtual bool is_alive();
 	virtual bool send_message();
+	info_to_battle_sys on_turn_begin();
+	info_to_battle_sys on_turn_end();
 
-protected:
-	bool living_state;
-	int max_hit_points;
-	int current_hit_points;
-	int max_action_points;
-	int current_action_points;
-	virtual info* create_message() = 0;
+	info_to_battle_sys create_message_to_battle_sys();
 };

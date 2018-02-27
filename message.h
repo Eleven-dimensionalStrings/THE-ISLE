@@ -1,85 +1,52 @@
 #pragma once
-
-namespace change_value_type
-{
-	const int DAMAGE = 1;
-	const int HEALING = 2;
-}
-
-namespace damage_type
-{
-	const int NORMAL = 1;
-	const int FLAME = 2;
-	const int LEECH = 3;
-	const int PIERCE = 4;
-}
-
+#include <cstdlib>
 #include "game_entity.h"
-#include <queue>
+#include <vector>
+namespace change_type
+{
+	const unsigned int NORMAL = 1;
+	const unsigned int FLAME = 2;
+	const unsigned int PIERCE = 3;
+	const unsigned int POISON = 4;
+	const unsigned int FREEZING = 5;
+	const unsigned int INDEPENDENT = 6;
+	const unsigned int HEALING = 65535;
+}
+
 
 class info
 {
 public:
-	size_t sender_id;
-	std::queue<size_t> action_id;
-	std::queue<std::string> action_name;
-	virtual void next_message() = 0;
+	info();
+	std::size_t sender_id;
+	std::vector<std::size_t> action_id;
+	std::vector<std::string> action_name;
 };
 
-class info_to_battle_system : public info
+class info_to_battle_sys : public info
 {
 public:
-	std::queue<game_entity*> caller;
-	std::queue<game_entity*> listener;
-	std::queue<int> value;
-	void next_message()
-	{
-		action_id.pop();
-		action_name.pop();
-		caller.pop();
-		listener.pop();
-		value.pop();
-	}
+	info_to_battle_sys();
+	info_to_battle_sys(change);
+	void append(info_to_battle_sys);
+	std::vector<game_entity*> caller;
+	std::vector<game_entity*> listener;
+	std::vector<change> value;
 };
 
 class info_to_explore_system : public info
 {
 public:
 	std::queue<int> value;
-	void next_message()
-	{
-		action_id.pop();
-		action_name.pop();
-		value.pop();
-	}
 };
 
-class change_value_set
+class change
 {
 public:
-	game_entity* caller;
-	game_entity* listener;
-	int value;
+	std::size_t value;
+	std::size_t type;
 };
 
-class damage : public change_value_set
-{
-public:
-	std::vector<std::pair<size_t, double>> sss; // TO BE renamed
-	size_t get_type()
-	{
-		return change_value_type::DAMAGE;
-	}
-};
-
-class healing : public change_value_set
-{
-public:
-	size_t get_type()
-	{
-		return change_value_type::HEALING;
-	}
-};
 
 //battle_system 调用攻击者的 deal_damage(damage*)
 //攻击者的deal_damage函数遍历攻击者的buff_list

@@ -1,9 +1,10 @@
 #pragma once
 #include "message.h"
-#include "player_stats.h"
+#include "data_sys.h"
 #include "managers.h"
 #include <string>
 #include <stack>
+
 
 namespace explore_action_type
 {
@@ -37,10 +38,10 @@ namespace explore_action_type
 
 struct explore_system_action
 {
-	explore_system_action(size_t id, string act_name, int val)
+	explore_system_action(std::size_t id, string act_name, int val)
 		:action_name(act_name), action_id(id), value(val) {};
 	std::string action_name;
-	size_t action_id;
+	std::size_t action_id;
 	int value;
 };
 
@@ -54,5 +55,6 @@ protected:
 private:
 	std::stack<explore_system_action> process_stack;
 	void process();
-	player_stats player_class;
+	info_for_battle_sys player_class;
 };
+

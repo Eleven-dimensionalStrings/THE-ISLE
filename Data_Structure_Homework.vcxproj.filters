@@ -24,14 +24,17 @@
     <ClCompile Include="explore_system.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="player_stats.cpp">
+    <ClCompile Include="data_sys.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cards.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="message.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game_entity.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="battle_system.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -53,10 +56,13 @@
     <ClInclude Include="event_cards.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="player_stats.h">
+    <ClInclude Include="artifacts.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="artifacts.h">
+    <ClInclude Include="game_entity.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="data_sys.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

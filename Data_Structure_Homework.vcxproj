@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{5D164CCB-9B9B-4DC9-8BDE-3118313149CE}</ProjectGuid>
+    <ProjectGuid>{9DA10E00-D741-417A-A815-4630259A0C63}</ProjectGuid>
     <RootNamespace>Data_Structure_Homework</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
     <ProjectName>data_structure_hw</ProjectName>
@@ -113,9 +113,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="battle_system.cpp" />
+    <ClCompile Include="cards.cpp" />
+    <ClCompile Include="data_sys.cpp" />
     <ClCompile Include="explore_system.cpp" />
     <ClCompile Include="game_entity.cpp" />
-    <ClCompile Include="player_stats.cpp" />
+    <ClCompile Include="message.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="artifacts.h" />
@@ -127,7 +129,7 @@
     <ClInclude Include="game_entity.h" />
     <ClInclude Include="managers.h" />
     <ClInclude Include="message.h" />
-    <ClInclude Include="player_stats.h" />
+    <ClInclude Include="data_sys.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

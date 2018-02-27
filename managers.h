@@ -5,8 +5,8 @@
 
 class message_dispatcher
 {
-protected:
-	virtual info* create_message() = 0;
+public:
+	virtual info_to_battle_sys create_message_to_battle_sys() = 0;
 };
 
 class message_listener
@@ -29,9 +29,9 @@ protected:
 class buff_manager
 {
 public:
-	virtual info_to_battle_system add_buff();
-	virtual info_to_battle_system remove_buff();
-	virtual info_to_battle_system next_turn();
+	virtual info_to_battle_sys add_buff();
+	virtual info_to_battle_sys remove_buff();
+	virtual info_to_battle_sys next_turn();
 	virtual bool has_buff();
 protected:
 	//some re-designed container to hold the buffs
