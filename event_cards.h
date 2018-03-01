@@ -2,10 +2,10 @@
 #include "message.h"
 #include "managers.h"
 
-class event_cards : public event_dispatcher
+class event_cards : public message_dispatcher
 {
 public:
-	virtual info_to_explore_system activate();
+	virtual info_to_explore_sys activate();
 protected:
 	virtual info* create_message() = 0;
 }; 

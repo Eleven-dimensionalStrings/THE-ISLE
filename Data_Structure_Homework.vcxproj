@@ -113,6 +113,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="battle_system.cpp" />
+    <ClCompile Include="buff.cpp" />
     <ClCompile Include="cards.cpp" />
     <ClCompile Include="data_sys.cpp" />
     <ClCompile Include="explore_system.cpp" />

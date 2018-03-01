@@ -48,10 +48,10 @@ struct explore_system_action
 class explore_system : public message_manager
 {
 public:
-	bool send_message(info_to_explore_system);
+	bool send_message(info_to_explore_sys);
 protected:
 	info* create_message();
-	bool interpret_message(info_to_explore_system);
+	bool interpret_message(info_to_explore_sys);
 private:
 	std::stack<explore_system_action> process_stack;
 	void process();

@@ -7,17 +7,20 @@
 using namespace std;
 using namespace explore_action_type;
 
-bool explore_system::send_message(info_to_explore_system)
+bool explore_system::send_message(info_to_explore_sys)
 {
 
 }
 
-bool explore_system::interpret_message(info_to_explore_system)
+bool explore_system::interpret_message(info_to_explore_sys)
 {
 
 }
 
-bool explore_system::interpret_message(info_to_explore_system input)
+//action_id has been removed from info since 18/2/28
+//now the action_id is included in class "change".
+
+bool explore_system::interpret_message(info_to_explore_sys input)
 {
 	while (!input.action_id.empty())
 	{

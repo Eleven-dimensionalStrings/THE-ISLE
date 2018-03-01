@@ -11,11 +11,12 @@ class game_entity : public message_dispatcher, buff_manager
 {
 public:
 	virtual void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list) = 0;
-	virtual info_to_battle_sys calling_change(change);
-	virtual info_to_battle_sys receiving_change(change);
+	virtual info_to_battle_sys calling_action(action);
+	virtual info_to_battle_sys performing_action(action);
 	virtual info_to_battle_sys kill() = 0;
-	virtual info_to_battle_sys add_buff(buff t);
-	virtual info_to_battle_sys remove_buff(std::size_t buff_id);
+	virtual info_to_battle_sys add_buff(buff);
+	virtual info_to_battle_sys remove_buff(buff);
+	virtual void multiply_buff(buff);
 	bool is_alive();
 	virtual info_to_battle_sys on_turn_begin() = 0;
 	virtual info_to_battle_sys on_turn_end() = 0;

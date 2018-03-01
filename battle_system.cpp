@@ -11,22 +11,16 @@ bool battle_system::send_message(info_to_battle_sys& input)
 
 bool battle_system::interpret_message(info_to_battle_sys& input)
 {
-	for (size_t i = input.action_id.size() - 1; i >= 0; --i)
+	for (size_t i = input.action_set.size() - 1; i >= 0; --i)
 	{
-		switch (input.action_id[i])
+		switch (input.action_set[i].action_id)
 		{
-		case battle_action_type::DEALING_DAMAGE:
+		case battle_action_type::CALLING_ACTION:
 		{
-			battle_system_action next_action(battle_action_type::DEALING_DAMAGE,
-			input.action_name[i],input.caller[i],input.listener[i],input.value[i]);
-			process_stack.push(next_action);
 			break;
 		}
-		case battle_action_type::RECEIVING_DAMAGE:
+		case battle_action_type::PERFORMING_ACTION:
 		{
-			battle_system_action next_action(battle_action_type::RECEIVING_DAMAGE,
-			input.action_name[i], input.caller[i], input.listener[i], input.value[i]);
-			process_stack.push(next_action);
 			break;
 		}
 		default:
@@ -45,19 +39,18 @@ void battle_system::process()
 {
 	while (!process_stack.empty())
 	{
-		battle_system_action& temp = process_stack.top();
+		action temp = process_stack.top();
+		process_stack.pop();
 		switch (temp.action_id)
 		{
-		case battle_action_type::DEALING_DAMAGE:
+		case battle_action_type::CALLING_ACTION:
 		{
-			send_message(temp.caller->calling_change(temp.value));
-			delete temp.value;
+			send_message(temp.caller->calling_action(temp));
 			break;
 		}
-		case battle_action_type::RECEIVING_DAMAGE:
+		case battle_action_type::PERFORMING_ACTION:
 		{
-			send_message(temp.listener->receiving_change(temp.value));
-			delete temp.value;
+			send_message(temp.listener->performing_action(temp));
 			break;
 		}
 		default:
@@ -65,9 +58,4 @@ void battle_system::process()
 		}
 		process_stack.pop();
 	}
-}
-
-battle_system_action::battle_system_action(std::size_t id, std::string tname, game_entity * tcaller, game_entity * tlistener, change tvalue)
-	:action_name(tname), caller(tcaller), listener(tlistener), action_id(id), value(tvalue)
-{
 }

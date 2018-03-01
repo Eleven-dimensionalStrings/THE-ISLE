@@ -2,6 +2,7 @@
 #include "buff.h"
 #include "message.h"
 #include <queue>
+#include <random>
 
 class message_dispatcher
 {
@@ -35,5 +36,16 @@ public:
 	virtual bool has_buff();
 protected:
 	//some re-designed container to hold the buffs
-	std::priority_queue<buff*> buff_list;
+	std::vector<buff> buff_list;
+};
+
+class random_engine
+{
+public:
+	static random_engine* instantiate_engine();
+	static bool random_event(int);
+	static int random_battle_cards(int card_generate_value);
+private:
+	random_engine();
+	static std::default_random_engine generator;
 };
