@@ -12,9 +12,6 @@ namespace battle_action_type
 	const unsigned int CALLING_ACTION = 1;
 	const unsigned int PERFORMING_ACTION = 2;
 	const unsigned int KILL = 5;
-	const unsigned int ADD_BUFF = 11;
-	const unsigned int REMOVE_BUFF = 12;
-	const unsigned int MULTIPLY_BUFF = 13;
 	const unsigned int USE_A_CARD = 233333;
 }
 

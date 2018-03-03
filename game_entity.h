@@ -4,29 +4,27 @@
 #include "cards.h"
 #include "artifacts.h"
 #include "buff.h"
+#include "data_sys.h"
 
 //the definition of base class game_entity
 
-class game_entity : public message_dispatcher, buff_manager
+class game_entity : public message_dispatcher
 {
 public:
 	virtual void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list) = 0;
 	virtual info_to_battle_sys calling_action(action);
 	virtual info_to_battle_sys performing_action(action);
 	virtual info_to_battle_sys kill() = 0;
-	virtual info_to_battle_sys add_buff(buff);
-	virtual info_to_battle_sys remove_buff(buff);
-	virtual void multiply_buff(buff);
 	bool is_alive();
 	virtual info_to_battle_sys on_turn_begin() = 0;
 	virtual info_to_battle_sys on_turn_end() = 0;
 
-
-	bool living_state;
-	int max_hit_points;
-	int current_hit_points;
-	int max_action_points;
-	int current_action_points;
+	data_sys& data;
+	bool living_state; //实体的存活状态，实体无论存活状态如何都会占据原先的位置
+	int max_hp;//最大生命值
+	int current_hp;//当前生命值
+	int max_ap; // 最大行动力
+	int current_ap;//当前行动力
 	std::vector<card> cards_deck;//战斗时牌库
 	std::vector<card> cards_grave;//弃牌堆
 	std::vector<card> cards_in_hand;//手牌
@@ -47,7 +45,6 @@ public:
 	info_to_battle_sys kill();
 	info_to_battle_sys on_turn_begin();
 	info_to_battle_sys on_turn_end();
-	//bool has_buff();
 	std::size_t gold;
 	std::size_t food;
 
@@ -63,9 +60,6 @@ class enemy : public game_entity
 public:
 	void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list);
 	virtual info_to_battle_sys kill();
-	virtual info_to_battle_sys next_turn();
-	virtual bool has_buff();
-	virtual bool send_message();
 	info_to_battle_sys on_turn_begin();
 	info_to_battle_sys on_turn_end();
 

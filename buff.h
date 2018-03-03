@@ -2,6 +2,17 @@
 #include <string>
 #include <cstddef>
 #include "message.h"
+
+inline unsigned int get_buff_life(std::size_t value)
+{
+	return value >> 16;
+}
+
+inline unsigned int get_buff_level(std::size_t value)
+{
+	return value &((1 << 16) - 1);
+}
+
 namespace BUFF_PRIORITY
 {
 	const size_t PRIORITY_LEVEL_1 = 1;
@@ -11,11 +22,11 @@ namespace BUFF_PRIORITY
 	const size_t PRIORITY_LEVEL_5 = 5;
 }
 
-
-
 class buff : public message_dispatcher
 {
 public:
+	buff(std::size_t, std::size_t, std::size_t);
+	buff(std::size_t, std::string, std::size_t, std::size_t, std::size_t);
 	std::size_t buff_id;
 	std::string buff_name;
 	std::size_t buff_priority;
@@ -25,8 +36,8 @@ public:
 
 	//将change传给buff之后,返回该change修改后的结果,和额外造成的操作
 	//修改后的结果将被传给下一个buff,所有info被打包后返回给battle_sys
-	info_to_battle_sys on_create();
-	info_to_battle_sys on_delete();
+	info_to_battle_sys on_create(game_entity*, game_entity*); //两个参数依次是创建buff的对象，被创建buff的对象
+	info_to_battle_sys on_delete(game_entity*, game_entity*);
 	info_to_battle_sys on_kill();//所在角色死亡时调用
 	info_to_battle_sys on_turn_begin();
 	info_to_battle_sys on_turn_end();

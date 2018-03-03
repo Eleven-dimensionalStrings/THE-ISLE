@@ -27,18 +27,6 @@ protected:
 	virtual bool interpret_message() = 0;
 };
 
-class buff_manager
-{
-public:
-	virtual info_to_battle_sys add_buff();
-	virtual info_to_battle_sys remove_buff();
-	virtual info_to_battle_sys next_turn();
-	virtual bool has_buff();
-protected:
-	//some re-designed container to hold the buffs
-	std::vector<buff> buff_list;
-};
-
 class random_engine
 {
 public:

@@ -1,3 +1,4 @@
+#include <string>
 #include "game_entity.h"
 #include "message.h"
 #include "managers.h"
@@ -45,60 +46,69 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 	result.action_set.erase(result.action_set.begin());
 	if (present_act.type < 10000)//造成伤害
 	{
-
+		current_hp -= present_act.value;
 	}
-	else if (present_act.type < 20000)//添加/删除 buff
+	else if (present_act.type < 20000)//增加生命值
 	{
-
+		current_hp += present_act.value;
+	}
+	else if (present_act.type < 30000)//减少行动力
+	{
+		current_ap -= present_act.value;
+	}
+	else if (present_act.type < 40000)//增加行动力
+	{
+		current_ap += present_act.value;
+	}
+	else if (present_act.type < 50000)//添加buff
+	{
+		buff* ptr;
+		if (ptr = buff_pool.find(present_act.type))
+		{
+			*ptr += buff(present_act.type, get_buff_life(present_act.type), get_buff_level(present_act.type));
+			return info_to_battle_sys();
+		}
+		else
+		{
+			pair<string, size_t> t = data.get_buff(present_act.type); // pair<buff_name, priority>
+			buff temp(present_act.type, t.first, t.second, get_buff_life(present_act.type), get_buff_level(present_act.type));
+			buff_pool.push_back(temp);
+			return temp.on_create(present_act.caller, present_act.listener);
+		}
+	}
+	else if (present_act.type < 60000)//减少/删除buff
+	{
+		buff* ptr;
+		if (ptr = buff_pool.find(present_act.type))
+		{
+			if (*ptr -= buff(present_act.type, get_buff_life(present_act.type), get_buff_level(present_act.type)))
+			{
+				info_to_battle_sys result = ptr->on_delete(present_act.caller, present_act.listener);
+				buff_pool.erase(ptr);
+				return result;
+			}
+		}
+		else
+			return info_to_battle_sys();
+	}
+	else if (present_act.type < 60000)//buff翻倍
+	{
+		buff* ptr;
+		if (ptr = buff_pool.find(present_act.type))
+		{
+			ptr->buff_life *= get_buff_life(present_act.type);
+			ptr->buff_level *= get_buff_level(present_act.type);
+		}
+		return info_to_battle_sys();
 	}
 	//其他再补充
 	return std::move(result);
 
 }
 
-
 info_to_battle_sys game_entity::kill()
 {
 	return info_to_battle_sys();
-}
-
-info_to_battle_sys game_entity::add_buff(buff t)
-{
-	bool buff_exist = 0;
-	for (auto &i : buff_list)
-	{
-		if (i.buff_id == t.buff_id)
-		{
-			i += t;
-			buff_exist = 1;
-		}
-	}
-	if (!buff_exist)
-	{
-		buff_pool.push_back(t);
-	}
-}
-
-info_to_battle_sys game_entity::remove_buff(buff t)
-{
-	for (auto i = buff_list.begin(); i != buff_list.end(); ++i)
-	{
-		if (i->buff_id == t.buff_id)
-		{
-			if (*i -= t)
-			{
-				info_to_battle_sys result = i->on_delete();
-				buff_list.erase(i);
-				return result;
-			}
-		}
-	}
-
-}
-
-void game_entity::multiply_buff(buff)
-{
-
 }
 
 bool game_entity::is_alive()
@@ -115,8 +125,3 @@ info_to_battle_sys game_entity::on_turn_end()
 {
 	return info_to_battle_sys();
 }
-
-//
-//
-//
-//
