@@ -5,16 +5,6 @@
 #include <stack>
 #include <string>
 
-namespace battle_action_type
-{
-	const unsigned int INITIATE = 99;
-	const unsigned int NEXT_TURN = 100;
-	const unsigned int CALLING_ACTION = 1;
-	const unsigned int PERFORMING_ACTION = 2;
-	const unsigned int KILL = 5;
-	const unsigned int USE_A_CARD = 233333;
-}
-
 class battle_system : public message_manager
 {
 public:

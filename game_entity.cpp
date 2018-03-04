@@ -4,10 +4,16 @@
 #include "managers.h"
 #include "battle_system.h"
 using namespace std;
+using std::size_t;
 
 void player::initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list)
 {
 
+}
+
+info_to_battle_sys player::on_turn_begin()
+{
+	return info_to_battle_sys();
 }
 
 
@@ -47,10 +53,14 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 	if (present_act.type < 10000)//造成伤害
 	{
 		current_hp -= present_act.value;
+		if (current_hp <= 0)
+			return this->kill();
 	}
 	else if (present_act.type < 20000)//增加生命值
 	{
 		current_hp += present_act.value;
+		if (current_hp > max_hp)
+			current_hp = max_hp;
 	}
 	else if (present_act.type < 30000)//减少行动力
 	{

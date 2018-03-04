@@ -21,3 +21,8 @@ void info_to_battle_sys::append(info_to_battle_sys t)
 info::info()
 {
 }
+
+action::action(std::size_t id, game_entity * tcaller, game_entity * tlistener, std::size_t ttype, std::size_t tvalue)
+	:action_id(id), caller(tcaller), listener(tlistener), type(ttype)
+{
+}

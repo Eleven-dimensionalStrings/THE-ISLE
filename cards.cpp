@@ -19,3 +19,8 @@ card::card(card && move_card) : card_id(move_card.card_id), upgrade_version_id(m
 card_name(std::move(move_card.card_name))
 {
 }
+
+info_to_battle_sys card::use()
+{
+	return info_to_battle_sys();
+}

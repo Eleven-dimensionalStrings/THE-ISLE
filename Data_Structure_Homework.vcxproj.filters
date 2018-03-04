@@ -36,6 +36,9 @@
     <ClCompile Include="buff.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="interacting.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="battle_system.h">
@@ -59,13 +62,16 @@
     <ClInclude Include="event_cards.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="artifacts.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="game_entity.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="data_sys.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="artifacts.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="interacting.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

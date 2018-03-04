@@ -17,10 +17,13 @@ public:
 
 class data_sys
 {
+	//保存buff的优先度和名字,根据下标(buff_id)访问
+	std::vector<std::pair<std::string, std::size_t>>buff_data;
+
 public:
 	std::vector<card> cards_pool;//永久牌库
 	std::vector<artifact> artifacts;//宝物
 	player player_data;
 	std::vector<enemy> enemies_data;
-	battle_sys_data&& get_battle_sys_data();
+	std::pair<std::string, std::size_t> get_buff(std::size_t);
 };

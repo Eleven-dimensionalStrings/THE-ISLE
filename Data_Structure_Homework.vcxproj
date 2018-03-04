@@ -118,6 +118,7 @@
     <ClCompile Include="data_sys.cpp" />
     <ClCompile Include="explore_system.cpp" />
     <ClCompile Include="game_entity.cpp" />
+    <ClCompile Include="interacting.cpp" />
     <ClCompile Include="message.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +129,7 @@
     <ClInclude Include="event_cards.h" />
     <ClInclude Include="explore_system.h" />
     <ClInclude Include="game_entity.h" />
+    <ClInclude Include="interacting.h" />
     <ClInclude Include="managers.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="data_sys.h" />

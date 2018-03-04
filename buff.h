@@ -15,11 +15,11 @@ inline unsigned int get_buff_level(std::size_t value)
 
 namespace BUFF_PRIORITY
 {
-	const size_t PRIORITY_LEVEL_1 = 1;
-	const size_t PRIORITY_LEVEL_2 = 2;
-	const size_t PRIORITY_LEVEL_3 = 3;
-	const size_t PRIORITY_LEVEL_4 = 4;
-	const size_t PRIORITY_LEVEL_5 = 5;
+	const std::size_t PRIORITY_LEVEL_1 = 1;
+	const std::size_t PRIORITY_LEVEL_2 = 2;
+	const std::size_t PRIORITY_LEVEL_3 = 3;
+	const std::size_t PRIORITY_LEVEL_4 = 4;
+	const std::size_t PRIORITY_LEVEL_5 = 5;
 }
 
 class buff : public message_dispatcher
