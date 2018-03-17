@@ -32,6 +32,26 @@ action::action(std::size_t id, std::size_t ttype, std::size_t tvalue)
 }
 
 action::action(std::size_t id, game_entity * tcaller, game_entity * tlistener, std::size_t ttype, std::size_t tvalue)
-	:action_id(id), caller(tcaller), listener(tlistener), type(ttype), value(tvalue)
+	: action_id(id), caller(tcaller), listener(tlistener), type(ttype), value(tvalue)
 {
+}
+
+info_battle_to_interacting::info_battle_to_interacting(std::size_t ttype, std::size_t tnum, bool tis_m)
+	: type(ttype), num(tnum), is_m(tis_m)
+{
+}
+
+info_battle_to_interacting::operator bool()
+{
+	return (type || num || is_m);
+}
+
+void info_battle_to_interacting::clear()
+{
+	type = num = is_m = 0;
+}
+
+info_battle_to_interacting::info_battle_to_interacting()
+{
+
 }

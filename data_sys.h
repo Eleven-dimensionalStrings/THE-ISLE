@@ -39,4 +39,6 @@ class data_sys
 	std::vector<card> cards_removed;//除外区
 	std::vector<card> cards_equiped;//装备区
 	std::array<char, 10> reserve_cards;//手牌中的卡片是否保留
+	info_to_battle_sys i_to_b_pipe;
+	info_battle_to_interacting b_to_i_pipe;
 };

@@ -1,5 +1,7 @@
 #include "interacting.h"
 using namespace std;
+using std::size_t;
+using std::size_t;
 
 context::context(interacting_sys * i_s)
 	:i_s(i_s)
@@ -34,6 +36,11 @@ void battle_context::read_input()
 {
 }
 
+void battle_context::change_to_select_state(info_battle_to_interacting t)
+{
+	set_state(new select_state(this, t.num, t.type, t.is_m));
+}
+
 info_to_battle_sys interacting_sys::play_a_card(std::size_t card_pos, game_entity* target)
 {
 	info_to_battle_sys result(action(battle_action_type::USE_A_CARD, &data.player_data, target,
@@ -44,7 +51,18 @@ info_to_battle_sys interacting_sys::play_a_card(std::size_t card_pos, game_entit
 
 void interacting_sys::update()
 {
-
+	if (data.b_to_i_pipe)
+	{
+		(dynamic_cast<battle_context*>(present_context))->change_to_select_state(data.b_to_i_pipe);
+		data.b_to_i_pipe.clear();
+		return;
+	}
+	//´ý¶¨
+	//else if (from_explore_sys)
+	{
+		//Í¬ÉÏ
+	}
+	present_context->read_input();
 }
 
 state::state(battle_context * b_c)
@@ -60,7 +78,7 @@ data_sys & state::get_data()
 
 void state::send_to_battle_sys(info_to_battle_sys t)
 {
-	ctx->i_s->next_info = t;
+	get_data().i_to_b_pipe = t;
 }
 
 vaccant_state::vaccant_state(battle_context * b_c)
@@ -210,12 +228,49 @@ void lock_state::click_turn_end()
 	//nothing happens
 }
 
-select_state::select_state(battle_context * b_c, size_t num, bool mdy)
-	:state(b_c), max(num), is_mandatory(mdy)
+select_state::select_state(battle_context * b_c, size_t num, size_t ttype, bool mdy)
+	:state(b_c), max(num), type(ttype), is_mandatory(mdy)
 {
 }
 
+
 void select_state::click_a_card(std::size_t card_pos)
 {
-	if()
+	bool is_selected = 0;
+	for (auto i = selected_cards.begin(); i != selected_cards.end(); ++i)
+	{
+		if (*i == card_pos)
+		{
+			selected_cards.erase(i);
+			return;
+		}
+	}
+	if (selected_cards.size() == max)return;
+	selected_cards.push_back(card_pos);
+}
+
+void select_state::click_an_enemy(std::size_t)
+{
+	//nothing happens
+}
+
+void select_state::click_confirm()
+{
+	info_to_battle_sys t;
+	for (auto& i : selected_cards)
+	{
+		t.append(action(type + TYPE_TO_P_TYPE, 0, i));
+	}
+	send_to_battle_sys(t);
+	ctx->set_state(new vaccant_state(ctx));
+}
+
+void select_state::click_cancel()
+{
+	//nothing happens
+}
+
+void select_state::click_turn_end()
+{
+	//nothing happened
 }

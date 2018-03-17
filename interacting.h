@@ -21,6 +21,7 @@ public:
 	~battle_context();
 	void set_state(state*);
 	void read_input();
+	void change_to_select_state(info_battle_to_interacting);
 private:
 	state *cur_state;
 };
@@ -67,13 +68,14 @@ private:
 class select_state : public state
 {
 public:
-	select_state(battle_context*, std::size_t, bool);
+	select_state(battle_context*, std::size_t tmax, std::size_t, bool);
 	void click_a_card(std::size_t);
 	void click_an_enemy(std::size_t);
 	void click_confirm();
 	void click_cancel();
 	void click_turn_end();
 private:
+	std::size_t type;
 	vector<std::size_t> selected_cards;
 	std::size_t max; //indicates the max amount of cards to select
 	bool is_mandatory; //indicates if the player is forced to select the max amount of cards
@@ -96,13 +98,9 @@ class interacting_sys :public message_listener
 {
 public:
 	data_sys& data;
-	std::size_t pre_state;
-	std::size_t cur_state;
-	info_to_battle_sys& next_info;
+	context* present_context;
 	bool send_message();
 	bool interpret_message();
-	//card_pos是使用的牌在手牌中从左到右的顺序
-	std::vector<std::size_t> select_cards(std::size_t card_pos);
 	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);
 	void update();
 };
