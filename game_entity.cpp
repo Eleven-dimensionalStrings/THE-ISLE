@@ -1,8 +1,8 @@
 #include <string>
-#include "game_entity.h"
 #include "message.h"
 #include "managers.h"
 #include "battle_system.h"
+#include "game_entity.h"
 using namespace std;
 using std::size_t;
 
@@ -13,14 +13,16 @@ void player::initiate(std::vector<card>&card_pool, std::vector<artifact>&artifac
 
 info_to_battle_sys player::on_turn_begin()
 {
+	for (auto &i : cards_in_hand) 
+	{
+		i.reserve = 0;
+	}
 	return info_to_battle_sys();
 }
 
 
-
-info_to_battle_sys player::create_message_to_battle_sys()
+game_entity::game_entity()
 {
-
 }
 
 info_to_battle_sys game_entity::calling_action(action iaction)
@@ -134,4 +136,8 @@ info_to_battle_sys game_entity::on_turn_begin()
 info_to_battle_sys game_entity::on_turn_end()
 {
 	return info_to_battle_sys();
+}
+
+enemy::enemy():game_entity()
+{
 }

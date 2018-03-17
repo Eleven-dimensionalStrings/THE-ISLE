@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include "game_entity.h"
 #include <vector>
+#define MAX_ENEMIES 5
+#define MEANINGLESS_VALUE static_cast<unsigned int>(31415926)
 
 namespace battle_action_type
 {
@@ -10,6 +12,7 @@ namespace battle_action_type
 	const unsigned int CALLING_ACTION = 1;
 	const unsigned int PERFORMING_ACTION = 2;
 	const unsigned int KILL = 5;
+	const unsigned int UPGRADE_CARD = 6;
 	const unsigned int USE_A_CARD = 23333;//action中type为卡片类型,value为手牌中的第几张卡
 	const unsigned int REMOVE_A_CARD = 233333;//将卡除外
 	const unsigned int DISCARD_A_CARD = 2333333;//受效果影响弃牌
@@ -35,17 +38,12 @@ namespace type_type
 	const unsigned int MULTIPLY_BUFF = 13;
 }
 
-namespace card_target_type
-{
-	const unsigned int NO_TARGET = 0;
-	const unsigned int ENEMY_ONLY = 1;
-	const unsigned int BOTH = 2;
-}
-
 class action
 {
 public:
 	//动作的类别，如造成伤害、受到伤害等
+	action(std::size_t);
+	action(std::size_t id, std::size_t ttype, std::size_t tvalue);
 	action(std::size_t id, game_entity* tcaller, game_entity* tlistener, std::size_t ttype, std::size_t tvalue);
 	std::size_t action_id;
 	game_entity* caller;

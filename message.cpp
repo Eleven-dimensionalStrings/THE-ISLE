@@ -22,7 +22,16 @@ info::info()
 {
 }
 
+action::action(std::size_t id) :action_id(id), caller(nullptr), listener(nullptr), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE)
+{
+}
+
+action::action(std::size_t id, std::size_t ttype, std::size_t tvalue)
+	: action_id(id), caller(nullptr), listener(nullptr), type(ttype), value(tvalue)
+{
+}
+
 action::action(std::size_t id, game_entity * tcaller, game_entity * tlistener, std::size_t ttype, std::size_t tvalue)
-	:action_id(id), caller(tcaller), listener(tlistener), type(ttype)
+	:action_id(id), caller(tcaller), listener(tlistener), type(ttype), value(tvalue)
 {
 }

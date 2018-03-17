@@ -22,7 +22,7 @@ namespace BUFF_PRIORITY
 	const std::size_t PRIORITY_LEVEL_5 = 5;
 }
 
-class buff : public message_dispatcher
+class buff
 {
 public:
 	buff(std::size_t, std::size_t, std::size_t);
@@ -31,8 +31,8 @@ public:
 	std::string buff_name;
 	std::size_t buff_priority;
 	std::size_t buff_life;
-	std::size_t buff_level;  
-	info_to_battle_sys create_message_to_battle_sys();
+	std::size_t buff_level; 
+	bool visible;
 
 	//将change传给buff之后,返回该change修改后的结果,和额外造成的操作
 	//修改后的结果将被传给下一个buff,所有info被打包后返回给battle_sys

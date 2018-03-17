@@ -4,26 +4,11 @@
 #include <queue>
 #include <random>
 
-class message_dispatcher
-{
-public:
-	virtual info_to_battle_sys create_message_to_battle_sys() = 0;
-};
-
 class message_listener
 {
 public:
 	virtual bool send_message() = 0;
 protected:
-	virtual bool interpret_message() = 0;
-};
-
-class message_manager : public message_dispatcher, message_listener
-{
-public:
-	virtual bool send_message() = 0;
-protected:
-	virtual info* create_message() = 0;
 	virtual bool interpret_message() = 0;
 };
 

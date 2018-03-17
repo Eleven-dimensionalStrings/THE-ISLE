@@ -5,7 +5,7 @@
 #include <stack>
 #include <string>
 
-class battle_system : public message_manager
+class battle_system : public message_listener
 {
 public:
 	bool send_message(info_to_battle_sys&);

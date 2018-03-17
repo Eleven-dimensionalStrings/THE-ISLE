@@ -45,7 +45,7 @@ struct explore_system_action
 	int value;
 };
 
-class explore_system : public message_manager
+class explore_system : public message_listener
 {
 public:
 	bool send_message(info_to_explore_sys);
@@ -55,6 +55,5 @@ protected:
 private:
 	std::stack<explore_system_action> process_stack;
 	void process();
-	info_for_battle_sys player_class;
 };
 
