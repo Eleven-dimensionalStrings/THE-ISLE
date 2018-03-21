@@ -11,7 +11,7 @@ public:
 	card(card& copy_card);
 	card(card&& move_card);
 
-	bool reserve;
+	bool is_reserve;
 
 	std::size_t card_id;
 	std::string card_name;

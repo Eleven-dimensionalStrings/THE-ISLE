@@ -13,9 +13,9 @@ void player::initiate(std::vector<card>&card_pool, std::vector<artifact>&artifac
 
 info_to_battle_sys player::on_turn_begin()
 {
-	for (auto &i : cards_in_hand) 
+	for (auto &i : data.cards_in_hand)
 	{
-		i.reserve = 0;
+		i.is_reserve = 0;
 	}
 	return info_to_battle_sys();
 }
@@ -138,6 +138,6 @@ info_to_battle_sys game_entity::on_turn_end()
 	return info_to_battle_sys();
 }
 
-enemy::enemy():game_entity()
+enemy::enemy() :game_entity()
 {
 }

@@ -9,7 +9,8 @@
 namespace battle_action_type
 {
 	const unsigned int INITIATE = 99;
-	const unsigned int NEXT_TURN = 100;
+	const unsigned int TURN_BEGIN = 100;
+	const unsigned int TURN_END = 101;
 	const unsigned int CALLING_ACTION = 1;
 	const unsigned int PERFORMING_ACTION = 2;
 	const unsigned int KILL = 5;
@@ -20,12 +21,11 @@ namespace battle_action_type
 	const unsigned int KEEP_A_CARD = 10000;//回合结束时保留这张卡
 	const unsigned int REMOVE_A_CARD = 10001;//将卡除外
 	const unsigned int DISCARD_A_CARD = 10002;//受效果影响弃牌
-	const unsigned int ENGRAVE_A_CARD = 10003;//回合结束时弃牌,不造成其他影响
+	const unsigned int DRAW_CARDS = 10003;//抽卡,value表示抽多少张,遍历buff的操作在on_calling执行
 	//下面的P代表perform,是在interacting选完卡片后传回战斗系统,执行具体操作的
 	const unsigned int P_KEEP_A_CARD = 10100;//回合结束时保留这张卡
 	const unsigned int P_REMOVE_A_CARD = 10101;//将卡除外
 	const unsigned int P_DISCARD_A_CARD = 10102;//受效果影响弃牌
-	const unsigned int P_ENGRAVE_A_CARD = 10103;//回合结束时弃牌,不造成其他影响
 }
 
 

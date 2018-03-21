@@ -12,13 +12,13 @@ void battle_system::update()
 	}
 }
 
-bool battle_system::send_message(info_to_battle_sys& input)
+bool battle_system::send_message(info_to_battle_sys input)
 {
 	battle_system::interpret_message(input);
 	//send back something afterwards
 }
 
-bool battle_system::interpret_message(info_to_battle_sys& input)
+bool battle_system::interpret_message(info_to_battle_sys input)
 {
 	for (size_t i = input.action_set.size() - 1; i >= 0; --i)
 	{
@@ -77,20 +77,69 @@ void battle_system::process()
 			data.b_to_i_pipe = info_battle_to_interacting(temp.action_id, temp.value, temp.type);
 			break;
 		}
-		case ENGRAVE_A_CARD:
+		case DRAW_CARDS:
 		{
-			data.b_to_i_pipe = info_battle_to_interacting(temp.action_id, temp.value, temp.type);
+			info_to_battle_sys t(temp);
+			for (auto& i : data.player_data.buff_pool)
+			{
+				t = i.on_calling(t);
+			}
+			vector<card>& c_in_hand = data.cards_in_hand;
+			vector<card>& c_deck = data.cards_deck;
+			vector<card>& c_grave = data.cards_grave;
+			for (size_t i = 0; i < t.action_set.begin()->value; ++i)
+			{
+				if (c_deck.empty())
+				{
+					//需要随机洗牌
+					c_deck = std::move(my_random_engine.xipai(std::move(c_grave)));
+				}
+				if (c_deck.size())//抽空了卡组就抽不出东西了
+
+				{
+					c_in_hand.push_back(*(c_deck.end() - 1));
+					c_deck.pop_back();
+				}
+			}
 			break;
 		}
 
 		case P_KEEP_A_CARD:
+		{
+			data.cards_in_hand[temp.value].is_reserve = 1;
 			break;
+		}
 		case P_REMOVE_A_CARD:
+		{
+			vector<card>& c_in_hand = data.cards_in_hand;
+			vector<card>& c_removed = data.cards_in_hand;
+			c_removed.push_back(c_in_hand[temp.value]);
+			c_in_hand.erase(c_in_hand.begin() + temp.value);
 			break;
+		}
 		case P_DISCARD_A_CARD:
+		{
+			vector<card>& c_in_hand = data.cards_in_hand;
+			vector<card>& c_grave = data.cards_grave;
+			c_grave.push_back(c_in_hand[temp.value]);
+			send_message((c_in_hand.end() - 1)->discard());
+			c_in_hand.erase(c_in_hand.begin() + temp.value);
 			break;
-		case P_ENGRAVE_A_CARD:
+		}
+		case TURN_END://还要调用buff的turn_end
+		{
+			vector<card>& c_in_hand = data.cards_in_hand;
+			vector<card>& c_grave = data.cards_grave;
+			for (auto i = c_in_hand.begin(); i != c_in_hand.end(); ++i)
+			{
+				if (!i->is_reserve)
+				{
+					c_grave.push_back(*i);
+					c_in_hand.erase(i++);
+				}
+			}
 			break;
+		}
 		default:
 			break;
 		}
