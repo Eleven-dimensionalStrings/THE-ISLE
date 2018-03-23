@@ -7,29 +7,6 @@
 using namespace std;
 using namespace explore_action_type;
 
-bool explore_system::send_message(info_to_explore_sys)
-{
-
-}
-
-bool explore_system::interpret_message(info_to_explore_sys)
-{
-
-}
-
-//action_id has been removed from info since 18/2/28
-//now the action_id is included in class "change".
-
-bool explore_system::interpret_message(info_to_explore_sys input)
-{
-	while (!input.action_id.empty())
-	{
-		explore_system_action new_action(input.action_id.front(),
-			input.action_name.front(), input.value.front());
-		process_stack.push(new_action);
-	}
-}
-
 void explore_system::process()
 {
 	while (!process_stack.empty())
@@ -40,34 +17,27 @@ void explore_system::process()
 		{
 		case AQUIRE_HIT_POINTS:
 		{
-			int current = player_class.get_player_current_hit_points();
-			player_class.set_player_current_hit_points(current + temp.value);
+			data->player_data.current_hp += temp.value;
 			break;
 		}
-
 		case AQUIRE_MAX_HIT_POINTS:
 		{
-			int current = player_class.get_player_max_hit_points();
-			player_class.set_player_max_hit_points(current + temp.value);
+			data->player_data.max_hp += temp.value;
 			break;
 		}
-
 		case REMOVE_HIT_POINTS:
 		{
-			int current = player_class.get_player_current_hit_points();
-			player_class.set_player_current_hit_points(current - temp.value);
+			data->player_data.current_hp -= temp.value;
 			break;
 		}
-
 		case REMOVE_MAX_HIT_POINTS:
 		{
-			int current = player_class.get_player_max_hit_points();
-			player_class.set_player_max_hit_points(current - temp.value);
+			data->player_data.max_hp -= temp.value;
 			break;
 		}
-
 		case AQUIRE_CARD:
 		{
+			data->cards_pool.push_back();
 			break;
 		}
 

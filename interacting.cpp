@@ -10,12 +10,12 @@ context::context(interacting_sys * i_s)
 }
 
 battle_context::battle_context(interacting_sys* i_s)
-	: context(i_s), cur_state(new vaccant_state(this))
+	: context(i_s), cur_state(new b_vaccant_state(this))
 {
 
 }
 
-battle_context::battle_context(interacting_sys* i_s, state * pstate)
+battle_context::battle_context(interacting_sys* i_s, b_state * pstate)
 	: context(i_s), cur_state(pstate)
 {
 
@@ -26,7 +26,7 @@ battle_context::~battle_context()
 	delete cur_state;
 }
 
-void battle_context::set_state(state * pstate)
+void battle_context::set_state(b_state * pstate)
 {
 	delete cur_state;
 	cur_state = pstate;
@@ -34,11 +34,42 @@ void battle_context::set_state(state * pstate)
 
 void battle_context::read_input()
 {
+	//switch
+	//cur_state->xxxfunction;
 }
 
 void battle_context::change_to_select_state(info_battle_to_interacting t)
 {
-	set_state(new select_state(this, t.num, t.type, t.is_m));
+	set_state(new b_select_state(this, t.num, t.type, t.is_m));
+}
+
+explore_context::explore_context(interacting_sys* i_s)
+	: context(i_s), cur_state(new e_vaccant_state(this))
+{
+
+}
+
+explore_context::explore_context(interacting_sys* i_s, e_state * pstate)
+	: context(i_s), cur_state(pstate)
+{
+
+}
+
+explore_context::~explore_context()
+{
+	delete cur_state;
+}
+
+void explore_context::set_state(e_state * pstate)
+{
+	delete cur_state;
+	cur_state = pstate;
+}
+
+void explore_context::read_input()
+{
+	//switch
+	//cur_state->xxxfunction
 }
 
 info_to_battle_sys interacting_sys::play_a_card(std::size_t card_pos, game_entity* target)
@@ -65,56 +96,56 @@ void interacting_sys::update()
 	present_context->read_input();
 }
 
-state::state(battle_context * b_c)
+b_state::b_state(battle_context * b_c)
 	:ctx(b_c)
 {
 
 }
 
-data_sys & state::get_data()
+data_sys & b_state::get_data()
 {
 	return ctx->i_s->data;
 }
 
-void state::send_to_battle_sys(info_to_battle_sys t)
+void b_state::send_to_battle_sys(info_to_battle_sys t)
 {
 	get_data().i_to_b_pipe = t;
 }
 
-vaccant_state::vaccant_state(battle_context * b_c)
-	:state(b_c)
+b_vaccant_state::b_vaccant_state(battle_context * b_c)
+	:b_state(b_c)
 {
 
 }
 
-void vaccant_state::click_a_card(size_t card_pos)
+void b_vaccant_state::click_a_card(size_t card_pos)
 {
-	ctx->set_state(new confirm_state(ctx, card_pos));
+	ctx->set_state(new b_confirm_state(ctx, card_pos));
 }
 
-void vaccant_state::click_an_enemy(size_t enemy_No)
-{
-	//nothing happens
-}
-
-void vaccant_state::click_confirm()
+void b_vaccant_state::click_an_enemy(size_t enemy_No)
 {
 	//nothing happens
 }
 
-void vaccant_state::click_cancel()
+void b_vaccant_state::click_confirm()
 {
 	//nothing happens
 }
 
-void vaccant_state::click_turn_end()
+void b_vaccant_state::click_cancel()
 {
-	send_to_battle_sys(info_to_battle_sys(action(battle_action_type::NEXT_TURN)));
-	ctx->set_state(new lock_state(ctx));
+	//nothing happens
 }
 
-confirm_state::confirm_state(battle_context * b_c, size_t card_pos)
-	:state(b_c), selected_card(card_pos), require_target(false)
+void b_vaccant_state::click_turn_end()
+{
+	send_to_battle_sys(info_to_battle_sys(action(battle_action_type::TURN_END)));
+	ctx->set_state(new b_lock_state(ctx));
+}
+
+b_confirm_state::b_confirm_state(battle_context * b_c, size_t card_pos)
+	:b_state(b_c), selected_card(card_pos), require_target(false)
 {
 	if (get_data().cards_in_hand[card_pos].require_target)
 	{
@@ -122,19 +153,19 @@ confirm_state::confirm_state(battle_context * b_c, size_t card_pos)
 	}
 }
 
-void confirm_state::click_a_card(size_t card_pos)
+void b_confirm_state::click_a_card(size_t card_pos)
 {
 	if (card_pos == selected_card)
 	{
-		ctx->set_state(new vaccant_state(ctx));
+		ctx->set_state(new b_vaccant_state(ctx));
 	}
 	else
 	{
-		ctx->set_state(new confirm_state(ctx, card_pos));
+		ctx->set_state(new b_confirm_state(ctx, card_pos));
 	}
 }
 
-void confirm_state::click_an_enemy(size_t enemy_pos)
+void b_confirm_state::click_an_enemy(size_t enemy_pos)
 {
 	if (require_target)
 	{
@@ -155,12 +186,12 @@ void confirm_state::click_an_enemy(size_t enemy_pos)
 		}
 		else
 		{
-			ctx->set_state(new vaccant_state(ctx));
+			ctx->set_state(new b_vaccant_state(ctx));
 		}
 	}
 }
 
-void confirm_state::click_confirm()
+void b_confirm_state::click_confirm()
 {
 	if (!require_target)
 	{
@@ -187,54 +218,54 @@ void confirm_state::click_confirm()
 	}
 }
 
-void confirm_state::click_cancel()
+void b_confirm_state::click_cancel()
 {
-	ctx->set_state(new vaccant_state(ctx));
+	ctx->set_state(new b_vaccant_state(ctx));
 }
 
-void confirm_state::click_turn_end()
+void b_confirm_state::click_turn_end()
 {
-	send_to_battle_sys(info_to_battle_sys(action(battle_action_type::NEXT_TURN)));
-	ctx->set_state(new lock_state(ctx));
+	send_to_battle_sys(info_to_battle_sys(action(battle_action_type::TURN_END)));
+	ctx->set_state(new b_lock_state(ctx));
 }
 
-lock_state::lock_state(battle_context * b_c)
-	:state(b_c)
+b_lock_state::b_lock_state(battle_context * b_c)
+	:b_state(b_c)
 {
 }
 
-void lock_state::click_a_card(size_t card_pos)
-{
-	//nothing happens
-}
-
-void lock_state::click_an_enemy(size_t card_pos)
+void b_lock_state::click_a_card(size_t card_pos)
 {
 	//nothing happens
 }
 
-void lock_state::click_confirm()
+void b_lock_state::click_an_enemy(size_t card_pos)
 {
 	//nothing happens
 }
 
-void lock_state::click_cancel()
+void b_lock_state::click_confirm()
 {
 	//nothing happens
 }
 
-void lock_state::click_turn_end()
+void b_lock_state::click_cancel()
 {
 	//nothing happens
 }
 
-select_state::select_state(battle_context * b_c, size_t num, size_t ttype, bool mdy)
-	:state(b_c), max(num), type(ttype), is_mandatory(mdy)
+void b_lock_state::click_turn_end()
+{
+	//nothing happens
+}
+
+b_select_state::b_select_state(battle_context * b_c, size_t num, size_t ttype, bool mdy)
+	:b_state(b_c), max(num), type(ttype), is_mandatory(mdy)
 {
 }
 
 
-void select_state::click_a_card(std::size_t card_pos)
+void b_select_state::click_a_card(std::size_t card_pos)
 {
 	bool is_selected = 0;
 	for (auto i = selected_cards.begin(); i != selected_cards.end(); ++i)
@@ -249,12 +280,12 @@ void select_state::click_a_card(std::size_t card_pos)
 	selected_cards.push_back(card_pos);
 }
 
-void select_state::click_an_enemy(std::size_t)
+void b_select_state::click_an_enemy(std::size_t)
 {
 	//nothing happens
 }
 
-void select_state::click_confirm()
+void b_select_state::click_confirm()
 {
 	info_to_battle_sys t;
 	for (auto& i : selected_cards)
@@ -262,15 +293,37 @@ void select_state::click_confirm()
 		t.append(action(type + TYPE_TO_P_TYPE, 0, i));
 	}
 	send_to_battle_sys(t);
-	ctx->set_state(new vaccant_state(ctx));
+	ctx->set_state(new b_vaccant_state(ctx));
 }
 
-void select_state::click_cancel()
+void b_select_state::click_cancel()
 {
 	//nothing happens
 }
 
-void select_state::click_turn_end()
+void b_select_state::click_turn_end()
 {
 	//nothing happened
+}
+
+data_sys & e_state::get_data()
+{
+	return ctx->i_s->data;
+}
+
+void e_state::send_to_explore_sys(info_to_explore_sys t)
+{
+	get_data().i_to_e_pipe = t;
+}
+
+e_vaccant_state::e_vaccant_state(explore_context * e_c)
+	:e_state(e_c)
+{
+}
+
+
+
+e_state::e_state(explore_context *tcontext)
+	:ctx(tcontext)
+{
 }

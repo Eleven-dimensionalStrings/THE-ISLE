@@ -21,12 +21,12 @@ class data_sys
 {
 public:
 	data_sys();
-	//±£´æbuffµÄÓÅÏÈ¶ÈºÍÃû×Ö,¸ù¾ÝÏÂ±ê(buff_id)·ÃÎÊ
+	//ï¿½ï¿½ï¿½ï¿½buffï¿½ï¿½ï¿½ï¿½ï¿½È¶Èºï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½Â±ï¿½(buff_id)ï¿½ï¿½ï¿½ï¿½
 	std::vector<std::pair<std::string, std::size_t>> buff_data;
-	//±£´æ¿¨Æ¬µÄÐ§¹û£¬¸ù¾Ý¼üÖµ£¨card_id£©·ÃÎÊ
+	//ï¿½ï¿½ï¿½æ¿¨Æ¬ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¼ï¿½Öµï¿½ï¿½card_idï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	std::map<std::size_t, std::vector<action>> card_effect;
-	std::vector<card> cards_pool;//ÓÀ¾ÃÅÆ¿â
-	std::vector<artifact> artifacts;//±¦Îï
+	std::vector<card> cards_pool;//ï¿½ï¿½ï¿½ï¿½ï¿½Æ¿ï¿½
+	std::vector<artifact> artifacts;//ï¿½ï¿½ï¿½ï¿½
 	player player_data;
 	std::vector<enemy> enemies_data;
 	enemy all_enemies, random_enemy, select_one_enemy;
@@ -38,19 +38,20 @@ public:
 	std::size_t dexterity;
 	std::size_t vitality;
 	std::size_t luck;
-	std::vector<card> cards_deck;//Õ½¶·Ê±ÅÆ¿â
-	std::vector<card> cards_grave;//ÆúÅÆ¶Ñ
-	std::vector<card> cards_in_hand;//ÊÖÅÆ
-	std::vector<card> cards_removed;//³ýÍâÇø
-	std::vector<card> cards_equiped;//×°±¸Çø
-	std::array<char, 10> reserve_cards;//ÊÖÅÆÖÐµÄ¿¨Æ¬ÊÇ·ñ±£Áô
+	std::vector<card> cards_deck;//Õ½ï¿½ï¿½Ê±ï¿½Æ¿ï¿½
+	std::vector<card> cards_grave;//ï¿½ï¿½ï¿½Æ¶ï¿½
+	std::vector<card> cards_in_hand;//ï¿½ï¿½ï¿½ï¿½
+	std::vector<card> cards_removed;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	std::vector<card> cards_equiped;//×°ï¿½ï¿½ï¿½ï¿½
+	std::array<char, 10> reserve_cards;//ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄ¿ï¿½Æ¬ï¿½Ç·ï¿½ï¿½ï¿½
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
+	info_to_explore_sys i_to_e_pipe;
 
 	std::vector<std::function<info_to_battle_sys(info_to_battle_sys)>>v;
 	/*
-	ÐèÒª¼ÇÂ¼²¿·Ö:
-	¹¹½¨¿¨ÅÆ¶ÔÓ¦Ð§¹û,±£´æÃ¿ÕÅÅÆaction(ÓÃÓÚÊ¹ÓÃÅÆ
-	buff¶ÔÓ¦Ð§¹û(ÔÚbuffµÄon_callingµÈº¯ÊýÖÐÊ¹ÓÃ
+	ï¿½ï¿½Òªï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½:
+	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½Ó¦Ð§ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½action(ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½
+	buffï¿½ï¿½Ó¦Ð§ï¿½ï¿½(ï¿½ï¿½buffï¿½ï¿½on_callingï¿½Èºï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½
 	*/
 };

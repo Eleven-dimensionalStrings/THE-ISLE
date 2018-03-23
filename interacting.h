@@ -1,7 +1,7 @@
 #pragma once
 #include "message.h"
 #include "data_sys.h"
-class state;
+class b_state;
 class interacting_sys;
 
 class context
@@ -17,19 +17,31 @@ class battle_context : public context
 {
 public:
 	battle_context(interacting_sys*);
-	battle_context(interacting_sys*, state*);
+	battle_context(interacting_sys*, b_state*);
 	~battle_context();
-	void set_state(state*);
+	void set_state(b_state*);
 	void read_input();
 	void change_to_select_state(info_battle_to_interacting);
 private:
-	state *cur_state;
+	b_state *cur_state;
 };
 
-class state
+class explore_context : public context
 {
 public:
-	state(battle_context*);
+	explore_context(interacting_sys*);
+	explore_context(interacting_sys*, e_state*);
+	~explore_context();
+	void set_state(e_state*);
+	void read_input();
+private:
+	e_state *cur_state;
+};
+
+class b_state
+{
+public:
+	b_state(battle_context*);
 	virtual void click_a_card(std::size_t) = 0;
 	virtual void click_an_enemy(std::size_t) = 0;
 	virtual void click_confirm() = 0;
@@ -40,10 +52,10 @@ public:
 	battle_context* ctx;
 };
 
-class vaccant_state : public state
+class b_vaccant_state : public b_state
 {
 public:
-	vaccant_state(battle_context*);
+	b_vaccant_state(battle_context*);
 	void click_a_card(std::size_t);
 	void click_an_enemy(std::size_t);
 	void click_confirm();
@@ -51,10 +63,10 @@ public:
 	void click_turn_end();
 };
 
-class confirm_state : public state
+class b_confirm_state : public b_state
 {
 public:
-	confirm_state(battle_context*, std::size_t);
+	b_confirm_state(battle_context*, std::size_t);
 	void click_a_card(std::size_t);
 	void click_an_enemy(std::size_t);
 	void click_confirm();
@@ -65,10 +77,10 @@ private:
 	bool require_target;
 };
 
-class select_state : public state
+class b_select_state : public b_state
 {
 public:
-	select_state(battle_context*, std::size_t tmax, std::size_t, bool);
+	b_select_state(battle_context*, std::size_t tmax, std::size_t, bool);
 	void click_a_card(std::size_t);
 	void click_an_enemy(std::size_t);
 	void click_confirm();
@@ -83,10 +95,10 @@ private:
 
 //the lock state is the state in the enemies' turn
 //all functions are empty in lock state
-class lock_state : public state
+class b_lock_state : public b_state
 {
 public:
-	lock_state(battle_context*);
+	b_lock_state(battle_context*);
 	void click_a_card(std::size_t card_No);
 	void click_an_enemy(std::size_t card_No);
 	void click_confirm();
@@ -94,13 +106,48 @@ public:
 	void click_turn_end();
 };
 
-class interacting_sys :public message_listener
+class e_state
+{
+public:
+	e_state(explore_context*);
+	virtual void click_an_option(std::size_t) = 0;
+	virtual void click_next() = 0;
+	virtual void click_up_arrow() = 0;
+	virtual void click_down_arrow() = 0;
+	virtual void click_left_arrow() = 0;
+	virtual void click_right_arrow() = 0;
+	data_sys& get_data();
+	void send_to_explore_sys(info_to_explore_sys);
+	explore_context* ctx;
+};
+
+class e_vaccant_state : public e_state
+{
+public:
+	e_vaccant_state(explore_context*);
+	void click_an_option();
+	void click_next();
+	void click_up_arrow();
+	void click_down_arrow();
+	void click_left_arrow();
+	void click_right_arrow();
+};
+
+class e_select_state : public e_state
+{
+	
+};
+
+class e_multi_select_state : public e_state
+{
+	
+};
+
+class interacting_sys
 {
 public:
 	data_sys& data;
 	context* present_context;
-	bool send_message();
-	bool interpret_message();
 	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);
 	void update();
 };
