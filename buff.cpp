@@ -46,3 +46,28 @@ info_to_battle_sys buff::on_delete(game_entity *, game_entity *)
 	//switch
 	return info_to_battle_sys();
 }
+
+info_to_battle_sys buff::on_kill()
+{
+	return info_to_battle_sys();
+}
+
+info_to_battle_sys buff::on_turn_begin()
+{
+	return info_to_battle_sys();
+}
+
+info_to_battle_sys buff::on_turn_end()
+{
+	return info_to_battle_sys();
+}
+
+info_to_battle_sys buff::on_calling(info_to_battle_sys)
+{
+	return info_to_battle_sys();
+}
+
+info_to_battle_sys buff::on_performing(info_to_battle_sys)
+{
+	return info_to_battle_sys();
+}

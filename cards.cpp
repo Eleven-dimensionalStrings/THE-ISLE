@@ -20,7 +20,22 @@ card_name(std::move(move_card.card_name))
 {
 }
 
-info_to_battle_sys card::use()
+info_to_battle_sys card::use_card()
+{
+	return info_to_battle_sys();
+}
+
+info_to_battle_sys card::discard()
+{
+	return info_to_battle_sys();
+}
+
+info_to_battle_sys card::remove()
+{
+	return info_to_battle_sys();
+}
+
+info_to_battle_sys card::on_turn_end()
 {
 	return info_to_battle_sys();
 }

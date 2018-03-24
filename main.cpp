@@ -1,17 +1,20 @@
 #include <iostream>
 #include "message.h"
 #include "interacting.h"
+#include "battle_system.h"
+#include "t_draw_sys.h"
 using namespace std;
 int main()
 {
-	info_battle_to_interacting b_to_i_pipe;
-	info_to_battle_sys i_to_b_pipe;
 	data_sys d;
-	interacting_sys i;
-
+	battle_system b(d);
+	interacting_sys i(d);
+	t_draw_sys dr(d);
 	while (1)
 	{
 		i.update();
+		b.update();
+		dr.draw();
 	}
 	return 0;
 }

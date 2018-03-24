@@ -97,6 +97,7 @@ public:
 class interacting_sys :public message_listener
 {
 public:
+	interacting_sys(data_sys& d);
 	data_sys& data;
 	context* present_context;
 	bool send_message();

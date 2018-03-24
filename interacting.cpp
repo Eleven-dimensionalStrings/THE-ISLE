@@ -41,11 +41,25 @@ void battle_context::change_to_select_state(info_battle_to_interacting t)
 	set_state(new select_state(this, t.num, t.type, t.is_m));
 }
 
+interacting_sys::interacting_sys(data_sys & d) :data(d), present_context(nullptr)
+{
+}
+
+bool interacting_sys::send_message()
+{
+	return false;
+}
+
+bool interacting_sys::interpret_message()
+{
+	return false;
+}
+
 info_to_battle_sys interacting_sys::play_a_card(std::size_t card_pos, game_entity* target)
 {
 	info_to_battle_sys result(action(battle_action_type::USE_A_CARD, &data.player_data, target,
 		data.cards_in_hand[card_pos].card_type, card_pos));
-	result.append(data.cards_in_hand[card_pos].use());
+	result.append(data.cards_in_hand[card_pos].use_card());
 	return result;
 }
 

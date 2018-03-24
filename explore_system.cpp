@@ -12,6 +12,11 @@ bool explore_system::send_message(info_to_explore_sys)
 
 }
 
+info * explore_system::create_message()
+{
+	return nullptr;
+}
+
 bool explore_system::interpret_message(info_to_explore_sys)
 {
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdlib>
-#include "game_entity.h"
 #include <vector>
+#include <queue>
 #define MAX_ENEMIES 5
 #define MEANINGLESS_VALUE static_cast<unsigned int>(31415926)
 #define TYPE_TO_P_TYPE static_cast<unsigned int>(100)
@@ -46,6 +46,8 @@ namespace type_type
 	const unsigned int REMOVE_BUFF = 12;
 	const unsigned int MULTIPLY_BUFF = 13;
 }
+
+class game_entity;
 
 class action
 {

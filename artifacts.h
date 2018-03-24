@@ -2,7 +2,7 @@
 #include "message.h"
 #include "managers.h"
 
-class artifact : public message_dispatcher
+class artifact
 {
 public:
 	virtual info* on_battle_begin() = 0; // adds buff to the player entity or the enemy entity(s)

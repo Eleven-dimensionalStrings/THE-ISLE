@@ -4,6 +4,8 @@
 #include <vector> 
 #include <map>
 #include <functional>
+class enemy;
+class player;
 /*class battle_sys_data
 {
 public:

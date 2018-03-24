@@ -4,12 +4,16 @@
 using namespace std;
 using std::size_t;
 using namespace battle_action_type;
+battle_system::battle_system(data_sys & d) :data(d)
+{
+}
 void battle_system::update()
 {
-	for (auto& i : from_interacting)
+	for (auto i = data.i_to_b_pipe.action_set.rbegin(); i != data.i_to_b_pipe.action_set.rend(); ++i)
 	{
-
+		process_stack.push(*i);
 	}
+	this->process();
 }
 
 bool battle_system::send_message(info_to_battle_sys input)
@@ -92,7 +96,7 @@ void battle_system::process()
 				if (c_deck.empty())
 				{
 					//需要随机洗牌
-					c_deck = std::move(my_random_engine.xipai(std::move(c_grave)));
+					c_deck = std::move(my_random_engine::xipai(std::move(c_grave)));
 				}
 				if (c_deck.size())//抽空了卡组就抽不出东西了
 
@@ -145,4 +149,10 @@ void battle_system::process()
 		}
 		process_stack.pop();
 	}
+}
+
+std::vector<card> my_random_engine::xipai(std::vector<card> v)
+{
+	sort(v.begin(), v.end());
+	return std::move(v);
 }

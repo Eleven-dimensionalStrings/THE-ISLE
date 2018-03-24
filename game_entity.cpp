@@ -141,3 +141,22 @@ info_to_battle_sys game_entity::on_turn_end()
 enemy::enemy() :game_entity()
 {
 }
+
+void enemy::initiate(std::vector<card>& card_pool, std::vector<artifact>& artifact_list)
+{
+}
+
+info_to_battle_sys enemy::kill()
+{
+	return info_to_battle_sys();
+}
+
+info_to_battle_sys enemy::on_turn_begin()
+{
+	return info_to_battle_sys();
+}
+
+info_to_battle_sys enemy::on_turn_end()
+{
+	return info_to_battle_sys();
+}
