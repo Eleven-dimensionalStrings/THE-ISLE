@@ -6,6 +6,15 @@
 #define MEANINGLESS_VALUE static_cast<unsigned int>(31415926)
 #define TYPE_TO_P_TYPE static_cast<unsigned int>(100)
 
+namespace map_mark_type
+{
+	const int EMPTY = -1;
+	const int PLAYER = 0;//玩家所处位置
+	const int UNKNOWN = 1;//没有去过
+	const int KNOWN = 2;//已经翻开，但是没有去过
+	const int VISITED = 3;//已经去过
+}
+
 namespace battle_action_type
 {
 	const unsigned int INITIATE = 99;

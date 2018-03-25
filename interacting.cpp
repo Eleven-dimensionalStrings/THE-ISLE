@@ -80,6 +80,24 @@ info_to_battle_sys interacting_sys::play_a_card(std::size_t card_pos, game_entit
 	return result;
 }
 
+void interacting_sys::move_player(int x, int y)
+{
+	data.map_marks[data.player_location.first][data.player_location.second] = map_mark_type::VISITED;
+	data.map_marks[x][y] = map_mark_type::PLAYER;
+	data.player_location = make_pair(x, y);
+}
+
+void interacting_sys::set_map_location(int x, int y, int mark_type)
+{
+	data.map_marks[x][y] = mark_type;
+	//tell the renderer to reveal the map
+}
+
+void interacting_sys::reveal_map_location(int x, int y)
+{
+	//call the renderer to reveal the map
+}
+
 void interacting_sys::update()
 {
 	if (data.b_to_i_pipe)
@@ -321,9 +339,169 @@ e_vaccant_state::e_vaccant_state(explore_context * e_c)
 {
 }
 
+void e_vaccant_state::click_an_option(size_t option)
+{
+	//nothing happens
+}
 
+void e_vaccant_state::click_next()
+{
+	//nothing happens
+}
+
+void e_vaccant_state::click_up_arrow()
+{
+	if (get_data().player_location.second == 5)
+	{
+		return;
+	}
+	int mark = get_data().map_marks[get_data().player_location.first][get_data().player_location.second + 1];
+	switch (mark)
+	{
+	case map_mark_type::EMPTY:
+		break;
+	case map_mark_type::VISITED:
+		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second + 1);
+		break;
+	case map_mark_type::KNOWN:
+		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second + 1);
+		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second + 1, map_mark_type::VISITED);
+		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		break;
+	case map_mark_type::UNKNOWN:
+		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second + 1);
+		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second + 1, map_mark_type::VISITED);
+		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+	default:
+		break;
+	}
+}
+
+void e_vaccant_state::click_down_arrow()
+{
+	if (get_data().player_location.second == 0)
+	{
+		return;
+	}
+	int mark = get_data().map_marks[get_data().player_location.first][get_data().player_location.second - 1];
+	switch (mark)
+	{
+	case map_mark_type::EMPTY:
+		break;
+	case map_mark_type::VISITED:
+		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second - 1);
+		break;
+	case map_mark_type::KNOWN:
+		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second - 1);
+		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second - 1, map_mark_type::VISITED);
+		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		break;
+	case map_mark_type::UNKNOWN:
+		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second - 1);
+		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second - 1, map_mark_type::VISITED);
+		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+	default:
+		break;
+	}
+}
+
+void e_vaccant_state::click_left_arrow()
+{
+	if (get_data().player_location.first == 0)
+	{
+		return;
+	}
+	int mark = get_data().map_marks[get_data().player_location.first - 1][get_data().player_location.second];
+	switch (mark)
+	{
+	case map_mark_type::EMPTY:
+		break;
+	case map_mark_type::VISITED:
+		ctx->i_s->move_player(get_data().player_location.first - 1, get_data().player_location.second);
+		break;
+	case map_mark_type::KNOWN:
+		ctx->i_s->move_player(get_data().player_location.first - 1, get_data().player_location.second);
+		ctx->i_s->set_map_location(get_data().player_location.first - 1, get_data().player_location.second, map_mark_type::VISITED);
+		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		break;
+	case map_mark_type::UNKNOWN:
+		ctx->i_s->move_player(get_data().player_location.first - 1, get_data().player_location.second);
+		ctx->i_s->set_map_location(get_data().player_location.first - 1, get_data().player_location.second, map_mark_type::VISITED);
+		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+	default:
+		break;
+	}
+}
+
+void e_vaccant_state::click_right_arrow()
+{
+	if (get_data().player_location.first == 5)
+	{
+		return;
+	}
+	int mark = get_data().map_marks[get_data().player_location.first + 1][get_data().player_location.second];
+	switch (mark)
+	{
+	case map_mark_type::EMPTY:
+		break;
+	case map_mark_type::VISITED:
+		ctx->i_s->move_player(get_data().player_location.first + 1, get_data().player_location.second);
+		break;
+	case map_mark_type::KNOWN:
+		ctx->i_s->move_player(get_data().player_location.first + 1, get_data().player_location.second);
+		ctx->i_s->set_map_location(get_data().player_location.first + 1, get_data().player_location.second, map_mark_type::VISITED);
+		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		break;
+	case map_mark_type::UNKNOWN:
+		ctx->i_s->move_player(get_data().player_location.first + 1, get_data().player_location.second);
+		ctx->i_s->set_map_location(get_data().player_location.first + 1, get_data().player_location.second, map_mark_type::VISITED);
+		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+	default:
+		break;
+	}
+}
 
 e_state::e_state(explore_context *tcontext)
 	:ctx(tcontext)
+{
+}
+
+e_select_state::e_select_state(explore_context * e_c)
+	:e_state(e_c)
+{
+}
+
+void e_select_state::click_an_option(std::size_t)
+{
+
+}
+
+void e_select_state::click_next()
+{
+
+}
+
+void e_select_state::click_up_arrow()
+{
+	//switch page
+}
+
+void e_select_state::click_down_arrow()
+{
+
+}
+
+void e_select_state::click_left_arrow()
+{
+
+}
+
+void e_select_state::click_right_arrow()
+{
+
+}
+
+e_multi_select_state::e_multi_select_state(explore_context * e_c)
+	:e_state(e_c)
 {
 }

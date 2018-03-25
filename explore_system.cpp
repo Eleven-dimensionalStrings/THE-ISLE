@@ -37,7 +37,7 @@ void explore_system::process()
 		}
 		case AQUIRE_CARD:
 		{
-			data->cards_pool.push_back();
+			data->cards_pool.push_back();// mafan
 			break;
 		}
 

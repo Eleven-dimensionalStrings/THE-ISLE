@@ -47,6 +47,9 @@ public:
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
 	info_to_explore_sys i_to_e_pipe;
+	std::size_t explore_map[6][6];
+	int map_marks[6][6];
+	std::pair<int, int> player_location;
 
 	std::vector<std::function<info_to_battle_sys(info_to_battle_sys)>>v;
 	/*

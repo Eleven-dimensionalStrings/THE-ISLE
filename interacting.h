@@ -125,7 +125,7 @@ class e_vaccant_state : public e_state
 {
 public:
 	e_vaccant_state(explore_context*);
-	void click_an_option();
+	void click_an_option(std::size_t);
 	void click_next();
 	void click_up_arrow();
 	void click_down_arrow();
@@ -135,12 +135,24 @@ public:
 
 class e_select_state : public e_state
 {
-	
+	e_select_state(explore_context*);
+	void click_an_option(std::size_t);
+	void click_next();
+	void click_up_arrow();
+	void click_down_arrow();
+	void click_left_arrow();
+	void click_right_arrow();
 };
 
 class e_multi_select_state : public e_state
 {
-	
+	e_multi_select_state(explore_context*);
+	void click_an_option(std::size_t);
+	void click_next();
+	void click_up_arrow();
+	void click_down_arrow();
+	void click_left_arrow();
+	void click_right_arrow();
 };
 
 class interacting_sys
@@ -149,5 +161,9 @@ public:
 	data_sys& data;
 	context* present_context;
 	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);
+	void move_player(int x, int y);
+	void set_map_location(int x, int y, int mark_type);
+	void reveal_map_location(int x, int y);
+	void encounter_event(std::size_t event_card_no);
 	void update();
 };

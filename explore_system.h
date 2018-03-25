@@ -5,7 +5,6 @@
 #include <string>
 #include <stack>
 
-
 namespace explore_action_type
 {
 	const int AQUIRE_HIT_POINTS = 10;
