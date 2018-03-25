@@ -2,12 +2,12 @@
 
 namespace card_No
 {
-	const int COMMON_BATTLE;
-	const int COMMON_EFFECT;
-	const int COMMON_ABILITY;
-	const int RARE_BATTLE;
-	const int RARE_EFFECT;
-	const int RARE_ABILITY;
+	const int COMMON_BATTLE=0;
+	const int COMMON_EFFECT=1;
+	const int COMMON_ABILITY=2;
+	const int RARE_BATTLE=3;
+	const int RARE_EFFECT=4;
+	const int RARE_ABILITY=5;
 }
 
 random_engine* random_engine::instantiate_engine()

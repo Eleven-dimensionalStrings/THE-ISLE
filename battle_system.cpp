@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include <sstream>
 #include "battle_system.h"
 #include "data_sys.h"
@@ -97,10 +98,10 @@ void battle_system::process()
 			{
 				if (c_deck.empty())
 				{
-					//ÐèÒªËæ»úÏ´ÅÆ
+					//ï¿½ï¿½Òªï¿½ï¿½ï¿½Ï´ï¿½ï¿½
 					c_deck = std::move(my_random_engine::xipai(std::move(c_grave)));
 				}
-				if (c_deck.size())//³é¿ÕÁË¿¨×é¾Í³é²»³ö¶«Î÷ÁË
+				if (c_deck.size())//ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½ï¿½Í³é²»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 				{
 					c_in_hand.push_back(*(c_deck.end() - 1));
@@ -132,7 +133,7 @@ void battle_system::process()
 			c_in_hand.erase(c_in_hand.begin() + temp.value);
 			break;
 		}
-		case TURN_END://»¹Òªµ÷ÓÃbuffµÄturn_end
+		case TURN_END://ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½buffï¿½ï¿½turn_end
 		{
 			vector<card>& c_in_hand = data.cards_in_hand;
 			vector<card>& c_grave = data.cards_grave;

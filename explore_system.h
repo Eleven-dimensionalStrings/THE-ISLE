@@ -38,7 +38,7 @@ namespace explore_action_type
 
 struct explore_system_action
 {
-	explore_system_action(std::size_t id, string act_name, int val)
+	explore_system_action(std::size_t id, std::string act_name, int val)
 		:action_name(act_name), action_id(id), value(val) {};
 	std::string action_name;
 	std::size_t action_id;
