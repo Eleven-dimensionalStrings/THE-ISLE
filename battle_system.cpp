@@ -3,6 +3,7 @@
 #include <sstream>
 #include "battle_system.h"
 #include "data_sys.h"
+#include "message.h"
 using namespace std;
 using std::size_t;
 using namespace battle_action_type;
@@ -20,14 +21,16 @@ void battle_system::update()
 
 bool battle_system::send_message(info_to_battle_sys input)
 {
-	battle_system::interpret_message(input);
-	//send back something afterwards
+	for (int i = static_cast<int>(input.action_set.size()) - 1; i >= 0; --i)
+	{
+		process_stack.push(input.action_set[i]);
+	}
 	return 0;
 }
 
 bool battle_system::interpret_message(info_to_battle_sys input)
 {
-	for (size_t i = input.action_set.size() - 1; i >= 0; --i)
+	for (int i = static_cast<int>(input.action_set.size()) - 1; i >= 0; --i)
 	{
 		switch (input.action_set[i].action_id)
 		{
@@ -43,7 +46,6 @@ bool battle_system::interpret_message(info_to_battle_sys input)
 			break;
 		}
 	}
-	delete &input;
 	return 0;
 }
 
@@ -99,10 +101,9 @@ void battle_system::process()
 			{
 				if (c_deck.empty())
 				{
-					//��Ҫ���ϴ��
 					c_deck = std::move(my_random_engine::xipai(std::move(c_grave)));
 				}
-				if (c_deck.size())//����˿���ͳ鲻��������
+				if (c_deck.size())
 
 				{
 					c_in_hand.push_back(*(c_deck.end() - 1));
@@ -134,7 +135,7 @@ void battle_system::process()
 			c_in_hand.erase(c_in_hand.begin() + temp.value);
 			break;
 		}
-		case TURN_END://��Ҫ����buff��turn_end
+		case TURN_END:
 		{
 			vector<card>& c_in_hand = data.cards_in_hand;
 			vector<card>& c_grave = data.cards_grave;

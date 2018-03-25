@@ -34,13 +34,15 @@ info_to_battle_sys player::on_turn_begin()
 info_to_battle_sys player::on_turn_end()
 {
 
-		for (auto i = data.cards_in_hand.begin(); i != data.cards_in_hand.end(); ++i)
+		for (auto i = data.cards_in_hand.begin(); i != data.cards_in_hand.end();)
 		{
 			if (!i->is_reserve)
 			{
 				data.cards_grave.push_back(*i);
-				data.cards_in_hand.erase(i++);
+				i = data.cards_in_hand.erase(i);
 			}
+			else
+				++i;
 		}
 		return info_to_battle_sys();
 
@@ -64,7 +66,7 @@ info_to_battle_sys game_entity::calling_action(action iaction)
 	//we have to change the original change_type to PERFORMING_ACTION.
 	result.action_set[0].action_id = battle_action_type::PERFORMING_ACTION;
 
-	return std::move(result);
+	return result;
 }
 
 info_to_battle_sys game_entity::performing_action(action iaction)
