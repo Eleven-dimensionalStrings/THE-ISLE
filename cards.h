@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <cstddef>
 #include "message.h"
+class data_sys;
 class card
 {
 public:
@@ -18,8 +19,9 @@ public:
 	std::size_t upgrade_version_id;
 	bool require_target; //true代表需要选择目标，false代表不用
 
-	info_to_battle_sys use_card();
-	info_to_battle_sys discard();
-	info_to_battle_sys remove();
-	info_to_battle_sys on_turn_end();
+	
+	info_to_battle_sys use_card(data_sys&);
+	info_to_battle_sys discard(data_sys&);
+	info_to_battle_sys remove(data_sys&);
+	info_to_battle_sys on_turn_end(data_sys&);
 };

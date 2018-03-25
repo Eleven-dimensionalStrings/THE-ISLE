@@ -1,4 +1,5 @@
 #include "cards.h"
+#include "data_sys.h"
 using namespace std;
 using std::size_t;
 
@@ -18,22 +19,23 @@ card_name(copy_card.card_name)
 }
 
 
-info_to_battle_sys card::use_card()
+info_to_battle_sys card::use_card(data_sys&d)
+{
+	//TODO
+	return info_to_battle_sys();
+}
+
+info_to_battle_sys card::discard(data_sys&)
 {
 	return info_to_battle_sys();
 }
 
-info_to_battle_sys card::discard()
+info_to_battle_sys card::remove(data_sys&)
 {
 	return info_to_battle_sys();
 }
 
-info_to_battle_sys card::remove()
-{
-	return info_to_battle_sys();
-}
-
-info_to_battle_sys card::on_turn_end()
+info_to_battle_sys card::on_turn_end(data_sys&)
 {
 	return info_to_battle_sys();
 }

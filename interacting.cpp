@@ -112,6 +112,10 @@ state::state(battle_context * b_c)
 
 }
 
+state::~state()
+{
+}
+
 data_sys & state::get_data()
 {
 	return ctx->i_s->data;
@@ -183,8 +187,8 @@ void confirm_state::click_an_enemy(size_t enemy_pos)
 		if (get_data().enemies_data[enemy_pos].is_alive())
 		{
 			target = &get_data().enemies_data[enemy_pos];
-			info_to_battle_sys temp;
-			temp.action_set = get_data().card_effect[get_data().cards_in_hand[selected_card].card_id];
+			//temp.action_set = get_data().card_effect[get_data().cards_in_hand[selected_card].card_id];
+			info_to_battle_sys temp = get_data().cards_in_hand[selected_card].use_card(get_data());
 			for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 			{
 				i->caller = &get_data().player_data;

@@ -38,6 +38,7 @@ public:
 	virtual void click_confirm() = 0;
 	virtual void click_cancel() = 0;
 	virtual void click_turn_end() = 0;
+	virtual ~state();
 	data_sys& get_data();
 	void send_to_battle_sys(info_to_battle_sys);
 	battle_context* ctx;

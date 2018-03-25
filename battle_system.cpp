@@ -131,7 +131,7 @@ void battle_system::process()
 			vector<card>& c_in_hand = data.cards_in_hand;
 			vector<card>& c_grave = data.cards_grave;
 			c_grave.push_back(c_in_hand[temp.value]);
-			send_message((c_in_hand.end() - 1)->discard());
+			send_message((c_in_hand.end() - 1)->discard(data));
 			c_in_hand.erase(c_in_hand.begin() + temp.value);
 			break;
 		}
