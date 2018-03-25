@@ -3,8 +3,13 @@
 #include "managers.h"
 #include "battle_system.h"
 #include "game_entity.h"
+#include "data_sys.h"
 using namespace std;
 using std::size_t;
+
+player::player(data_sys &d) :game_entity(d)
+{
+}
 
 void player::initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list)
 {
@@ -21,7 +26,7 @@ info_to_battle_sys player::on_turn_begin()
 }
 
 
-game_entity::game_entity()
+game_entity::game_entity(data_sys& d) :data(d)
 {
 }
 
@@ -75,12 +80,14 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 	else if (present_act.type < 50000)//添加buff
 	{
 		buff* ptr;
+		/*
+		先空着,之后写find
 		if (ptr = buff_pool.find(present_act.type))
 		{
 			*ptr += buff(present_act.type, get_buff_life(present_act.type), get_buff_level(present_act.type));
 			return info_to_battle_sys();
 		}
-		else
+		else*/
 		{
 			pair<string, size_t> t = data.get_buff(present_act.type); // pair<buff_name, priority>
 			buff temp(present_act.type, t.first, t.second, get_buff_life(present_act.type), get_buff_level(present_act.type));
@@ -90,7 +97,8 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 	}
 	else if (present_act.type < 60000)//减少/删除buff
 	{
-		buff* ptr;
+		//先空着,之后再改
+		/*buff* ptr;
 		if (ptr = buff_pool.find(present_act.type))
 		{
 			if (*ptr -= buff(present_act.type, get_buff_life(present_act.type), get_buff_level(present_act.type)))
@@ -100,17 +108,19 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 				return result;
 			}
 		}
-		else
-			return info_to_battle_sys();
+		else*/
+		return info_to_battle_sys();
 	}
 	else if (present_act.type < 60000)//buff翻倍
 	{
 		buff* ptr;
+		/*
+		也是先空着
 		if (ptr = buff_pool.find(present_act.type))
 		{
 			ptr->buff_life *= get_buff_life(present_act.type);
 			ptr->buff_level *= get_buff_level(present_act.type);
-		}
+		}*/
 		return info_to_battle_sys();
 	}
 	//其他再补充
@@ -138,7 +148,7 @@ info_to_battle_sys game_entity::on_turn_end()
 	return info_to_battle_sys();
 }
 
-enemy::enemy() :game_entity()
+enemy::enemy(data_sys&d) :game_entity(d)
 {
 }
 

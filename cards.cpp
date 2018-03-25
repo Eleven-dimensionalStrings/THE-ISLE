@@ -10,15 +10,12 @@ card::card(size_t id, size_t up_id, string name) :card_id(id), upgrade_version_i
 {
 }
 
-card::card(card& copy_card):card_id(copy_card.card_id),upgrade_version_id(copy_card.upgrade_version_id),
+card::card(const card& copy_card):is_reserve(copy_card.is_reserve) , card_id(copy_card.card_id),
+card_type(copy_card.card_type), upgrade_version_id(copy_card.upgrade_version_id),
 card_name(copy_card.card_name)
 {
 }
 
-card::card(card && move_card) : card_id(move_card.card_id), upgrade_version_id(move_card.upgrade_version_id),
-card_name(std::move(move_card.card_name))
-{
-}
 
 info_to_battle_sys card::use_card()
 {

@@ -8,8 +8,7 @@ class card
 public:
 	card();
 	card(std::size_t id, std::size_t up_id, std::string name);
-	card(card& copy_card);
-	card(card&& move_card);
+	card(const card& copy_card);
 
 	bool is_reserve;
 

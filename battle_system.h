@@ -5,7 +5,7 @@
 #include "message.h"
 #include <stack>
 #include <string>
-
+class data_sys;
 class battle_system
 {
 public:

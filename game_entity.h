@@ -5,14 +5,13 @@
 #include "cards.h"
 #include "artifacts.h"
 #include "buff.h"
-#include "data_sys.h"
-
+class data_sys;
 //the definition of base class game_entity
 
 class game_entity
 {
 public:
-	game_entity();
+	game_entity(data_sys&);
 	virtual void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list) = 0;
 	info_to_battle_sys calling_action(action);
 	info_to_battle_sys performing_action(action);
@@ -38,6 +37,7 @@ public:
 class player : public game_entity
 {
 public:
+	player(data_sys&);
 	void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list);
 	info_to_battle_sys kill()
 	{
@@ -59,7 +59,7 @@ public:
 class enemy : public game_entity
 {
 public:
-	enemy();
+	enemy(data_sys&);
 	void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list);
 	virtual info_to_battle_sys kill();
 	info_to_battle_sys on_turn_begin();

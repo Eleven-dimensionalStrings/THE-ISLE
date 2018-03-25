@@ -123,7 +123,7 @@ void vaccant_state::click_cancel()
 
 void vaccant_state::click_turn_end()
 {
-	send_to_battle_sys(info_to_battle_sys(action(battle_action_type::NEXT_TURN)));
+	send_to_battle_sys(info_to_battle_sys(action(battle_action_type::TURN_END)));
 	ctx->set_state(new lock_state(ctx));
 }
 
@@ -185,7 +185,7 @@ void confirm_state::click_confirm()
 			if (i->listener == &get_data().all_enemies)
 			{
 				auto temp_action = *i;
-				for (int j = 0; j < MAX_ENEMIES; +j)
+				for (int j = 0; j < MAX_ENEMIES; ++j)
 				{
 					if (get_data().enemies_data[j].is_alive())
 					{
@@ -208,7 +208,7 @@ void confirm_state::click_cancel()
 
 void confirm_state::click_turn_end()
 {
-	send_to_battle_sys(info_to_battle_sys(action(battle_action_type::NEXT_TURN)));
+	send_to_battle_sys(info_to_battle_sys(action(battle_action_type::TURN_END)));
 	ctx->set_state(new lock_state(ctx));
 }
 

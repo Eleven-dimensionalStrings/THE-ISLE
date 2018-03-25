@@ -1,6 +1,7 @@
-#include "battle_system.h"
 #include <iostream>
 #include <sstream>
+#include "battle_system.h"
+#include "data_sys.h"
 using namespace std;
 using std::size_t;
 using namespace battle_action_type;
@@ -41,6 +42,7 @@ bool battle_system::interpret_message(info_to_battle_sys input)
 		}
 	}
 	delete &input;
+	return 0;
 }
 
 info* battle_system::create_message()
@@ -153,6 +155,6 @@ void battle_system::process()
 
 std::vector<card> my_random_engine::xipai(std::vector<card> v)
 {
-	sort(v.begin(), v.end());
+	sort(v.begin(), v.end(), [](card& l, card& r) {return l.card_id > r.card_id; });
 	return std::move(v);
 }

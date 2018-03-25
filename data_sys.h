@@ -1,11 +1,10 @@
 #pragma once
-#include "artifacts.h"
-#include "cards.h"
 #include <vector> 
 #include <map>
 #include <functional>
-class enemy;
-class player;
+#include "artifacts.h"
+#include "cards.h"
+#include "game_entity.h"
 /*class battle_sys_data
 {
 public:
