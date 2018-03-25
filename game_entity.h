@@ -39,17 +39,9 @@ class player : public game_entity
 public:
 	player(data_sys&);
 	void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list);
-	info_to_battle_sys kill()
-	{
-		// TODO
-		return info_to_battle_sys();
-	}
+	info_to_battle_sys kill();
 	info_to_battle_sys on_turn_begin();
-	info_to_battle_sys on_turn_end()
-	{
-		// TODO
-		return info_to_battle_sys();
-	}
+	info_to_battle_sys on_turn_end();
 };
 
 

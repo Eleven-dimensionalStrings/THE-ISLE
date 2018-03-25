@@ -151,7 +151,6 @@ void battle_system::process()
 		default:
 			break;
 		}
-		process_stack.pop();
 	}
 }
 

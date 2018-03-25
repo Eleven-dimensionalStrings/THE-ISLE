@@ -3,12 +3,12 @@
 #include <cstddef>
 #include "message.h"
 
-inline unsigned int get_buff_life(std::size_t value)
+inline std::size_t get_buff_life(std::size_t value)
 {
 	return value >> 16;
 }
 
-inline unsigned int get_buff_level(std::size_t value)
+inline std::size_t get_buff_level(std::size_t value)
 {
 	return value &((1 << 16) - 1);
 }

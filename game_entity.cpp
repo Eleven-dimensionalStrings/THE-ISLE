@@ -16,17 +16,39 @@ void player::initiate(std::vector<card>&card_pool, std::vector<artifact>&artifac
 
 }
 
+info_to_battle_sys player::kill()
+{
+	return info_to_battle_sys();
+}
+
 info_to_battle_sys player::on_turn_begin()
 {
 	for (auto &i : data.cards_in_hand)
 	{
 		i.is_reserve = 0;
 	}
+	for (int i = 0; i < 2; ++i)data.draw_a_card();
 	return info_to_battle_sys();
 }
 
+info_to_battle_sys player::on_turn_end()
+{
 
-game_entity::game_entity(data_sys& d) :data(d)
+		for (auto i = data.cards_in_hand.begin(); i != data.cards_in_hand.end(); ++i)
+		{
+			if (!i->is_reserve)
+			{
+				data.cards_grave.push_back(*i);
+				data.cards_in_hand.erase(i++);
+			}
+		}
+		return info_to_battle_sys();
+
+}
+
+
+game_entity::game_entity(data_sys& d) :data(d), living_state(1),
+max_hp(100), current_hp(100), max_ap(1), current_ap(1)
 {
 }
 
@@ -59,23 +81,23 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 	result.action_set.erase(result.action_set.begin());
 	if (present_act.type < 10000)//造成伤害
 	{
-		current_hp -= present_act.value;
+		current_hp -= static_cast<int>(present_act.value);
 		if (current_hp <= 0)
 			return this->kill();
 	}
 	else if (present_act.type < 20000)//增加生命值
 	{
-		current_hp += present_act.value;
+		current_hp += static_cast<int>(present_act.value);
 		if (current_hp > max_hp)
 			current_hp = max_hp;
 	}
 	else if (present_act.type < 30000)//减少行动力
 	{
-		current_ap -= present_act.value;
+		current_ap -= static_cast<int>(present_act.value);
 	}
 	else if (present_act.type < 40000)//增加行动力
 	{
-		current_ap += present_act.value;
+		current_ap += static_cast<int>(present_act.value);
 	}
 	else if (present_act.type < 50000)//添加buff
 	{
@@ -135,7 +157,7 @@ info_to_battle_sys game_entity::kill()
 
 bool game_entity::is_alive()
 {
-	return false;
+	return living_state;
 }
 
 info_to_battle_sys game_entity::on_turn_begin()

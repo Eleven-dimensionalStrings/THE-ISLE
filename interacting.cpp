@@ -63,7 +63,7 @@ void battle_context::test_read()
 	cur_state->click_confirm();
 }
 
-interacting_sys::interacting_sys(data_sys & d) :data(d), 
+interacting_sys::interacting_sys(data_sys & d) :data(d),
 present_context(new battle_context(this))
 {
 }
@@ -82,7 +82,11 @@ info_to_battle_sys interacting_sys::play_a_card(std::size_t card_pos, game_entit
 {
 	info_to_battle_sys result(action(battle_action_type::USE_A_CARD, &data.player_data, target,
 		data.cards_in_hand[card_pos].card_type, card_pos));
-	result.append(data.cards_in_hand[card_pos].use_card());
+	auto ef = data.card_effect.find(data.cards_in_hand[card_pos].card_id)->second;
+	for (auto& i : ef)
+		result.append(info_to_battle_sys(i));
+	for (auto& i : result.action_set)
+		i.caller = &data.player_data;
 	return result;
 }
 
@@ -183,9 +187,10 @@ void confirm_state::click_an_enemy(size_t enemy_pos)
 			temp.action_set = get_data().card_effect[get_data().cards_in_hand[selected_card].card_id];
 			for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 			{
+				i->caller = &get_data().player_data;
 				if (i->listener == &get_data().select_one_enemy)
 				{
-					i->listener = &get_data().enemies_data[enemy_pos];
+					i->listener = target;
 				}
 			}
 			send_to_battle_sys(temp);
