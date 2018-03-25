@@ -22,6 +22,7 @@ bool battle_system::send_message(info_to_battle_sys input)
 {
 	battle_system::interpret_message(input);
 	//send back something afterwards
+	return 0;
 }
 
 bool battle_system::interpret_message(info_to_battle_sys input)
@@ -48,7 +49,7 @@ bool battle_system::interpret_message(info_to_battle_sys input)
 
 info* battle_system::create_message()
 {
-
+	return nullptr;
 }
 
 void battle_system::process()

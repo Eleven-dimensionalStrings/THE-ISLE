@@ -10,6 +10,9 @@ int main()
 	battle_system b(d);
 	interacting_sys i(d);
 	t_draw_sys dr(d);
+
+	//½øÈëÕ½¶·
+	
 	while (1)
 	{
 		i.update();

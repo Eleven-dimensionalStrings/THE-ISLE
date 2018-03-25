@@ -56,19 +56,10 @@
     <ClInclude Include="message.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="managers.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="event_cards.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="game_entity.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="data_sys.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="artifacts.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="interacting.h">

@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "message.h"
 #include "data_sys.h"
 class state;
@@ -8,7 +9,7 @@ class context
 {
 public:
 	context(interacting_sys*);
-	virtual void set_state() = 0;
+	virtual void set_state(state*) = 0;
 	virtual void read_input() = 0;
 	interacting_sys* i_s;
 };
@@ -19,9 +20,11 @@ public:
 	battle_context(interacting_sys*);
 	battle_context(interacting_sys*, state*);
 	~battle_context();
-	void set_state(state*);
-	void read_input();
+	void set_state(state*)override;
+	void read_input()override;
 	void change_to_select_state(info_battle_to_interacting);
+	data_sys& get_data();
+	void test_read();
 private:
 	state *cur_state;
 };
@@ -94,7 +97,7 @@ public:
 	void click_turn_end();
 };
 
-class interacting_sys :public message_listener
+class interacting_sys
 {
 public:
 	interacting_sys(data_sys& d);

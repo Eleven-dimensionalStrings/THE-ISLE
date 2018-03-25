@@ -1,6 +1,6 @@
 #pragma once
 #include "message.h"
-#include "managers.h"
+//#include "managers.h"
 
 class artifact
 {

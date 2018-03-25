@@ -34,6 +34,8 @@ void battle_context::set_state(state * pstate)
 
 void battle_context::read_input()
 {
+	//²âÊÔ
+	test_read();
 }
 
 void battle_context::change_to_select_state(info_battle_to_interacting t)
@@ -41,7 +43,28 @@ void battle_context::change_to_select_state(info_battle_to_interacting t)
 	set_state(new select_state(this, t.num, t.type, t.is_m));
 }
 
-interacting_sys::interacting_sys(data_sys & d) :data(d), present_context(nullptr)
+data_sys & battle_context::get_data()
+{
+	return i_s->data;
+}
+
+void battle_context::test_read()
+{
+	size_t card_pos, target_pos;
+	cin >> card_pos;
+	delete cur_state;
+	cur_state = new confirm_state(this, card_pos);
+	if (get_data().cards_in_hand[card_pos].require_target)
+	{
+		cin >> target_pos;
+		cur_state->click_an_enemy(target_pos);
+		return;
+	}
+	cur_state->click_confirm();
+}
+
+interacting_sys::interacting_sys(data_sys & d) :data(d), 
+present_context(new battle_context(this))
 {
 }
 
