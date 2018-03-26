@@ -8,7 +8,7 @@ class card
 {
 public:
 	card();
-	card(std::size_t id, std::size_t up_id, std::string name);
+	card(std::size_t id, std::size_t up_id, std::string name,bool r_target);
 	card(const card& copy_card);
 	card& operator=(const card& copy_card);
 

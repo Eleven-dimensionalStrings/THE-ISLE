@@ -15,6 +15,9 @@ namespace battle_action_type
 	const std::size_t PERFORMING_ACTION = 2;
 	const std::size_t KILL = 5;
 	const std::size_t UPGRADE_CARD = 6;
+	const std::size_t ADD_BUFF = 11;
+	const std::size_t REMOVE_BUFF = 12;
+	const std::size_t MULTIPLY_BUFF = 13;
 	const std::size_t USE_A_CARD = 2333;//action中type为卡片类型,value为手牌中的第几张卡
 	//在下面八个action中,type直接表示是否强制选满那么多张卡
 	//下面是使用卡片时得到的action
@@ -42,11 +45,12 @@ namespace type_type
 	const std::size_t ADD_AP = 20000;
 	const std::size_t ADD_HP = 20001;
 	const std::size_t HEALING = 20002;
-	const std::size_t ADD_BUFF = 11;
-	const std::size_t REMOVE_BUFF = 12;
-	const std::size_t MULTIPLY_BUFF = 13;
 }
 
+namespace buff_type
+{
+	const std::size_t STRENGTH = 0;
+}
 class game_entity;
 
 class action

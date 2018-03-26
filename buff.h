@@ -13,6 +13,11 @@ inline std::size_t get_buff_level(std::size_t value)
 	return value &((1 << 16) - 1);
 }
 
+inline std::size_t mix_value(std::size_t life, std::size_t level)
+{
+	return (life << 16) + level;
+}
+
 namespace BUFF_PRIORITY
 {
 	const std::size_t PRIORITY_LEVEL_1 = 1;
@@ -26,7 +31,7 @@ class buff
 {
 public:
 	buff(std::size_t, std::size_t, std::size_t);
-	buff(std::size_t, std::string, std::size_t, std::size_t, std::size_t);
+	buff(std::size_t id, std::string name, std::size_t priority, std::size_t life, std::size_t level);
 	std::size_t buff_id;
 	std::string buff_name;
 	std::size_t buff_priority;
@@ -45,7 +50,7 @@ public:
 	info_to_battle_sys on_performing(info_to_battle_sys);
 	void operator--();
 	void operator--(int);
-	void operator+=(buff& t);
+	void operator+=(buff t);
 	//返回1表示应该清除该buff
 	bool operator-=(buff& t);
 };

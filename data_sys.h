@@ -27,7 +27,6 @@ public:
 
 
 	//保存buff的优先度和名字,根据下标(buff_id)访问
-	std::vector<std::pair<std::string, std::size_t>> buff_data;
 	//保存卡片的效果，根据键值（card_id）访问
 	std::map<std::size_t, std::vector<action>> card_effect;
 	std::vector<card> cards_pool;//永久牌库

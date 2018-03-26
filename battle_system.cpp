@@ -113,7 +113,24 @@ void battle_system::process()
 			}
 			break;
 		}
-
+		case ADD_BUFF://11,还有12/13在game_entity中需要移动过来
+		{
+			auto it = data.player_data.buff_pool.end();
+			//先空着,之后写find
+			if ((it = data.player_data.find_buff(temp.type)) != data.player_data.buff_pool.end())
+			{
+				*it += buff(temp.type, get_buff_life(temp.value), get_buff_level(temp.value));
+				break;
+			}
+			else
+			{
+				pair<string, size_t> t = data.get_buff(temp.type); // pair<buff_name, priority>
+				buff tbuff(temp.type, t.first, t.second, get_buff_life(temp.value), get_buff_level(temp.value));
+				data.player_data.buff_pool.push_back(tbuff);
+				send_message(tbuff.on_create(temp.caller, temp.listener));
+			}
+			break;
+		}
 		case P_KEEP_A_CARD:
 		{
 			data.cards_in_hand[temp.value].is_reserve = 1;

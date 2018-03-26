@@ -16,12 +16,14 @@ int main()
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
-
-	for (int i = 0; i < 10; ++i)
-		d.cards_pool.push_back(card(0, 0, "打10"));
+	card c(1, 1, "加100力量", 0);
+	cout << c.require_target << endl;
+	d.cards_pool.push_back(card(0, 0, "打10", 1));
+	d.cards_pool.push_back(card(1, 1, "加100力量", false));
 	d.cards_deck = d.cards_pool;
 	while (1)
 	{
+
 		d.player_data.on_turn_begin();
 		dr.draw();
 		i.update();

@@ -20,6 +20,7 @@ public:
 	bool is_alive();
 	virtual info_to_battle_sys on_turn_begin() = 0;
 	virtual info_to_battle_sys on_turn_end() = 0;
+	std::vector<buff>::iterator find_buff(std::size_t id);
 
 	data_sys& data;
 	bool living_state; //实体的存活状态，实体无论存活状态如何都会占据原先的位置

@@ -11,7 +11,7 @@ void buff::operator--(int)
 	--buff_life;
 }
 
-void buff::operator+=(buff & t)
+void buff::operator+=(buff t)
 {
 	buff_life += t.buff_life;
 	buff_level += t.buff_level;
@@ -62,9 +62,24 @@ info_to_battle_sys buff::on_turn_end()
 	return info_to_battle_sys();
 }
 
-info_to_battle_sys buff::on_calling(info_to_battle_sys)
+info_to_battle_sys buff::on_calling(info_to_battle_sys t)
 {
-	return info_to_battle_sys();
+	switch (buff_id)
+	{
+		//≤‚ ‘
+	case buff_type::STRENGTH: 
+	{
+		for (auto& i : t.action_set)
+		{
+			if (i.action_id==battle_action_type::CALLING_ACTION &&(i.type == type_type::NORMAL && i.type == type_type::FLAME && i.type == type_type::FREEZING
+				&& i.type == type_type::INDEPENDENT && i.type == type_type::PIERCE))
+				i.value += buff_level;
+		}
+	}
+	default:
+		break;
+	}
+	return t;
 }
 
 info_to_battle_sys buff::on_performing(info_to_battle_sys)
