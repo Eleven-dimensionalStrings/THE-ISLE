@@ -82,6 +82,7 @@ class info_to_battle_sys : public info
 public:
 	info_to_battle_sys();
 	info_to_battle_sys(action);
+	info_to_battle_sys(std::vector<action>);
 	void append(info_to_battle_sys);
 	std::vector<action> action_set;
 };

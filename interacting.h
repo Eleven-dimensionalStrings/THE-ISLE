@@ -9,6 +9,7 @@ class context
 {
 public:
 	context(interacting_sys*);
+	virtual ~context();
 	virtual void set_state(state*) = 0;
 	virtual void read_input() = 0;
 	interacting_sys* i_s;
@@ -19,7 +20,7 @@ class battle_context : public context
 public:
 	battle_context(interacting_sys*);
 	battle_context(interacting_sys*, state*);
-	~battle_context();
+	virtual ~battle_context();
 	void set_state(state*)override;
 	void read_input()override;
 	void change_to_select_state(info_battle_to_interacting);
@@ -106,6 +107,6 @@ public:
 	context* present_context;
 	bool send_message();
 	bool interpret_message();
-	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);
+	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);//没用的,出牌操作在context中完成
 	void update();
 };

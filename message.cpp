@@ -10,6 +10,10 @@ info_to_battle_sys::info_to_battle_sys(action ichange)
 	action_set.push_back(ichange);
 }
 
+info_to_battle_sys::info_to_battle_sys(vector<action> ichange) :action_set(std::move(ichange))
+{
+}
+
 void info_to_battle_sys::append(info_to_battle_sys t)
 {
 	for (auto &i : t.action_set)

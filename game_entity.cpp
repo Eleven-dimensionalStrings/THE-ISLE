@@ -11,6 +11,11 @@ player::player(data_sys &d) :game_entity(d)
 {
 }
 
+player::~player()
+{
+	//TODO
+}
+
 void player::initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list)
 {
 
@@ -51,6 +56,10 @@ info_to_battle_sys player::on_turn_end()
 
 game_entity::game_entity(data_sys& d) :data(d), living_state(1),
 max_hp(100), current_hp(100), max_ap(1), current_ap(1)
+{
+}
+
+game_entity::~game_entity()
 {
 }
 
@@ -148,7 +157,7 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 		return info_to_battle_sys();
 	}
 	//∆‰À˚‘Ÿ≤π≥‰
-	return std::move(result);
+	return result;
 
 }
 
@@ -159,6 +168,8 @@ info_to_battle_sys game_entity::kill()
 
 bool game_entity::is_alive()
 {
+	if (current_hp <= 0)
+		living_state = 0;
 	return living_state;
 }
 
@@ -174,6 +185,11 @@ info_to_battle_sys game_entity::on_turn_end()
 
 enemy::enemy(data_sys&d) :game_entity(d)
 {
+}
+
+enemy::~enemy()
+{
+	//TODO
 }
 
 void enemy::initiate(std::vector<card>& card_pool, std::vector<artifact>& artifact_list)

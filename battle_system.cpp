@@ -16,6 +16,7 @@ void battle_system::update()
 	{
 		process_stack.push(*i);
 	}
+	data.i_to_b_pipe.action_set.clear();
 	this->process();
 }
 
@@ -101,7 +102,7 @@ void battle_system::process()
 			{
 				if (c_deck.empty())
 				{
-					c_deck = std::move(my_random_engine::xipai(std::move(c_grave)));
+					c_deck = my_random_engine::xipai(std::move(c_grave));
 				}
 				if (c_deck.size())
 
@@ -158,5 +159,5 @@ void battle_system::process()
 std::vector<card> my_random_engine::xipai(std::vector<card> v)
 {
 	sort(v.begin(), v.end(), [](card& l, card& r) {return l.card_id > r.card_id; });
-	return std::move(v);
+	return v;
 }

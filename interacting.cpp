@@ -9,6 +9,10 @@ context::context(interacting_sys * i_s)
 
 }
 
+context::~context()
+{
+}
+
 battle_context::battle_context(interacting_sys* i_s)
 	: context(i_s), cur_state(new vaccant_state(this))
 {
@@ -187,7 +191,6 @@ void confirm_state::click_an_enemy(size_t enemy_pos)
 		if (get_data().enemies_data[enemy_pos].is_alive())
 		{
 			target = &get_data().enemies_data[enemy_pos];
-			//temp.action_set = get_data().card_effect[get_data().cards_in_hand[selected_card].card_id];
 			info_to_battle_sys temp = get_data().cards_in_hand[selected_card].use_card(get_data());
 			for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 			{
@@ -217,7 +220,7 @@ void confirm_state::click_confirm()
 			if (i->listener == &get_data().all_enemies)
 			{
 				auto temp_action = *i;
-				for (int j = 0; j < MAX_ENEMIES; ++j)
+				for (size_t j = 0; j < MAX_ENEMIES; ++j)
 				{
 					if (get_data().enemies_data[j].is_alive())
 					{
@@ -275,7 +278,7 @@ void lock_state::click_turn_end()
 }
 
 select_state::select_state(battle_context * b_c, size_t num, size_t ttype, bool mdy)
-	:state(b_c), max(num), type(ttype), is_mandatory(mdy)
+	:state(b_c), type(ttype), max(num), is_mandatory(mdy)
 {
 }
 

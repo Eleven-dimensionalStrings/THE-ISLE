@@ -18,7 +18,7 @@ int main()
 	d.enemies_data.push_back(enemy(d));
 
 	for (int i = 0; i < 10; ++i)
-		d.cards_pool.push_back(card(0, 0, "´ò1"));
+		d.cards_pool.push_back(card(0, 0, "´ò10"));
 	d.cards_deck = d.cards_pool;
 	while (1)
 	{

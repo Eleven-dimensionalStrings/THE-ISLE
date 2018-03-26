@@ -12,6 +12,7 @@ class game_entity
 {
 public:
 	game_entity(data_sys&);
+	virtual ~game_entity();
 	virtual void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list) = 0;
 	info_to_battle_sys calling_action(action);
 	info_to_battle_sys performing_action(action);
@@ -38,10 +39,11 @@ class player : public game_entity
 {
 public:
 	player(data_sys&);
-	void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list);
-	info_to_battle_sys kill();
-	info_to_battle_sys on_turn_begin();
-	info_to_battle_sys on_turn_end();
+	virtual ~player();
+	void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list)override;
+	info_to_battle_sys kill()override;
+	info_to_battle_sys on_turn_begin()override;
+	info_to_battle_sys on_turn_end()override;
 };
 
 
@@ -52,8 +54,9 @@ class enemy : public game_entity
 {
 public:
 	enemy(data_sys&);
-	void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list);
-	virtual info_to_battle_sys kill();
-	info_to_battle_sys on_turn_begin();
-	info_to_battle_sys on_turn_end();
+	virtual ~enemy();
+	void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list)override;
+	virtual info_to_battle_sys kill()override;
+	info_to_battle_sys on_turn_begin()override;
+	info_to_battle_sys on_turn_end()override;
 };

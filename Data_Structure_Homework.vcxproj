@@ -114,6 +114,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="artifacts.cpp" />
     <ClCompile Include="battle_system.cpp" />
     <ClCompile Include="buff.cpp" />
     <ClCompile Include="cards.cpp" />
@@ -125,6 +126,7 @@
     <ClCompile Include="t_draw_sys.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="artifacts.h" />
     <ClInclude Include="battle_system.h" />
     <ClInclude Include="buff.h" />
     <ClInclude Include="cards.h" />

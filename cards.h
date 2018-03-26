@@ -10,6 +10,7 @@ public:
 	card();
 	card(std::size_t id, std::size_t up_id, std::string name);
 	card(const card& copy_card);
+	card& operator=(const card& copy_card);
 
 	bool is_reserve;
 
