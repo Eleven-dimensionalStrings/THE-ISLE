@@ -34,7 +34,7 @@ card & card::operator=(const card & c)
 
 info_to_battle_sys card::use_card(data_sys&d)
 {
-	return info_to_battle_sys(d.card_effect.find(card_id)->second);
+	return d.card_effect(card_id);
 }
 
 info_to_battle_sys card::discard(data_sys&)

@@ -56,8 +56,7 @@ void battle_context::test_read()
 {
 	size_t card_pos, target_pos;
 	cin >> card_pos;
-	delete cur_state;
-	cur_state = new confirm_state(this, card_pos);
+	set_state(new confirm_state(this, card_pos));
 	if (get_data().cards_in_hand[card_pos].require_target)
 	{
 		cin >> target_pos;
@@ -86,9 +85,8 @@ info_to_battle_sys interacting_sys::play_a_card(std::size_t card_pos, game_entit
 {
 	info_to_battle_sys result(action(battle_action_type::USE_A_CARD, &data.player_data, target,
 		data.cards_in_hand[card_pos].card_type, card_pos));
-	auto ef = data.card_effect.find(data.cards_in_hand[card_pos].card_id)->second;
-	for (auto& i : ef)
-		result.append(info_to_battle_sys(i));
+	auto ef = data.card_effect(data.cards_in_hand[card_pos].card_id);
+	result.append(ef);
 	for (auto& i : result.action_set)
 		i.caller = &data.player_data;
 	return result;
@@ -201,6 +199,7 @@ void confirm_state::click_an_enemy(size_t enemy_pos)
 				}
 			}
 			send_to_battle_sys(temp);
+			ctx->set_state(new vaccant_state(ctx));
 		}
 		else
 		{
@@ -213,8 +212,7 @@ void confirm_state::click_confirm()
 {
 	if (!require_target)
 	{
-		info_to_battle_sys temp;
-		temp.action_set = get_data().card_effect[get_data().cards_in_hand[selected_card].card_id];
+		info_to_battle_sys temp(get_data().card_effect(get_data().cards_in_hand[selected_card].card_id));
 		for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 		{
 			if (i->listener == &get_data().all_enemies)
@@ -229,7 +227,7 @@ void confirm_state::click_confirm()
 						++i;
 					}
 				}
-				temp.action_set.erase(i++);
+				temp.action_set.erase(i);
 			}
 		}
 		send_to_battle_sys(temp);

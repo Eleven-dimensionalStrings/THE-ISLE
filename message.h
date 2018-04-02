@@ -50,7 +50,26 @@ namespace type_type
 namespace buff_type
 {
 	const std::size_t STRENGTH = 0;
+	const std::size_t VULNERABLE = 1;//易伤
+	const std::size_t POISON = 2;//易伤
 }
+
+namespace window_unit_size
+{
+	using cstszt = const std::size_t;
+	cstszt window_width = 1200;
+	cstszt window_height = 720;
+	//手牌区域
+	cstszt card_in_hand_up = 500;
+	cstszt card_in_hand_down = 720;
+	cstszt card_in_hand_left = 0;
+	cstszt card_in_hand_right = 900;
+	cstszt card_width = 100;//每张牌的宽度
+	cstszt card_up = 510;//牌的位置
+	cstszt card_down = 710;
+	cstszt card_closure = 10;
+}
+
 class game_entity;
 
 class action

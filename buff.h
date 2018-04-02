@@ -13,7 +13,7 @@ inline std::size_t get_buff_level(std::size_t value)
 	return value &((1 << 16) - 1);
 }
 
-inline std::size_t mix_value(std::size_t life, std::size_t level)
+inline std::size_t fix_buff_value(std::size_t life, std::size_t level)
 {
 	return (life << 16) + level;
 }
@@ -44,8 +44,8 @@ public:
 	info_to_battle_sys on_create(game_entity*, game_entity*); //两个参数依次是创建buff的对象，被创建buff的对象
 	info_to_battle_sys on_delete(game_entity*, game_entity*);
 	info_to_battle_sys on_kill();//所在角色死亡时调用
-	info_to_battle_sys on_turn_begin();
-	info_to_battle_sys on_turn_end();
+	info_to_battle_sys on_turn_begin(game_entity*);
+	info_to_battle_sys on_turn_end(game_entity*);
 	info_to_battle_sys on_calling(info_to_battle_sys);
 	info_to_battle_sys on_performing(info_to_battle_sys);
 	void operator--();

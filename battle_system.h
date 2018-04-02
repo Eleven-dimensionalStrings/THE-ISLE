@@ -11,10 +11,7 @@ class battle_system
 public:
 	battle_system(data_sys& d);
 	void update();
-	bool send_message(info_to_battle_sys);//已经没用了
-protected:
-	info * create_message();//似乎也没用了
-	bool interpret_message(info_to_battle_sys);//也已经没用了
+	void send_message(info_to_battle_sys);
 private:
 	data_sys & data;
 	std::stack<action> process_stack;

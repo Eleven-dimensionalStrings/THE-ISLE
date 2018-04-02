@@ -28,7 +28,7 @@ public:
 
 	//保存buff的优先度和名字,根据下标(buff_id)访问
 	//保存卡片的效果，根据键值（card_id）访问
-	std::map<std::size_t, std::vector<action>> card_effect;
+	info_to_battle_sys card_effect(std::size_t card_id);
 	std::vector<card> cards_pool;//永久牌库
 	std::vector<artifact> artifacts;//宝物
 	player player_data;

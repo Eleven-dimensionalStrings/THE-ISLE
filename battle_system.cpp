@@ -1,6 +1,8 @@
 #include <iostream>
 #include <algorithm>
 #include <sstream>
+#include <random>
+#include <ctime>
 #include "battle_system.h"
 #include "data_sys.h"
 #include "message.h"
@@ -20,39 +22,12 @@ void battle_system::update()
 	this->process();
 }
 
-bool battle_system::send_message(info_to_battle_sys input)
+void battle_system::send_message(info_to_battle_sys input)
 {
-	for (int i = static_cast<int>(input.action_set.size()) - 1; i >= 0; --i)
+	for (auto i = input.action_set.rbegin(); i != input.action_set.rend(); ++i)
 	{
-		process_stack.push(input.action_set[i]);
+		process_stack.push(*i);
 	}
-	return 0;
-}
-
-bool battle_system::interpret_message(info_to_battle_sys input)
-{
-	for (int i = static_cast<int>(input.action_set.size()) - 1; i >= 0; --i)
-	{
-		switch (input.action_set[i].action_id)
-		{
-		case battle_action_type::CALLING_ACTION:
-		{
-			break;
-		}
-		case battle_action_type::PERFORMING_ACTION:
-		{
-			break;
-		}
-		default:
-			break;
-		}
-	}
-	return 0;
-}
-
-info* battle_system::create_message()
-{
-	return nullptr;
 }
 
 void battle_system::process()
@@ -115,9 +90,10 @@ void battle_system::process()
 		}
 		case ADD_BUFF://11,还有12/13在game_entity中需要移动过来
 		{
-			auto it = data.player_data.buff_pool.end();
+
+			auto it = temp.listener->buff_pool.end();
 			//先空着,之后写find
-			if ((it = data.player_data.find_buff(temp.type)) != data.player_data.buff_pool.end())
+			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
 			{
 				*it += buff(temp.type, get_buff_life(temp.value), get_buff_level(temp.value));
 				break;
@@ -126,7 +102,7 @@ void battle_system::process()
 			{
 				pair<string, size_t> t = data.get_buff(temp.type); // pair<buff_name, priority>
 				buff tbuff(temp.type, t.first, t.second, get_buff_life(temp.value), get_buff_level(temp.value));
-				data.player_data.buff_pool.push_back(tbuff);
+				temp.listener->buff_pool.push_back(tbuff);
 				send_message(tbuff.on_create(temp.caller, temp.listener));
 			}
 			break;
@@ -175,6 +151,13 @@ void battle_system::process()
 
 std::vector<card> my_random_engine::xipai(std::vector<card> v)
 {
-	sort(v.begin(), v.end(), [](card& l, card& r) {return l.card_id > r.card_id; });
-	return v;
+	vector<card>vv;
+	default_random_engine e(static_cast<unsigned>(time(0)));
+	while (!v.empty())
+	{
+		uniform_int_distribution<int> ran(static_cast<int>(v.size() - 1));
+		vv.push_back(*(v.begin() + ran(e)));
+		v.erase(v.begin() + ran(e));
+	}
+	return vv;
 }

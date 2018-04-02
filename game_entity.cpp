@@ -33,7 +33,12 @@ info_to_battle_sys player::on_turn_begin()
 		i.is_reserve = 0;
 	}
 	for (int i = 0; i < 2; ++i)data.draw_a_card();
-	return info_to_battle_sys();
+	info_to_battle_sys t;
+	for (auto& i : buff_pool)
+	{
+		t.append(i.on_turn_begin(this));
+	}
+	return t;
 }
 
 info_to_battle_sys player::on_turn_end()
@@ -49,7 +54,17 @@ info_to_battle_sys player::on_turn_end()
 		else
 			++i;
 	}
-	return info_to_battle_sys();
+
+	info_to_battle_sys t;
+	for (auto& i : buff_pool)
+	{
+		t.append(i.on_turn_end(this));
+	}
+	for (auto& i : data.enemies_data)
+	{
+		t.append(i.on_turn_begin());
+	}
+	return t;
 
 }
 
@@ -83,7 +98,7 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 	info_to_battle_sys result(iaction);
 	for (auto i : buff_pool)
 	{
-		result = i.on_calling(result);
+		result = i.on_performing(result);
 	}
 
 	//now that the potentially triggered changes are added,
@@ -156,16 +171,6 @@ bool game_entity::is_alive()
 	return living_state;
 }
 
-info_to_battle_sys game_entity::on_turn_begin()
-{
-	return info_to_battle_sys();
-}
-
-info_to_battle_sys game_entity::on_turn_end()
-{
-	return info_to_battle_sys();
-}
-
 vector<buff>::iterator game_entity::find_buff(std::size_t id)
 {
 	for (auto i = buff_pool.begin(); i != buff_pool.end(); ++i)
@@ -196,7 +201,12 @@ info_to_battle_sys enemy::kill()
 
 info_to_battle_sys enemy::on_turn_begin()
 {
-	return info_to_battle_sys();
+	info_to_battle_sys t;
+	for (auto& i : buff_pool)
+	{
+		t.append(i.on_turn_begin(this));
+	}
+	return t;
 }
 
 info_to_battle_sys enemy::on_turn_end()

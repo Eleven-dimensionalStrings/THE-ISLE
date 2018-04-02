@@ -9,26 +9,36 @@ int main()
 	data_sys d;
 	battle_system b(d);
 	interacting_sys i(d);
-	t_draw_sys dr(d);
+	IMAGE buffer(window_unit_size::window_width, window_unit_size::window_height);
+	t_draw_sys dr(d, buffer);
 
-	//进入战斗
+
+	/*easyx
+	initgraph(window_unit_size::window_width, window_unit_size::window_height);
+	setbkcolor(WHITE);
+	cleardevice();*/
+	
+
+
 	d.enemies_data.push_back(enemy(d));
-	d.enemies_data.push_back(enemy(d));
-	d.enemies_data.push_back(enemy(d));
-	d.enemies_data.push_back(enemy(d));
-	card c(1, 1, "加100力量", 0);
-	cout << c.require_target << endl;
+	//d.enemies_data.push_back(enemy(d));
+	//d.enemies_data.push_back(enemy(d));
+	//d.enemies_data.push_back(enemy(d));
 	d.cards_pool.push_back(card(0, 0, "打10", 1));
-	d.cards_pool.push_back(card(1, 1, "加100力量", false));
+	d.cards_pool.push_back(card(1, 1, "加100力量", 0));
+	d.cards_pool.push_back(card(2, 2, "加100易伤", 1));
+	d.cards_pool.push_back(card(3, 3, "加100毒", 1));
 	d.cards_deck = d.cards_pool;
+	//进入战斗
 	while (1)
 	{
 
-		d.player_data.on_turn_begin();
+		b.send_message(d.player_data.on_turn_begin());
 		dr.draw();
 		i.update();
 		b.update();
-		d.player_data.on_turn_end();
+		b.send_message(d.player_data.on_turn_end());
+		b.update();
 	}
 	return 0;
 }

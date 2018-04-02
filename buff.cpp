@@ -52,12 +52,26 @@ info_to_battle_sys buff::on_kill()
 	return info_to_battle_sys();
 }
 
-info_to_battle_sys buff::on_turn_begin()
+info_to_battle_sys buff::on_turn_begin(game_entity*p)
 {
-	return info_to_battle_sys();
+	info_to_battle_sys result;
+	switch (buff_id)
+	{
+	case buff_type::POISON:
+	{
+		if (buff_life == 0)
+			break;
+		result.append(action(battle_action_type::PERFORMING_ACTION, p, p, type_type::POISON, buff_level));
+		--buff_level;
+		--buff_life;
+	}
+	default:
+		break;
+	}
+	return result;
 }
 
-info_to_battle_sys buff::on_turn_end()
+info_to_battle_sys buff::on_turn_end(game_entity*)
 {
 	return info_to_battle_sys();
 }
@@ -67,14 +81,15 @@ info_to_battle_sys buff::on_calling(info_to_battle_sys t)
 	switch (buff_id)
 	{
 		//≤‚ ‘
-	case buff_type::STRENGTH: 
+	case buff_type::STRENGTH:
 	{
 		for (auto& i : t.action_set)
 		{
-			if (i.action_id==battle_action_type::CALLING_ACTION &&(i.type == type_type::NORMAL && i.type == type_type::FLAME && i.type == type_type::FREEZING
-				&& i.type == type_type::INDEPENDENT && i.type == type_type::PIERCE))
+			if (i.action_id == battle_action_type::CALLING_ACTION && (i.type == type_type::NORMAL || i.type == type_type::FLAME || i.type == type_type::FREEZING
+				|| i.type == type_type::INDEPENDENT || i.type == type_type::PIERCE))
 				i.value += buff_level;
 		}
+		break;
 	}
 	default:
 		break;
@@ -82,7 +97,22 @@ info_to_battle_sys buff::on_calling(info_to_battle_sys t)
 	return t;
 }
 
-info_to_battle_sys buff::on_performing(info_to_battle_sys)
+info_to_battle_sys buff::on_performing(info_to_battle_sys t)
 {
-	return info_to_battle_sys();
+	switch (buff_id)
+	{
+	case buff_type::VULNERABLE:
+	{
+		for (auto& i : t.action_set)
+		{
+			if (i.action_id == battle_action_type::PERFORMING_ACTION && (i.type == type_type::NORMAL || i.type == type_type::FLAME || i.type == type_type::FREEZING
+				|| i.type == type_type::INDEPENDENT || i.type == type_type::PIERCE))
+				i.value += buff_level;
+		}
+		break;
+	}
+	default:
+		break;
+	}
+	return t;
 }

@@ -3,10 +3,7 @@ using namespace std;
 
 data_sys::data_sys() :player_data(*this), all_enemies(*this), random_enemy(*this), select_one_enemy(*this)
 {
-	card_effect.insert(pair < size_t, vector<action>>(0, vector<action>{action(battle_action_type::CALLING_ACTION
-		, &player_data, &select_one_enemy, type_type::NORMAL, 10)}));
-	card_effect.insert(pair < size_t, vector<action>>(1, vector<action>{action(battle_action_type::ADD_BUFF
-		, &player_data, &player_data, buff_type::STRENGTH, mix_value(1000,100))}));
+	
 }
 
 void data_sys::draw_a_card()
@@ -22,14 +19,39 @@ void data_sys::draw_a_card()
 	cards_deck.pop_back();
 }
 
-pair<std::string, std::size_t> data_sys::get_buff(std::size_t id)
+info_to_battle_sys data_sys::card_effect(std::size_t id)
 {
-	using namespace buff_type;
 	switch (id)
 	{
-	case STRENGTH:
-		return pair<string, size_t>(string("strength"), 1);
+	case 0://打10
+		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
+			, &player_data, &select_one_enemy, type_type::NORMAL, 10)});
+	case 1://加100力量
+		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
+			, &player_data, &player_data, buff_type::STRENGTH, fix_buff_value(10000, 100))});
+	case 2://100易伤
+		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
+			, &player_data, &select_one_enemy, buff_type::VULNERABLE, fix_buff_value(10000, 100))});
+	case 3://100毒
+		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
+			, &player_data, &select_one_enemy, buff_type::POISON, fix_buff_value(100, 100))});
 	default:
-		return pair<string, size_t>("", 1);
+		break;
+	}
+	return info_to_battle_sys();
+}
+
+pair<std::string, std::size_t> data_sys::get_buff(std::size_t id)
+{
+	switch (id)
+	{
+	case buff_type::STRENGTH:
+		return pair<string, size_t>(string("strength"), 1);
+	case buff_type::VULNERABLE:
+		return pair<string, size_t>(string("strength"), 1);
+	case buff_type::POISON:
+		return pair<string, size_t>(string("poison"), 1);
+	default:
+		throw exception("buff id does not found");
 	}
 }
