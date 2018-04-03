@@ -7,6 +7,10 @@ class t_draw_sys
 {
 	data_sys& data;
 	IMAGE buffer;
+	std::queue<std::size_t> draw_queue;
+	std::size_t pos;
+	std::size_t timer;
+	bool is_drawing;
 
 	//»æÖÆ,·ÖÄ£¿é
 	void __draw_card_in_hand();

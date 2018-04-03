@@ -1,3 +1,5 @@
+#include <random>
+#include <ctime>
 #include "interacting.h"
 using namespace std;
 using std::size_t;
@@ -210,6 +212,8 @@ void confirm_state::click_an_enemy(size_t enemy_pos)
 
 void confirm_state::click_confirm()
 {
+	default_random_engine e(static_cast<int>(time(0)));
+	uniform_int_distribution<int> ran(0, static_cast<int>(get_data().enemies_data.size()) - 1);
 	if (!require_target)
 	{
 		info_to_battle_sys temp(get_data().card_effect(get_data().cards_in_hand[selected_card].card_id));
@@ -228,6 +232,15 @@ void confirm_state::click_confirm()
 					}
 				}
 				temp.action_set.erase(i);
+			}
+			else if (i->listener == &get_data().random_enemy)
+			{
+				game_entity* p;
+				do
+				{
+					p = &get_data().enemies_data[ran(e)];
+					i->listener = p;
+				} while (!p->is_alive());
 			}
 		}
 		send_to_battle_sys(temp);

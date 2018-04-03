@@ -29,6 +29,7 @@ namespace battle_action_type
 	const std::size_t P_KEEP_A_CARD = 10100;//回合结束时保留这张卡
 	const std::size_t P_REMOVE_A_CARD = 10101;//将卡除外
 	const std::size_t P_DISCARD_A_CARD = 10102;//受效果影响弃牌
+	const std::size_t ENTITY_BE_ATK = 10300;//实体收到攻击,再由battle传递消息给draw
 }
 
 

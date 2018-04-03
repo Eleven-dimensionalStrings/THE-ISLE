@@ -143,6 +143,20 @@ void battle_system::process()
 			}
 			break;
 		}
+		case ENTITY_BE_ATK:
+		{
+			if (temp.listener == &data.player_data)
+			{
+				data.b_to_d.push_back(666);
+			}
+			for (size_t i = 0; i < data.enemies_data.size(); ++i)
+			{
+				if (temp.listener == &data.enemies_data[i])
+				{
+					data.b_to_d.push_back(i);
+				}
+			}
+		}
 		default:
 			break;
 		}

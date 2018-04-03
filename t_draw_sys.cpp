@@ -21,22 +21,27 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 {
 	if (data.enemies_data[pos].is_alive())
 	{
-
+		if (is_drawing && pos == this->pos)
+		{
+			//TODO
+			++timer;
+			if (timer >= 20) {}//TODO
+		}
 	}
 	else
 	{
-
+		//TODO
 	}
 }
 void t_draw_sys::__draw_a_card(std::size_t pos)
 {
 	int up = window_unit_size::card_up,
 		left = window_unit_size::card_closure * (pos + 1) + window_unit_size::card_width * pos;
-	//putimage(up,left,image object);
+	//putimage(up,left,image path);
 	//TODO
 }
-t_draw_sys::t_draw_sys(data_sys &d) :data(d), 
-buffer(window_unit_size::window_width,window_unit_size::window_height)
+t_draw_sys::t_draw_sys(data_sys &d) :data(d),
+buffer(window_unit_size::window_width, window_unit_size::window_height), pos(0), timer(0), is_drawing(0)
 {
 }
 

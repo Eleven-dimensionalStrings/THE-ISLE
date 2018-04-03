@@ -35,6 +35,16 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 3://100¶¾
 		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
 			, &player_data, &select_one_enemy, buff_type::POISON, fix_buff_value(100, 100))});
+	case 4://Ëæ»ú´ò
+	{
+		info_to_battle_sys t;
+		for (int i = 0; i < 10; ++i)
+		{
+			t.append(action(battle_action_type::CALLING_ACTION
+				, &player_data, &random_enemy, type_type::NORMAL, 10));
+		}
+		return t;
+	}
 	default:
 		break;
 	}

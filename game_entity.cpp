@@ -109,8 +109,9 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 	if (present_act.type <= 6)//造成伤害
 	{
 		current_hp -= static_cast<int>(present_act.value);
+		result.append(action(battle_action_type::ENTITY_BE_ATK, present_act.caller, present_act.listener, 0, 0));
 		if (current_hp <= 0)
-			return this->kill();
+			result.append(this->kill());
 	}
 	else if (present_act.type == ADD_HP)//增加生命值
 	{
@@ -126,35 +127,6 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 	{
 		current_ap += static_cast<int>(present_act.value);
 	}
-	/*else if (present_act.type == REMOVE_BUFF)//减少/删除buff
-	{
-		//先空着,之后再改
-		/*buff* ptr;
-		if (ptr = buff_pool.find(present_act.type))
-		{
-			if (*ptr -= buff(present_act.type, get_buff_life(present_act.type), get_buff_level(present_act.type)))
-			{
-				info_to_battle_sys result = ptr->on_delete(present_act.caller, present_act.listener);
-				buff_pool.erase(ptr);
-				return result;
-			}
-		}
-		else
-		return info_to_battle_sys();
-	}
-	else if (present_act.type < 60000)//buff翻倍
-	{
-		buff* ptr;
-
-		也是先空着
-		if (ptr = buff_pool.find(present_act.type))
-		{
-			ptr->buff_life *= get_buff_life(present_act.type);
-			ptr->buff_level *= get_buff_level(present_act.type);
-		}
-		return info_to_battle_sys();
-	}*/
-	//其他再补充
 	return result;
 
 }
