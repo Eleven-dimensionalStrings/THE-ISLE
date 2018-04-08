@@ -1,5 +1,3 @@
-#include <random>
-#include <ctime>
 #include "interacting.h"
 using namespace std;
 using std::size_t;
@@ -9,10 +7,6 @@ context::context(interacting_sys * i_s)
 	:i_s(i_s)
 {
 
-}
-
-context::~context()
-{
 }
 
 battle_context::battle_context(interacting_sys* i_s)
@@ -40,8 +34,8 @@ void battle_context::set_state(b_state * pstate)
 
 void battle_context::read_input()
 {
-	//ï¿½ï¿½ï¿½ï¿½
-	test_read();
+	//switch
+	//cur_state->xxxfunction;
 }
 
 void battle_context::change_to_select_state(info_battle_to_interacting t)
@@ -78,48 +72,11 @@ void explore_context::read_input()
 	//cur_state->xxxfunction
 }
 
-data_sys & battle_context::get_data()
-{
-	return i_s->data;
-}
-
-void battle_context::test_read()
-{
-	size_t card_pos, target_pos;
-	cin >> card_pos;
-	set_state(new confirm_state(this, card_pos));
-	if (get_data().cards_in_hand[card_pos].require_target)
-	{
-		cin >> target_pos;
-		cur_state->click_an_enemy(target_pos);
-		return;
-	}
-	cur_state->click_confirm();
-}
-
-interacting_sys::interacting_sys(data_sys & d) :data(d),
-present_context(new battle_context(this))
-{
-}
-
-bool interacting_sys::send_message()
-{
-	return false;
-}
-
-bool interacting_sys::interpret_message()
-{
-	return false;
-}
-
 info_to_battle_sys interacting_sys::play_a_card(std::size_t card_pos, game_entity* target)
 {
 	info_to_battle_sys result(action(battle_action_type::USE_A_CARD, &data.player_data, target,
 		data.cards_in_hand[card_pos].card_type, card_pos));
-	auto ef = data.card_effect(data.cards_in_hand[card_pos].card_id);
-	result.append(ef);
-	for (auto& i : result.action_set)
-		i.caller = &data.player_data;
+	result.append(data.cards_in_hand[card_pos].use());
 	return result;
 }
 
@@ -141,20 +98,26 @@ void interacting_sys::reveal_map_location(int x, int y)
 	//call the renderer to reveal the map
 }
 
+void interacting_sys::encounter_event(std::size_t event_card_no)
+{
+	event_card temp = data.event_effect.find(event_card_no)->second;
+	present_explore_context->set_state(&e_select_state(present_explore_context, temp.root));
+}
+
 void interacting_sys::update()
 {
 	if (data.b_to_i_pipe)
 	{
-		(dynamic_cast<battle_context*>(present_context))->change_to_select_state(data.b_to_i_pipe);
+		present_battle_context->change_to_select_state(data.b_to_i_pipe);
 		data.b_to_i_pipe.clear();
 		return;
 	}
-	//ï¿½ï¿½ï¿½ï¿½
+	//´ý¶¨
 	//else if (from_explore_sys)
 	{
-		//Í¬ï¿½ï¿½
+		//Í¬ÉÏ
 	}
-	present_context->read_input();
+	present_battle_context->read_input();
 }
 
 b_state::b_state(battle_context * b_c)
@@ -234,17 +197,16 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 		if (get_data().enemies_data[enemy_pos].is_alive())
 		{
 			target = &get_data().enemies_data[enemy_pos];
-			info_to_battle_sys temp = get_data().cards_in_hand[selected_card].use_card(get_data());
+			info_to_battle_sys temp;
+			temp.action_set = get_data().card_effect[get_data().cards_in_hand[selected_card].card_id];
 			for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 			{
-				i->caller = &get_data().player_data;
 				if (i->listener == &get_data().select_one_enemy)
 				{
-					i->listener = target;
+					i->listener = &get_data().enemies_data[enemy_pos];
 				}
 			}
 			send_to_battle_sys(temp);
-			ctx->set_state(new vaccant_state(ctx));
 		}
 		else
 		{
@@ -257,13 +219,14 @@ void b_confirm_state::click_confirm()
 {
 	if (!require_target)
 	{
-		info_to_battle_sys temp(get_data().card_effect(get_data().cards_in_hand[selected_card].card_id));
+		info_to_battle_sys temp;
+		temp.action_set = get_data().card_effect[get_data().cards_in_hand[selected_card].card_id];
 		for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 		{
 			if (i->listener == &get_data().all_enemies)
 			{
 				auto temp_action = *i;
-				for (size_t j = 0; j < MAX_ENEMIES; ++j)
+				for (int j = 0; j < MAX_ENEMIES; +j)
 				{
 					if (get_data().enemies_data[j].is_alive())
 					{
@@ -272,7 +235,7 @@ void b_confirm_state::click_confirm()
 						++i;
 					}
 				}
-				temp.action_set.erase(i);
+				temp.action_set.erase(i++);
 			}
 		}
 		send_to_battle_sys(temp);
@@ -509,42 +472,87 @@ e_state::e_state(explore_context *tcontext)
 {
 }
 
-e_select_state::e_select_state(explore_context * e_c)
-	:e_state(e_c)
+e_select_state::e_select_state(explore_context * e_c, event_e e_e)
+	:e_state(e_c), current_phase(e_e)
 {
+	switch (current_phase.type)
+	{
+	case event_type::select :
+		get_data().choice_list.clear();
+		get_data().choice_list = e_e.selection;
+		break;
+	case event_type::battle :
+		//½Ó¿Ú
+		break;
+	case event_type::select_from_cards : //Î´ÍêÉÆ
+		get_data().choice_list.clear();
+		for (int i = 0; i < get_data().cards_pool.size(); i++)
+		{
+			get_data().choice_list.push_back(explore_selection());
+		}
+		break;
+	case event_type::select_from_artifacts ://Î´ÍêÉÆ
+		get_data().choice_list.clear();
+		for (int i = 0; i < get_data().artifacts.size(); i++)
+		{
+			get_data().choice_list.push_back(explore_selection());
+		}
+		break;
+	}
 }
 
-void e_select_state::click_an_option(std::size_t)
+void e_select_state::click_an_option(std::size_t pos)
 {
-
+	explore_selection temp = get_data().choice_list[pos + current_select_pos];
+	get_data().i_to_e_pipe = info_to_explore_sys(e_action(temp));
+	get_data().choice_list.erase(get_data().choice_list.begin() + pos + current_select_pos, get_data().choice_list.begin() + pos + current_select_pos + 1);
+	if (get_data().choice_list.empty())
+	{
+		ctx->set_state(&e_select_state(ctx, current_phase.following_event[0]));
+	}
+	else if (get_data().choice_list.size() == current_select_pos)
+	{
+		current_select_pos -= 3;
+	}
 }
 
 void e_select_state::click_next()
 {
-
+	if (!is_mandatory)
+	{
+		ctx->set_state(&e_select_state(ctx, current_phase.following_event[0]));
+	}
 }
 
 void e_select_state::click_up_arrow()
 {
-	//switch page
+	if (current_select_pos > 0)
+	{
+		current_select_pos -= 3;
+	}
 }
 
 void e_select_state::click_down_arrow()
 {
-
+	if (current_select_pos < get_data().choice_list.size() - 3)
+	{
+		current_select_pos += 3;
+	}
 }
 
 void e_select_state::click_left_arrow()
 {
-
+	if (current_select_pos > 0)
+	{
+		current_select_pos -= 3;
+	}
 }
 
 void e_select_state::click_right_arrow()
 {
-
+	if (current_select_pos < get_data().choice_list.size() - 3)
+	{
+		current_select_pos += 3;
+	}
 }
 
-e_multi_select_state::e_multi_select_state(explore_context * e_c)
-	:e_state(e_c)
-{
-}

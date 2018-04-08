@@ -1,10 +1,10 @@
 #pragma once
+#include "artifacts.h"
+#include "cards.h"
+#include "message.h"
 #include <vector> 
 #include <map>
 #include <functional>
-#include "artifacts.h"
-#include "cards.h"
-#include "game_entity.h"
 /*class battle_sys_data
 {
 public:
@@ -22,12 +22,12 @@ class data_sys
 {
 public:
 	data_sys();
-
-
-
 	//����buff�����ȶȺ�����,�����±�(buff_id)����
+	std::vector<std::pair<std::string, std::size_t>> buff_data;
 	//���濨Ƭ��Ч�������ݼ�ֵ��card_id������
-	info_to_battle_sys card_effect(std::size_t card_id);
+	std::map<std::size_t, std::vector<action>> card_effect;
+	std::map<std::size_t, std::string> card_name;
+	std::map<std::size_t, std::size_t> card_upgrade_id;
 	std::vector<card> cards_pool;//�����ƿ�
 	std::vector<artifact> artifacts;//����
 	player player_data;
@@ -49,11 +49,13 @@ public:
 	std::array<char, 10> reserve_cards;//�����еĿ�Ƭ�Ƿ���
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
-	std::vector<pair<std::size_t,std::size_t>>b_to_d;
 	info_to_explore_sys i_to_e_pipe;
+	info_explore_to_interacting e_to_i_pipe;
 	std::size_t explore_map[6][6];
 	int map_marks[6][6];
 	std::pair<int, int> player_location;
+	std::vector<explore_selection> choice_list;
+	std::map<std::size_t, event_card> event_effect;
 
 	std::vector<std::function<info_to_battle_sys(info_to_battle_sys)>>v;
 	/*

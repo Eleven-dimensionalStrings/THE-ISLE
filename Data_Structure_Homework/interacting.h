@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include "message.h"
 #include "data_sys.h"
 class b_state;
@@ -9,8 +8,7 @@ class context
 {
 public:
 	context(interacting_sys*);
-	virtual ~context();
-	virtual void set_state(state*) = 0;
+	virtual void set_state() = 0;
 	virtual void read_input() = 0;
 	interacting_sys* i_s;
 };
@@ -20,12 +18,10 @@ class battle_context : public context
 public:
 	battle_context(interacting_sys*);
 	battle_context(interacting_sys*, b_state*);
-	virtual ~battle_context();
-	void set_state(state*)override;
-	void read_input()override;
+	~battle_context();
+	void set_state(b_state*);
+	void read_input();
 	void change_to_select_state(info_battle_to_interacting);
-	data_sys& get_data();
-	void test_read();
 private:
 	b_state *cur_state;
 };
@@ -51,7 +47,6 @@ public:
 	virtual void click_confirm() = 0;
 	virtual void click_cancel() = 0;
 	virtual void click_turn_end() = 0;
-	virtual ~state();
 	data_sys& get_data();
 	void send_to_battle_sys(info_to_battle_sys);
 	battle_context* ctx;
@@ -93,7 +88,7 @@ public:
 	void click_turn_end();
 private:
 	std::size_t type;
-	std::vector<std::size_t> selected_cards;
+	vector<std::size_t> selected_cards;
 	std::size_t max; //indicates the max amount of cards to select
 	bool is_mandatory; //indicates if the player is forced to select the max amount of cards
 };
@@ -140,39 +135,31 @@ public:
 
 class e_select_state : public e_state
 {
-	e_select_state(explore_context*);
+public:
+	e_select_state(explore_context*, event_e);
 	void click_an_option(std::size_t);
 	void click_next();
 	void click_up_arrow();
 	void click_down_arrow();
 	void click_left_arrow();
 	void click_right_arrow();
-};
-
-class e_multi_select_state : public e_state
-{
-	e_multi_select_state(explore_context*);
-	void click_an_option(std::size_t);
-	void click_next();
-	void click_up_arrow();
-	void click_down_arrow();
-	void click_left_arrow();
-	void click_right_arrow();
+private:
+	event_e current_phase;
+	bool is_mandatory;
+	std::size_t max_amount;
+	std::size_t current_select_pos;//indicates the position of the first selection in choice_list.  
 };
 
 class interacting_sys
 {
 public:
-	interacting_sys(data_sys& d);
 	data_sys& data;
-	context* present_context;
+	battle_context* present_battle_context;
+	explore_context* present_explore_context;
 	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);
 	void move_player(int x, int y);
 	void set_map_location(int x, int y, int mark_type);
 	void reveal_map_location(int x, int y);
 	void encounter_event(std::size_t event_card_no);
-	bool send_message();
-	bool interpret_message();
-	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);//û�õ�,���Ʋ�����context�����
 	void update();
 };

@@ -5,7 +5,6 @@
 #include <string>
 #include <stack>
 
-
 namespace explore_action_type
 {
 	const int AQUIRE_HIT_POINTS = 10;
@@ -29,11 +28,6 @@ namespace explore_action_type
 
 	const int AQUIRE_GOLD = 80;
 	const int REMOVE_GOLD = 81;
-
-	const int GET_RANDOM_EVENT_CARDS = 100;
-	const int GET_RANDOM_BATTLE_CARDS = 110;
-	const int GET_RANDOM_ARTIFACTS = 120;
-	const int GET_RANDOM_GOLD_BALANCE = 130;
 }
 
 struct explore_system_action
@@ -45,15 +39,11 @@ struct explore_system_action
 	int value;
 };
 
-class explore_system : public message_listener
+class explore_system
 {
-public:
-	bool send_message(info_to_explore_sys);
-protected:
-	info* create_message();
-	bool interpret_message(info_to_explore_sys);
 private:
 	std::stack<explore_system_action> process_stack;
 	void process();
+	data_sys* data;
 };
 
