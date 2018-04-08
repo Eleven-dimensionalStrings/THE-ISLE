@@ -1,0 +1,920 @@
+﻿  battle_system.cpp
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C3646: “use”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C3646: “discard”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C3646: “remove”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(6): error C2504: “message_dispatcher”: 未定义基类
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(9): error C2065: “buff”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C2923: “std::vector”: 对于参数“_Ty”，“buff”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C2061: 语法错误: 标识符“player”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2143: 语法错误: 缺少“;”(在“&”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C3646: “player_data”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(12): error C2504: “message_dispatcher”: 未定义基类
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C3646: “calling_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C3646: “performing_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(28): error C2065: “buff”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(28): error C2923: “std::vector”: 对于参数“_Ty”，“buff”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(28): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\message.h(84): error C2039: “queue”: 不是“std”的成员
+  C:\Program Files (x86)\VisualStudio2017\VC\Tools\MSVC\14.10.25017\include\vector(15): note: 参见“std”的声明
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\message.h(84): error C2143: 语法错误: 缺少“;”(在“<”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\message.h(84): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\message.h(84): error C2238: 意外的标记位于“;”之前
+battle_system.cpp(48): error C2039: “calling_action”: 不是“game_entity”的成员
+  c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(11): note: 参见“game_entity”的声明
+battle_system.cpp(53): error C2039: “performing_action”: 不是“game_entity”的成员
+  c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(11): note: 参见“game_entity”的声明
+  buff.cpp
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2433: “message_manager::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C3646: “use”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C3646: “discard”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C3646: “remove”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(9): error C2065: “buff”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C2923: “std::vector”: 对于参数“_Ty”，“buff”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C2061: 语法错误: 标识符“player”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2143: 语法错误: 缺少“;”(在“&”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C3646: “player_data”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C3646: “calling_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C3646: “performing_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(28): error C2065: “buff”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(28): error C2923: “std::vector”: 对于参数“_Ty”，“buff”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(28): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2238: 意外的标记位于“;”之前
+  cards.cpp
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C3646: “on_create”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C3646: “on_delete”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C3646: “on_kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C3646: “on_calling”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C3646: “on_performing”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2433: “message_manager::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C2065: “card”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C2923: “std::vector”: 对于参数“_Ty”，“card”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(9): error C2065: “card”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C2061: 语法错误: 标识符“player”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2143: 语法错误: 缺少“;”(在“&”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(24): error C2065: “card”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(24): error C2923: “std::vector”: 对于参数“_Ty”，“card”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(24): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C3646: “player_data”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(14): error C2065: “card”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(14): error C2923: “std::vector”: 对于参数“_Ty”，“card”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(14): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C3646: “calling_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C3646: “performing_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(39): error C2065: “card”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(39): error C2923: “std::vector”: 对于参数“_Ty”，“card”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(39): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(45): error C2065: “card”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(45): error C2923: “std::vector”: 对于参数“_Ty”，“card”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(45): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(46): error C2065: “card”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(46): error C2923: “std::vector”: 对于参数“_Ty”，“card”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(46): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(47): error C2065: “card”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(47): error C2923: “std::vector”: 对于参数“_Ty”，“card”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(47): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(48): error C2065: “card”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(48): error C2923: “std::vector”: 对于参数“_Ty”，“card”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(48): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(49): error C2065: “card”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(49): error C2923: “std::vector”: 对于参数“_Ty”，“card”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(49): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(49): fatal error C1003: 错误计数超过 100；正在停止编译
+  data_sys.cpp
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C3646: “on_create”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C3646: “on_delete”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C3646: “on_kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C3646: “on_calling”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C3646: “on_performing”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2433: “message_manager::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C3646: “use”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C3646: “discard”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C3646: “remove”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(14): error C2065: “artifact”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(14): error C2923: “std::vector”: 对于参数“_Ty”，“artifact”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(14): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C3646: “calling_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C3646: “performing_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(22): error C2143: 语法错误: 缺少“;”(在“&”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(22): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(22): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(39): error C2065: “artifact”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(39): error C2923: “std::vector”: 对于参数“_Ty”，“artifact”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(39): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(60): error C2065: “artifact”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(60): error C2923: “std::vector”: 对于参数“_Ty”，“artifact”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(60): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2238: 意外的标记位于“;”之前
+  explore_system.cpp
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C3646: “on_create”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C3646: “on_delete”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C3646: “on_kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C3646: “on_calling”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C3646: “on_performing”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2433: “message_manager::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C3646: “use”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C3646: “discard”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C3646: “remove”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C2061: 语法错误: 标识符“player”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2143: 语法错误: 缺少“;”(在“&”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C3646: “player_data”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C3646: “calling_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C3646: “performing_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\explore_system.h(41): error C2061: 语法错误: 标识符“string”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\explore_system.h(42): error C2065: “act_name”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\explore_system.h(42): error C2065: “val”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\explore_system.h(58): error C3646: “player_class”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\explore_system.h(58): fatal error C1003: 错误计数超过 100；正在停止编译
+  game_entity.cpp
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C3646: “on_create”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C3646: “on_delete”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C3646: “on_kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C3646: “on_calling”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C3646: “on_performing”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2433: “message_manager::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C3646: “use”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C3646: “discard”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C3646: “remove”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C2061: 语法错误: 标识符“player”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2143: 语法错误: 缺少“;”(在“&”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C3646: “player_data”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C3646: “calling_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C3646: “performing_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2238: 意外的标记位于“;”之前
+game_entity.cpp(14): error C2039: “on_turn_begin”: 不是“player”的成员
+  c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(36): note: 参见“player”的声明
+game_entity.cpp(16): error C2065: “cards_in_hand”: 未声明的标识符
+game_entity.cpp(17): error C3312: 未找到可调用的“begin”函数(针对类型“unknown-type”)
+game_entity.cpp(17): error C3312: 未找到可调用的“end”函数(针对类型“unknown-type”)
+game_entity.cpp(17): fatal error C1003: 错误计数超过 100；正在停止编译
+  interacting.cpp
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C3646: “on_create”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C3646: “on_delete”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C3646: “on_kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C3646: “on_calling”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C3646: “on_performing”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2433: “message_manager::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C3646: “use”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C3646: “discard”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C3646: “remove”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C2061: 语法错误: 标识符“player”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2143: 语法错误: 缺少“;”(在“&”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C3646: “player_data”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C3646: “calling_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C3646: “performing_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2238: 意外的标记位于“;”之前
+interacting.cpp(6): error C2039: “player_data”: 不是“data_sys”的成员
+  c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(19): note: 参见“data_sys”的声明
+interacting.cpp(6): error C2228: “.cards_in_hand”的左边必须有类/结构/联合
+interacting.cpp(6): error C2228: “.card_type”的左边必须有类/结构/联合
+interacting.cpp(6): error C2440: “<function-style-cast>”: 无法从“initializer list”转换为“action”
+interacting.cpp(6): fatal error C1003: 错误计数超过 100；正在停止编译
+  main.cpp
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C3646: “on_create”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C3646: “on_delete”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C3646: “on_kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C3646: “on_calling”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C3646: “on_performing”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2433: “message_manager::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C3646: “use”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C3646: “discard”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C3646: “remove”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C2061: 语法错误: 标识符“player”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2143: 语法错误: 缺少“;”(在“&”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C3646: “player_data”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C3646: “calling_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C3646: “performing_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2238: 意外的标记位于“;”之前
+  message.cpp
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C3646: “on_create”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(39): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C3646: “on_delete”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C3646: “on_kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(43): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C3646: “on_calling”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(44): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C3646: “on_performing”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\buff.h(45): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(10): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2433: “message_manager::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\managers.h(26): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C3646: “use”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C3646: “discard”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C3646: “remove”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(21): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\cards.h(22): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(8): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(9): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2143: 语法错误: 缺少“;”(在“*”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2433: “artifact::info”: 不允许在数据声明中使用“virtual”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\artifacts.h(13): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(8): error C2061: 语法错误: 标识符“player”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2143: 语法错误: 缺少“;”(在“&”的前面)
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(12): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(13): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C3646: “player_data”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(26): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2065: “enemy”: 未声明的标识符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C2923: “std::vector”: 对于参数“_Ty”，“enemy”不是有效的 模板 类型变量
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\data_sys.h(27): error C3203: “allocator”: 未专用化的 类 模板 不能用作 模板 变量，该变量属于 模板 参数“_Alloc”，应为 real 类型
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C3646: “calling_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(15): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C3646: “performing_action”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(16): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(17): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(19): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(20): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(29): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(40): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(41): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(42): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C3646: “kill”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2059: 语法错误:“)”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(61): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C3646: “on_turn_begin”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(62): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C3646: “on_turn_end”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(63): error C2238: 意外的标记位于“;”之前
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C3646: “create_message_to_battle_sys”: 未知重写说明符
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2059: 语法错误:“(”
+c:\users\michael\desktop\数据结构大作业\data_structure_homework\data_structure_homework\game_entity.h(65): error C2238: 意外的标记位于“;”之前
