@@ -7,8 +7,9 @@ class t_draw_sys
 {
 	data_sys& data;
 	IMAGE buffer;
-	std::queue<std::size_t> draw_queue;
-	std::size_t pos;
+
+	//the caller and listener which means the first is attacking the second
+	std::queue<std::pair<std::size_t, std::size_t>> draw_queue;
 	std::size_t timer;
 	bool is_drawing;
 
@@ -16,12 +17,19 @@ class t_draw_sys
 	void __draw_card_in_hand();
 	void __draw_entities();
 	void __draw_right_hand_select();
+	void __draw_artifacts();//top of window
+	void __get_atk_entities();//get pair of caller and listener from pipe on data_sys
 
 	void __draw_player();
 	void __draw_an_enemy(std::size_t pos);//draw the enemy in pos
-	void __draw_a_card(std::size_t pos);
+	void __draw_a_card(std::size_t pos, int x, int y);
 public:
 	t_draw_sys(data_sys&);
 	void draw();//控制台测试用
 	void draw_battle();
+	void draw_explore();
+	void draw_begin();//开始页面
+
+	void draw_card_list();//看卡组/墓地等
+	void draw_artifact_list();
 };

@@ -26,8 +26,8 @@ int main()
 	d.enemies_data.push_back(enemy(d));
 	d.cards_pool.push_back(card(0, 0, "打10", 1));
 	d.cards_pool.push_back(card(1, 1, "加100力量", 0));
-	d.cards_pool.push_back(card(2, 2, "加100易伤", 1));
-	d.cards_pool.push_back(card(3, 3, "加100毒", 1));
+	//d.cards_pool.push_back(card(2, 2, "加100易伤", 1));
+	//d.cards_pool.push_back(card(3, 3, "加100毒", 1));
 	d.cards_pool.push_back(card(4, 4, "随机打", 0));
 	d.cards_deck = d.cards_pool;
 	//进入战斗
@@ -35,6 +35,7 @@ int main()
 	{
 
 		b.send_message(d.player_data.on_turn_begin());
+		b.update();
 		dr.draw();
 		i.update();
 		b.update();

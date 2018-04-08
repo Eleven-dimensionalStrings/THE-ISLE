@@ -1,4 +1,5 @@
 #include "buff.h"
+#include "game_entity.h"
 using namespace std;
 
 void buff::operator--()
@@ -59,15 +60,15 @@ info_to_battle_sys buff::on_turn_begin(game_entity*p)
 	{
 	case buff_type::POISON:
 	{
-		if (buff_life == 0)
+		if (buff_life == 0 || !p->is_alive())
 			break;
-		result.append(action(battle_action_type::PERFORMING_ACTION, p, p, type_type::POISON, buff_level));
+		result.append(action(battle_action_type::PERFORMING_ACTION, nullptr, p, type_type::POISON, buff_level));
 		--buff_level;
-		--buff_life;
 	}
 	default:
 		break;
 	}
+	--buff_life;
 	return result;
 }
 

@@ -34,6 +34,12 @@ void battle_system::process()
 {
 	while (!process_stack.empty())
 	{
+		if (battle_finishes())
+		{
+			while (!process_stack.empty())process_stack.pop();
+			//TODO
+			break;
+		}
 		action temp = process_stack.top();
 		process_stack.pop();
 		switch (temp.action_id)
@@ -45,6 +51,15 @@ void battle_system::process()
 		}
 		case battle_action_type::PERFORMING_ACTION:
 		{
+			default_random_engine e(static_cast<int>(time(0)));
+			uniform_int_distribution<int> ran(0, static_cast<int>(data.enemies_data.size()) - 1);
+			if (temp.listener == &data.random_enemy)
+			{
+				do
+				{
+					temp.listener = &data.enemies_data[ran(e)];
+				} while (!temp.listener->is_alive());
+			}
 			send_message(temp.listener->performing_action(temp));
 			break;
 		}
@@ -82,7 +97,7 @@ void battle_system::process()
 				if (c_deck.size())
 
 				{
-					c_in_hand.push_back(*(c_deck.end() - 1));
+					c_in_hand.push_back(c_deck.back());
 					c_deck.pop_back();
 				}
 			}
@@ -145,22 +160,48 @@ void battle_system::process()
 		}
 		case ENTITY_BE_ATK:
 		{
+			pair<size_t, size_t> atkp;
+			if (temp.caller == &data.player_data)
+			{
+				atkp.first = 666;
+			}
+			else if (temp.caller >= &data.enemies_data[0] && temp.caller <= &data.enemies_data[0] + 10)
+			{
+				atkp.first = temp.caller - &data.enemies_data[0];
+			}
+			else if (temp.caller == nullptr)
+			{
+				atkp.first = 999;
+			}
 			if (temp.listener == &data.player_data)
 			{
-				data.b_to_d.push_back(666);
+				atkp.second = 666;
 			}
-			for (size_t i = 0; i < data.enemies_data.size(); ++i)
+			else if (temp.listener >= &data.enemies_data[0] && temp.listener <= &data.enemies_data[0] + 10)
 			{
-				if (temp.listener == &data.enemies_data[i])
-				{
-					data.b_to_d.push_back(i);
-				}
+				atkp.second = temp.listener - &data.enemies_data[0];
 			}
+			else if (temp.listener == nullptr)
+			{
+				atkp.second = 999;
+			}
+			data.b_to_d.push_back(atkp);
+			break;
 		}
 		default:
 			break;
 		}
 	}
+}
+
+bool battle_system::battle_finishes()
+{
+	if (!data.player_data.is_alive())return 1;
+	for (auto& i : data.enemies_data)
+	{
+		if (i.is_alive())return 0;
+	}
+	return 1;
 }
 
 std::vector<card> my_random_engine::xipai(std::vector<card> v)
@@ -169,9 +210,10 @@ std::vector<card> my_random_engine::xipai(std::vector<card> v)
 	default_random_engine e(static_cast<unsigned>(time(0)));
 	while (!v.empty())
 	{
-		uniform_int_distribution<int> ran(static_cast<int>(v.size() - 1));
-		vv.push_back(*(v.begin() + ran(e)));
-		v.erase(v.begin() + ran(e));
+		uniform_int_distribution<int> ran(0, static_cast<int>(v.size()) - 1);
+		int ind = ran(e);
+		vv.push_back(*(v.begin() + ind));
+		v.erase(v.begin() + ind);
 	}
 	return vv;
 }

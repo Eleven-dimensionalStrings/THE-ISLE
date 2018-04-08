@@ -23,7 +23,6 @@ public:
 	std::vector<buff>::iterator find_buff(std::size_t id);
 
 	data_sys& data;
-	bool living_state; //实体的存活状态，实体无论存活状态如何都会占据原先的位置
 	int max_hp;//最大生命值
 	int current_hp;//当前生命值
 	int max_ap; // 最大行动力

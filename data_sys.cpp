@@ -6,19 +6,6 @@ data_sys::data_sys() :player_data(*this), all_enemies(*this), random_enemy(*this
 	
 }
 
-void data_sys::draw_a_card()
-{
-	if (!cards_deck.empty())
-	{
-		cards_in_hand.push_back(cards_deck.back());
-		cards_deck.pop_back();
-		return;
-	}
-	cards_deck = cards_grave;
-	cards_in_hand.push_back(cards_deck.back());
-	cards_deck.pop_back();
-}
-
 info_to_battle_sys data_sys::card_effect(std::size_t id)
 {
 	switch (id)

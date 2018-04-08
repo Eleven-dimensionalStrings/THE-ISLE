@@ -22,7 +22,6 @@ class data_sys
 {
 public:
 	data_sys();
-	void draw_a_card();
 
 
 
@@ -50,7 +49,7 @@ public:
 	std::array<char, 10> reserve_cards;//手牌中的卡片是否保留
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
-	std::vector<std::size_t>b_to_d;
+	std::vector<pair<std::size_t,std::size_t>>b_to_d;
 
 	std::vector<std::function<info_to_battle_sys(info_to_battle_sys)>>v;
 	/*

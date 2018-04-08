@@ -32,11 +32,17 @@ info_to_battle_sys player::on_turn_begin()
 	{
 		i.is_reserve = 0;
 	}
-	for (int i = 0; i < 2; ++i)data.draw_a_card();
 	info_to_battle_sys t;
+	t.append(action(battle_action_type::DRAW_CARDS, 0, 2));
 	for (auto& i : buff_pool)
 	{
 		t.append(i.on_turn_begin(this));
+	}
+	//这里调用enemies的on_turn_end
+
+	for (auto& i : data.enemies_data)
+	{
+		t.append(i.on_turn_end());
 	}
 	return t;
 }
@@ -69,7 +75,7 @@ info_to_battle_sys player::on_turn_end()
 }
 
 
-game_entity::game_entity(data_sys& d) :data(d), living_state(1),
+game_entity::game_entity(data_sys& d) :data(d),
 max_hp(100), current_hp(100), max_ap(1), current_ap(1)
 {
 }
@@ -95,6 +101,8 @@ info_to_battle_sys game_entity::calling_action(action iaction)
 
 info_to_battle_sys game_entity::performing_action(action iaction)
 {
+	if (!is_alive())
+		return info_to_battle_sys();
 	info_to_battle_sys result(iaction);
 	for (auto i : buff_pool)
 	{
@@ -139,8 +147,8 @@ info_to_battle_sys game_entity::kill()
 bool game_entity::is_alive()
 {
 	if (current_hp <= 0)
-		living_state = 0;
-	return living_state;
+		return 0;
+	return 1;
 }
 
 vector<buff>::iterator game_entity::find_buff(std::size_t id)
