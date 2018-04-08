@@ -3,7 +3,6 @@
 #include "interacting.h"
 using namespace std;
 using std::size_t;
-using std::size_t;
 
 context::context(interacting_sys * i_s)
 	:i_s(i_s)
@@ -35,7 +34,7 @@ battle_context::~battle_context()
 void battle_context::set_state(b_state * pstate)
 {
 	delete cur_state;
-	cur_state = pstate;
+	cur_state = dynamic_cast<b_state*>(pstate);
 }
 
 void battle_context::read_input()
@@ -87,7 +86,7 @@ void battle_context::test_read()
 {
 	size_t card_pos, target_pos;
 	cin >> card_pos;
-	set_state(new confirm_state(this, card_pos));
+	set_state(new b_confirm_state(this, card_pos));
 	if (get_data().cards_in_hand[card_pos].require_target)
 	{
 		cin >> target_pos;
@@ -244,7 +243,7 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 				}
 			}
 			send_to_battle_sys(temp);
-			ctx->set_state(new vaccant_state(ctx));
+			ctx->set_state(new b_vaccant_state(ctx));
 		}
 		else
 		{
@@ -409,12 +408,12 @@ void e_vaccant_state::click_up_arrow()
 	case map_mark_type::KNOWN:
 		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second + 1);
 		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second + 1, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 		break;
 	case map_mark_type::UNKNOWN:
 		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second + 1);
 		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second + 1, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 	default:
 		break;
 	}
@@ -437,12 +436,12 @@ void e_vaccant_state::click_down_arrow()
 	case map_mark_type::KNOWN:
 		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second - 1);
 		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second - 1, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 		break;
 	case map_mark_type::UNKNOWN:
 		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second - 1);
 		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second - 1, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 	default:
 		break;
 	}
@@ -465,12 +464,12 @@ void e_vaccant_state::click_left_arrow()
 	case map_mark_type::KNOWN:
 		ctx->i_s->move_player(get_data().player_location.first - 1, get_data().player_location.second);
 		ctx->i_s->set_map_location(get_data().player_location.first - 1, get_data().player_location.second, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 		break;
 	case map_mark_type::UNKNOWN:
 		ctx->i_s->move_player(get_data().player_location.first - 1, get_data().player_location.second);
 		ctx->i_s->set_map_location(get_data().player_location.first - 1, get_data().player_location.second, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 	default:
 		break;
 	}
@@ -493,12 +492,12 @@ void e_vaccant_state::click_right_arrow()
 	case map_mark_type::KNOWN:
 		ctx->i_s->move_player(get_data().player_location.first + 1, get_data().player_location.second);
 		ctx->i_s->set_map_location(get_data().player_location.first + 1, get_data().player_location.second, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 		break;
 	case map_mark_type::UNKNOWN:
 		ctx->i_s->move_player(get_data().player_location.first + 1, get_data().player_location.second);
 		ctx->i_s->set_map_location(get_data().player_location.first + 1, get_data().player_location.second, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 	default:
 		break;
 	}

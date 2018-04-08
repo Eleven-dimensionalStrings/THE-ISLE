@@ -167,7 +167,7 @@ void battle_system::process()
 			}
 			else if (temp.caller >= &data.enemies_data[0] && temp.caller <= &data.enemies_data[0] + 10)
 			{
-				atkp.first = temp.caller - &data.enemies_data[0];
+				atkp.first = dynamic_cast<enemy*>(temp.caller) - &data.enemies_data[0];
 			}
 			else if (temp.caller == nullptr)
 			{
@@ -179,7 +179,7 @@ void battle_system::process()
 			}
 			else if (temp.listener >= &data.enemies_data[0] && temp.listener <= &data.enemies_data[0] + 10)
 			{
-				atkp.second = temp.listener - &data.enemies_data[0];
+				atkp.second = dynamic_cast<enemy*>(temp.listener) - &data.enemies_data[0];
 			}
 			else if (temp.listener == nullptr)
 			{

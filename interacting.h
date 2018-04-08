@@ -10,7 +10,6 @@ class context
 public:
 	context(interacting_sys*);
 	virtual ~context();
-	virtual void set_state(state*) = 0;
 	virtual void read_input() = 0;
 	interacting_sys* i_s;
 };
@@ -21,7 +20,7 @@ public:
 	battle_context(interacting_sys*);
 	battle_context(interacting_sys*, b_state*);
 	virtual ~battle_context();
-	void set_state(state*)override;
+	void set_state(b_state*);
 	void read_input()override;
 	void change_to_select_state(info_battle_to_interacting);
 	data_sys& get_data();
@@ -30,6 +29,7 @@ private:
 	b_state *cur_state;
 };
 
+class e_state;
 class explore_context : public context
 {
 public:
@@ -51,7 +51,6 @@ public:
 	virtual void click_confirm() = 0;
 	virtual void click_cancel() = 0;
 	virtual void click_turn_end() = 0;
-	virtual ~state();
 	data_sys& get_data();
 	void send_to_battle_sys(info_to_battle_sys);
 	battle_context* ctx;
@@ -152,12 +151,12 @@ class e_select_state : public e_state
 class e_multi_select_state : public e_state
 {
 	e_multi_select_state(explore_context*);
-	void click_an_option(std::size_t);
+	/*void click_an_option(std::size_t);
 	void click_next();
 	void click_up_arrow();
 	void click_down_arrow();
 	void click_left_arrow();
-	void click_right_arrow();
+	void click_right_arrow();*/
 };
 
 class interacting_sys
@@ -166,13 +165,12 @@ public:
 	interacting_sys(data_sys& d);
 	data_sys& data;
 	context* present_context;
-	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);
 	void move_player(int x, int y);
 	void set_map_location(int x, int y, int mark_type);
 	void reveal_map_location(int x, int y);
-	void encounter_event(std::size_t event_card_no);
+	//void encounter_event(std::size_t event_card_no);
 	bool send_message();
 	bool interpret_message();
-	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);//û�õ�,���Ʋ�����context�����
+	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);
 	void update();
 };

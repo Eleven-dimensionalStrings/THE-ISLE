@@ -64,7 +64,7 @@ void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 	//TODO
 }
 t_draw_sys::t_draw_sys(data_sys &d) :data(d),
-buffer(window_unit_size::window_width, window_unit_size::window_height), pos(0), timer(0), is_drawing(0)
+buffer(window_unit_size::window_width, window_unit_size::window_height), timer(0), is_drawing(0)
 {
 }
 
