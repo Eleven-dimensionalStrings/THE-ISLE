@@ -28,12 +28,12 @@ public:
 	std::size_t dexterity;
 	std::size_t vitality;
 	std::size_t luck;
-	std::vector<card> cards_deck;//ս��ʱ�ƿ�
-	std::vector<card> cards_grave;//���ƶ�
-	std::vector<card> cards_in_hand;//����
-	std::vector<card> cards_removed;//������
-	std::vector<card> cards_equiped;//װ����
-	std::array<char, 10> reserve_cards;//�����еĿ�Ƭ�Ƿ���
+	std::vector<card> cards_deck;
+	std::vector<card> cards_grave;
+	std::vector<card> cards_in_hand;
+	std::vector<card> cards_removed;
+	std::vector<card> cards_equiped;
+	std::array<char, 10> reserve_cards;
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
 	std::vector<std::pair<std::size_t,std::size_t>>b_to_d;

@@ -70,6 +70,11 @@ buffer(window_unit_size::window_width, window_unit_size::window_height), timer(0
 
 void t_draw_sys::draw()
 {
+	for (auto& i:data.b_to_d)
+	{
+		draw_queue.push(i);
+	}
+	data.b_to_d.clear();
 	system("cls");
 	cout << "enemy:\n";
 	for (auto&i : data.enemies_data)
@@ -88,6 +93,12 @@ void t_draw_sys::draw()
 	cout << "player:\n";
 	cout << "hp:" << data.player_data.current_hp << '/' << data.player_data.max_hp << endl
 		<< "ap:" << data.player_data.current_ap << '/' << data.player_data.max_ap << endl;
+
+	while(!draw_queue.empty())
+	{
+		cout << (draw_queue.front().first) << ' ' << (draw_queue.front().second) << endl;
+		draw_queue.pop();
+	}
 }
 
 void t_draw_sys::draw_battle()

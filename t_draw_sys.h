@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <graphics.h>
+#include <queue>
 #include "data_sys.h"
 #include "message.h"
 class t_draw_sys

@@ -9,6 +9,7 @@
 using namespace std;
 using std::size_t;
 using namespace battle_action_type;
+default_random_engine e(static_cast<int>(time(0)));
 battle_system::battle_system(data_sys & d) :data(d)
 {
 }
@@ -51,7 +52,6 @@ void battle_system::process()
 		}
 		case battle_action_type::PERFORMING_ACTION:
 		{
-			default_random_engine e(static_cast<int>(time(0)));
 			uniform_int_distribution<int> ran(0, static_cast<int>(data.enemies_data.size()) - 1);
 			if (temp.listener == &data.random_enemy)
 			{

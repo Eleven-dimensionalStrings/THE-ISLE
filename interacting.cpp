@@ -101,15 +101,6 @@ present_context(new battle_context(this))
 {
 }
 
-bool interacting_sys::send_message()
-{
-	return false;
-}
-
-bool interacting_sys::interpret_message()
-{
-	return false;
-}
 
 info_to_battle_sys interacting_sys::play_a_card(std::size_t card_pos, game_entity* target)
 {

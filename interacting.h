@@ -81,9 +81,11 @@ private:
 	bool require_target;
 };
 
+class t_draw_sys;
 class b_select_state : public b_state
 {
 public:
+	friend class t_draw_sys;
 	b_select_state(battle_context*, std::size_t tmax, std::size_t, bool);
 	void click_a_card(std::size_t);
 	void click_an_enemy(std::size_t);
@@ -169,8 +171,6 @@ public:
 	void set_map_location(int x, int y, int mark_type);
 	void reveal_map_location(int x, int y);
 	//void encounter_event(std::size_t event_card_no);
-	bool send_message();
-	bool interpret_message();
 	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);
 	void update();
 };
