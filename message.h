@@ -2,18 +2,18 @@
 #include <cstdlib>
 #include <vector>
 #include <queue>
+#include <cstddef>
 #define MAX_ENEMIES 5
 #define MEANINGLESS_VALUE static_cast<std::size_t>(31415926)
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
-class artifact;
-class card;
+class data_sys;
 namespace map_mark_type
 {
 	const int EMPTY = -1;
-	const int PLAYER = 0;//�������λ��
-	const int UNKNOWN = 1;//û��ȥ��
-	const int KNOWN = 2;//�Ѿ�����������û��ȥ��
-	const int VISITED = 3;//�Ѿ�ȥ��
+	const int PLAYER = 0;
+	const int UNKNOWN = 1;
+	const int KNOWN = 2;
+	const int VISITED = 3;
 }
 
 namespace battle_action_type
@@ -50,7 +50,7 @@ namespace event_type
 	const unsigned int SELECT_NEXT_EVENT = 7;
 }
 
-//action��type�ľ�����𣬼��˺���buff�ľ������
+
 namespace type_type
 {
 	const std::size_t NORMAL = 1;
@@ -64,11 +64,17 @@ namespace type_type
 	const std::size_t HEALING = 20002;
 }
 
+namespace card_type
+{
+	const std::size_t attack = 0;
+	const std::size_t skill = 1;
+	//to be completed
+}
 namespace buff_type
 {
 	const std::size_t STRENGTH = 0;
-	const std::size_t VULNERABLE = 1;//����
-	const std::size_t POISON = 2;//����
+	const std::size_t VULNERABLE = 1;
+	const std::size_t POISON = 2;
 }
 
 namespace window_unit_size
@@ -76,23 +82,59 @@ namespace window_unit_size
 	using cstszt = const std::size_t;
 	cstszt window_width = 1200;
 	cstszt window_height = 720;
-	//��������
+
 	cstszt card_in_hand_up = 500;
 	cstszt card_in_hand_down = 720;
 	cstszt card_in_hand_left = 0;
 	cstszt card_in_hand_right = 900;
-	cstszt card_width = 100;//ÿ���ƵĿ��
-	cstszt card_up = 510;//�Ƶ�λ��
+	cstszt card_width = 100;
+	cstszt card_up = 510;
 	cstszt card_down = 710;
 	cstszt card_closure = 10;
 }
+class info_to_battle_sys;
+class card
+{
+public:
+	card();
+	card(std::size_t id);
+	card(const card& copy_card);
+	card& operator=(const card& copy_card);
+
+
+	std::size_t card_id;
+	std::string card_name;
+	std::size_t card_type;
+	std::size_t upgrade_version_id; //0 means the card has no upgrade version(already upgraded);
+	std::size_t cost;
+	bool is_reserve;
+	bool require_target; //true代表需要选择目标，false代表不用
+
+
+	info_to_battle_sys use_card(data_sys&);
+	info_to_battle_sys discard(data_sys&);
+	info_to_battle_sys remove(data_sys&);
+	info_to_battle_sys on_turn_end(data_sys&);
+};
+
+
+
+
+class artifact
+{
+public:
+	//~artifact();
+	//info_to_battle_sys on_battle_begin(); // adds buff to the player entity or the enemy entity(s)
+	//info_to_battle_sys on_exploring(); //has the same working theory as buffs does in battles
+	//void on_create();
+	//void on_delete();
+};
 
 class game_entity;
 
 class action
 {
 public:
-	//���������������˺����ܵ��˺���
 	action(std::size_t);
 	action(std::size_t id, std::size_t ttype, std::size_t tvalue);
 	action(std::size_t id, game_entity* tcaller, game_entity* tlistener, std::size_t ttype, std::size_t tvalue);
@@ -100,17 +142,27 @@ public:
 	game_entity* caller;
 	game_entity* listener;
 
-	//�˺���buff�ľ����������Ѫ���ж���
 	//it is a change_type value when action_id is not ADD_BUFF or REMOVE_BUFF.
 	//when the action_id is associated with buff actions, the value is a buff_type value.
 	std::size_t type;
 
 	//value is the damage/healing value when action_id is not ADD_BUFF or REMOVE_BUFF.
-	//ǰ�����ֽڱ�ʾbuff_life���������ֽڱ�ʾbuff_level
+	//first two bytes buff_life, ....buff_level
 	std::size_t value;
 };
-class event_e;
-//explore_selection �ǿ���ѡ���ѡ��
+class explore_selection;
+
+class event_e
+{
+public:
+	std::vector<explore_selection> selection;
+	std::vector<event_e> following_event;
+	std::string name;
+	std::string text;
+	std::size_t type;
+	std::size_t enemy_type;
+};
+
 class explore_selection
 {
 public:
@@ -126,8 +178,7 @@ public:
 	artifact atf;
 	card selected_card;
 	event_e next_event;
-};
-
+}; 
 class e_action
 {
 public:
@@ -140,6 +191,7 @@ public:
 	artifact atf;
 	card selected_card;
 };
+
 
 class info
 {
@@ -189,22 +241,17 @@ public:
 };
 
 
-//event_e ���¼�����һ���ڵ�
-class event_e
-{
-public:
-	std::vector<explore_selection> selection;//ѡ��/����ѡ���¼���ѡ��
-	std::vector<event_e> following_event;//�����ķ�֧�¼�
-	std::string name;//�¼������֣�ѡ��ĵ����֣�
-	std::string text;//��ʾ���¼�����
-	std::size_t type;//�¼������ࣨս����ѡ�񣬶���ѡ��
-	std::size_t enmey_type;//ս���¼��ĵ�������
-};
 
-//event_card ���¼���������һ���¼���
+
 class event_card
 {
 public:
 	event_e root;
 };
+
+
+
+
+
+
 

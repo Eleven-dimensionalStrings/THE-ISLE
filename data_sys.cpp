@@ -12,7 +12,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	{
 	case 0://打10
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &select_one_enemy, type_type::NORMAL, 10)});
+			, &player_data, &select_one_enemy, type_type::NORMAL, 100)});
 	case 1://加100力量
 		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
 			, &player_data, &player_data, buff_type::STRENGTH, fix_buff_value(10000, 100))});

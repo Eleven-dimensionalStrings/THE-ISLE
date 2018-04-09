@@ -1,8 +1,6 @@
 #pragma once
 #include <array>
 #include "message.h"
-#include "cards.h"
-#include "artifacts.h"
 #include "buff.h"
 class data_sys;
 //the definition of base class game_entity
@@ -22,11 +20,11 @@ public:
 	std::vector<buff>::iterator find_buff(std::size_t id);
 
 	data_sys& data;
-	int max_hp;//�������ֵ
-	int current_hp;//��ǰ����ֵ
-	int max_ap; // ����ж���
-	int current_ap;//��ǰ�ж���
-	std::vector<buff> buff_pool;//buff��
+	int max_hp;
+	int current_hp;
+	int max_ap;
+	int current_ap;
+	std::vector<buff> buff_pool;
 
 };
 

@@ -3,34 +3,51 @@
 #include "interacting.h"
 #include "battle_system.h"
 #include "t_draw_sys.h"
+#include "explore_system.h"
 using namespace std;
 int main()
 {
 	data_sys d;
 	battle_system b(d);
 	interacting_sys i(d);
+	explore_system e(d);
 	IMAGE buffer(window_unit_size::window_width, window_unit_size::window_height);
 	t_draw_sys dr(d);
 
 
-	/*easyx
-	initgraph(window_unit_size::window_width, window_unit_size::window_height);
+	//easyx
+	/*initgraph(window_unit_size::window_width, window_unit_size::window_height);
 	setbkcolor(WHITE);
 	cleardevice();*/
-	
 
 
+
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
-	d.cards_pool.push_back(card(0, 0, "打10", 1));
-	d.cards_pool.push_back(card(1, 1, "加100力量", 0));
-	//d.cards_pool.push_back(card(2, 2, "加100易伤", 1));
-	//d.cards_pool.push_back(card(3, 3, "加100毒", 1));
-	d.cards_pool.push_back(card(4, 4, "随机打", 0));
+	d.cards_pool.push_back(card(0));
+	d.cards_pool.push_back(card(1));
+	//d.cards_pool.push_back(card(2));
+	//d.cards_pool.push_back(card(3));
+	//d.cards_pool.push_back(card(4));
 	d.cards_deck = d.cards_pool;
+
+explore:
+	//explore loop
+	/*while (1)
+	{
+		e.update();
+
+
+		if (!d.enemies_data.empty())
+			goto battle;
+	}*/
+
+
+battle:
 	//进入战斗
+	//explore gives battle some info
 	while (1)
 	{
 
@@ -41,6 +58,10 @@ int main()
 		b.update();
 		b.send_message(d.player_data.on_turn_end());
 		b.update();
+		//enemy act
+
+		if (d.enemies_data.empty())
+			goto explore;
 	}
 	return 0;
 }

@@ -97,7 +97,7 @@ void battle_context::test_read()
 }
 
 interacting_sys::interacting_sys(data_sys & d) :data(d),
-present_context(new battle_context(this))
+present_battle_context(new battle_context(this)), present_explore_context(new explore_context(this))
 {
 }
 
@@ -145,10 +145,9 @@ void interacting_sys::update()
 		data.b_to_i_pipe.clear();
 		return;
 	}
-	//ï¿½ï¿½ï¿½ï¿½
 	//else if (from_explore_sys)
 	{
-		//Í¬ï¿½ï¿½
+		
 	}
 	present_battle_context->read_input();
 }
@@ -519,7 +518,7 @@ e_select_state::e_select_state(explore_context * e_c, event_e e_e)
 		get_data().choice_list = e_e.selection;
 		break;
 	case event_type::BATTLE:
-		//½Ó¿Ú
+		get_data().i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::START_BATTLE, e_e.enemy_type));
 		break;
 	case event_type::REMOVE_CARDS:
 		get_data().choice_list.clear();
@@ -557,16 +556,16 @@ e_select_state::e_select_state(explore_context * e_c, event_e e_e)
 
 void e_select_state::click_an_option(std::size_t pos)
 {
-	explore_selection temp = get_data().choice_list[pos + current_select_pos];
+	explore_selection temp = get_data().choice_list[pos + 3 * get_data().current_select_page];
 	get_data().i_to_e_pipe = info_to_explore_sys(e_action(temp));
-	get_data().choice_list.erase(get_data().choice_list.begin() + pos + current_select_pos, get_data().choice_list.begin() + pos + current_select_pos + 1);
+	get_data().choice_list.erase(get_data().choice_list.begin() + pos + 3 * get_data().current_select_page, get_data().choice_list.begin() + pos + get_data().current_select_page + 1);
 	if (get_data().choice_list.empty())
 	{
 		ctx->set_state(&e_select_state(ctx, current_phase.following_event[0]));
 	}
-	else if (get_data().choice_list.size() == current_select_pos)
+	else if (get_data().choice_list.size() == 3 * get_data().current_select_page)
 	{
-		current_select_pos -= 3;
+		get_data().current_select_page -= 1;
 	}
 }
 
@@ -580,33 +579,33 @@ void e_select_state::click_next()
 
 void e_select_state::click_up_arrow()
 {
-	if (current_select_pos > 0)
+	if (get_data().current_select_page > 0)
 	{
-		current_select_pos -= 3;
+		get_data().current_select_page -= 1;
 	}
 }
 
 void e_select_state::click_down_arrow()
 {
-	if (current_select_pos < get_data().choice_list.size() - 3)
+	if (get_data().current_select_page < get_data().choice_list.size() / 3)
 	{
-		current_select_pos += 3;
+		get_data().current_select_page += 1;
 	}
 }
 
 void e_select_state::click_left_arrow()
 {
-	if (current_select_pos > 0)
+	if (get_data().current_select_page > 0)
 	{
-		current_select_pos -= 3;
+		get_data().current_select_page -= 1;
 	}
 }
 
 void e_select_state::click_right_arrow()
 {
-	if (current_select_pos < get_data().choice_list.size() - 3)
+	if (get_data().current_select_page < get_data().choice_list.size() / 3)
 	{
-		current_select_pos += 3;
+		get_data().current_select_page += 1;
 	}
 }
 

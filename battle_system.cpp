@@ -35,10 +35,12 @@ void battle_system::process()
 {
 	while (!process_stack.empty())
 	{
-		if (battle_finishes())
+		//TODO battle_fail
+		if (battle_succ())
 		{
 			while (!process_stack.empty())process_stack.pop();
 			//TODO
+			data.enemies_data.clear();
 			break;
 		}
 		action temp = process_stack.top();
@@ -103,11 +105,10 @@ void battle_system::process()
 			}
 			break;
 		}
-		case ADD_BUFF://11,����12/13��game_entity����Ҫ�ƶ�����
+		case ADD_BUFF:
 		{
 
 			auto it = temp.listener->buff_pool.end();
-			//�ȿ���,֮��дfind
 			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
 			{
 				*it += buff(temp.type, get_buff_life(temp.value), get_buff_level(temp.value));
@@ -194,7 +195,7 @@ void battle_system::process()
 	}
 }
 
-bool battle_system::battle_finishes()
+bool battle_system::battle_succ()
 {
 	if (!data.player_data.is_alive())return 1;
 	for (auto& i : data.enemies_data)

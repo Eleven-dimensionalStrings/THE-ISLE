@@ -2,8 +2,6 @@
 #include <vector> 
 #include <map>
 #include <functional>
-#include "artifacts.h"
-#include "cards.h"
 #include "game_entity.h"
 
 
@@ -43,5 +41,7 @@ public:
 	std::pair<int, int> player_location;
 	std::vector<explore_selection> choice_list;
 	std::map<std::size_t, event_card> event_effect;
-
+	//to determine explore context
+	std::size_t current_select_page;//indicates the position of the first selection in choice_list.  
+	bool is_vaccant;
 };

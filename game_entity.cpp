@@ -186,6 +186,8 @@ info_to_battle_sys enemy::on_turn_begin()
 	{
 		t.append(i.on_turn_begin(this));
 	}
+
+
 	return t;
 }
 

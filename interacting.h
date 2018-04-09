@@ -154,7 +154,6 @@ private:
 	event_e current_phase;
 	bool is_mandatory;
 	std::size_t max_amount;
-	std::size_t current_select_pos;//indicates the position of the first selection in choice_list.  
 };
 
 class interacting_sys
@@ -168,7 +167,6 @@ public:
 	void move_player(int x, int y);
 	void set_map_location(int x, int y, int mark_type);
 	void reveal_map_location(int x, int y);
-	//void encounter_event(std::size_t event_card_no);
-	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);
+	void encounter_event(std::size_t event_card_no);
 	void update();
 };

@@ -1,6 +1,6 @@
+#include <iostream>
 #include "message.h"
-#include "artifacts.h"
-#include "cards.h"
+#include "data_sys.h"
 using namespace std;
 
 info_to_battle_sys::info_to_battle_sys() 
@@ -158,3 +158,104 @@ explore_selection::explore_selection(std::size_t ttype, std::size_t tvalue, arti
 	: type(ttype), value(tvalue), atf(tatf)
 {
 }
+
+card::card()
+{
+}
+
+card::card(size_t id) 
+{
+	switch (id)
+	{
+	case 0:
+	{
+		card_id = id;
+		card_name = "打100";
+		card_type = card_type::attack;
+		upgrade_version_id = 0;
+		cost = 1;
+		is_reserve = 0;
+		require_target = 1;
+		break;
+	}
+	case 1:
+	{
+		card_id = id;
+		card_name = "100力量";
+		card_type = card_type::skill;
+		upgrade_version_id = 0;
+		cost = 1;
+		is_reserve = 0;
+		require_target = 0;
+		break;
+	}
+	case 2:
+	{
+		card_name = "打100";
+		card_type = card_type::attack;
+		upgrade_version_id = 0;
+		cost = 1;
+		is_reserve = 0;
+		require_target = 1;
+	}
+	case 3:
+	{
+		card_name = "打100";
+		card_type = card_type::attack;
+		upgrade_version_id = 0;
+		cost = 1;
+		is_reserve = 0;
+		require_target = 1;
+	}
+	case 4:
+	{
+		card_name = "打100";
+		card_type = card_type::attack;
+		upgrade_version_id = 0;
+		cost = 1;
+		is_reserve = 0;
+		require_target = 1;
+	}
+	default:
+		break;
+	}
+}
+
+card::card(const card& copy_card) : is_reserve(copy_card.is_reserve), card_id(copy_card.card_id),
+card_name(copy_card.card_name), card_type(copy_card.card_type), upgrade_version_id(copy_card.upgrade_version_id),
+require_target(copy_card.require_target)
+{
+}
+
+card & card::operator=(const card & c)
+{
+	this->is_reserve = c.is_reserve;
+	this->card_id = c.card_id;
+	this->card_name = c.card_name;
+	this->card_type = c.card_type;
+	this->upgrade_version_id = c.upgrade_version_id;
+	this->require_target = c.require_target;
+	return *this;
+}
+
+
+info_to_battle_sys card::use_card(data_sys&d)
+{
+	return d.card_effect(card_id);
+}
+
+info_to_battle_sys card::discard(data_sys&)
+{
+	return info_to_battle_sys();
+}
+
+info_to_battle_sys card::remove(data_sys&)
+{
+	return info_to_battle_sys();
+}
+
+info_to_battle_sys card::on_turn_end(data_sys&)
+{
+	return info_to_battle_sys();
+}
+
