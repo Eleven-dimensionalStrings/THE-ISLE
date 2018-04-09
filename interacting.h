@@ -2,6 +2,7 @@
 #include <iostream>
 #include "message.h"
 #include "data_sys.h"
+#include "explore_system.h"
 class b_state;
 class interacting_sys;
 
@@ -141,24 +142,19 @@ public:
 
 class e_select_state : public e_state
 {
-	e_select_state(explore_context*);
+public:
+	e_select_state(explore_context*, event_e);
 	void click_an_option(std::size_t);
 	void click_next();
 	void click_up_arrow();
 	void click_down_arrow();
 	void click_left_arrow();
 	void click_right_arrow();
-};
-
-class e_multi_select_state : public e_state
-{
-	e_multi_select_state(explore_context*);
-	/*void click_an_option(std::size_t);
-	void click_next();
-	void click_up_arrow();
-	void click_down_arrow();
-	void click_left_arrow();
-	void click_right_arrow();*/
+private:
+	event_e current_phase;
+	bool is_mandatory;
+	std::size_t max_amount;
+	std::size_t current_select_pos;//indicates the position of the first selection in choice_list.  
 };
 
 class interacting_sys
@@ -166,7 +162,9 @@ class interacting_sys
 public:
 	interacting_sys(data_sys& d);
 	data_sys& data;
-	context* present_context;
+	battle_context* present_battle_context;
+	explore_context* present_explore_context;
+	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);
 	void move_player(int x, int y);
 	void set_map_location(int x, int y, int mark_type);
 	void reveal_map_location(int x, int y);

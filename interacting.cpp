@@ -131,11 +131,17 @@ void interacting_sys::reveal_map_location(int x, int y)
 	//call the renderer to reveal the map
 }
 
+void interacting_sys::encounter_event(std::size_t event_card_no)
+{
+	event_card temp = data.event_effect.find(event_card_no)->second;
+	present_explore_context->set_state(&e_select_state(present_explore_context, temp.root));
+}
+
 void interacting_sys::update()
 {
 	if (data.b_to_i_pipe)
 	{
-		(dynamic_cast<battle_context*>(present_context))->change_to_select_state(data.b_to_i_pipe);
+		present_battle_context->change_to_select_state(data.b_to_i_pipe);
 		data.b_to_i_pipe.clear();
 		return;
 	}
@@ -144,7 +150,7 @@ void interacting_sys::update()
 	{
 		//Í¬ï¿½ï¿½
 	}
-	present_context->read_input();
+	present_battle_context->read_input();
 }
 
 b_state::b_state(battle_context * b_c)
@@ -499,42 +505,108 @@ e_state::e_state(explore_context *tcontext)
 {
 }
 
-e_select_state::e_select_state(explore_context * e_c)
-	:e_state(e_c)
+e_select_state::e_select_state(explore_context * e_c, event_e e_e)
+	: e_state(e_c), current_phase(e_e)
 {
+	switch (current_phase.type)
+	{
+	case event_type::SELECT:
+		get_data().choice_list.clear();
+		get_data().choice_list = e_e.selection;
+		break;
+	case event_type::SELECT_NEXT_EVENT:
+		get_data().choice_list.clear();
+		get_data().choice_list = e_e.selection;
+		break;
+	case event_type::BATTLE:
+		//½Ó¿Ú
+		break;
+	case event_type::REMOVE_CARDS:
+		get_data().choice_list.clear();
+		for (int i = 0; i < get_data().cards_pool.size(); i++)
+		{
+			get_data().choice_list.push_back(explore_selection(explore_action_type::REMOVE_CARD, i, get_data().cards_pool[i]));
+		}
+		break;
+	case event_type::UPGRADE_CARDS:
+		get_data().choice_list.clear();
+		for (int i = 0; i < get_data().cards_pool.size(); i++)
+		{
+			if (get_data().cards_pool[i].upgrade_version_id != 0)
+			{
+				get_data().choice_list.push_back(explore_selection(explore_action_type::UPGRADE_CARD, i, get_data().cards_pool[i]));
+			}
+		}
+		break;
+	case event_type::CHANGE_CARDS:
+		get_data().choice_list.clear();
+		for (int i = 0; i < get_data().cards_pool.size(); i++)
+		{
+			get_data().choice_list.push_back(explore_selection(explore_action_type::CHANGE_CARD, i, get_data().cards_pool[i]));
+		}
+		break;
+	case event_type::REMOVE_ARTIFACTS:
+		get_data().choice_list.clear();
+		for (int i = 0; i < get_data().artifacts.size(); i++)
+		{
+			get_data().choice_list.push_back(explore_selection(explore_action_type::REMOVE_ARTIFACT, i, get_data().artifacts[i]));
+		}
+		break;
+	}
 }
 
-void e_select_state::click_an_option(std::size_t)
+void e_select_state::click_an_option(std::size_t pos)
 {
-
+	explore_selection temp = get_data().choice_list[pos + current_select_pos];
+	get_data().i_to_e_pipe = info_to_explore_sys(e_action(temp));
+	get_data().choice_list.erase(get_data().choice_list.begin() + pos + current_select_pos, get_data().choice_list.begin() + pos + current_select_pos + 1);
+	if (get_data().choice_list.empty())
+	{
+		ctx->set_state(&e_select_state(ctx, current_phase.following_event[0]));
+	}
+	else if (get_data().choice_list.size() == current_select_pos)
+	{
+		current_select_pos -= 3;
+	}
 }
 
 void e_select_state::click_next()
 {
-
+	if (!is_mandatory)
+	{
+		ctx->set_state(&e_select_state(ctx, current_phase.following_event[0]));
+	}
 }
 
 void e_select_state::click_up_arrow()
 {
-	//switch page
+	if (current_select_pos > 0)
+	{
+		current_select_pos -= 3;
+	}
 }
 
 void e_select_state::click_down_arrow()
 {
-
+	if (current_select_pos < get_data().choice_list.size() - 3)
+	{
+		current_select_pos += 3;
+	}
 }
 
 void e_select_state::click_left_arrow()
 {
-
+	if (current_select_pos > 0)
+	{
+		current_select_pos -= 3;
+	}
 }
 
 void e_select_state::click_right_arrow()
 {
-
+	if (current_select_pos < get_data().choice_list.size() - 3)
+	{
+		current_select_pos += 3;
+	}
 }
 
-e_multi_select_state::e_multi_select_state(explore_context * e_c)
-	:e_state(e_c)
-{
-}

@@ -1,6 +1,5 @@
 #pragma once
 #include <array>
-//#include "managers.h"
 #include "message.h"
 #include "cards.h"
 #include "artifacts.h"
@@ -23,11 +22,11 @@ public:
 	std::vector<buff>::iterator find_buff(std::size_t id);
 
 	data_sys& data;
-	int max_hp;//×î´óÉúÃüÖµ
-	int current_hp;//µ±Ç°ÉúÃüÖµ
-	int max_ap; // ×î´óÐÐ¶¯Á¦
-	int current_ap;//µ±Ç°ÐÐ¶¯Á¦
-	std::vector<buff> buff_pool;//buffÇø
+	int max_hp;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+	int current_hp;//ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Öµ
+	int max_ap; // ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½
+	int current_ap;//ï¿½ï¿½Ç°ï¿½Ð¶ï¿½ï¿½ï¿½
+	std::vector<buff> buff_pool;//buffï¿½ï¿½
 
 };
 

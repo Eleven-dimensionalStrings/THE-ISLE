@@ -103,11 +103,11 @@ void battle_system::process()
 			}
 			break;
 		}
-		case ADD_BUFF://11,»¹ÓÐ12/13ÔÚgame_entityÖÐÐèÒªÒÆ¶¯¹ýÀ´
+		case ADD_BUFF://11,ï¿½ï¿½ï¿½ï¿½12/13ï¿½ï¿½game_entityï¿½ï¿½ï¿½ï¿½Òªï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½
 		{
 
 			auto it = temp.listener->buff_pool.end();
-			//ÏÈ¿Õ×Å,Ö®ºóÐ´find
+			//ï¿½È¿ï¿½ï¿½ï¿½,Ö®ï¿½ï¿½Ð´find
 			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
 			{
 				*it += buff(temp.type, get_buff_life(temp.value), get_buff_level(temp.value));
