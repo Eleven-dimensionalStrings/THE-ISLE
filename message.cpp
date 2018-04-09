@@ -1,4 +1,6 @@
 #include "message.h"
+#include "artifacts.h"
+#include "cards.h"
 using namespace std;
 
 info_to_battle_sys::info_to_battle_sys() 

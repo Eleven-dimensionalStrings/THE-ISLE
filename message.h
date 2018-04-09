@@ -5,7 +5,8 @@
 #define MAX_ENEMIES 5
 #define MEANINGLESS_VALUE static_cast<std::size_t>(31415926)
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
-
+class artifact;
+class card;
 namespace map_mark_type
 {
 	const int EMPTY = -1;
@@ -27,18 +28,15 @@ namespace battle_action_type
 	const std::size_t ADD_BUFF = 11;
 	const std::size_t REMOVE_BUFF = 12;
 	const std::size_t MULTIPLY_BUFF = 13;
-	const std::size_t USE_A_CARD = 2333;//action��typeΪ��Ƭ����,valueΪ�����еĵڼ��ſ�
-	//������˸�action��,typeֱ�ӱ�ʾ�Ƿ�ǿ��ѡ����ô���ſ�
-	//������ʹ�ÿ�Ƭʱ�õ���action
-	const std::size_t KEEP_A_CARD = 10000;//�غϽ���ʱ�������ſ�
-	const std::size_t REMOVE_A_CARD = 10001;//��������
-	const std::size_t DISCARD_A_CARD = 10002;//��Ч��Ӱ������
-	const std::size_t DRAW_CARDS = 10003;//�鿨,value��ʾ�������,����buff�Ĳ�����on_callingִ��
-	//�����P����perform,����interactingѡ�꿨Ƭ�󴫻�ս��ϵͳ,ִ�о��������
-	const std::size_t P_KEEP_A_CARD = 10100;//�غϽ���ʱ�������ſ�
-	const std::size_t P_REMOVE_A_CARD = 10101;//��������
-	const std::size_t P_DISCARD_A_CARD = 10102;//��Ч��Ӱ������
-	const std::size_t ENTITY_BE_ATK = 10300;//ʵ���յ�����,����battle������Ϣ��draw
+	const std::size_t USE_A_CARD = 2333;
+	const std::size_t KEEP_A_CARD = 10000;
+	const std::size_t REMOVE_A_CARD = 10001;
+	const std::size_t DISCARD_A_CARD = 10002;
+	const std::size_t DRAW_CARDS = 10003;
+	const std::size_t P_KEEP_A_CARD = 10100;
+	const std::size_t P_REMOVE_A_CARD = 10101;
+	const std::size_t P_DISCARD_A_CARD = 10102;
+	const std::size_t ENTITY_BE_ATK = 10300;
 }
 
 namespace event_type
@@ -111,6 +109,24 @@ public:
 	//ǰ�����ֽڱ�ʾbuff_life���������ֽڱ�ʾbuff_level
 	std::size_t value;
 };
+class event_e;
+//explore_selection �ǿ���ѡ���ѡ��
+class explore_selection
+{
+public:
+	explore_selection();
+	explore_selection(std::size_t ttype, std::size_t tvalue);
+	explore_selection(std::size_t ttype, card tcard);
+	explore_selection(std::size_t ttype, artifact tatf);
+	explore_selection(std::size_t ttype, event_e tevent);
+	explore_selection(std::size_t ttype, std::size_t tvalue, card tcard);
+	explore_selection(std::size_t ttype, std::size_t tvalue, artifact tatf);
+	std::size_t type;
+	std::size_t value;
+	artifact atf;
+	card selected_card;
+	event_e next_event;
+};
 
 class e_action
 {
@@ -172,23 +188,6 @@ public:
 	void clear();
 };
 
-//explore_selection �ǿ���ѡ���ѡ��
-class explore_selection
-{
-public:
-	explore_selection();
-	explore_selection(std::size_t ttype, std::size_t tvalue);
-	explore_selection(std::size_t ttype, card tcard);
-	explore_selection(std::size_t ttype, artifact tatf);
-	explore_selection(std::size_t ttype, event_e tevent);
-	explore_selection(std::size_t ttype, std::size_t tvalue, card tcard);
-	explore_selection(std::size_t ttype, std::size_t tvalue, artifact tatf);
-	std::size_t type;
-	std::size_t value;
-	artifact atf;
-	card selected_card;
-	event_e next_event;
-};
 
 //event_e ���¼�����һ���ڵ�
 class event_e
