@@ -1,6 +1,5 @@
 #pragma once
 #include <array>
-#include "managers.h"
 #include "message.h"
 #include "cards.h"
 #include "artifacts.h"

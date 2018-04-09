@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdlib>
 #include "game_entity.h"
+#include "cards.h"
 #include <vector>
 #define MAX_ENEMIES 5
 #define MEANINGLESS_VALUE static_cast<unsigned int>(31415926)
@@ -37,7 +38,16 @@ namespace battle_action_type
 	const unsigned int P_DISCARD_A_CARD = 10102;//受效果影响弃牌
 }
 
-
+namespace event_type
+{
+	const unsigned int SELECT = 1;
+	const unsigned int BATTLE = 2;
+	const unsigned int REMOVE_CARDS = 3;
+	const unsigned int UPGRADE_CARDS = 4;
+	const unsigned int CHANGE_CARDS = 5;
+	const unsigned int REMOVE_ARTIFACTS = 6;
+	const unsigned int SELECT_NEXT_EVENT = 7;
+}
 
 //action里type的具体类别，即伤害、buff的具体类别
 namespace type_type
@@ -77,6 +87,19 @@ public:
 	std::size_t value;
 };
 
+class e_action
+{
+public:
+	e_action(std::size_t id, std::size_t tvalue);
+	e_action(std::size_t id, artifact tatf);
+	e_action(std::size_t id, card tcard);
+	e_action(explore_selection exp_s);
+	std::size_t action_id;
+	std::size_t value;
+	artifact atf;
+	card selected_card;
+};
+
 class info
 {
 public:
@@ -96,10 +119,13 @@ public:
 class info_to_explore_sys : public info
 {
 public:
-	std::queue<int> value;
+	info_to_explore_sys();
+	info_to_explore_sys(e_action);
+	void append(info_to_explore_sys);
+	std::vector<e_action> action_set;
 };
 
-class info_battle_to_interacting :public info
+class info_battle_to_interacting : public info
 {
 public:
 	info_battle_to_interacting();
@@ -110,7 +136,50 @@ public:
 	void clear();
 };
 
+class info_explore_to_interacting : public info
+{
+public:
+	info_explore_to_interacting();
+	info_explore_to_interacting(std::size_t ttype, std::size_t tnum);
+	std::size_t type, num;
+	operator bool();
+	void clear();
+};
 
+//explore_selection 是可以选择的选项
+class explore_selection
+{
+public:
+	explore_selection();
+	explore_selection(std::size_t ttype, std::size_t tvalue);
+	explore_selection(std::size_t ttype, card tcard);
+	explore_selection(std::size_t ttype, artifact tatf);
+	explore_selection(std::size_t ttype, event_e tevent);
+	explore_selection(std::size_t ttype, std::size_t tvalue, card tcard);
+	explore_selection(std::size_t ttype, std::size_t tvalue, artifact tatf);
+	std::size_t type;
+	std::size_t value;
+	artifact atf;
+	card selected_card;
+	event_e next_event;
+};
 
+//event_e 是事件树的一个节点
+class event_e
+{
+public:
+	std::vector<explore_selection> selection;//选择/多项选择事件的选项
+	std::vector<event_e> following_event;//后续的分支事件
+	std::string name;//事件的名字（选项的的名字）
+	std::string text;//显示的事件剧情
+	std::size_t type;//事件的种类（战斗，选择，多项选择）
+	std::size_t enmey_type;//战斗事件的敌人种类
+};
 
+//event_card 是事件卡，就是一棵事件树
+class event_card
+{
+public:
+	event_e root;
+};
 

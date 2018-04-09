@@ -127,11 +127,9 @@
     <ClInclude Include="battle_system.h" />
     <ClInclude Include="buff.h" />
     <ClInclude Include="cards.h" />
-    <ClInclude Include="event_cards.h" />
     <ClInclude Include="explore_system.h" />
     <ClInclude Include="game_entity.h" />
     <ClInclude Include="interacting.h" />
-    <ClInclude Include="managers.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="data_sys.h" />
   </ItemGroup>

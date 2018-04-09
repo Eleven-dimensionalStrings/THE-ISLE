@@ -39,11 +39,6 @@ bool battle_system::interpret_message(info_to_battle_sys input)
 	delete &input;
 }
 
-info* battle_system::create_message()
-{
-
-}
-
 void battle_system::process()
 {
 	while (!process_stack.empty())
