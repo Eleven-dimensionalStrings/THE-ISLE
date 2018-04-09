@@ -1,6 +1,5 @@
 #pragma once
 #include <ctime>
-//#include "managers.h"
 #include "game_entity.h"
 #include "message.h"
 #include <stack>
@@ -13,6 +12,7 @@ public:
 	void update();
 	void send_message(info_to_battle_sys);
 private:
+	bool interpret_message(info_to_battle_sys);
 	data_sys & data;
 	std::stack<action> process_stack;
 	void process();
@@ -21,7 +21,7 @@ private:
 
 
 
-//临时使用:
+//锟斤拷时使锟斤拷:
 class my_random_engine
 {
 public:

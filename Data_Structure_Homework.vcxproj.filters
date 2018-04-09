@@ -59,12 +59,14 @@
     <ClInclude Include="message.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="explore_system.h">
     <ClInclude Include="game_entity.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="data_sys.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="game_entity.h">
     <ClInclude Include="interacting.h">
       <Filter>头文件</Filter>
     </ClInclude>

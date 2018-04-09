@@ -9,10 +9,10 @@
 namespace map_mark_type
 {
 	const int EMPTY = -1;
-	const int PLAYER = 0;//Íæ¼ÒËù´¦Î»ÖÃ
-	const int UNKNOWN = 1;//Ã»ÓÐÈ¥¹ý
-	const int KNOWN = 2;//ÒÑ¾­·­¿ª£¬µ«ÊÇÃ»ÓÐÈ¥¹ý
-	const int VISITED = 3;//ÒÑ¾­È¥¹ý
+	const int PLAYER = 0;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
+	const int UNKNOWN = 1;//Ã»ï¿½ï¿½È¥ï¿½ï¿½
+	const int KNOWN = 2;//ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½È¥ï¿½ï¿½
+	const int VISITED = 3;//ï¿½Ñ¾ï¿½È¥ï¿½ï¿½
 }
 
 namespace battle_action_type
@@ -27,23 +27,32 @@ namespace battle_action_type
 	const std::size_t ADD_BUFF = 11;
 	const std::size_t REMOVE_BUFF = 12;
 	const std::size_t MULTIPLY_BUFF = 13;
-	const std::size_t USE_A_CARD = 2333;//actionÖÐtypeÎª¿¨Æ¬ÀàÐÍ,valueÎªÊÖÅÆÖÐµÄµÚ¼¸ÕÅ¿¨
-	//ÔÚÏÂÃæ°Ë¸öactionÖÐ,typeÖ±½Ó±íÊ¾ÊÇ·ñÇ¿ÖÆÑ¡ÂúÄÇÃ´¶àÕÅ¿¨
-	//ÏÂÃæÊÇÊ¹ÓÃ¿¨Æ¬Ê±µÃµ½µÄaction
-	const std::size_t KEEP_A_CARD = 10000;//»ØºÏ½áÊøÊ±±£ÁôÕâÕÅ¿¨
-	const std::size_t REMOVE_A_CARD = 10001;//½«¿¨³ýÍâ
-	const std::size_t DISCARD_A_CARD = 10002;//ÊÜÐ§¹ûÓ°ÏìÆúÅÆ
-	const std::size_t DRAW_CARDS = 10003;//³é¿¨,value±íÊ¾³é¶àÉÙÕÅ,±éÀúbuffµÄ²Ù×÷ÔÚon_callingÖ´ÐÐ
-	//ÏÂÃæµÄP´ú±íperform,ÊÇÔÚinteractingÑ¡Íê¿¨Æ¬ºó´«»ØÕ½¶·ÏµÍ³,Ö´ÐÐ¾ßÌå²Ù×÷µÄ
-	const std::size_t P_KEEP_A_CARD = 10100;//»ØºÏ½áÊøÊ±±£ÁôÕâÕÅ¿¨
-	const std::size_t P_REMOVE_A_CARD = 10101;//½«¿¨³ýÍâ
-	const std::size_t P_DISCARD_A_CARD = 10102;//ÊÜÐ§¹ûÓ°ÏìÆúÅÆ
-	const std::size_t ENTITY_BE_ATK = 10300;//ÊµÌåÊÕµ½¹¥»÷,ÔÙÓÉbattle´«µÝÏûÏ¢¸ødraw
+	const std::size_t USE_A_CARD = 2333;//actionï¿½ï¿½typeÎªï¿½ï¿½Æ¬ï¿½ï¿½ï¿½ï¿½,valueÎªï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄµÚ¼ï¿½ï¿½Å¿ï¿½
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¸ï¿½actionï¿½ï¿½,typeÖ±ï¿½Ó±ï¿½Ê¾ï¿½Ç·ï¿½Ç¿ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½Å¿ï¿½
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã¿ï¿½Æ¬Ê±ï¿½Ãµï¿½ï¿½ï¿½action
+	const std::size_t KEEP_A_CARD = 10000;//ï¿½ØºÏ½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¿ï¿½
+	const std::size_t REMOVE_A_CARD = 10001;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	const std::size_t DISCARD_A_CARD = 10002;//ï¿½ï¿½Ð§ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	const std::size_t DRAW_CARDS = 10003;//ï¿½é¿¨,valueï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½buffï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½on_callingÖ´ï¿½ï¿½
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Pï¿½ï¿½ï¿½ï¿½perform,ï¿½ï¿½ï¿½ï¿½interactingÑ¡ï¿½ê¿¨Æ¬ï¿½ó´«»ï¿½Õ½ï¿½ï¿½ÏµÍ³,Ö´ï¿½Ð¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	const std::size_t P_KEEP_A_CARD = 10100;//ï¿½ØºÏ½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å¿ï¿½
+	const std::size_t P_REMOVE_A_CARD = 10101;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	const std::size_t P_DISCARD_A_CARD = 10102;//ï¿½ï¿½Ð§ï¿½ï¿½Ó°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	const std::size_t ENTITY_BE_ATK = 10300;//Êµï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½battleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½draw
 }
 
+namespace event_type
+{
+	const unsigned int SELECT = 1;
+	const unsigned int BATTLE = 2;
+	const unsigned int REMOVE_CARDS = 3;
+	const unsigned int UPGRADE_CARDS = 4;
+	const unsigned int CHANGE_CARDS = 5;
+	const unsigned int REMOVE_ARTIFACTS = 6;
+	const unsigned int SELECT_NEXT_EVENT = 7;
+}
 
-
-//actionÀïtypeµÄ¾ßÌåÀà±ð£¬¼´ÉËº¦¡¢buffµÄ¾ßÌåÀà±ð
+//actionï¿½ï¿½typeï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ð£¬¼ï¿½ï¿½Ëºï¿½ï¿½ï¿½buffï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 namespace type_type
 {
 	const std::size_t NORMAL = 1;
@@ -60,8 +69,8 @@ namespace type_type
 namespace buff_type
 {
 	const std::size_t STRENGTH = 0;
-	const std::size_t VULNERABLE = 1;//Ò×ÉË
-	const std::size_t POISON = 2;//Ò×ÉË
+	const std::size_t VULNERABLE = 1;//ï¿½ï¿½ï¿½ï¿½
+	const std::size_t POISON = 2;//ï¿½ï¿½ï¿½ï¿½
 }
 
 namespace window_unit_size
@@ -69,13 +78,13 @@ namespace window_unit_size
 	using cstszt = const std::size_t;
 	cstszt window_width = 1200;
 	cstszt window_height = 720;
-	//ÊÖÅÆÇøÓò
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	cstszt card_in_hand_up = 500;
 	cstszt card_in_hand_down = 720;
 	cstszt card_in_hand_left = 0;
 	cstszt card_in_hand_right = 900;
-	cstszt card_width = 100;//Ã¿ÕÅÅÆµÄ¿í¶È
-	cstszt card_up = 510;//ÅÆµÄÎ»ÖÃ
+	cstszt card_width = 100;//Ã¿ï¿½ï¿½ï¿½ÆµÄ¿ï¿½ï¿½
+	cstszt card_up = 510;//ï¿½Æµï¿½Î»ï¿½ï¿½
 	cstszt card_down = 710;
 	cstszt card_closure = 10;
 }
@@ -85,7 +94,7 @@ class game_entity;
 class action
 {
 public:
-	//¶¯×÷µÄÀà±ð£¬ÈçÔì³ÉÉËº¦¡¢ÊÜµ½ÉËº¦µÈ
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½Üµï¿½ï¿½Ëºï¿½ï¿½ï¿½
 	action(std::size_t);
 	action(std::size_t id, std::size_t ttype, std::size_t tvalue);
 	action(std::size_t id, game_entity* tcaller, game_entity* tlistener, std::size_t ttype, std::size_t tvalue);
@@ -93,14 +102,27 @@ public:
 	game_entity* caller;
 	game_entity* listener;
 
-	//ÉËº¦¡¢buffµÄ¾ßÌåÀà±ð£¬ÈçÎüÑª¡¢ÖÐ¶¾µÈ
+	//ï¿½Ëºï¿½ï¿½ï¿½buffï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñªï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½
 	//it is a change_type value when action_id is not ADD_BUFF or REMOVE_BUFF.
 	//when the action_id is associated with buff actions, the value is a buff_type value.
 	std::size_t type;
 
 	//value is the damage/healing value when action_id is not ADD_BUFF or REMOVE_BUFF.
-	//Ç°Á½¸ö×Ö½Ú±íÊ¾buff_life£¬ºóÁ½¸ö×Ö½Ú±íÊ¾buff_level
+	//Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Ö½Ú±ï¿½Ê¾buff_lifeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½Ú±ï¿½Ê¾buff_level
 	std::size_t value;
+};
+
+class e_action
+{
+public:
+	e_action(std::size_t id, std::size_t tvalue);
+	e_action(std::size_t id, artifact tatf);
+	e_action(std::size_t id, card tcard);
+	e_action(explore_selection exp_s);
+	std::size_t action_id;
+	std::size_t value;
+	artifact atf;
+	card selected_card;
 };
 
 class info
@@ -123,10 +145,13 @@ public:
 class info_to_explore_sys : public info
 {
 public:
-	std::queue<int> value;
+	info_to_explore_sys();
+	info_to_explore_sys(e_action);
+	void append(info_to_explore_sys);
+	std::vector<e_action> action_set;
 };
 
-class info_battle_to_interacting :public info
+class info_battle_to_interacting : public info
 {
 public:
 	info_battle_to_interacting();
@@ -137,7 +162,50 @@ public:
 	void clear();
 };
 
+class info_explore_to_interacting : public info
+{
+public:
+	info_explore_to_interacting();
+	info_explore_to_interacting(std::size_t ttype, std::size_t tnum);
+	std::size_t type, num;
+	operator bool();
+	void clear();
+};
 
+//explore_selection ï¿½Ç¿ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½
+class explore_selection
+{
+public:
+	explore_selection();
+	explore_selection(std::size_t ttype, std::size_t tvalue);
+	explore_selection(std::size_t ttype, card tcard);
+	explore_selection(std::size_t ttype, artifact tatf);
+	explore_selection(std::size_t ttype, event_e tevent);
+	explore_selection(std::size_t ttype, std::size_t tvalue, card tcard);
+	explore_selection(std::size_t ttype, std::size_t tvalue, artifact tatf);
+	std::size_t type;
+	std::size_t value;
+	artifact atf;
+	card selected_card;
+	event_e next_event;
+};
 
+//event_e ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Úµï¿½
+class event_e
+{
+public:
+	std::vector<explore_selection> selection;//Ñ¡ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½
+	std::vector<event_e> following_event;//ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½Ö§ï¿½Â¼ï¿½
+	std::string name;//ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö£ï¿½Ñ¡ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½Ö£ï¿½
+	std::string text;//ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½
+	std::size_t type;//ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½à£¨Õ½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ñ£¬¶ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½
+	std::size_t enmey_type;//Õ½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+};
 
+//event_card ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½
+class event_card
+{
+public:
+	event_e root;
+};
 
