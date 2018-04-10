@@ -1,6 +1,5 @@
 #include <string>
 #include "message.h"
-//#include "managers.h"
 #include "battle_system.h"
 #include "game_entity.h"
 #include "data_sys.h"

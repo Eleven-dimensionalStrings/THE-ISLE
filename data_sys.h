@@ -47,3 +47,9 @@ public:
 	std::size_t current_select_page;//indicates the position of the first selection in choice_list.  
 	bool is_vaccant;
 };
+
+class random_engine
+{
+public:
+	size_t get_num(size_t lb, size_t ub);
+};

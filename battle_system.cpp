@@ -96,10 +96,14 @@ void battle_system::process()
 				{
 					c_deck = my_random_engine::xipai(std::move(c_grave));
 				}
-				if (c_deck.size())
-
+				if (c_deck.size() && c_in_hand.size() <= MAX_CARDS_IN_HAND)
 				{
 					c_in_hand.push_back(c_deck.back());
+					c_deck.pop_back();
+				}
+				else
+				{
+					c_grave.push_back(c_deck.back());
 					c_deck.pop_back();
 				}
 			}
@@ -107,7 +111,6 @@ void battle_system::process()
 		}
 		case ADD_BUFF:
 		{
-
 			auto it = temp.listener->buff_pool.end();
 			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
 			{
@@ -131,7 +134,7 @@ void battle_system::process()
 		case P_REMOVE_A_CARD:
 		{
 			vector<card>& c_in_hand = data.cards_in_hand;
-			vector<card>& c_removed = data.cards_in_hand;
+			vector<card>& c_removed = data.cards_removed;
 			c_removed.push_back(c_in_hand[temp.value]);
 			c_in_hand.erase(c_in_hand.begin() + temp.value);
 			break;
@@ -191,9 +194,82 @@ void battle_system::process()
 		}
 		case battle_action_type::USE_A_CARD:
 		{
-			data.cards_grave.push_back(data.cards_in_hand[temp.value]);
-			data.cards_in_hand.erase(data.cards_in_hand.begin() + temp.value);
-			//TODO
+			vector<card>& c_in_hand = data.cards_in_hand;
+			vector<card>& c_grave = data.cards_grave;
+			vector<card>& c_removed = data.cards_removed;
+			vector<card>& c_equiped = data.cards_equiped;
+			if (data.cards_in_hand[temp.value].exhaust)
+			{
+				c_removed.push_back(c_in_hand[temp.value]);
+				c_in_hand.erase(c_in_hand.begin() + temp.value);
+			}
+			else if (data.cards_in_hand[temp.value].card_type == card_type::ABILITY)
+			{
+				c_equiped.push_back(c_in_hand[temp.value]);
+				c_in_hand.erase(c_in_hand.begin() + temp.value);
+			}
+			else
+			{
+				c_grave.push_back(c_in_hand[temp.value]);
+				c_in_hand.erase(c_in_hand.begin() + temp.value);
+			}
+			switch (temp.type)
+			{
+			case card_type::ATTACK:
+			{
+				process_stack.push(action(battle_action_type::ADD_BUFF
+					, &data.player_data, &data.player_data, buff_type::USED_ATTACK_CARDS, fix_buff_value(1, 1)));
+				break;
+			}
+			case card_type::SKILL:
+			{
+				process_stack.push(action(battle_action_type::ADD_BUFF
+					, &data.player_data, &data.player_data, buff_type::USED_SKILL_CARDS, fix_buff_value(1, 1)));
+				break;
+			}
+			case card_type::ABILITY:
+			{
+				process_stack.push(action(battle_action_type::ADD_BUFF
+					, &data.player_data, &data.player_data, buff_type::USED_ABILITY_CARDS, fix_buff_value(1, 1)));
+				break;
+			}
+			default:
+				break;
+			}
+		}
+		case ADD_CARD_TO_HAND:
+		{
+			vector<card>& c_in_hand = data.cards_in_hand;
+			vector<card>& c_deck = data.cards_deck;
+			vector<card>& c_grave = data.cards_grave;
+			if (c_in_hand.size() <= MAX_CARDS_IN_HAND)
+			{
+				c_in_hand.push_back(card(temp.value));
+			}
+			else
+			{
+				c_grave.push_back(card(temp.value));
+			}
+			break;
+		}
+		case ADD_CARD_TO_DECK:
+		{
+			vector<card>& c_deck = data.cards_deck;
+			c_deck.push_back(card(temp.value));
+			break;
+		}
+		case ADD_CARD_TO_DECK_TOP:
+		{
+			data.b_to_i_pipe = info_battle_to_interacting(temp.action_id, temp.value, temp.type);
+			break;
+		}
+		case P_ADD_CARD_TO_DECK_TOP:
+		{
+			vector<card>& c_in_hand = data.cards_in_hand;
+			vector<card>& c_deck = data.cards_deck;
+			c_deck.push_back(c_in_hand[temp.value]);
+			c_in_hand.erase(c_in_hand.begin() + temp.value);
+			break;
 		}
 		default:
 			break;

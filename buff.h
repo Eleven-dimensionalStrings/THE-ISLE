@@ -31,12 +31,12 @@ class buff
 {
 public:
 	buff(std::size_t, std::size_t, std::size_t);
-	buff(std::size_t id, std::string name, std::size_t priority, std::size_t life, std::size_t level);
+	buff(std::size_t id, std::string name, std::size_t priority, std::size_t life, int level);
 	std::size_t buff_id;
 	std::string buff_name;
 	std::size_t buff_priority;
 	std::size_t buff_life;
-	std::size_t buff_level; 
+	int buff_level; 
 	bool visible;
 
 	//将change传给buff之后,返回该change修改后的结果,和额外造成的操作

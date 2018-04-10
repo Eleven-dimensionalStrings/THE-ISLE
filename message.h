@@ -4,6 +4,8 @@
 #include <queue>
 #include <cstddef>
 #define MAX_ENEMIES 5
+#define MAX_CARDS_IN_HAND 10
+#define ENTERNAL 10000
 #define MEANINGLESS_VALUE static_cast<std::size_t>(31415926)
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
 class data_sys;
@@ -37,6 +39,10 @@ namespace battle_action_type
 	const std::size_t P_REMOVE_A_CARD = 10101;
 	const std::size_t P_DISCARD_A_CARD = 10102;
 	const std::size_t ENTITY_BE_ATK = 10300;
+	const std::size_t ADD_CARD_TO_HAND = 10400;
+	const std::size_t ADD_CARD_TO_DECK = 10500;
+	const std::size_t ADD_CARD_TO_DECK_TOP = 10510;
+	const std::size_t P_ADD_CARD_TO_DECK_TOP = 10610;
 }
 
 namespace event_type
@@ -49,7 +55,6 @@ namespace event_type
 	const unsigned int REMOVE_ARTIFACTS = 6;
 	const unsigned int SELECT_NEXT_EVENT = 7;
 }
-
 
 namespace type_type
 {
@@ -66,15 +71,23 @@ namespace type_type
 
 namespace card_type
 {
-	const std::size_t attack = 0;
-	const std::size_t skill = 1;
-	//to be completed
+	const std::size_t STAT = 0;
+	const std::size_t ATTACK = 1;
+	const std::size_t SKILL = 2;
+	const std::size_t ABILITY = 3;
 }
+
 namespace buff_type
 {
 	const std::size_t STRENGTH = 0;
 	const std::size_t VULNERABLE = 1;
 	const std::size_t POISON = 2;
+	const std::size_t WEAK = 3;
+	const std::size_t USED_ATTACK_CARDS = 4;
+	const std::size_t USED_SKILL_CARDS = 5;
+	const std::size_t USED_ABILITY_CARDS = 6;
+	const std::size_t EXHAUST = 7;
+	const std::size_t CHAINED = 8;
 }
 
 namespace gra_size
@@ -125,7 +138,8 @@ public:
 	std::size_t cost;
 	bool is_reserve;
 	bool require_target; //true代表需要选择目标，false代表不用
-
+	bool exhaust;//true代表消耗
+	bool inherent;//true代表固有
 
 	info_to_battle_sys use_card(data_sys&);
 	info_to_battle_sys discard(data_sys&);
