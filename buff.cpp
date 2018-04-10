@@ -31,7 +31,7 @@ buff::buff(std::size_t id, std::size_t life, std::size_t level)
 {
 }
 
-buff::buff(std::size_t id, std::string name, std::size_t priority, std::size_t life, std::size_t level)
+buff::buff(std::size_t id, std::string name, std::size_t priority, std::size_t life, int level)
 	: buff_id(id), buff_name(name), buff_priority(priority), buff_life(life), buff_level(level)
 {
 }

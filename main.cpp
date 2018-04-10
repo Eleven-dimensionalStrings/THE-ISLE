@@ -11,7 +11,7 @@ int main()
 	battle_system b(d);
 	interacting_sys i(d);
 	explore_system e(d);
-	IMAGE buffer(window_unit_size::window_width, window_unit_size::window_height);
+	//IMAGE buffer(window_unit_size::window_width, window_unit_size::window_height);
 	t_draw_sys dr(d);
 
 

@@ -39,7 +39,6 @@ void battle_context::set_state(b_state * pstate)
 
 void battle_context::read_input()
 {
-	//����
 	test_read();
 }
 
@@ -102,7 +101,7 @@ present_battle_context(new battle_context(this)), present_explore_context(new ex
 }
 
 
-info_to_battle_sys interacting_sys::play_a_card(std::size_t card_pos, game_entity* target)
+info_to_battle_sys interacting_sys::play_a_card(size_t card_pos, game_entity* target)
 {
 	info_to_battle_sys result(action(battle_action_type::USE_A_CARD, &data.player_data, target,
 		data.cards_in_hand[card_pos].card_type, card_pos));
@@ -145,9 +144,11 @@ void interacting_sys::update()
 		data.b_to_i_pipe.clear();
 		return;
 	}
-	//else if (from_explore_sys)
+	else if (data.e_to_i_pipe)
 	{
-
+		//TODO
+		data.e_to_i_pipe.clear();
+		return;
 	}
 	present_battle_context->read_input();
 }
