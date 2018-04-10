@@ -77,20 +77,36 @@ namespace buff_type
 	const std::size_t POISON = 2;
 }
 
-namespace window_unit_size
+namespace gra_size
 {
-	using cstszt = const std::size_t;
-	cstszt window_width = 1200;
-	cstszt window_height = 720;
+	const std::size_t window_width = 1200;
+	const std::size_t window_height = 720;
+	const std::size_t max_enemies = 5;
+	const std::size_t max_cards = 8;
 
-	cstszt card_in_hand_up = 500;
-	cstszt card_in_hand_down = 720;
-	cstszt card_in_hand_left = 0;
-	cstszt card_in_hand_right = 900;
-	cstszt card_width = 100;
-	cstszt card_up = 510;
-	cstszt card_down = 710;
-	cstszt card_closure = 10;
+
+	const std::size_t card_width = 100;
+	const std::size_t card_closure = 10;
+	const std::size_t card_x = 0;
+	const std::size_t card_rx = card_x + card_width * max_cards + card_closure * (max_cards + 1);
+	const std::size_t card_y = 500;
+	const std::size_t card_dy = 700;
+	const std::size_t hp_y = 500;
+	const std::size_t hp_x = card_width * max_cards + card_closure * (max_cards + 1);
+	const std::size_t ap_y = 610;
+	const std::size_t ap_x = card_width * max_cards + card_closure * (max_cards + 1);
+	const std::size_t confirm_button_y = 500;
+	const std::size_t confirm_button_x = card_width * max_cards + card_closure * (max_cards + 1) + 150;
+	const std::size_t cansel_button_y = 565;
+	const std::size_t cansel_button_x = card_width * max_cards + card_closure * (max_cards + 1) + 150;
+	const std::size_t turn_end_button_y = 630;
+	const std::size_t turn_end_button_x = card_width * max_cards + card_closure * (max_cards + 1) + 150;
+	const std::size_t enemy_x = 300;
+	const std::size_t enemy_y = 200;
+	const std::size_t enemy_width = 160;
+	const std::size_t player_x = 50;
+	const std::size_t player_y = 200;
+
 }
 class info_to_battle_sys;
 class card
@@ -178,7 +194,7 @@ public:
 	artifact atf;
 	card selected_card;
 	event_e next_event;
-}; 
+};
 class e_action
 {
 public:
