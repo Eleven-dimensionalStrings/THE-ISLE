@@ -147,7 +147,7 @@ void interacting_sys::update()
 	}
 	//else if (from_explore_sys)
 	{
-		
+
 	}
 	present_battle_context->read_input();
 }
@@ -176,6 +176,7 @@ b_vaccant_state::b_vaccant_state(battle_context * b_c)
 
 void b_vaccant_state::click_a_card(size_t card_pos)
 {
+	get_data().draw_select_card[card_pos] = 1;
 	ctx->set_state(new b_confirm_state(ctx, card_pos));
 }
 
@@ -213,10 +214,13 @@ void b_confirm_state::click_a_card(size_t card_pos)
 {
 	if (card_pos == selected_card)
 	{
+		get_data().draw_select_card[selected_card] = 0;
 		ctx->set_state(new b_vaccant_state(ctx));
 	}
 	else
 	{
+		get_data().draw_select_card[card_pos] = 1;
+		get_data().draw_select_card[selected_card] = 0;
 		ctx->set_state(new b_confirm_state(ctx, card_pos));
 	}
 }
@@ -229,7 +233,8 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 		if (get_data().enemies_data[enemy_pos].is_alive())
 		{
 			target = &get_data().enemies_data[enemy_pos];
-			info_to_battle_sys temp = get_data().cards_in_hand[selected_card].use_card(get_data());
+			info_to_battle_sys temp(action(battle_action_type::USE_A_CARD,MEANINGLESS_VALUE,selected_card));
+			temp.append(get_data().cards_in_hand[selected_card].use_card(get_data()));
 			for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 			{
 				i->caller = &get_data().player_data;
@@ -328,12 +333,14 @@ void b_select_state::click_a_card(std::size_t card_pos)
 	{
 		if (*i == card_pos)
 		{
+			get_data().draw_select_card[card_pos] = 0;
 			selected_cards.erase(i);
 			return;
 		}
 	}
 	if (selected_cards.size() == max)return;
 	selected_cards.push_back(card_pos);
+	get_data().draw_select_card[card_pos] = 1;
 }
 
 void b_select_state::click_an_enemy(std::size_t)

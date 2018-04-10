@@ -30,6 +30,8 @@ public:
 	void draw_battle();
 	void draw_explore();
 	void draw_begin();//开始页面
+	void view_cards(std::vector<card>&v);//按键后查看卡组等
+	void view_artifacts();
 
 	void draw_card_list();//看卡组/墓地等
 	void draw_artifact_list();

@@ -12,7 +12,6 @@ public:
 	void update();
 	void send_message(info_to_battle_sys);
 private:
-	bool interpret_message(info_to_battle_sys);
 	data_sys & data;
 	std::stack<action> process_stack;
 	void process();

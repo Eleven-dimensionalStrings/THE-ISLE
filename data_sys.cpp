@@ -3,7 +3,7 @@ using namespace std;
 
 data_sys::data_sys() :player_data(*this), all_enemies(*this), random_enemy(*this), select_one_enemy(*this)
 {
-	
+	for (auto&i : draw_select_card)i = 0;
 }
 
 info_to_battle_sys data_sys::card_effect(std::size_t id)
@@ -31,6 +31,10 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 				, &player_data, &random_enemy, type_type::NORMAL, 10));
 		}
 		return t;
+	}
+	case 5://≥È“ª’≈≈∆
+	{
+		return info_to_battle_sys(action(battle_action_type::DRAW_CARDS, &player_data, &player_data, MEANINGLESS_VALUE, 1));
 	}
 	default:
 		break;

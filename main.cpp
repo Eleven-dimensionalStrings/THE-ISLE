@@ -31,22 +31,22 @@ int main()
 	//d.cards_pool.push_back(card(2));
 	//d.cards_pool.push_back(card(3));
 	//d.cards_pool.push_back(card(4));
-	d.cards_deck = d.cards_pool;
 
 explore:
 	//explore loop
-	/*while (1)
+	while (1)
 	{
 		e.update();
 
 
 		if (!d.enemies_data.empty())
 			goto battle;
-	}*/
+	}
 
 
 battle:
 	//Ω¯»Î’Ω∂∑
+	d.cards_deck = d.cards_pool;
 	//explore gives battle some info
 	while (1)
 	{

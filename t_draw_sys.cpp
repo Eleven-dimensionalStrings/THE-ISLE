@@ -7,6 +7,11 @@ void t_draw_sys::__draw_card_in_hand()
 		int y = window_unit_size::card_up,
 			x = window_unit_size::card_closure * (i + 1) + window_unit_size::card_width * i;
 		__draw_a_card(i, x, y);
+		if (data.draw_select_card[i])
+		{
+			//TODO
+			//说明选中了这个位置的卡
+		}
 	}
 }
 void t_draw_sys::__draw_entities()
@@ -25,6 +30,10 @@ void t_draw_sys::__draw_right_hand_select()
 }
 void t_draw_sys::__draw_artifacts()
 {
+	for (auto&i : data.artifacts)
+	{
+		//TODO
+	}
 }
 void t_draw_sys::__get_atk_entities()
 {
@@ -36,6 +45,19 @@ void t_draw_sys::__get_atk_entities()
 }
 void t_draw_sys::__draw_player()
 {
+	pair<size_t, size_t>& drawing = this->draw_queue.front();
+	if (drawing.first == 666)
+	{
+
+	}
+	else if (drawing.second == 666)
+	{
+
+	}
+	else
+	{
+
+	}
 }
 void t_draw_sys::__draw_an_enemy(std::size_t pos)
 {
@@ -57,6 +79,10 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 
 		}
 	}
+	else
+	{
+
+	}
 }
 void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 {
@@ -70,7 +96,7 @@ buffer(window_unit_size::window_width, window_unit_size::window_height), timer(0
 
 void t_draw_sys::draw()
 {
-	for (auto& i:data.b_to_d)
+	for (auto& i : data.b_to_d)
 	{
 		draw_queue.push(i);
 	}
@@ -94,7 +120,7 @@ void t_draw_sys::draw()
 	cout << "hp:" << data.player_data.current_hp << '/' << data.player_data.max_hp << endl
 		<< "ap:" << data.player_data.current_ap << '/' << data.player_data.max_ap << endl;
 
-	while(!draw_queue.empty())
+	while (!draw_queue.empty())
 	{
 		cout << (draw_queue.front().first) << ' ' << (draw_queue.front().second) << endl;
 		draw_queue.pop();
@@ -103,7 +129,7 @@ void t_draw_sys::draw()
 
 void t_draw_sys::draw_battle()
 {
-
+	__get_atk_entities();
 	SetWorkingImage(&buffer);
 	//TODO 用背景图片覆盖 putimage(0, 0, image);
 	this->__draw_card_in_hand();
@@ -118,6 +144,14 @@ void t_draw_sys::draw_explore()
 }
 
 void t_draw_sys::draw_begin()
+{
+}
+
+void t_draw_sys::view_cards(vector<card>& v)
+{
+}
+
+void t_draw_sys::view_artifacts()
 {
 }
 

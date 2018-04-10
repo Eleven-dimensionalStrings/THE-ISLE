@@ -1,4 +1,5 @@
 #pragma once
+#include <array>
 #include <vector> 
 #include <map>
 #include <functional>
@@ -30,10 +31,11 @@ public:
 	std::vector<card> cards_in_hand;
 	std::vector<card> cards_removed;
 	std::vector<card> cards_equiped;
-	std::array<char, 10> reserve_cards;
+	std::array<bool, 8>draw_select_card;
+	std::array<char, 10> reserve_cards;//√≤À∆√ª”√
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
-	std::vector<std::pair<std::size_t,std::size_t>>b_to_d;
+	std::vector<std::pair<std::size_t, std::size_t>>b_to_d;
 	info_to_explore_sys i_to_e_pipe;
 	info_explore_to_interacting e_to_i_pipe;
 	std::size_t explore_map[6][6];

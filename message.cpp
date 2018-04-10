@@ -165,11 +165,11 @@ card::card()
 
 card::card(size_t id) 
 {
+	card_id = id;
 	switch (id)
 	{
 	case 0:
 	{
-		card_id = id;
 		card_name = "打100";
 		card_type = card_type::attack;
 		upgrade_version_id = 0;
@@ -180,7 +180,6 @@ card::card(size_t id)
 	}
 	case 1:
 	{
-		card_id = id;
 		card_name = "100力量";
 		card_type = card_type::skill;
 		upgrade_version_id = 0;
@@ -191,32 +190,36 @@ card::card(size_t id)
 	}
 	case 2:
 	{
-		card_name = "打100";
-		card_type = card_type::attack;
+		card_name = "100易伤";
+		card_type = card_type::skill;
 		upgrade_version_id = 0;
 		cost = 1;
 		is_reserve = 0;
 		require_target = 1;
+		break;
 	}
 	case 3:
 	{
-		card_name = "打100";
-		card_type = card_type::attack;
+		card_name = "100毒";
+		card_type = card_type::skill;
 		upgrade_version_id = 0;
 		cost = 1;
 		is_reserve = 0;
 		require_target = 1;
+		break;
 	}
 	case 4:
 	{
-		card_name = "打100";
+		card_name = "随机打";
 		card_type = card_type::attack;
 		upgrade_version_id = 0;
 		cost = 1;
 		is_reserve = 0;
-		require_target = 1;
+		require_target = 0;
+		break;
 	}
 	default:
+		
 		break;
 	}
 }

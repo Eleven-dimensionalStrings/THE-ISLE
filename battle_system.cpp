@@ -189,6 +189,12 @@ void battle_system::process()
 			data.b_to_d.push_back(atkp);
 			break;
 		}
+		case battle_action_type::USE_A_CARD:
+		{
+			data.cards_grave.push_back(data.cards_in_hand[temp.value]);
+			data.cards_in_hand.erase(data.cards_in_hand.begin() + temp.value);
+			//TODO
+		}
 		default:
 			break;
 		}
