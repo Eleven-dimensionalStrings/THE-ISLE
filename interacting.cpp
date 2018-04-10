@@ -233,7 +233,7 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 		if (get_data().enemies_data[enemy_pos].is_alive())
 		{
 			target = &get_data().enemies_data[enemy_pos];
-			info_to_battle_sys temp(action(battle_action_type::USE_A_CARD,MEANINGLESS_VALUE,selected_card));
+			info_to_battle_sys temp(action(battle_action_type::USE_A_CARD,get_data().cards_in_hand[selected_card].card_type,selected_card));
 			temp.append(get_data().cards_in_hand[selected_card].use_card(get_data()));
 			for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 			{
@@ -257,7 +257,8 @@ void b_confirm_state::click_confirm()
 {
 	if (!require_target)
 	{
-		info_to_battle_sys temp(get_data().card_effect(get_data().cards_in_hand[selected_card].card_id));
+		info_to_battle_sys temp(action(battle_action_type::USE_A_CARD, get_data().cards_in_hand[selected_card].card_type, selected_card));
+		temp.append(get_data().cards_in_hand[selected_card].use_card(get_data()));
 		for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 		{
 			if (i->listener == &get_data().all_enemies)
