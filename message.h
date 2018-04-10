@@ -5,7 +5,7 @@
 #include <cstddef>
 #define MAX_ENEMIES 5
 #define MAX_CARDS_IN_HAND 10
-#define ENTERNAL 10000
+#define ETERNAL 10000
 #define MEANINGLESS_VALUE static_cast<std::size_t>(31415926)
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
 class data_sys;
@@ -60,10 +60,11 @@ namespace type_type
 {
 	const std::size_t NORMAL = 1;
 	const std::size_t FLAME = 2;
-	const std::size_t PIERCE = 3;
+	const std::size_t PIERCE = 3;//穿甲
 	const std::size_t POISON = 4;
-	const std::size_t FREEZING = 5;
-	const std::size_t INDEPENDENT = 6;
+	const std::size_t BLEEDING = 5;
+	const std::size_t PURE = 6;//不受buff影响，穿甲
+	const std::size_t INDEPENDENT = 7;//不受buff影响
 	const std::size_t ADD_AP = 20000;
 	const std::size_t ADD_HP = 20001;
 	const std::size_t HEALING = 20002;
@@ -87,7 +88,12 @@ namespace buff_type
 	const std::size_t USED_SKILL_CARDS = 5;
 	const std::size_t USED_ABILITY_CARDS = 6;
 	const std::size_t EXHAUST = 7;
-	const std::size_t CHAINED = 8;
+	const std::size_t CHAIN = 8;
+	const std::size_t BURN = 9;
+	const std::size_t STUN = 10;
+	const std::size_t STUN_RESIST = 11;
+	const std::size_t ARMOR = 12;
+	const std::size_t MOVE_MUSSLE = 13;
 }
 
 namespace window_unit_size

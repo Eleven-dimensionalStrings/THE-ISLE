@@ -409,6 +409,7 @@ card::card(size_t id)
 		cost = 1;
 		require_target = true;
 		exhaust = true;
+		inherent = true;
 		break;
 	}
 	case 30:
@@ -895,6 +896,7 @@ card::card(size_t id)
 		cost = 1;
 		require_target = true;
 		exhaust = true;
+		inherent = true;
 		break;
 	}
 	case 90:
@@ -941,7 +943,7 @@ card::card(size_t id)
 	{
 		card_name = "Ä¥µ¶+";
 		card_type = card_type::SKILL;
-		cost = 1;
+		cost = 0;
 		require_target = true;
 		break;
 	}
@@ -981,7 +983,7 @@ card::card(size_t id)
 	{
 		card_name = "°×ÈÈ»¯+";
 		card_type = card_type::SKILL;
-		cost = 1;
+		cost = 0;
 		require_target = false;
 		break;
 	}

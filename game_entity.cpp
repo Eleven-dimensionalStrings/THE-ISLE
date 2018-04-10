@@ -160,6 +160,18 @@ vector<buff>::iterator game_entity::find_buff(std::size_t id)
 	return buff_pool.end();
 }
 
+std::size_t game_entity::has_buff(std::size_t id)
+{
+	for (int i = 0; i < buff_pool.size(); i++)
+	{
+		if (buff_pool[i].buff_id == id)
+		{
+			return buff_pool[i].buff_level;
+		}
+	}
+	return 0;
+}
+
 enemy::enemy(data_sys&d) :game_entity(d)
 {
 }

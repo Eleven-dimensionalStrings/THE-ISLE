@@ -86,8 +86,8 @@ info_to_battle_sys buff::on_calling(info_to_battle_sys t)
 	{
 		for (auto& i : t.action_set)
 		{
-			if (i.action_id == battle_action_type::CALLING_ACTION && (i.type == type_type::NORMAL || i.type == type_type::FLAME || i.type == type_type::FREEZING
-				|| i.type == type_type::INDEPENDENT || i.type == type_type::PIERCE))
+			if (i.action_id == battle_action_type::CALLING_ACTION && (i.type == type_type::NORMAL || i.type == type_type::FLAME || i.type == type_type::BLEEDING
+				|| i.type == type_type::PURE || i.type == type_type::PIERCE))
 				i.value += buff_level;
 		}
 		break;
@@ -106,8 +106,8 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys t)
 	{
 		for (auto& i : t.action_set)
 		{
-			if (i.action_id == battle_action_type::PERFORMING_ACTION && (i.type == type_type::NORMAL || i.type == type_type::FLAME || i.type == type_type::FREEZING
-				|| i.type == type_type::INDEPENDENT || i.type == type_type::PIERCE))
+			if (i.action_id == battle_action_type::PERFORMING_ACTION && (i.type == type_type::NORMAL || i.type == type_type::FLAME || i.type == type_type::BLEEDING
+				|| i.type == type_type::PURE || i.type == type_type::PIERCE))
 				i.value += buff_level;
 		}
 		break;
