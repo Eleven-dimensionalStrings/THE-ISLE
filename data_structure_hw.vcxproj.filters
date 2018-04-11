@@ -7,7 +7,7 @@
     </Filter>
     <Filter Include="头文件">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
     <Filter Include="资源文件">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -18,28 +18,28 @@
     <ClCompile Include="battle_system.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="game_entity.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="explore_system.cpp">
+    <ClCompile Include="buff.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="data_sys.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="cards.cpp">
+    <ClCompile Include="explore_system.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="message.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="buff.cpp">
+    <ClCompile Include="game_entity.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="interacting.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="message.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="t_draw_sys.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -50,10 +50,7 @@
     <ClInclude Include="buff.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="cards.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="message.h">
+    <ClInclude Include="data_sys.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="explore_system.h">
@@ -62,13 +59,16 @@
     <ClInclude Include="game_entity.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="data_sys.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="artifacts.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="interacting.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="message.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="t_draw_sys.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="container.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

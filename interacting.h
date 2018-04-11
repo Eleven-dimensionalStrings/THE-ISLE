@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include "message.h"
 #include "data_sys.h"
 #include "explore_system.h"
@@ -9,7 +10,7 @@ class context
 {
 public:
 	context(interacting_sys*);
-	virtual void set_state() = 0;
+	virtual ~context();
 	virtual void read_input() = 0;
 	interacting_sys* i_s;
 };
@@ -19,14 +20,17 @@ class battle_context : public context
 public:
 	battle_context(interacting_sys*);
 	battle_context(interacting_sys*, b_state*);
-	~battle_context();
+	virtual ~battle_context();
 	void set_state(b_state*);
-	void read_input();
+	void read_input()override;
 	void change_to_select_state(info_battle_to_interacting);
+	data_sys& get_data();
+	void test_read();
 private:
 	b_state *cur_state;
 };
 
+class e_state;
 class explore_context : public context
 {
 public:
@@ -78,9 +82,11 @@ private:
 	bool require_target;
 };
 
+class t_draw_sys;
 class b_select_state : public b_state
 {
 public:
+	friend class t_draw_sys;
 	b_select_state(battle_context*, std::size_t tmax, std::size_t, bool);
 	void click_a_card(std::size_t);
 	void click_an_enemy(std::size_t);
@@ -89,7 +95,7 @@ public:
 	void click_turn_end();
 private:
 	std::size_t type;
-	vector<std::size_t> selected_cards;
+	std::vector<std::size_t> selected_cards;
 	std::size_t max; //indicates the max amount of cards to select
 	bool is_mandatory; //indicates if the player is forced to select the max amount of cards
 };
@@ -148,12 +154,12 @@ private:
 	event_e current_phase;
 	bool is_mandatory;
 	std::size_t max_amount;
-	std::size_t current_select_pos;//indicates the position of the first selection in choice_list.  
 };
 
 class interacting_sys
 {
 public:
+	interacting_sys(data_sys& d);
 	data_sys& data;
 	battle_context* present_battle_context;
 	explore_context* present_explore_context;
@@ -161,6 +167,6 @@ public:
 	void move_player(int x, int y);
 	void set_map_location(int x, int y, int mark_type);
 	void reveal_map_location(int x, int y);
-	void encounter_event(std::size_t event_card_no);
+	//void encounter_event(std::size_t event_id);
 	void update();
 };

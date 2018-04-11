@@ -1,48 +1,48 @@
-#include "battle_system.h"
 #include <iostream>
+#include <algorithm>
 #include <sstream>
+#include <random>
+#include <ctime>
+#include "battle_system.h"
+#include "data_sys.h"
+#include "message.h"
 using namespace std;
 using std::size_t;
 using namespace battle_action_type;
+default_random_engine e(static_cast<int>(time(0)));
+battle_system::battle_system(data_sys & d) :data(d)
+{
+}
 void battle_system::update()
 {
-	for (auto& i : from_interacting)
+	for (auto i = data.i_to_b_pipe.action_set.rbegin(); i != data.i_to_b_pipe.action_set.rend(); ++i)
 	{
-
+		process_stack.push(*i);
 	}
+	data.i_to_b_pipe.action_set.clear();
+	this->process();
 }
 
-bool battle_system::send_message(info_to_battle_sys input)
+void battle_system::send_message(info_to_battle_sys input)
 {
-	battle_system::interpret_message(input);
-	//send back something afterwards
-}
-
-bool battle_system::interpret_message(info_to_battle_sys input)
-{
-	for (size_t i = input.action_set.size() - 1; i >= 0; --i)
+	for (auto i = input.action_set.rbegin(); i != input.action_set.rend(); ++i)
 	{
-		switch (input.action_set[i].action_id)
-		{
-		case battle_action_type::CALLING_ACTION:
-		{
-			break;
-		}
-		case battle_action_type::PERFORMING_ACTION:
-		{
-			break;
-		}
-		default:
-			break;
-		}
+		process_stack.push(*i);
 	}
-	delete &input;
 }
 
 void battle_system::process()
 {
 	while (!process_stack.empty())
 	{
+		//TODO battle_fail
+		if (battle_succ())
+		{
+			while (!process_stack.empty())process_stack.pop();
+			//TODO
+			data.enemies_data.clear();
+			break;
+		}
 		action temp = process_stack.top();
 		process_stack.pop();
 		switch (temp.action_id)
@@ -54,6 +54,14 @@ void battle_system::process()
 		}
 		case battle_action_type::PERFORMING_ACTION:
 		{
+			uniform_int_distribution<int> ran(0, static_cast<int>(data.enemies_data.size()) - 1);
+			if (temp.listener == &data.random_enemy)
+			{
+				do
+				{
+					temp.listener = &data.enemies_data[ran(e)];
+				} while (!temp.listener->is_alive());
+			}
 			send_message(temp.listener->performing_action(temp));
 			break;
 		}
@@ -86,30 +94,77 @@ void battle_system::process()
 			{
 				if (c_deck.empty())
 				{
-					//需要随机洗牌
-					c_deck = std::move(my_random_engine.xipai(std::move(c_grave)));
+					c_deck = my_random_engine::xipai(std::move(c_grave));
 				}
-				if (c_deck.size())//抽空了卡组就抽不出东西了
-
+				if (c_deck.size() && c_in_hand.size() <= MAX_CARDS_IN_HAND)
 				{
-					c_in_hand.push_back(*(c_deck.end() - 1));
+					c_in_hand.push_back(c_deck.back());
+					c_deck.pop_back();
+				}
+				else
+				{
+					c_grave.push_back(c_deck.back());
 					c_deck.pop_back();
 				}
 			}
+			send_message(data.player_data.performing_action(temp));
 			break;
 		}
-
+		case ADD_BUFF:
+		{
+			auto it = temp.listener->buff_pool.end();
+			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
+			{
+				*it += buff(temp.type, temp.value);
+				break;
+			}
+			else
+			{
+				pair<string, size_t> t = data.get_buff(temp.type); // pair<buff_name, priority>
+				buff tbuff(temp.type, t.first, t.second, temp.value);
+				temp.listener->buff_pool.push_back(tbuff);
+				send_message(tbuff.on_create(temp.caller, temp.listener));
+			}
+			break;
+		}
+		case REMOVE_BUFF:
+		{
+			auto it = temp.listener->buff_pool.end();
+			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
+			{
+				if (*it - buff(temp.type, temp.value))
+				{
+					send_message(it->on_delete(temp.caller, temp.listener));
+					temp.listener->buff_pool.erase(it);
+				}
+				else
+				{
+					*it -= buff(temp.type, temp.value);
+				}
+				break;
+			}
+			else if(temp.type == buff_type::STRENGTH || temp.type == buff_type::AGILITY || temp.type == buff_type::VITALITY )
+			{
+				pair<string, size_t> t = data.get_buff(temp.type); // pair<buff_name, priority>
+				buff tbuff(temp.type, t.first, t.second, -static_cast<int>(temp.value));
+				temp.listener->buff_pool.push_back(tbuff);
+				send_message(tbuff.on_create(temp.caller, temp.listener));
+			}
+			break;
+		}
 		case P_KEEP_A_CARD:
 		{
 			data.cards_in_hand[temp.value].is_reserve = 1;
+			send_message(data.player_data.performing_action(temp));
 			break;
 		}
 		case P_REMOVE_A_CARD:
 		{
 			vector<card>& c_in_hand = data.cards_in_hand;
-			vector<card>& c_removed = data.cards_in_hand;
+			vector<card>& c_removed = data.cards_removed;
 			c_removed.push_back(c_in_hand[temp.value]);
 			c_in_hand.erase(c_in_hand.begin() + temp.value);
+			send_message(data.player_data.performing_action(temp));
 			break;
 		}
 		case P_DISCARD_A_CARD:
@@ -117,27 +172,170 @@ void battle_system::process()
 			vector<card>& c_in_hand = data.cards_in_hand;
 			vector<card>& c_grave = data.cards_grave;
 			c_grave.push_back(c_in_hand[temp.value]);
-			send_message((c_in_hand.end() - 1)->discard());
+			send_message((c_in_hand.end() - 1)->discard(data));
 			c_in_hand.erase(c_in_hand.begin() + temp.value);
+			send_message(data.player_data.performing_action(temp));
 			break;
 		}
-		case TURN_END://还要调用buff的turn_end
+		case TURN_END:
 		{
 			vector<card>& c_in_hand = data.cards_in_hand;
 			vector<card>& c_grave = data.cards_grave;
-			for (auto i = c_in_hand.begin(); i != c_in_hand.end(); ++i)
+			for (int i =  0; i < c_in_hand.size(); ++i)
 			{
-				if (!i->is_reserve)
+				if (c_in_hand[i].vanity)
 				{
-					c_grave.push_back(*i);
-					c_in_hand.erase(i++);
+					process_stack.push(action(battle_action_type::P_REMOVE_A_CARD, c_in_hand[i].card_type, i));
+				}
+				else if (!c_in_hand[i].is_reserve)
+				{
+					c_grave.push_back(c_in_hand[i]);
+					c_in_hand.erase(c_in_hand.begin() + i);
 				}
 			}
+			//TODO
+			break;
+		}
+		case ENTITY_BE_ATK:
+		{
+			pair<size_t, size_t> atkp;
+			if (temp.caller == &data.player_data)
+			{
+				atkp.first = 666;
+			}
+			else if (temp.caller >= &data.enemies_data[0] && temp.caller <= &data.enemies_data[0] + 10)
+			{
+				atkp.first = dynamic_cast<enemy*>(temp.caller) - &data.enemies_data[0];
+			}
+			else if (temp.caller == nullptr)
+			{
+				atkp.first = 999;
+			}
+			if (temp.listener == &data.player_data)
+			{
+				atkp.second = 666;
+			}
+			else if (temp.listener >= &data.enemies_data[0] && temp.listener <= &data.enemies_data[0] + 10)
+			{
+				atkp.second = dynamic_cast<enemy*>(temp.listener) - &data.enemies_data[0];
+			}
+			else if (temp.listener == nullptr)
+			{
+				atkp.second = 999;
+			}
+			data.b_to_d.push_back(atkp);
+			break;
+		}
+		case battle_action_type::USE_A_CARD:
+		{
+			vector<card>& c_in_hand = data.cards_in_hand;
+			vector<card>& c_grave = data.cards_grave;
+			vector<card>& c_removed = data.cards_removed;
+			vector<card>& c_equiped = data.cards_equiped;
+			if (data.cards_in_hand[temp.value].exhaust)
+			{
+				process_stack.push(action(battle_action_type::P_REMOVE_A_CARD, MEANINGLESS_VALUE, temp.value));
+				/*c_removed.push_back(c_in_hand[temp.value]);
+				c_in_hand.erase(c_in_hand.begin() + temp.value);*/
+			}
+			else if (data.cards_in_hand[temp.value].card_type == card_type::ABILITY)
+			{
+				c_equiped.push_back(c_in_hand[temp.value]);
+				c_in_hand.erase(c_in_hand.begin() + temp.value);
+			}
+			else
+			{
+				c_grave.push_back(c_in_hand[temp.value]);
+				c_in_hand.erase(c_in_hand.begin() + temp.value);
+			}
+			switch (temp.type)
+			{
+			case card_type::ATTACK:
+			{
+				process_stack.push(action(battle_action_type::ADD_BUFF
+					, &data.player_data, &data.player_data, buff_type::USED_ATTACK_CARDS, 1));
+				break;
+			}
+			case card_type::SKILL:
+			{
+				process_stack.push(action(battle_action_type::ADD_BUFF
+					, &data.player_data, &data.player_data, buff_type::USED_SKILL_CARDS, 1));
+				break;
+			}
+			case card_type::ABILITY:
+			{
+				process_stack.push(action(battle_action_type::ADD_BUFF
+					, &data.player_data, &data.player_data, buff_type::USED_ABILITY_CARDS, 1));
+				break;
+			}
+			default:
+				break;
+			}
+			break;
+		}
+		case ADD_CARD_TO_HAND:
+		{
+			vector<card>& c_in_hand = data.cards_in_hand;
+			vector<card>& c_deck = data.cards_deck;
+			vector<card>& c_grave = data.cards_grave;
+			if (c_in_hand.size() <= MAX_CARDS_IN_HAND)
+			{
+				c_in_hand.push_back(card(temp.value));
+			}
+			else
+			{
+				c_grave.push_back(card(temp.value));
+			}
+			send_message(data.player_data.performing_action(temp));
+			break;
+		}
+		case ADD_CARD_TO_DECK:
+		{
+			vector<card>& c_deck = data.cards_deck;
+			c_deck.push_back(card(temp.value));
+			send_message(data.player_data.performing_action(temp));
+			break;
+		}
+		case ADD_CARD_TO_DECK_TOP:
+		{
+			data.b_to_i_pipe = info_battle_to_interacting(temp.action_id, temp.value, temp.type);
+			break;
+		}
+		case P_ADD_CARD_TO_DECK_TOP:
+		{
+			vector<card>& c_in_hand = data.cards_in_hand;
+			vector<card>& c_deck = data.cards_deck;
+			c_deck.push_back(c_in_hand[temp.value]);
+			c_in_hand.erase(c_in_hand.begin() + temp.value);
+			send_message(data.player_data.performing_action(temp));
 			break;
 		}
 		default:
 			break;
 		}
-		process_stack.pop();
 	}
+}
+
+bool battle_system::battle_succ()
+{
+	if (!data.player_data.is_alive())return 1;
+	for (auto& i : data.enemies_data)
+	{
+		if (i.is_alive())return 0;
+	}
+	return 1;
+}
+
+std::vector<card> my_random_engine::xipai(std::vector<card> v)
+{
+	vector<card>vv;
+	default_random_engine e(static_cast<unsigned>(time(0)));
+	while (!v.empty())
+	{
+		uniform_int_distribution<int> ran(0, static_cast<int>(v.size()) - 1);
+		int ind = ran(e);
+		vv.push_back(*(v.begin() + ind));
+		v.erase(v.begin() + ind);
+	}
+	return vv;
 }

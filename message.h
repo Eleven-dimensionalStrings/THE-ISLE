@@ -1,41 +1,47 @@
 #pragma once
 #include <cstdlib>
-#include "game_entity.h"
-#include "cards.h"
 #include <vector>
+#include <queue>
+#include <cstddef>
 #define MAX_ENEMIES 5
-#define MEANINGLESS_VALUE static_cast<unsigned int>(31415926)
-#define TYPE_TO_P_TYPE static_cast<unsigned int>(100)
-
+#define MAX_CARDS_IN_HAND 8
+#define MEANINGLESS_VALUE static_cast<std::size_t>(31415926)
+#define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
+class data_sys;
 namespace map_mark_type
 {
 	const int EMPTY = -1;
-	const int PLAYER = 0;//Íæ¼ÒËù´¦Î»ÖÃ
-	const int UNKNOWN = 1;//Ã»ÓĞÈ¥¹ı
-	const int KNOWN = 2;//ÒÑ¾­·­¿ª£¬µ«ÊÇÃ»ÓĞÈ¥¹ı
-	const int VISITED = 3;//ÒÑ¾­È¥¹ı
+	const int PLAYER = 0;
+	const int UNKNOWN = 1;
+	const int KNOWN = 2;
+	const int VISITED = 3;
 }
 
 namespace battle_action_type
 {
-	const unsigned int INITIATE = 99;
-	const unsigned int TURN_BEGIN = 100;
-	const unsigned int TURN_END = 101;
-	const unsigned int CALLING_ACTION = 1;
-	const unsigned int PERFORMING_ACTION = 2;
-	const unsigned int KILL = 5;
-	const unsigned int UPGRADE_CARD = 6;
-	const unsigned int USE_A_CARD = 2333;//actionÖĞtypeÎª¿¨Æ¬ÀàĞÍ,valueÎªÊÖÅÆÖĞµÄµÚ¼¸ÕÅ¿¨
-	//ÔÚÏÂÃæ°Ë¸öactionÖĞ,typeÖ±½Ó±íÊ¾ÊÇ·ñÇ¿ÖÆÑ¡ÂúÄÇÃ´¶àÕÅ¿¨
-	//ÏÂÃæÊÇÊ¹ÓÃ¿¨Æ¬Ê±µÃµ½µÄaction
-	const unsigned int KEEP_A_CARD = 10000;//»ØºÏ½áÊøÊ±±£ÁôÕâÕÅ¿¨
-	const unsigned int REMOVE_A_CARD = 10001;//½«¿¨³ıÍâ
-	const unsigned int DISCARD_A_CARD = 10002;//ÊÜĞ§¹ûÓ°ÏìÆúÅÆ
-	const unsigned int DRAW_CARDS = 10003;//³é¿¨,value±íÊ¾³é¶àÉÙÕÅ,±éÀúbuffµÄ²Ù×÷ÔÚon_callingÖ´ĞĞ
-	//ÏÂÃæµÄP´ú±íperform,ÊÇÔÚinteractingÑ¡Íê¿¨Æ¬ºó´«»ØÕ½¶·ÏµÍ³,Ö´ĞĞ¾ßÌå²Ù×÷µÄ
-	const unsigned int P_KEEP_A_CARD = 10100;//»ØºÏ½áÊøÊ±±£ÁôÕâÕÅ¿¨
-	const unsigned int P_REMOVE_A_CARD = 10101;//½«¿¨³ıÍâ
-	const unsigned int P_DISCARD_A_CARD = 10102;//ÊÜĞ§¹ûÓ°ÏìÆúÅÆ
+	const std::size_t INITIATE = 99;
+	const std::size_t TURN_BEGIN = 100;
+	const std::size_t TURN_END = 101;
+	const std::size_t CALLING_ACTION = 1;
+	const std::size_t PERFORMING_ACTION = 2;
+	const std::size_t KILL = 5;
+	const std::size_t UPGRADE_CARD = 6;
+	const std::size_t ADD_BUFF = 11;
+	const std::size_t REMOVE_BUFF = 12;
+	const std::size_t MULTIPLY_BUFF = 13;
+	const std::size_t USE_A_CARD = 2333;
+	const std::size_t KEEP_A_CARD = 10000;
+	const std::size_t REMOVE_A_CARD = 10001;
+	const std::size_t DISCARD_A_CARD = 10002;
+	const std::size_t DRAW_CARDS = 10003;
+	const std::size_t P_KEEP_A_CARD = 10100;
+	const std::size_t P_REMOVE_A_CARD = 10101;
+	const std::size_t P_DISCARD_A_CARD = 10102;
+	const std::size_t ENTITY_BE_ATK = 10300;
+	const std::size_t ADD_CARD_TO_HAND = 10400;
+	const std::size_t ADD_CARD_TO_DECK = 10500;
+	const std::size_t ADD_CARD_TO_DECK_TOP = 10510;
+	const std::size_t P_ADD_CARD_TO_DECK_TOP = 10610;
 }
 
 namespace event_type
@@ -49,27 +55,147 @@ namespace event_type
 	const unsigned int SELECT_NEXT_EVENT = 7;
 }
 
-//actionÀïtypeµÄ¾ßÌåÀà±ğ£¬¼´ÉËº¦¡¢buffµÄ¾ßÌåÀà±ğ
+#undef PURE
+//a fucking sb define PURE without namespace or other protect
 namespace type_type
 {
-	const unsigned int NORMAL = 1;
-	const unsigned int FLAME = 2;
-	const unsigned int PIERCE = 3;
-	const unsigned int POISON = 4;
-	const unsigned int FREEZING = 5;
-	const unsigned int INDEPENDENT = 6;
-	const unsigned int ADD_AP = 20000;
-	const unsigned int ADD_HP = 20001;
-	const unsigned int HEALING = 20002;
-	const unsigned int ADD_BUFF = 11;
-	const unsigned int REMOVE_BUFF = 12;
-	const unsigned int MULTIPLY_BUFF = 13;
+	const std::size_t NORMAL = 1;
+	const std::size_t FLAME = 2;
+	const std::size_t POISON = 4;
+	const std::size_t BLEED = 5;
+	const std::size_t PURE = 6;//ä¸å—buffå½±å“ï¼Œç©¿ç”²
+	const std::size_t INDEPENDENT = 7;//ä¸å—buffå½±å“
+	const std::size_t WAR_12 = 101;//è“„åŠ›åŠˆç ï¼›
+	const std::size_t WAR_12_PLUS = 102;//è“„åŠ›åŠˆç +ï¼›
+	const std::size_t ADD_AP = 20000;
+	const std::size_t ADD_HP = 20001;
+	const std::size_t HEALING = 20002;
 }
+
+namespace card_type
+{
+	const std::size_t STAT = 0;
+	const std::size_t ATTACK = 1;
+	const std::size_t SKILL = 2;
+	const std::size_t ABILITY = 3;
+}
+
+namespace buff_type
+{
+	const std::size_t STRENGTH = 1;
+	const std::size_t AGILITY = 2;
+	const std::size_t VITALITY = 3;
+	const std::size_t ARMOR = 4;
+	const std::size_t WEAK = 5;
+	const std::size_t VULNERABLE = 6;
+	const std::size_t FRAGILE = 7;
+	const std::size_t BURN = 8;
+	const std::size_t POISON = 9;
+	const std::size_t BLEED = 10;
+	const std::size_t USED_ATTACK_CARDS = 11;
+	const std::size_t USED_SKILL_CARDS = 12;
+	const std::size_t USED_ABILITY_CARDS = 13;
+	const std::size_t EXHAUST = 14;
+	const std::size_t CHAIN = 15;
+	const std::size_t MOVE_MUSSLE = 16;
+	const std::size_t STUN = 17;
+	const std::size_t STUN_RESIST = 18;
+
+	//buff from ability cards
+	const std::size_t ETERNAL_FURY = 101;
+	const std::size_t INVULNARABLE = 102;
+	const std::size_t FIGHTING_SPIRIT = 103;
+	const std::size_t FRENZY = 104;
+	const std::size_t RITE = 105;
+	const std::size_t RESUSCITATE = 106;
+	const std::size_t ABILITY_BURN = 107;
+	const std::size_t SCORCHED_EARTH = 108;
+}
+
+namespace gra_size
+{
+	const std::size_t window_width = 1200;
+	const std::size_t window_height = 720;
+	const std::size_t max_enemies = 5;
+	const std::size_t max_cards = 8;
+
+
+	const std::size_t card_width = 100;
+	const std::size_t card_closure = 10;
+	const std::size_t card_x = 0;
+	const std::size_t card_rx = card_x + card_width * max_cards + card_closure * (max_cards + 1);
+	const std::size_t card_y = 500;
+	const std::size_t card_dy = 700;
+	const std::size_t hp_y = 500;
+	const std::size_t hp_x = card_width * max_cards + card_closure * (max_cards + 1);
+	const std::size_t ap_y = 610;
+	const std::size_t ap_x = card_width * max_cards + card_closure * (max_cards + 1);
+	const std::size_t confirm_button_y = 500;
+	const std::size_t confirm_button_x = card_width * max_cards + card_closure * (max_cards + 1) + 150;
+	const std::size_t cansel_button_y = 565;
+	const std::size_t cansel_button_x = card_width * max_cards + card_closure * (max_cards + 1) + 150;
+	const std::size_t turn_end_button_y = 630;
+	const std::size_t turn_end_button_x = card_width * max_cards + card_closure * (max_cards + 1) + 150;
+	const std::size_t enemy_x = 300;
+	const std::size_t enemy_y = 200;
+	const std::size_t enemy_width = 160;
+	const std::size_t player_x = 50;
+	const std::size_t player_y = 200;
+
+}
+
+namespace player_class
+{
+	const std::size_t WAR = 1;
+	const std::size_t PLAGUE = 2;
+	const std::size_t DEATH = 3;
+}
+
+class info_to_battle_sys;
+class card
+{
+public:
+	card();
+	card(std::size_t id);
+	card(const card& copy_card);
+	card& operator=(const card& copy_card);
+
+
+	std::size_t card_id;
+	std::string card_name;
+	std::size_t card_type;
+	std::size_t upgrade_version_id; //0 means the card has no upgrade version(already upgraded);
+	std::size_t cost;
+	bool is_reserve;
+	bool require_target; //trueä»£è¡¨éœ€è¦é€‰æ‹©ç›®æ ‡ï¼Œfalseä»£è¡¨ä¸ç”¨
+	bool exhaust;//trueä»£è¡¨æ¶ˆè€—
+	bool inherent;//trueä»£è¡¨å›ºæœ‰
+	bool vanity;//trueä»£è¡¨è™šæ— 
+
+	info_to_battle_sys use_card(data_sys&);
+	info_to_battle_sys discard(data_sys&);
+	info_to_battle_sys remove(data_sys&);
+	info_to_battle_sys on_turn_end(data_sys&);
+};
+
+
+
+
+class artifact
+{
+public:
+	//~artifact();
+	//info_to_battle_sys on_battle_begin(); // adds buff to the player entity or the enemy entity(s)
+	//info_to_battle_sys on_exploring(); //has the same working theory as buffs does in battles
+	//void on_create();
+	//void on_delete();
+};
+
+class game_entity;
 
 class action
 {
 public:
-	//¶¯×÷µÄÀà±ğ£¬ÈçÔì³ÉÉËº¦¡¢ÊÜµ½ÉËº¦µÈ
 	action(std::size_t);
 	action(std::size_t id, std::size_t ttype, std::size_t tvalue);
 	action(std::size_t id, game_entity* tcaller, game_entity* tlistener, std::size_t ttype, std::size_t tvalue);
@@ -77,16 +203,43 @@ public:
 	game_entity* caller;
 	game_entity* listener;
 
-	//ÉËº¦¡¢buffµÄ¾ßÌåÀà±ğ£¬ÈçÎüÑª¡¢ÖĞ¶¾µÈ
 	//it is a change_type value when action_id is not ADD_BUFF or REMOVE_BUFF.
 	//when the action_id is associated with buff actions, the value is a buff_type value.
 	std::size_t type;
 
 	//value is the damage/healing value when action_id is not ADD_BUFF or REMOVE_BUFF.
-	//Ç°Á½¸ö×Ö½Ú±íÊ¾buff_life£¬ºóÁ½¸ö×Ö½Ú±íÊ¾buff_level
+	//first two bytes buff_life, ....buff_level
 	std::size_t value;
 };
+class explore_selection;
 
+class event_e
+{
+public:
+	std::vector<explore_selection> selection;
+	std::vector<event_e> following_event;
+	std::string name;
+	std::string text;
+	std::size_t type;
+	std::size_t enemy_type;
+};
+
+class explore_selection
+{
+public:
+	explore_selection();
+	explore_selection(std::size_t ttype, std::size_t tvalue);
+	explore_selection(std::size_t ttype, card tcard);
+	explore_selection(std::size_t ttype, artifact tatf);
+	explore_selection(std::size_t ttype, event_e tevent);
+	explore_selection(std::size_t ttype, std::size_t tvalue, card tcard);
+	explore_selection(std::size_t ttype, std::size_t tvalue, artifact tatf);
+	std::size_t type;
+	std::size_t value;
+	artifact atf;
+	card selected_card;
+	event_e next_event;
+};
 class e_action
 {
 public:
@@ -100,6 +253,7 @@ public:
 	card selected_card;
 };
 
+
 class info
 {
 public:
@@ -112,6 +266,7 @@ class info_to_battle_sys : public info
 public:
 	info_to_battle_sys();
 	info_to_battle_sys(action);
+	info_to_battle_sys(std::vector<action>);
 	void append(info_to_battle_sys);
 	std::vector<action> action_set;
 };
@@ -146,40 +301,15 @@ public:
 	void clear();
 };
 
-//explore_selection ÊÇ¿ÉÒÔÑ¡ÔñµÄÑ¡Ïî
-class explore_selection
-{
-public:
-	explore_selection();
-	explore_selection(std::size_t ttype, std::size_t tvalue);
-	explore_selection(std::size_t ttype, card tcard);
-	explore_selection(std::size_t ttype, artifact tatf);
-	explore_selection(std::size_t ttype, event_e tevent);
-	explore_selection(std::size_t ttype, std::size_t tvalue, card tcard);
-	explore_selection(std::size_t ttype, std::size_t tvalue, artifact tatf);
-	std::size_t type;
-	std::size_t value;
-	artifact atf;
-	card selected_card;
-	event_e next_event;
-};
-
-//event_e ÊÇÊÂ¼şÊ÷µÄÒ»¸ö½Úµã
-class event_e
-{
-public:
-	std::vector<explore_selection> selection;//Ñ¡Ôñ/¶àÏîÑ¡ÔñÊÂ¼şµÄÑ¡Ïî
-	std::vector<event_e> following_event;//ºóĞøµÄ·ÖÖ§ÊÂ¼ş
-	std::string name;//ÊÂ¼şµÄÃû×Ö£¨Ñ¡ÏîµÄµÄÃû×Ö£©
-	std::string text;//ÏÔÊ¾µÄÊÂ¼ş¾çÇé
-	std::size_t type;//ÊÂ¼şµÄÖÖÀà£¨Õ½¶·£¬Ñ¡Ôñ£¬¶àÏîÑ¡Ôñ£©
-	std::size_t enmey_type;//Õ½¶·ÊÂ¼şµÄµĞÈËÖÖÀà
-};
-
-//event_card ÊÇÊÂ¼ş¿¨£¬¾ÍÊÇÒ»¿ÃÊÂ¼şÊ÷
 class event_card
 {
 public:
 	event_e root;
 };
+
+
+
+
+
+
 

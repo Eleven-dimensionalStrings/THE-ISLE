@@ -1,8 +1,8 @@
 #pragma once
-#include "message.h"
-#include "data_sys.h"
 #include <string>
 #include <stack>
+#include "message.h"
+class data_sys;
 
 namespace explore_action_type
 {
@@ -35,22 +35,21 @@ namespace explore_action_type
 	const int END_EVENT = 100;
 }
 
-struct explore_system_action
-{
-	explore_system_action(std::size_t, int, artifact, card);
-	std::size_t action_id;
-	int value;
-	artifact atf;
-	card c;
-};
 
 class explore_system
 {
 public:
-	vector<card> get_random_card(size_t num, bool is_rare);
+	explore_system(data_sys& d);
+	void update();
 private:
-	std::stack<explore_system_action> process_stack;
+	std::stack<e_action> process_stack;
 	void process();
-	data_sys* data;
+	data_sys& data;
 };
 
+class e_random_engine
+{
+public:
+	size_t get_card_by_id(int id);
+	size_t get_card_by_class(int class_id);
+};

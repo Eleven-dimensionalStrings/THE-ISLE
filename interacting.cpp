@@ -1,11 +1,20 @@
 #include "interacting.h"
+#include <random>
+#include <ctime>
+#include <graphics.h>
 using namespace std;
 using std::size_t;
+//写easyx的不知道哪个弱智把这宏放出来了,为什么要用这种垃圾
+#undef max
 
 context::context(interacting_sys * i_s)
 	:i_s(i_s)
 {
 
+}
+
+context::~context()
+{
 }
 
 battle_context::battle_context(interacting_sys* i_s)
@@ -28,13 +37,56 @@ battle_context::~battle_context()
 void battle_context::set_state(b_state * pstate)
 {
 	delete cur_state;
-	cur_state = pstate;
+	cur_state = dynamic_cast<b_state*>(pstate);
 }
 
 void battle_context::read_input()
 {
-	//switch
-	//cur_state->xxxfunction;
+	while (MouseHit())
+	{
+		auto hit = GetMouseMsg();
+		if (hit.mkLButton)
+		{
+			//检测点击卡
+			if (hit.x > gra_size::card_x && hit.x < gra_size::card_x + gra_size::card_rx
+				&& hit.y>gra_size::card_y && hit.y < gra_size::card_dy)
+			{
+				size_t pos = (hit.x - gra_size::card_closure) / (gra_size::card_width + gra_size::card_closure);
+				if (pos <= get_data().cards_in_hand.size())
+				{
+					cur_state->click_a_card(pos);
+					//cur_state->click_confirm();
+				}
+			}
+			//检查点击敌人
+			else if (hit.x > gra_size::enemy_x && hit.x<gra_size::enemy_x + gra_size::enemy_width*gra_size::max_enemies
+				&& hit.y>gra_size::enemy_y && hit.y < gra_size::enemy_y + 200)//需要改为敌人高度
+			{
+				size_t pos = (hit.x - gra_size::enemy_x) / gra_size::enemy_width;
+				if (pos <= get_data().enemies_data.size())
+				{
+					cur_state->click_an_enemy(pos);
+				}
+			}
+			//confirm, to revice the value
+			else if (hit.x > gra_size::confirm_button_x && hit.y > gra_size::confirm_button_y
+				&& hit.x < gra_size::confirm_button_x + 100 && hit.y < gra_size::confirm_button_y + 50)
+			{
+				cur_state->click_confirm();
+			}
+
+			FlushMouseMsgBuffer();
+		}
+		//temp
+		else if (hit.mkRButton)
+		{
+			//cur_state->click_turn_end();
+			get_data().i_to_b_pipe.append(get_data().player_data.on_turn_end());
+			get_data().i_to_b_pipe.append(get_data().player_data.on_turn_begin());
+			FlushMouseMsgBuffer();
+		}
+	}
+	//test_read();
 }
 
 void battle_context::change_to_select_state(info_battle_to_interacting t)
@@ -71,11 +123,39 @@ void explore_context::read_input()
 	//cur_state->xxxfunction
 }
 
-info_to_battle_sys interacting_sys::play_a_card(std::size_t card_pos, game_entity* target)
+data_sys & battle_context::get_data()
+{
+	return i_s->data;
+}
+
+void battle_context::test_read()
+{
+	size_t card_pos, target_pos;
+	cin >> card_pos;
+	set_state(new b_confirm_state(this, card_pos));
+	if (get_data().cards_in_hand[card_pos].require_target)
+	{
+		cin >> target_pos;
+		cur_state->click_an_enemy(target_pos);
+		return;
+	}
+	cur_state->click_confirm();
+}
+
+interacting_sys::interacting_sys(data_sys & d) :data(d),
+present_battle_context(new battle_context(this)), present_explore_context(new explore_context(this))
+{
+}
+
+
+info_to_battle_sys interacting_sys::play_a_card(size_t card_pos, game_entity* target)
 {
 	info_to_battle_sys result(action(battle_action_type::USE_A_CARD, &data.player_data, target,
 		data.cards_in_hand[card_pos].card_type, card_pos));
-	result.append(data.cards_in_hand[card_pos].use());
+	auto ef = data.card_effect(data.cards_in_hand[card_pos].card_id);
+	result.append(ef);
+	for (auto& i : result.action_set)
+		i.caller = &data.player_data;
 	return result;
 }
 
@@ -97,11 +177,11 @@ void interacting_sys::reveal_map_location(int x, int y)
 	//call the renderer to reveal the map
 }
 
-void interacting_sys::encounter_event(std::size_t event_card_no)
-{
-	event_card temp = data.event_effect.find(event_card_no)->second;
-	present_explore_context->set_state(&e_select_state(present_explore_context, temp.root));
-}
+//void interacting_sys::encounter_event(std::size_t event_id)
+//{
+//	data.i_to_e_pipe = data.event_effect(event_id);
+//	//	present_explore_context->set_state(&e_select_state(present_explore_context, temp.root));
+//}
 
 void interacting_sys::update()
 {
@@ -111,10 +191,11 @@ void interacting_sys::update()
 		data.b_to_i_pipe.clear();
 		return;
 	}
-	//����
-	//else if (from_explore_sys)
+	else if (data.e_to_i_pipe)
 	{
-		//ͬ��
+		//TODO
+		data.e_to_i_pipe.clear();
+		return;
 	}
 	present_battle_context->read_input();
 }
@@ -143,6 +224,7 @@ b_vaccant_state::b_vaccant_state(battle_context * b_c)
 
 void b_vaccant_state::click_a_card(size_t card_pos)
 {
+	get_data().draw_select_card[card_pos] = 1;
 	ctx->set_state(new b_confirm_state(ctx, card_pos));
 }
 
@@ -180,10 +262,13 @@ void b_confirm_state::click_a_card(size_t card_pos)
 {
 	if (card_pos == selected_card)
 	{
+		get_data().draw_select_card[selected_card] = 0;
 		ctx->set_state(new b_vaccant_state(ctx));
 	}
 	else
 	{
+		get_data().draw_select_card[card_pos] = 1;
+		get_data().draw_select_card[selected_card] = 0;
 		ctx->set_state(new b_confirm_state(ctx, card_pos));
 	}
 }
@@ -193,19 +278,22 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 	if (require_target)
 	{
 		game_entity* target;
+		get_data().draw_select_card[selected_card] = 0;
 		if (get_data().enemies_data[enemy_pos].is_alive())
 		{
 			target = &get_data().enemies_data[enemy_pos];
-			info_to_battle_sys temp;
-			temp.action_set = get_data().card_effect[get_data().cards_in_hand[selected_card].card_id];
+			info_to_battle_sys temp(action(battle_action_type::USE_A_CARD, get_data().cards_in_hand[selected_card].card_type, selected_card));
+			temp.append(get_data().cards_in_hand[selected_card].use_card(get_data()));
 			for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 			{
+				i->caller = &get_data().player_data;
 				if (i->listener == &get_data().select_one_enemy)
 				{
-					i->listener = &get_data().enemies_data[enemy_pos];
+					i->listener = target;
 				}
 			}
 			send_to_battle_sys(temp);
+			ctx->set_state(new b_vaccant_state(ctx));
 		}
 		else
 		{
@@ -218,14 +306,15 @@ void b_confirm_state::click_confirm()
 {
 	if (!require_target)
 	{
-		info_to_battle_sys temp;
-		temp.action_set = get_data().card_effect[get_data().cards_in_hand[selected_card].card_id];
+		info_to_battle_sys temp(action(battle_action_type::USE_A_CARD, get_data().cards_in_hand[selected_card].card_type, selected_card));
+		temp.append(get_data().cards_in_hand[selected_card].use_card(get_data()));
 		for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 		{
 			if (i->listener == &get_data().all_enemies)
 			{
 				auto temp_action = *i;
-				for (int j = 0; j < MAX_ENEMIES; +j)
+				i = temp.action_set.erase(i);
+				for (size_t j = 0; j < MAX_ENEMIES; ++j)
 				{
 					if (get_data().enemies_data[j].is_alive())
 					{
@@ -234,10 +323,10 @@ void b_confirm_state::click_confirm()
 						++i;
 					}
 				}
-				temp.action_set.erase(i++);
 			}
 		}
 		send_to_battle_sys(temp);
+		get_data().draw_select_card[selected_card] = 0;
 	}
 }
 
@@ -295,12 +384,14 @@ void b_select_state::click_a_card(std::size_t card_pos)
 	{
 		if (*i == card_pos)
 		{
+			get_data().draw_select_card[card_pos] = 0;
 			selected_cards.erase(i);
 			return;
 		}
 	}
 	if (selected_cards.size() == max)return;
 	selected_cards.push_back(card_pos);
+	get_data().draw_select_card[card_pos] = 1;
 }
 
 void b_select_state::click_an_enemy(std::size_t)
@@ -313,7 +404,7 @@ void b_select_state::click_confirm()
 	info_to_battle_sys t;
 	for (auto& i : selected_cards)
 	{
-		t.append(action(type + TYPE_TO_P_TYPE, 0, i));
+		t.append(action(type + TYPE_TO_P_TYPE, get_data().cards_in_hand[i].card_type, i));
 	}
 	send_to_battle_sys(t);
 	ctx->set_state(new b_vaccant_state(ctx));
@@ -371,12 +462,12 @@ void e_vaccant_state::click_up_arrow()
 	case map_mark_type::KNOWN:
 		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second + 1);
 		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second + 1, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 		break;
 	case map_mark_type::UNKNOWN:
 		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second + 1);
 		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second + 1, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 	default:
 		break;
 	}
@@ -399,12 +490,12 @@ void e_vaccant_state::click_down_arrow()
 	case map_mark_type::KNOWN:
 		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second - 1);
 		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second - 1, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 		break;
 	case map_mark_type::UNKNOWN:
 		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second - 1);
 		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second - 1, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 	default:
 		break;
 	}
@@ -427,12 +518,12 @@ void e_vaccant_state::click_left_arrow()
 	case map_mark_type::KNOWN:
 		ctx->i_s->move_player(get_data().player_location.first - 1, get_data().player_location.second);
 		ctx->i_s->set_map_location(get_data().player_location.first - 1, get_data().player_location.second, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 		break;
 	case map_mark_type::UNKNOWN:
 		ctx->i_s->move_player(get_data().player_location.first - 1, get_data().player_location.second);
 		ctx->i_s->set_map_location(get_data().player_location.first - 1, get_data().player_location.second, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 	default:
 		break;
 	}
@@ -455,12 +546,12 @@ void e_vaccant_state::click_right_arrow()
 	case map_mark_type::KNOWN:
 		ctx->i_s->move_player(get_data().player_location.first + 1, get_data().player_location.second);
 		ctx->i_s->set_map_location(get_data().player_location.first + 1, get_data().player_location.second, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 		break;
 	case map_mark_type::UNKNOWN:
 		ctx->i_s->move_player(get_data().player_location.first + 1, get_data().player_location.second);
 		ctx->i_s->set_map_location(get_data().player_location.first + 1, get_data().player_location.second, map_mark_type::VISITED);
-		ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
+		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
 	default:
 		break;
 	}
@@ -485,7 +576,7 @@ e_select_state::e_select_state(explore_context * e_c, event_e e_e)
 		get_data().choice_list = e_e.selection;
 		break;
 	case event_type::BATTLE:
-		//�ӿ�
+		get_data().i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::START_BATTLE, e_e.enemy_type));
 		break;
 	case event_type::REMOVE_CARDS:
 		get_data().choice_list.clear();
@@ -523,16 +614,16 @@ e_select_state::e_select_state(explore_context * e_c, event_e e_e)
 
 void e_select_state::click_an_option(std::size_t pos)
 {
-	explore_selection temp = get_data().choice_list[pos + current_select_pos];
+	explore_selection temp = get_data().choice_list[pos + 3 * get_data().current_select_page];
 	get_data().i_to_e_pipe = info_to_explore_sys(e_action(temp));
-	get_data().choice_list.erase(get_data().choice_list.begin() + pos + current_select_pos, get_data().choice_list.begin() + pos + current_select_pos + 1);
+	get_data().choice_list.erase(get_data().choice_list.begin() + pos + 3 * get_data().current_select_page, get_data().choice_list.begin() + pos + get_data().current_select_page + 1);
 	if (get_data().choice_list.empty())
 	{
 		ctx->set_state(&e_select_state(ctx, current_phase.following_event[0]));
 	}
-	else if (get_data().choice_list.size() == current_select_pos)
+	else if (get_data().choice_list.size() == 3 * get_data().current_select_page)
 	{
-		current_select_pos -= 3;
+		get_data().current_select_page -= 1;
 	}
 }
 
@@ -546,33 +637,33 @@ void e_select_state::click_next()
 
 void e_select_state::click_up_arrow()
 {
-	if (current_select_pos > 0)
+	if (get_data().current_select_page > 0)
 	{
-		current_select_pos -= 3;
+		get_data().current_select_page -= 1;
 	}
 }
 
 void e_select_state::click_down_arrow()
 {
-	if (current_select_pos < get_data().choice_list.size() - 3)
+	if (get_data().current_select_page < get_data().choice_list.size() / 3)
 	{
-		current_select_pos += 3;
+		get_data().current_select_page += 1;
 	}
 }
 
 void e_select_state::click_left_arrow()
 {
-	if (current_select_pos > 0)
+	if (get_data().current_select_page > 0)
 	{
-		current_select_pos -= 3;
+		get_data().current_select_page -= 1;
 	}
 }
 
 void e_select_state::click_right_arrow()
 {
-	if (current_select_pos < get_data().choice_list.size() - 3)
+	if (get_data().current_select_page < get_data().choice_list.size() / 3)
 	{
-		current_select_pos += 3;
+		get_data().current_select_page += 1;
 	}
 }
 
