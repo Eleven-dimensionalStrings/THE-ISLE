@@ -114,17 +114,21 @@ void battle_system::process()
 			auto it = temp.listener->buff_pool.end();
 			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
 			{
-				*it += buff(temp.type, get_buff_life(temp.value), get_buff_level(temp.value));
+				*it += buff(temp.type, temp.value);
 				break;
 			}
 			else
 			{
 				pair<string, size_t> t = data.get_buff(temp.type); // pair<buff_name, priority>
-				buff tbuff(temp.type, t.first, t.second, get_buff_life(temp.value), get_buff_level(temp.value));
+				buff tbuff(temp.type, t.first, t.second, temp.value);
 				temp.listener->buff_pool.push_back(tbuff);
 				send_message(tbuff.on_create(temp.caller, temp.listener));
 			}
 			break;
+		}
+		case REMOVE_BUFF:
+		{
+			//TODO
 		}
 		case P_KEEP_A_CARD:
 		{
@@ -218,19 +222,19 @@ void battle_system::process()
 			case card_type::ATTACK:
 			{
 				process_stack.push(action(battle_action_type::ADD_BUFF
-					, &data.player_data, &data.player_data, buff_type::USED_ATTACK_CARDS, fix_buff_value(1, 1)));
+					, &data.player_data, &data.player_data, buff_type::USED_ATTACK_CARDS, 1));
 				break;
 			}
 			case card_type::SKILL:
 			{
 				process_stack.push(action(battle_action_type::ADD_BUFF
-					, &data.player_data, &data.player_data, buff_type::USED_SKILL_CARDS, fix_buff_value(1, 1)));
+					, &data.player_data, &data.player_data, buff_type::USED_SKILL_CARDS, 1));
 				break;
 			}
 			case card_type::ABILITY:
 			{
 				process_stack.push(action(battle_action_type::ADD_BUFF
-					, &data.player_data, &data.player_data, buff_type::USED_ABILITY_CARDS, fix_buff_value(1, 1)));
+					, &data.player_data, &data.player_data, buff_type::USED_ABILITY_CARDS, 1));
 				break;
 			}
 			default:

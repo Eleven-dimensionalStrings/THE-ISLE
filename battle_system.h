@@ -18,9 +18,6 @@ private:
 	bool battle_succ();
 };
 
-
-
-//��ʱʹ��:
 class my_random_engine
 {
 public:

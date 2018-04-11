@@ -5,7 +5,6 @@
 #include <cstddef>
 #define MAX_ENEMIES 5
 #define MAX_CARDS_IN_HAND 10
-#define ETERNAL 10000
 #define MEANINGLESS_VALUE static_cast<std::size_t>(31415926)
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
 class data_sys;
@@ -60,11 +59,12 @@ namespace type_type
 {
 	const std::size_t NORMAL = 1;
 	const std::size_t FLAME = 2;
-	const std::size_t PIERCE = 3;//穿甲
 	const std::size_t POISON = 4;
-	const std::size_t BLEEDING = 5;
+	const std::size_t BLEED = 5;
 	const std::size_t PURE = 6;//不受buff影响，穿甲
 	const std::size_t INDEPENDENT = 7;//不受buff影响
+	const std::size_t WAR_12 = 101;//蓄力劈砍；
+	const std::size_t WAR_12_PLUS = 102;//蓄力劈砍+；
 	const std::size_t ADD_AP = 20000;
 	const std::size_t ADD_HP = 20001;
 	const std::size_t HEALING = 20002;
@@ -80,20 +80,35 @@ namespace card_type
 
 namespace buff_type
 {
-	const std::size_t STRENGTH = 0;
-	const std::size_t VULNERABLE = 1;
-	const std::size_t POISON = 2;
-	const std::size_t WEAK = 3;
-	const std::size_t USED_ATTACK_CARDS = 4;
-	const std::size_t USED_SKILL_CARDS = 5;
-	const std::size_t USED_ABILITY_CARDS = 6;
-	const std::size_t EXHAUST = 7;
-	const std::size_t CHAIN = 8;
-	const std::size_t BURN = 9;
-	const std::size_t STUN = 10;
-	const std::size_t STUN_RESIST = 11;
-	const std::size_t ARMOR = 12;
-	const std::size_t MOVE_MUSSLE = 13;
+	const std::size_t STRENGTH = 1;
+	const std::size_t AGILITY = 2;
+	const std::size_t VITALITY = 3;
+	const std::size_t ARMOR = 4;
+	const std::size_t WEAK = 5;
+	const std::size_t VULNERABLE = 6;
+	const std::size_t FRAGILE = 7;
+	const std::size_t BURN = 8;
+	const std::size_t POISON = 9;
+	const std::size_t BLEED = 10;
+	const std::size_t USED_ATTACK_CARDS = 11;
+	const std::size_t USED_SKILL_CARDS = 12;
+	const std::size_t USED_ABILITY_CARDS = 13;
+	const std::size_t EXHAUST = 14;
+	const std::size_t CHAIN = 15;
+	const std::size_t MOVE_MUSSLE = 16;
+	const std::size_t STUN = 17;
+	const std::size_t STUN_RESIST = 18;
+	const std::size_t IGNITE = 19;
+
+	//buff from ability cards
+	const std::size_t ETERNAL_FURY = 101;
+	const std::size_t INVULNARABLE = 102;
+	const std::size_t FIGHTING_SPIRIT = 103;
+	const std::size_t FRENZY = 104;
+	const std::size_t RITE = 105;
+	const std::size_t RESUSCITATE = 106;
+	const std::size_t ABILITY_BURN = 107;
+	const std::size_t SCORCHED_EARTH = 108;
 }
 
 namespace window_unit_size
