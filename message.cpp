@@ -1155,7 +1155,7 @@ card::card(size_t id)
 	}
 	case 1001:
 	{
-		card_name = "Æ£±¹+";
+		card_name = "Æ£±¹";
 		card_type = card_type::STAT;
 		cost = 100;
 		require_target = false;
@@ -1167,10 +1167,12 @@ card::card(size_t id)
 	}
 }
 
-card::card(const card& copy_card) : is_reserve(copy_card.is_reserve), card_id(copy_card.card_id),
+card::card(const card& copy_card) : card_id(copy_card.card_id),
 card_name(copy_card.card_name), card_type(copy_card.card_type), upgrade_version_id(copy_card.upgrade_version_id),
-require_target(copy_card.require_target)
+cost(copy_card.cost), is_reserve(copy_card.is_reserve), require_target(copy_card.require_target),
+exhaust(copy_card.exhaust), inherent(copy_card.inherent), vanity(copy_card.vanity)
 {
+
 }
 
 card & card::operator=(const card & c)
@@ -1181,6 +1183,10 @@ card & card::operator=(const card & c)
 	this->card_type = c.card_type;
 	this->upgrade_version_id = c.upgrade_version_id;
 	this->require_target = c.require_target;
+	this->cost = c.cost;
+	this->exhaust = c.exhaust;
+	this->inherent = c.inherent;
+	this->vanity = c.vanity;
 	return *this;
 }
 

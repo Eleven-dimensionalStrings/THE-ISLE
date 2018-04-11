@@ -913,12 +913,59 @@ pair<std::string, std::size_t> data_sys::get_buff(std::size_t id)
 	{
 	case buff_type::STRENGTH:
 		return pair<string, size_t>(string("strength"), 1);
+	case buff_type::AGILITY:
+		return pair<string, size_t>(string("agility"), 1);
+	case buff_type::VITALITY:
+		return pair<string, size_t>(string("vitality"), 1);
+	case buff_type::ARMOR:
+		return pair<string, size_t>(string("armor"), 1);
+	case buff_type::WEAK:
+		return pair<string, size_t>(string("weak"), 1);
 	case buff_type::VULNERABLE:
 		return pair<string, size_t>(string("vulnerable"), 1);
+	case buff_type::FRAGILE:
+		return pair<string, size_t>(string("fragile"), 1);
+	case buff_type::BURN:
+		return pair<string, size_t>(string("burn"), 1);
 	case buff_type::POISON:
 		return pair<string, size_t>(string("poison"), 1);
+	case buff_type::BLEED:
+		return pair<string, size_t>(string("bleed"), 1);
+	case buff_type::USED_ATTACK_CARDS:
+		return pair<string, size_t>(string("use_atk_c"), 1);
+	case buff_type::USED_SKILL_CARDS:
+		return pair<string, size_t>(string("use_ski_c"), 1);
+	case buff_type::USED_ABILITY_CARDS:
+		return pair<string, size_t>(string("use_abi_c"), 1);
+	case buff_type::EXHAUST:
+		return pair<string, size_t>(string("exhaust"), 1);
+	case buff_type::CHAIN:
+		return pair<string, size_t>(string("chain"), 1);
+	case buff_type::MOVE_MUSSLE:
+		return pair<string, size_t>(string("move_mussle"), 1);
+	case buff_type::STUN:
+		return pair<string, size_t>(string("stun"), 1);
+	case buff_type::STUN_RESIST:
+		return pair<string, size_t>(string("stun_resist"), 1);
+	case buff_type::ETERNAL_FURY:
+		return pair<string, size_t>(string("eternal_fury"), 1);
+	case buff_type::INVULNARABLE:
+		return pair<string, size_t>(string("invulnarable"), 1);
+	case buff_type::FIGHTING_SPIRIT:
+		return pair<string, size_t>(string("fighting_spirit"), 1);
+	case buff_type::FRENZY:
+		return pair<string, size_t>(string("frenzy"), 1);
+	case buff_type::RITE:
+		return pair<string, size_t>(string("rite"), 1);
+	case buff_type::RESUSCITATE:
+		return pair<string, size_t>(string("resuscitate"), 1);
+	case buff_type::ABILITY_BURN:
+		return pair<string, size_t>(string("ability_burn"), 1);
+	case buff_type::SCORCHED_EARTH:
+		return pair<string, size_t>(string("scorched_earth"), 1);
 	default:
-		throw exception("failed to find buff id");
+		return pair<string, size_t>(string("fuck"), 2);
+		//throw exception("failed to find buff id");
 	}
 }
 

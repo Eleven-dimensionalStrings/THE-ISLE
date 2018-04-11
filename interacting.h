@@ -167,6 +167,6 @@ public:
 	void move_player(int x, int y);
 	void set_map_location(int x, int y, int mark_type);
 	void reveal_map_location(int x, int y);
-	void encounter_event(std::size_t event_id);
+	//void encounter_event(std::size_t event_id);
 	void update();
 };

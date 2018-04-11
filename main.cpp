@@ -38,10 +38,11 @@ int main()
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
+	d.cards_pool.push_back(card(34));
+	d.cards_pool.push_back(card(31));
 	d.cards_pool.push_back(card(1));
-	d.cards_pool.push_back(card(2));
-	d.cards_pool.push_back(card(3));
-	d.cards_pool.push_back(card(4));
+	d.cards_pool.push_back(card(55));
+	d.cards_pool.push_back(card(17));
 
 explore:
 	//explore loop
@@ -63,16 +64,14 @@ battle:
 	while (1)
 	{
 
-		//b.send_message(d.player_data.on_turn_begin());
 		b.update();
 		dr.draw_battle();
 		dr.draw();
 		i.update();
 		b.update();
-		//b.send_message(d.player_data.on_turn_end());
 		b.update();
 		//enemy act
-		Sleep(30);
+		Sleep(100);
 		if (d.enemies_data.empty())
 			goto explore;
 	}

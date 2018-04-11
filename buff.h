@@ -27,7 +27,7 @@ public:
 	//修改后的结果将被传给下一个buff,所有info被打包后返回给battle_sys
 	info_to_battle_sys on_create(game_entity*, game_entity*); //两个参数依次是创建buff的对象，被创建buff的对象
 	info_to_battle_sys on_delete(game_entity*, game_entity*);
-	info_to_battle_sys on_kill();//所在角色死亡时调用
+	info_to_battle_sys on_kill(game_entity*);//所在角色死亡时调用
 	info_to_battle_sys on_turn_begin(game_entity*);
 	info_to_battle_sys on_turn_end(game_entity*);
 	info_to_battle_sys on_calling(info_to_battle_sys);
@@ -37,4 +37,5 @@ public:
 	void operator+=(buff t);
 	//返回1表示应该清除该buff
 	bool operator-=(buff t);
+	bool operator-(buff t);
 };

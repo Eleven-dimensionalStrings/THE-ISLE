@@ -1,7 +1,7 @@
+#include "interacting.h"
 #include <random>
 #include <ctime>
 #include <graphics.h>
-#include "interacting.h"
 using namespace std;
 using std::size_t;
 //写easyx的不知道哪个弱智把这宏放出来了,为什么要用这种垃圾
@@ -75,8 +75,16 @@ void battle_context::read_input()
 				cur_state->click_confirm();
 			}
 
+			FlushMouseMsgBuffer();
 		}
-		//FlushMouseMsgBuffer();
+		//temp
+		else if (hit.mkRButton)
+		{
+			//cur_state->click_turn_end();
+			get_data().i_to_b_pipe.append(get_data().player_data.on_turn_end());
+			get_data().i_to_b_pipe.append(get_data().player_data.on_turn_begin());
+			FlushMouseMsgBuffer();
+		}
 	}
 	//test_read();
 }
@@ -169,11 +177,11 @@ void interacting_sys::reveal_map_location(int x, int y)
 	//call the renderer to reveal the map
 }
 
-void interacting_sys::encounter_event(std::size_t event_id)
-{
-	data.i_to_e_pipe = data.event_effect(event_id);
-	present_explore_context->set_state(&e_select_state(present_explore_context, temp.root));
-}
+//void interacting_sys::encounter_event(std::size_t event_id)
+//{
+//	data.i_to_e_pipe = data.event_effect(event_id);
+//	//	present_explore_context->set_state(&e_select_state(present_explore_context, temp.root));
+//}
 
 void interacting_sys::update()
 {
@@ -305,6 +313,7 @@ void b_confirm_state::click_confirm()
 			if (i->listener == &get_data().all_enemies)
 			{
 				auto temp_action = *i;
+				i = temp.action_set.erase(i);
 				for (size_t j = 0; j < MAX_ENEMIES; ++j)
 				{
 					if (get_data().enemies_data[j].is_alive())
@@ -314,7 +323,6 @@ void b_confirm_state::click_confirm()
 						++i;
 					}
 				}
-				temp.action_set.erase(i);
 			}
 		}
 		send_to_battle_sys(temp);
