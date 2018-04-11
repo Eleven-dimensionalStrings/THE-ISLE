@@ -1,5 +1,6 @@
 #include "buff.h"
 #include "game_entity.h"
+#include "data_sys.h"
 using namespace std;
 
 void buff::operator--()
@@ -148,9 +149,9 @@ info_to_battle_sys buff::on_turn_begin(game_entity* p)
 		//TODO
 		enemy* temp;
 		data_sys& d = dynamic_cast<player*>(p)->data;
-		for (int i = 0; i < d.enemies.size(); i++)
+		for (int i = 0; i < d.enemies_data.size(); i++)
 		{
-			if (d.enemies[i].is_alive)
+			if (d.enemies_data[i].is_alive())
 				result.append(action(battle_action_type::ADD_BUFF, p, temp, buff_type::BURN, buff_level));
 		}
 		break;

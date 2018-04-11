@@ -143,7 +143,7 @@ void t_draw_sys::draw()
 	}
 	for (auto& i : data.player_data.buff_pool)
 	{
-		cout << i.buff_name << "  " << i.buff_level << ' ' << i.buff_life << endl;
+		cout << i.buff_name << "  " << i.buff_level << endl;
 	}
 	cout << "player:\n";
 	cout << "hp:" << data.player_data.current_hp << '/' << data.player_data.max_hp << endl
