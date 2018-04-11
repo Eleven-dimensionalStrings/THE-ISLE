@@ -30,6 +30,19 @@ bool buff::operator-=(buff t)
 		return 1;
 	return 0;
 }
+bool buff::operator-(buff t)
+{
+	if (buff_level <= t.buff_level)
+	{
+		if (buff_id == buff_type::STRENGTH
+			|| buff_id == buff_type::AGILITY
+			|| buff_id == buff_type::VITALITY
+			|| buff_id == buff_type::RESUSCITATE)
+			return 0;
+		return 1;
+	}
+	return 0;
+}
 
 buff::buff(std::size_t id, int level)
 	:buff_id(id), buff_name(""), buff_priority(0), buff_level(level)
@@ -48,12 +61,12 @@ info_to_battle_sys buff::on_create(game_entity* c, game_entity* p)
 	{
 	case buff_type::CHAIN:
 	{
-		result.append(action(battle_action_type::REMOVE_BUFF, buff_type::STRENGTH, buff_level));
+		result.append(action(battle_action_type::REMOVE_BUFF, c, p, buff_type::STRENGTH, buff_level));
 		break;
 	}
 	case buff_type::STUN:
 	{
-		result.append(action(battle_action_type::ADD_BUFF, buff_type::STUN_RESIST, 2));
+		result.append(action(battle_action_type::ADD_BUFF, c, p, buff_type::STUN_RESIST, 2));
 		break;
 	}
 	default:
@@ -67,19 +80,24 @@ info_to_battle_sys buff::on_delete(game_entity* c, game_entity* p)
 	info_to_battle_sys result;
 	switch (buff_id)
 	{
+	case buff_type::CHAIN:
+	{
+		result.append(action(battle_action_type::ADD_BUFF, c, p, buff_type::STRENGTH, buff_level));
+		break;
+	}
 	default:
 		break;
 	}
 	return result;
 }
 
-info_to_battle_sys buff::on_kill()
+info_to_battle_sys buff::on_kill(game_entity* p)
 {
 	info_to_battle_sys result;
 	switch (buff_id)
 	{
 	default:
-		result.append(action(battle_action_type::REMOVE_BUFF, buff_id, buff_level));
+		result.append(action(battle_action_type::REMOVE_BUFF, nullptr, p, buff_id, buff_level));
 		break;
 	}
 	return result;
@@ -126,7 +144,7 @@ info_to_battle_sys buff::on_turn_begin(game_entity* p)
 	}
 	case buff_type::STUN:
 	{
-		break;//TODO ½áÊø¸ÃÊµÌåµÄ»ØºÏ
+		break;//TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½Ä»Øºï¿½
 	}
 	case buff_type::ETERNAL_FURY:
 	{
@@ -147,7 +165,7 @@ info_to_battle_sys buff::on_turn_begin(game_entity* p)
 	case buff_type::SCORCHED_EARTH:
 	{
 		//TODO
-		data_sys& d = dynamic_cast<player*>(p)->data;
+		data_sys& d = (dynamic_cast<player*>(p))->data;
 		enemy* temp = &d.enemies_data[0];
 		for (int i = 0; i < d.enemies_data.size(); i++)
 		{
@@ -191,7 +209,6 @@ info_to_battle_sys buff::on_turn_end(game_entity* p)
 	}
 	case buff_type::CHAIN:
 	{
-		result.append(action(battle_action_type::ADD_BUFF, p, p, buff_type::STRENGTH, buff_level));
 		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, buff_level));
 		break;
 	}
@@ -248,7 +265,6 @@ info_to_battle_sys buff::on_calling(info_to_battle_sys temp)
 				i.value += 6 * buff_level;
 			if (i.action_id == battle_action_type::CALLING_ACTION && i.type == type_type::WAR_12_PLUS)
 				i.value += 8 * buff_level;
-			break;
 		}
 		break;
 	}
@@ -256,13 +272,9 @@ info_to_battle_sys buff::on_calling(info_to_battle_sys temp)
 	{
 		for (auto& i : temp.action_set)
 		{
-			if (i.action_id == battle_action_type::PERFORMING_ACTION && (i.type == type_type::NORMAL
+			if (i.action_id == battle_action_type::CALLING_ACTION && (i.type == type_type::NORMAL
 				|| i.type == type_type::FLAME || (i.type > 100 && i.type < 500)))
 				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, i.caller, i.listener, buff_type::BURN, buff_level));
-			
-			
-			
-			break;
 		}
 		break;
 	}

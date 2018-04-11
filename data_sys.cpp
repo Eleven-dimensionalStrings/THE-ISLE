@@ -3,6 +3,9 @@
 #include <ctime>
 using namespace std;
 
+//TODO 弃牌，消耗牌时，会爆炸； aoe会爆炸；各种莫名其妙爆炸
+//TODO 6, 8，9, 12
+
 data_sys::data_sys() :player_data(*this), all_enemies(*this), random_enemy(*this), select_one_enemy(*this)
 {
 	for (auto&i : draw_select_card)i = 0;
@@ -69,27 +72,27 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
 			, &player_data, &all_enemies, type_type::NORMAL, 10), action(battle_action_type::ADD_BUFF
-				, &player_data, &select_one_enemy, buff_type::VULNERABLE, 1), action(battle_action_type::ADD_BUFF
-					, &player_data, &select_one_enemy, buff_type::WEAK, 1)});
+				, &player_data, &all_enemies, buff_type::VULNERABLE, 1), action(battle_action_type::ADD_BUFF
+					, &player_data, &all_enemies, buff_type::WEAK, 1)});
 		break;
 	}
 	case 10://过肩摔
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::NORMAL, 12), action(battle_action_type::ADD_BUFF
+			, &player_data, &select_one_enemy, type_type::NORMAL, 12), action(battle_action_type::ADD_BUFF
 				, &player_data, &select_one_enemy, buff_type::WEAK, 2)});
 		break;
 	}
 	case 11://湮灭
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::NORMAL, 30)});
+			, &player_data, &select_one_enemy, type_type::NORMAL, 30)});
 		break;
 	}
 	case 12://蓄力劈砍
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::WAR_12, 12)});
+			, &player_data, &select_one_enemy, type_type::WAR_12, 12)});
 		break;
 	}
 	case 13://无谋打击
@@ -512,27 +515,27 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
 			, &player_data, &all_enemies, type_type::NORMAL, 10), action(battle_action_type::ADD_BUFF
-				, &player_data, &select_one_enemy, buff_type::VULNERABLE, 2), action(battle_action_type::ADD_BUFF
-					, &player_data, &select_one_enemy, buff_type::WEAK, 2)});
+				, &player_data, &all_enemies, buff_type::VULNERABLE, 2), action(battle_action_type::ADD_BUFF
+					, &player_data, &all_enemies, buff_type::WEAK, 2)});
 		break;
 	}
 	case 70://过肩摔+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::NORMAL, 14), action(battle_action_type::ADD_BUFF
+			, &player_data, &select_one_enemy, type_type::NORMAL, 14), action(battle_action_type::ADD_BUFF
 				, &player_data, &select_one_enemy, buff_type::WEAK, 3)});
 		break;
 	}
 	case 71://湮灭+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::NORMAL, 40)});
+			, &player_data, &select_one_enemy, type_type::NORMAL, 40)});
 		break;
 	}
 	case 72://蓄力劈砍+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::WAR_12_PLUS, 12)});
+			, &player_data, &select_one_enemy, type_type::WAR_12_PLUS, 12)});
 		break;
 	}
 	case 73://无谋打击+
@@ -913,13 +916,59 @@ pair<std::string, std::size_t> data_sys::get_buff(std::size_t id)
 	{
 	case buff_type::STRENGTH:
 		return pair<string, size_t>(string("strength"), 1);
+	case buff_type::AGILITY:
+		return pair<string, size_t>(string("agility"), 1);
+	case buff_type::VITALITY:
+		return pair<string, size_t>(string("vitality"), 1);
+	case buff_type::ARMOR:
+		return pair<string, size_t>(string("armor"), 1);
+	case buff_type::WEAK:
+		return pair<string, size_t>(string("weak"), 1);
 	case buff_type::VULNERABLE:
 		return pair<string, size_t>(string("vulnerable"), 1);
+	case buff_type::FRAGILE:
+		return pair<string, size_t>(string("fragile"), 1);
+	case buff_type::BURN:
+		return pair<string, size_t>(string("burn"), 1);
 	case buff_type::POISON:
 		return pair<string, size_t>(string("poison"), 1);
+	case buff_type::BLEED:
+		return pair<string, size_t>(string("bleed"), 1);
+	case buff_type::USED_ATTACK_CARDS:
+		return pair<string, size_t>(string("use_atk_c"), 1);
+	case buff_type::USED_SKILL_CARDS:
+		return pair<string, size_t>(string("use_ski_c"), 1);
+	case buff_type::USED_ABILITY_CARDS:
+		return pair<string, size_t>(string("use_abi_c"), 1);
+	case buff_type::EXHAUST:
+		return pair<string, size_t>(string("exhaust"), 1);
+	case buff_type::CHAIN:
+		return pair<string, size_t>(string("chain"), 1);
+	case buff_type::MOVE_MUSSLE:
+		return pair<string, size_t>(string("move_mussle"), 1);
+	case buff_type::STUN:
+		return pair<string, size_t>(string("stun"), 1);
+	case buff_type::STUN_RESIST:
+		return pair<string, size_t>(string("stun_resist"), 1);
+	case buff_type::ETERNAL_FURY:
+		return pair<string, size_t>(string("eternal_fury"), 1);
+	case buff_type::INVULNARABLE:
+		return pair<string, size_t>(string("invulnarable"), 1);
+	case buff_type::FIGHTING_SPIRIT:
+		return pair<string, size_t>(string("fighting_spirit"), 1);
+	case buff_type::FRENZY:
+		return pair<string, size_t>(string("frenzy"), 1);
+	case buff_type::RITE:
+		return pair<string, size_t>(string("rite"), 1);
+	case buff_type::RESUSCITATE:
+		return pair<string, size_t>(string("resuscitate"), 1);
+	case buff_type::ABILITY_BURN:
+		return pair<string, size_t>(string("ability_burn"), 1);
+	case buff_type::SCORCHED_EARTH:
+		return pair<string, size_t>(string("scorched_earth"), 1);
 	default:
-		//throw exception("failed to find buff id");
 		return pair<string, size_t>(string("fuck"), 2);
+		//throw exception("failed to find buff id");
 	}
 }
 

@@ -39,42 +39,39 @@ int main()
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
-	d.cards_pool.push_back(card(119));
-	d.cards_pool.push_back(card(119));
-	//d.cards_pool.push_back(card(2));
-	//d.cards_pool.push_back(card(3));
-	//d.cards_pool.push_back(card(4));
+	for (int i = 60; i > 0; i--)
+	{
+		d.cards_pool.push_back(card(i));
+	}
 
 explore:
 	//explore loop
 	while (1)
 	{
 		e.update();
-
-
+		i.update();
+		e.update();
 		if (!d.enemies_data.empty())
 			goto battle;
 	}
 
 
 battle:
-	
+
 	d.cards_deck = d.cards_pool;
 	//explore gives battle some info
 	b.send_message(d.player_data.on_turn_begin());
 	while (1)
 	{
 
-		//b.send_message(d.player_data.on_turn_begin());
 		b.update();
 		dr.draw_battle();
 		dr.draw();
 		i.update();
 		b.update();
-		//b.send_message(d.player_data.on_turn_end());
 		b.update();
 		//enemy act
-		Sleep(30);
+		Sleep(100);
 		if (d.enemies_data.empty())
 			goto explore;
 	}

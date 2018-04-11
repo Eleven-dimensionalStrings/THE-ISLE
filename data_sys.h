@@ -11,6 +11,7 @@ class data_sys
 public:
 	data_sys();
 	info_to_battle_sys card_effect(std::size_t card_id);
+	info_to_explore_sys event_effect(std::size_t event_id);
 	std::vector<card> cards_pool;
 	std::vector<artifact> artifacts;
 	std::map<std::size_t, std::size_t> card_upgrade_id;
@@ -42,10 +43,10 @@ public:
 	int map_marks[6][6];
 	std::pair<int, int> player_location;
 	std::vector<explore_selection> choice_list;
-	std::map<std::size_t, event_card> event_effect;
 	//to determine explore context
 	std::size_t current_select_page;//indicates the position of the first selection in choice_list.  
 	bool is_vaccant;
+	event_e current_event;
 };
 
 class random_engine

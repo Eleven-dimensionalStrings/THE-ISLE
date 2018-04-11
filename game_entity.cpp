@@ -48,19 +48,25 @@ info_to_battle_sys player::on_turn_begin()
 
 info_to_battle_sys player::on_turn_end()
 {
-
+	info_to_battle_sys t;
 	for (auto i = data.cards_in_hand.begin(); i != data.cards_in_hand.end();)
 	{
 		if (!i->is_reserve)
 		{
-			data.cards_grave.push_back(*i);
-			i = data.cards_in_hand.erase(i);
+			if (i->vanity)
+			{
+				t.append(action(battle_action_type::P_REMOVE_A_CARD, MEANINGLESS_VALUE, i - data.cards_in_hand.begin()));
+				++i;
+			}
+			else
+			{
+				data.cards_grave.push_back(*i);
+				i = data.cards_in_hand.erase(i);
+			}
 		}
 		else
 			++i;
 	}
-
-	info_to_battle_sys t;
 	for (auto& i : buff_pool)
 	{
 		t.append(i.on_turn_end(this));
@@ -100,6 +106,12 @@ info_to_battle_sys game_entity::calling_action(action iaction)
 
 info_to_battle_sys game_entity::performing_action(action iaction)
 {
+	//TODO
+
+
+
+
+	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if (!is_alive())
 		return info_to_battle_sys();
 	info_to_battle_sys result(iaction);
@@ -113,26 +125,29 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 	action present_act = result.action_set[0];
 	result.action_set.erase(result.action_set.begin());
 	using namespace type_type;
-	if (present_act.type <= 500)//造成伤害
+	if (iaction.action_id == battle_action_type::PERFORMING_ACTION)
 	{
-		current_hp -= static_cast<int>(present_act.value);
-		result.append(action(battle_action_type::ENTITY_BE_ATK, present_act.caller, present_act.listener, 0, 0));
-		if (current_hp <= 0)
-			result.append(this->kill());
-	}
-	else if (present_act.type == ADD_HP)//增加生命值
-	{
-		current_hp += static_cast<int>(present_act.value);
-		if (current_hp > max_hp)
-			current_hp = max_hp;
-	}
-	/*else if (present_act.type < 30000)//减少行动力
-	{
-		current_ap -= static_cast<int>(present_act.value);
-	}*/
-	else if (present_act.type == ADD_AP)//增加行动力
-	{
-		current_ap += static_cast<int>(present_act.value);
+		if (present_act.type <= 500)//造成伤害
+		{
+			current_hp -= static_cast<int>(present_act.value);
+			result.append(action(battle_action_type::ENTITY_BE_ATK, present_act.caller, present_act.listener, 0, 0));
+			if (current_hp <= 0)
+				result.append(this->kill());
+		}
+		else if (present_act.type == ADD_HP)//增加生命值
+		{
+			current_hp += static_cast<int>(present_act.value);
+			if (current_hp > max_hp)
+				current_hp = max_hp;
+		}
+		/*else if (present_act.type < 30000)//减少行动力
+		{
+			current_ap -= static_cast<int>(present_act.value);
+		}*/
+		else if (present_act.type == ADD_AP)//增加行动力
+		{
+			current_ap += static_cast<int>(present_act.value);
+		}
 	}
 	return result;
 

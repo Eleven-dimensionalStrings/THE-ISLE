@@ -107,6 +107,7 @@ void battle_system::process()
 					c_deck.pop_back();
 				}
 			}
+			send_message(data.player_data.performing_action(temp));
 			break;
 		}
 		case ADD_BUFF:
@@ -128,21 +129,33 @@ void battle_system::process()
 		}
 		case REMOVE_BUFF:
 		{
-			//TODO
 			auto it = temp.listener->buff_pool.end();
 			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
 			{
-				if (*it -= buff(temp.type, temp.value))
+				if (*it - buff(temp.type, temp.value))
 				{
+					send_message(it->on_delete(temp.caller, temp.listener));
 					temp.listener->buff_pool.erase(it);
 				}
+				else
+				{
+					*it -= buff(temp.type, temp.value);
+				}
 				break;
+			}
+			else if(temp.type == buff_type::STRENGTH || temp.type == buff_type::AGILITY || temp.type == buff_type::VITALITY )
+			{
+				pair<string, size_t> t = data.get_buff(temp.type); // pair<buff_name, priority>
+				buff tbuff(temp.type, t.first, t.second, -static_cast<int>(temp.value));
+				temp.listener->buff_pool.push_back(tbuff);
+				send_message(tbuff.on_create(temp.caller, temp.listener));
 			}
 			break;
 		}
 		case P_KEEP_A_CARD:
 		{
 			data.cards_in_hand[temp.value].is_reserve = 1;
+			send_message(data.player_data.performing_action(temp));
 			break;
 		}
 		case P_REMOVE_A_CARD:
@@ -151,6 +164,7 @@ void battle_system::process()
 			vector<card>& c_removed = data.cards_removed;
 			c_removed.push_back(c_in_hand[temp.value]);
 			c_in_hand.erase(c_in_hand.begin() + temp.value);
+			send_message(data.player_data.performing_action(temp));
 			break;
 		}
 		case P_DISCARD_A_CARD:
@@ -160,6 +174,7 @@ void battle_system::process()
 			c_grave.push_back(c_in_hand[temp.value]);
 			send_message((c_in_hand.end() - 1)->discard(data));
 			c_in_hand.erase(c_in_hand.begin() + temp.value);
+			send_message(data.player_data.performing_action(temp));
 			break;
 		}
 		case TURN_END:
@@ -178,6 +193,7 @@ void battle_system::process()
 					c_in_hand.erase(c_in_hand.begin() + i);
 				}
 			}
+			//TODO
 			break;
 		}
 		case ENTITY_BE_ATK:
@@ -218,8 +234,9 @@ void battle_system::process()
 			vector<card>& c_equiped = data.cards_equiped;
 			if (data.cards_in_hand[temp.value].exhaust)
 			{
-				c_removed.push_back(c_in_hand[temp.value]);
-				c_in_hand.erase(c_in_hand.begin() + temp.value);
+				process_stack.push(action(battle_action_type::P_REMOVE_A_CARD, MEANINGLESS_VALUE, temp.value));
+				/*c_removed.push_back(c_in_hand[temp.value]);
+				c_in_hand.erase(c_in_hand.begin() + temp.value);*/
 			}
 			else if (data.cards_in_hand[temp.value].card_type == card_type::ABILITY)
 			{
@@ -254,6 +271,7 @@ void battle_system::process()
 			default:
 				break;
 			}
+			break;
 		}
 		case ADD_CARD_TO_HAND:
 		{
@@ -268,12 +286,14 @@ void battle_system::process()
 			{
 				c_grave.push_back(card(temp.value));
 			}
+			send_message(data.player_data.performing_action(temp));
 			break;
 		}
 		case ADD_CARD_TO_DECK:
 		{
 			vector<card>& c_deck = data.cards_deck;
 			c_deck.push_back(card(temp.value));
+			send_message(data.player_data.performing_action(temp));
 			break;
 		}
 		case ADD_CARD_TO_DECK_TOP:
@@ -287,6 +307,7 @@ void battle_system::process()
 			vector<card>& c_deck = data.cards_deck;
 			c_deck.push_back(c_in_hand[temp.value]);
 			c_in_hand.erase(c_in_hand.begin() + temp.value);
+			send_message(data.player_data.performing_action(temp));
 			break;
 		}
 		default:

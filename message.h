@@ -4,7 +4,7 @@
 #include <queue>
 #include <cstddef>
 #define MAX_ENEMIES 5
-#define MAX_CARDS_IN_HAND 10
+#define MAX_CARDS_IN_HAND 8
 #define MEANINGLESS_VALUE static_cast<std::size_t>(31415926)
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
 class data_sys;
@@ -300,9 +300,6 @@ public:
 	operator bool();
 	void clear();
 };
-
-
-
 
 class event_card
 {

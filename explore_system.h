@@ -45,7 +45,6 @@ private:
 	std::stack<e_action> process_stack;
 	void process();
 	data_sys& data;
-	void interpret_message();
 };
 
 class e_random_engine

@@ -16,7 +16,7 @@ void t_draw_sys::__draw_card_in_hand()
 		{
 			setfillcolor(BLUE);
 			//TODO
-			//ËµÃ÷Ñ¡ÖÐÁËÕâ¸öÎ»ÖÃµÄ¿¨
+			//Ëµï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ÃµÄ¿ï¿½
 			solidrectangle(gra_size::card_x + i * (gra_size::card_closure + gra_size::card_width) + gra_size::card_closure / 2,
 				gra_size::card_y, gra_size::card_x + i * (gra_size::card_closure + gra_size::card_width) + gra_size::card_closure, gra_size::card_dy);
 			setfillcolor(BLACK);
@@ -164,7 +164,7 @@ void t_draw_sys::draw_battle()
 	cleardevice();
 	settextcolor(BLACK);
 	setfillcolor(BLACK);
-	//TODO ÓÃ±³¾°Í¼Æ¬¸²¸Ç putimage(0, 0, image);
+	//TODO ï¿½Ã±ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ putimage(0, 0, image);
 	this->__draw_card_in_hand();
 	this->__draw_entities();
 	this->__draw_right_hand_info();
