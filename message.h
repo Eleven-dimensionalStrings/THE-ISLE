@@ -98,7 +98,6 @@ namespace buff_type
 	const std::size_t MOVE_MUSSLE = 16;
 	const std::size_t STUN = 17;
 	const std::size_t STUN_RESIST = 18;
-	const std::size_t IGNITE = 19;
 
 	//buff from ability cards
 	const std::size_t ETERNAL_FURY = 101;
@@ -142,6 +141,14 @@ namespace gra_size
 	const std::size_t player_y = 200;
 
 }
+
+namespace player_class
+{
+	const std::size_t WAR = 1;
+	const std::size_t PLAGUE = 2;
+	const std::size_t DEATH = 3;
+}
+
 class info_to_battle_sys;
 class card
 {
@@ -161,6 +168,7 @@ public:
 	bool require_target; //true代表需要选择目标，false代表不用
 	bool exhaust;//true代表消耗
 	bool inherent;//true代表固有
+	bool vanity;//true代表虚无
 
 	info_to_battle_sys use_card(data_sys&);
 	info_to_battle_sys discard(data_sys&);

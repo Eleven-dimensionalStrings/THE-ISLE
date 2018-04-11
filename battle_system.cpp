@@ -129,6 +129,16 @@ void battle_system::process()
 		case REMOVE_BUFF:
 		{
 			//TODO
+			auto it = temp.listener->buff_pool.end();
+			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
+			{
+				if (*it -= buff(temp.type, temp.value))
+				{
+					temp.listener->buff_pool.erase(it);
+				}
+				break;
+			}
+			break;
 		}
 		case P_KEEP_A_CARD:
 		{
@@ -156,12 +166,16 @@ void battle_system::process()
 		{
 			vector<card>& c_in_hand = data.cards_in_hand;
 			vector<card>& c_grave = data.cards_grave;
-			for (auto i = c_in_hand.begin(); i != c_in_hand.end(); ++i)
+			for (int i =  0; i < c_in_hand.size(); ++i)
 			{
-				if (!i->is_reserve)
+				if (c_in_hand[i].vanity)
 				{
-					c_grave.push_back(*i);
-					c_in_hand.erase(i++);
+					process_stack.push(action(battle_action_type::P_REMOVE_A_CARD, c_in_hand[i].card_type, i));
+				}
+				else if (!c_in_hand[i].is_reserve)
+				{
+					c_grave.push_back(c_in_hand[i]);
+					c_in_hand.erase(c_in_hand.begin() + i);
 				}
 			}
 			break;

@@ -396,7 +396,7 @@ void b_select_state::click_confirm()
 	info_to_battle_sys t;
 	for (auto& i : selected_cards)
 	{
-		t.append(action(type + TYPE_TO_P_TYPE, 0, i));
+		t.append(action(type + TYPE_TO_P_TYPE, get_data().cards_in_hand[i].card_type, i));
 	}
 	send_to_battle_sys(t);
 	ctx->set_state(new b_vaccant_state(ctx));

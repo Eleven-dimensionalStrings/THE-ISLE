@@ -36,5 +36,5 @@ public:
 	void operator--(int);
 	void operator+=(buff t);
 	//返回1表示应该清除该buff
-	bool operator-=(buff& t);
+	bool operator-=(buff t);
 };

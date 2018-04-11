@@ -370,7 +370,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 47://引燃
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
-			, &player_data, &select_one_enemy, buff_type::IGNITE, 1)});
+			, &player_data, &select_one_enemy, buff_type::BURN, 5)});
 		break;
 	}
 	case 48://火之印
@@ -439,7 +439,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 58://活力再生
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
-			, &player_data, &player_data, buff_type::RESUSCITATE, 1)});
+			, &player_data, &player_data, buff_type::RESUSCITATE, 0)});
 		break;
 	}
 	case 59://燃烧
@@ -817,7 +817,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 107://引燃+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
-			, &player_data, &select_one_enemy, buff_type::IGNITE, 1)});
+			, &player_data, &select_one_enemy, buff_type::BURN, 5)});
 		break;
 	}
 	case 108://火之印+
@@ -886,7 +886,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 118://活力再生+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
-			, &player_data, &player_data, buff_type::RESUSCITATE, 1)});
+			, &player_data, &player_data, buff_type::RESUSCITATE, 0)});
 		break;
 	}
 	case 119://燃烧+
@@ -914,7 +914,7 @@ pair<std::string, std::size_t> data_sys::get_buff(std::size_t id)
 	case buff_type::STRENGTH:
 		return pair<string, size_t>(string("strength"), 1);
 	case buff_type::VULNERABLE:
-		return pair<string, size_t>(string("strength"), 1);
+		return pair<string, size_t>(string("vulnerable"), 1);
 	case buff_type::POISON:
 		return pair<string, size_t>(string("poison"), 1);
 	default:
