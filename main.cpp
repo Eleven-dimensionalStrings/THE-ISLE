@@ -17,8 +17,6 @@ auto get_p_q()
 }
 int main()
 {
-	cout << sizeof(vector<int>::iterator) << endl;
-	system("pause");
 	data_sys d;
 	battle_system b(d);
 	interacting_sys i(d);
