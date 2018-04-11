@@ -17,7 +17,8 @@ auto get_p_q()
 }
 int main()
 {
-
+	cout << sizeof(vector<int>::iterator) << endl;
+	system("pause");
 	data_sys d;
 	battle_system b(d);
 	interacting_sys i(d);
@@ -38,11 +39,11 @@ int main()
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
-	d.cards_pool.push_back(card(0));
-	d.cards_pool.push_back(card(1));
-	d.cards_pool.push_back(card(2));
-	d.cards_pool.push_back(card(3));
-	d.cards_pool.push_back(card(4));
+	d.cards_pool.push_back(card(119));
+	d.cards_pool.push_back(card(119));
+	//d.cards_pool.push_back(card(2));
+	//d.cards_pool.push_back(card(3));
+	//d.cards_pool.push_back(card(4));
 
 explore:
 	//explore loop

@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClInclude Include="battle_system.h" />
     <ClInclude Include="buff.h" />
+    <ClInclude Include="container.h" />
     <ClInclude Include="data_sys.h" />
     <ClInclude Include="explore_system.h" />
     <ClInclude Include="game_entity.h" />

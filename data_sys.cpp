@@ -918,7 +918,8 @@ pair<std::string, std::size_t> data_sys::get_buff(std::size_t id)
 	case buff_type::POISON:
 		return pair<string, size_t>(string("poison"), 1);
 	default:
-		throw exception("failed to find buff id");
+		//throw exception("failed to find buff id");
+		return pair<string, size_t>(string("fuck"), 2);
 	}
 }
 

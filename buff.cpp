@@ -147,12 +147,12 @@ info_to_battle_sys buff::on_turn_begin(game_entity* p)
 	case buff_type::SCORCHED_EARTH:
 	{
 		//TODO
-		enemy* temp;
 		data_sys& d = dynamic_cast<player*>(p)->data;
+		enemy* temp = &d.enemies_data[0];
 		for (int i = 0; i < d.enemies_data.size(); i++)
 		{
 			if (d.enemies_data[i].is_alive())
-				result.append(action(battle_action_type::ADD_BUFF, p, temp, buff_type::BURN, buff_level));
+				result.append(action(battle_action_type::ADD_BUFF, p, temp+i, buff_type::BURN, buff_level));
 		}
 		break;
 	}
@@ -259,6 +259,9 @@ info_to_battle_sys buff::on_calling(info_to_battle_sys temp)
 			if (i.action_id == battle_action_type::PERFORMING_ACTION && (i.type == type_type::NORMAL
 				|| i.type == type_type::FLAME || (i.type > 100 && i.type < 500)))
 				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, i.caller, i.listener, buff_type::BURN, buff_level));
+			
+			
+			
 			break;
 		}
 		break;
