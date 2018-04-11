@@ -14,16 +14,12 @@ explore_system::explore_system(data_sys & d) :data(d)
 
 void explore_system::update()
 {
-	interpret_message();
-	process();
-}
-
-void explore_system::interpret_message()
-{
-	for (int i = 0; i < data.i_to_e_pipe.action_set.size(); i++)
+	for (auto i = data.i_to_e_pipe.action_set.rbegin(); i != data.i_to_e_pipe.action_set.rend(); ++i)
 	{
-		process_stack.push(data.i_to_e_pipe.action_set[i]);
+		process_stack.push(*i);
 	}
+	data.i_to_e_pipe.action_set.clear();
+	this->process();
 }
 
 void explore_system::process()

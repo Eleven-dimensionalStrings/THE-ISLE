@@ -169,9 +169,9 @@ void interacting_sys::reveal_map_location(int x, int y)
 	//call the renderer to reveal the map
 }
 
-void interacting_sys::encounter_event(std::size_t event_card_no)
+void interacting_sys::encounter_event(std::size_t event_id)
 {
-	event_card temp = data.event_effect.find(event_card_no)->second;
+	data.i_to_e_pipe = data.event_effect(event_id);
 	present_explore_context->set_state(&e_select_state(present_explore_context, temp.root));
 }
 

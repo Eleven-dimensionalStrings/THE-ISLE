@@ -1,5 +1,6 @@
 #include "buff.h"
 #include "game_entity.h"
+#include "data_sys.h"
 using namespace std;
 
 void buff::operator--()
@@ -147,10 +148,10 @@ info_to_battle_sys buff::on_turn_begin(game_entity* p)
 	{
 		//TODO
 		enemy* temp;
-		data_sys& d = dynamic_cast<player*>(p)->data;
-		for (int i = 0; i < d.enemies.size(); i++)
+		data_sys& d = (dynamic_cast<player*>(p))->data;
+		for (int i = 0; i < d.enemies_data.size(); i++)
 		{
-			if (d.enemies[i].is_alive)
+			if (d.enemies_data[i].is_alive)
 				result.append(action(battle_action_type::ADD_BUFF, p, temp, buff_type::BURN, buff_level));
 		}
 		break;
@@ -247,7 +248,6 @@ info_to_battle_sys buff::on_calling(info_to_battle_sys temp)
 				i.value += 6 * buff_level;
 			if (i.action_id == battle_action_type::CALLING_ACTION && i.type == type_type::WAR_12_PLUS)
 				i.value += 8 * buff_level;
-			break;
 		}
 		break;
 	}
@@ -255,10 +255,9 @@ info_to_battle_sys buff::on_calling(info_to_battle_sys temp)
 	{
 		for (auto& i : temp.action_set)
 		{
-			if (i.action_id == battle_action_type::PERFORMING_ACTION && (i.type == type_type::NORMAL
+			if (i.action_id == battle_action_type::CALLING_ACTION && (i.type == type_type::NORMAL
 				|| i.type == type_type::FLAME || (i.type > 100 && i.type < 500)))
 				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, i.caller, i.listener, buff_type::BURN, buff_level));
-			break;
 		}
 		break;
 	}

@@ -299,9 +299,6 @@ public:
 	void clear();
 };
 
-
-
-
 class event_card
 {
 public:

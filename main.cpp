@@ -38,7 +38,6 @@ int main()
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
-	d.cards_pool.push_back(card(0));
 	d.cards_pool.push_back(card(1));
 	d.cards_pool.push_back(card(2));
 	d.cards_pool.push_back(card(3));
@@ -49,15 +48,14 @@ explore:
 	while (1)
 	{
 		e.update();
-
-
+		i.update();
+		e.update();
 		if (!d.enemies_data.empty())
 			goto battle;
 	}
 
 
 battle:
-	//����ս��
 	d.cards_deck = d.cards_pool;
 	//explore gives battle some info
 	b.send_message(d.player_data.on_turn_begin());
