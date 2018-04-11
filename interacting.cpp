@@ -1,8 +1,11 @@
 #include <random>
 #include <ctime>
+#include <graphics.h>
 #include "interacting.h"
 using namespace std;
 using std::size_t;
+//写easyx的不知道哪个弱智把这宏放出来了,为什么要用这种垃圾
+#undef max
 
 context::context(interacting_sys * i_s)
 	:i_s(i_s)
@@ -39,7 +42,43 @@ void battle_context::set_state(b_state * pstate)
 
 void battle_context::read_input()
 {
-	test_read();
+	while (MouseHit())
+	{
+		auto hit = GetMouseMsg();
+		if (hit.mkLButton)
+		{
+			//检测点击卡
+			if (hit.x > gra_size::card_x && hit.x < gra_size::card_x + gra_size::card_rx
+				&& hit.y>gra_size::card_y && hit.y < gra_size::card_dy)
+			{
+				size_t pos = (hit.x - gra_size::card_closure) / (gra_size::card_width + gra_size::card_closure);
+				if (pos <= get_data().cards_in_hand.size())
+				{
+					cur_state->click_a_card(pos);
+					//cur_state->click_confirm();
+				}
+			}
+			//检查点击敌人
+			else if (hit.x > gra_size::enemy_x && hit.x<gra_size::enemy_x + gra_size::enemy_width*gra_size::max_enemies
+				&& hit.y>gra_size::enemy_y && hit.y < gra_size::enemy_y + 200)//需要改为敌人高度
+			{
+				size_t pos = (hit.x - gra_size::enemy_x) / gra_size::enemy_width;
+				if (pos <= get_data().enemies_data.size())
+				{
+					cur_state->click_an_enemy(pos);
+				}
+			}
+			//confirm, to revice the value
+			else if (hit.x > gra_size::confirm_button_x && hit.y > gra_size::confirm_button_y
+				&& hit.x < gra_size::confirm_button_x + 100 && hit.y < gra_size::confirm_button_y + 50)
+			{
+				cur_state->click_confirm();
+			}
+
+		}
+		//FlushMouseMsgBuffer();
+	}
+	//test_read();
 }
 
 void battle_context::change_to_select_state(info_battle_to_interacting t)
@@ -234,7 +273,7 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 		if (get_data().enemies_data[enemy_pos].is_alive())
 		{
 			target = &get_data().enemies_data[enemy_pos];
-			info_to_battle_sys temp(action(battle_action_type::USE_A_CARD,get_data().cards_in_hand[selected_card].card_type,selected_card));
+			info_to_battle_sys temp(action(battle_action_type::USE_A_CARD, get_data().cards_in_hand[selected_card].card_type, selected_card));
 			temp.append(get_data().cards_in_hand[selected_card].use_card(get_data()));
 			for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 			{
@@ -251,6 +290,7 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 		{
 			ctx->set_state(new b_vaccant_state(ctx));
 		}
+		get_data().draw_select_card[selected_card] = 0;
 	}
 }
 
@@ -278,6 +318,7 @@ void b_confirm_state::click_confirm()
 			}
 		}
 		send_to_battle_sys(temp);
+		get_data().draw_select_card[selected_card] = 0;
 	}
 }
 

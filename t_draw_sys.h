@@ -17,7 +17,7 @@ class t_draw_sys
 	//绘制,分模块
 	void __draw_card_in_hand();
 	void __draw_entities();
-	void __draw_right_hand_select();
+	void __draw_right_hand_info();
 	void __draw_artifacts();//top of window
 	void __get_atk_entities();//get pair of caller and listener from pipe on data_sys
 
@@ -32,7 +32,4 @@ public:
 	void draw_begin();//开始页面
 	void view_cards(std::vector<card>&v);//按键后查看卡组等
 	void view_artifacts();
-
-	void draw_card_list();//看卡组/墓地等
-	void draw_artifact_list();
 };
