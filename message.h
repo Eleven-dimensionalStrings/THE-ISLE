@@ -55,6 +55,8 @@ namespace event_type
 	const unsigned int SELECT_NEXT_EVENT = 7;
 }
 
+#undef PURE
+//a fucking sb define PURE without namespace or other protect
 namespace type_type
 {
 	const std::size_t NORMAL = 1;

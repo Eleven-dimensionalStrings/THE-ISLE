@@ -126,7 +126,7 @@ info_to_battle_sys buff::on_turn_begin(game_entity* p)
 	}
 	case buff_type::STUN:
 	{
-		break;//TODO ½áÊø¸ÃÊµÌåµÄ»ØºÏ
+		break;//TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½Ä»Øºï¿½
 	}
 	case buff_type::ETERNAL_FURY:
 	{

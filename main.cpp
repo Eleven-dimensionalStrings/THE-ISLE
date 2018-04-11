@@ -56,6 +56,7 @@ explore:
 
 
 battle:
+	
 	d.cards_deck = d.cards_pool;
 	//explore gives battle some info
 	b.send_message(d.player_data.on_turn_begin());
