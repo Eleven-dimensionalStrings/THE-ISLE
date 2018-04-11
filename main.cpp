@@ -38,11 +38,10 @@ int main()
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
-	d.cards_pool.push_back(card(34));
-	d.cards_pool.push_back(card(31));
-	d.cards_pool.push_back(card(1));
-	d.cards_pool.push_back(card(55));
-	d.cards_pool.push_back(card(17));
+	for (int i = 60; i > 0; i--)
+	{
+		d.cards_pool.push_back(card(i));
+	}
 
 explore:
 	//explore loop
@@ -57,7 +56,7 @@ explore:
 
 
 battle:
-	
+
 	d.cards_deck = d.cards_pool;
 	//explore gives battle some info
 	b.send_message(d.player_data.on_turn_begin());

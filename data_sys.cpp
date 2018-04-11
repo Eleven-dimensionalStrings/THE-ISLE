@@ -3,6 +3,9 @@
 #include <ctime>
 using namespace std;
 
+//TODO 弃牌，消耗牌时，会爆炸； aoe会爆炸；各种莫名其妙爆炸
+//TODO 6, 8，9, 12
+
 data_sys::data_sys() :player_data(*this), all_enemies(*this), random_enemy(*this), select_one_enemy(*this)
 {
 	for (auto&i : draw_select_card)i = 0;
@@ -69,27 +72,27 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
 			, &player_data, &all_enemies, type_type::NORMAL, 10), action(battle_action_type::ADD_BUFF
-				, &player_data, &select_one_enemy, buff_type::VULNERABLE, 1), action(battle_action_type::ADD_BUFF
-					, &player_data, &select_one_enemy, buff_type::WEAK, 1)});
+				, &player_data, &all_enemies, buff_type::VULNERABLE, 1), action(battle_action_type::ADD_BUFF
+					, &player_data, &all_enemies, buff_type::WEAK, 1)});
 		break;
 	}
 	case 10://过肩摔
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::NORMAL, 12), action(battle_action_type::ADD_BUFF
+			, &player_data, &select_one_enemy, type_type::NORMAL, 12), action(battle_action_type::ADD_BUFF
 				, &player_data, &select_one_enemy, buff_type::WEAK, 2)});
 		break;
 	}
 	case 11://湮灭
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::NORMAL, 30)});
+			, &player_data, &select_one_enemy, type_type::NORMAL, 30)});
 		break;
 	}
 	case 12://蓄力劈砍
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::WAR_12, 12)});
+			, &player_data, &select_one_enemy, type_type::WAR_12, 12)});
 		break;
 	}
 	case 13://无谋打击
@@ -512,27 +515,27 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
 			, &player_data, &all_enemies, type_type::NORMAL, 10), action(battle_action_type::ADD_BUFF
-				, &player_data, &select_one_enemy, buff_type::VULNERABLE, 2), action(battle_action_type::ADD_BUFF
-					, &player_data, &select_one_enemy, buff_type::WEAK, 2)});
+				, &player_data, &all_enemies, buff_type::VULNERABLE, 2), action(battle_action_type::ADD_BUFF
+					, &player_data, &all_enemies, buff_type::WEAK, 2)});
 		break;
 	}
 	case 70://过肩摔+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::NORMAL, 14), action(battle_action_type::ADD_BUFF
+			, &player_data, &select_one_enemy, type_type::NORMAL, 14), action(battle_action_type::ADD_BUFF
 				, &player_data, &select_one_enemy, buff_type::WEAK, 3)});
 		break;
 	}
 	case 71://湮灭+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::NORMAL, 40)});
+			, &player_data, &select_one_enemy, type_type::NORMAL, 40)});
 		break;
 	}
 	case 72://蓄力劈砍+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::WAR_12_PLUS, 12)});
+			, &player_data, &select_one_enemy, type_type::WAR_12_PLUS, 12)});
 		break;
 	}
 	case 73://无谋打击+
