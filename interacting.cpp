@@ -270,6 +270,7 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 	if (require_target)
 	{
 		game_entity* target;
+		get_data().draw_select_card[selected_card] = 0;
 		if (get_data().enemies_data[enemy_pos].is_alive())
 		{
 			target = &get_data().enemies_data[enemy_pos];
@@ -290,7 +291,6 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 		{
 			ctx->set_state(new b_vaccant_state(ctx));
 		}
-		get_data().draw_select_card[selected_card] = 0;
 	}
 }
 
