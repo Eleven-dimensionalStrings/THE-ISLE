@@ -113,7 +113,7 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 	action present_act = result.action_set[0];
 	result.action_set.erase(result.action_set.begin());
 	using namespace type_type;
-	if (present_act.type <= 6)//造成伤害
+	if (present_act.type <= 500)//造成伤害
 	{
 		current_hp -= static_cast<int>(present_act.value);
 		result.append(action(battle_action_type::ENTITY_BE_ATK, present_act.caller, present_act.listener, 0, 0));
@@ -158,6 +158,18 @@ vector<buff>::iterator game_entity::find_buff(std::size_t id)
 			return i;
 	}
 	return buff_pool.end();
+}
+
+std::size_t game_entity::has_buff(std::size_t id)
+{
+	for (int i = 0; i < buff_pool.size(); i++)
+	{
+		if (buff_pool[i].buff_id == id)
+		{
+			return buff_pool[i].buff_level;
+		}
+	}
+	return 0;
 }
 
 enemy::enemy(data_sys&d) :game_entity(d)

@@ -164,7 +164,7 @@ card::card()
 }
 
 card::card(size_t id)
-	:card_id(id), is_reserve(0), exhaust(false), inherent(false)
+	:card_id(id), is_reserve(0), exhaust(false), inherent(false), vanity(false)
 {
 	card_id = id;
 	if ((id >= 1 && id <= 60) || (id >= 121 && id <= 180) || (id >= 241 && id <= 300))
@@ -400,6 +400,7 @@ card::card(size_t id)
 		card_type = card_type::ATTACK;
 		cost = 2;
 		require_target = true;
+		vanity = true;
 		break;
 	}
 	case 29:
@@ -409,6 +410,7 @@ card::card(size_t id)
 		cost = 1;
 		require_target = true;
 		exhaust = true;
+		inherent = true;
 		break;
 	}
 	case 30:
@@ -886,6 +888,7 @@ card::card(size_t id)
 		card_type = card_type::ATTACK;
 		cost = 2;
 		require_target = true;
+		vanity = true;
 		break;
 	}
 	case 89:
@@ -895,6 +898,7 @@ card::card(size_t id)
 		cost = 1;
 		require_target = true;
 		exhaust = true;
+		inherent = true;
 		break;
 	}
 	case 90:
@@ -941,7 +945,7 @@ card::card(size_t id)
 	{
 		card_name = "Ä¥µ¶+";
 		card_type = card_type::SKILL;
-		cost = 1;
+		cost = 0;
 		require_target = true;
 		break;
 	}
@@ -981,7 +985,7 @@ card::card(size_t id)
 	{
 		card_name = "°×ÈÈ»¯+";
 		card_type = card_type::SKILL;
-		cost = 1;
+		cost = 0;
 		require_target = false;
 		break;
 	}
@@ -1155,6 +1159,7 @@ card::card(size_t id)
 		card_type = card_type::STAT;
 		cost = 100;
 		require_target = false;
+		vanity = true;
 		break;
 	}
 	default:

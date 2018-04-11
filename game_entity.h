@@ -18,6 +18,7 @@ public:
 	virtual info_to_battle_sys on_turn_begin() = 0;
 	virtual info_to_battle_sys on_turn_end() = 0;
 	std::vector<buff>::iterator find_buff(std::size_t id);
+	std::size_t has_buff(std::size_t id);
 
 	data_sys& data;
 	int max_hp;

@@ -114,15 +114,29 @@ void battle_system::process()
 			auto it = temp.listener->buff_pool.end();
 			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
 			{
-				*it += buff(temp.type, get_buff_life(temp.value), get_buff_level(temp.value));
+				*it += buff(temp.type, temp.value);
 				break;
 			}
 			else
 			{
 				pair<string, size_t> t = data.get_buff(temp.type); // pair<buff_name, priority>
-				buff tbuff(temp.type, t.first, t.second, get_buff_life(temp.value), get_buff_level(temp.value));
+				buff tbuff(temp.type, t.first, t.second, temp.value);
 				temp.listener->buff_pool.push_back(tbuff);
 				send_message(tbuff.on_create(temp.caller, temp.listener));
+			}
+			break;
+		}
+		case REMOVE_BUFF:
+		{
+			//TODO
+			auto it = temp.listener->buff_pool.end();
+			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
+			{
+				if (*it -= buff(temp.type, temp.value))
+				{
+					temp.listener->buff_pool.erase(it);
+				}
+				break;
 			}
 			break;
 		}
@@ -152,12 +166,16 @@ void battle_system::process()
 		{
 			vector<card>& c_in_hand = data.cards_in_hand;
 			vector<card>& c_grave = data.cards_grave;
-			for (auto i = c_in_hand.begin(); i != c_in_hand.end(); ++i)
+			for (int i =  0; i < c_in_hand.size(); ++i)
 			{
-				if (!i->is_reserve)
+				if (c_in_hand[i].vanity)
 				{
-					c_grave.push_back(*i);
-					c_in_hand.erase(i++);
+					process_stack.push(action(battle_action_type::P_REMOVE_A_CARD, c_in_hand[i].card_type, i));
+				}
+				else if (!c_in_hand[i].is_reserve)
+				{
+					c_grave.push_back(c_in_hand[i]);
+					c_in_hand.erase(c_in_hand.begin() + i);
 				}
 			}
 			break;
@@ -218,19 +236,19 @@ void battle_system::process()
 			case card_type::ATTACK:
 			{
 				process_stack.push(action(battle_action_type::ADD_BUFF
-					, &data.player_data, &data.player_data, buff_type::USED_ATTACK_CARDS, fix_buff_value(1, 1)));
+					, &data.player_data, &data.player_data, buff_type::USED_ATTACK_CARDS, 1));
 				break;
 			}
 			case card_type::SKILL:
 			{
 				process_stack.push(action(battle_action_type::ADD_BUFF
-					, &data.player_data, &data.player_data, buff_type::USED_SKILL_CARDS, fix_buff_value(1, 1)));
+					, &data.player_data, &data.player_data, buff_type::USED_SKILL_CARDS, 1));
 				break;
 			}
 			case card_type::ABILITY:
 			{
 				process_stack.push(action(battle_action_type::ADD_BUFF
-					, &data.player_data, &data.player_data, buff_type::USED_ABILITY_CARDS, fix_buff_value(1, 1)));
+					, &data.player_data, &data.player_data, buff_type::USED_ABILITY_CARDS, 1));
 				break;
 			}
 			default:

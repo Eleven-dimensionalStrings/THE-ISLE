@@ -41,7 +41,6 @@ class explore_system
 public:
 	explore_system(data_sys& d);
 	void update();
-	//vector<card> get_random_card(size_t num, bool is_rare);
 private:
 	std::stack<e_action> process_stack;
 	void process();
@@ -49,3 +48,9 @@ private:
 	void interpret_message();
 };
 
+class e_random_engine
+{
+public:
+	size_t get_card_by_id(int id);
+	size_t get_card_by_class(int class_id);
+};

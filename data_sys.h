@@ -51,5 +51,5 @@ public:
 class random_engine
 {
 public:
-	size_t get_num(size_t lb, size_t ub);
+	size_t get_num(int lb, int ub);
 };
