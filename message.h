@@ -56,6 +56,7 @@ namespace battle_action_type
 	const std::size_t ADD_CARD_TO_DECK = 10500;
 	const std::size_t ADD_CARD_TO_DECK_TOP = 10510;
 	const std::size_t P_ADD_CARD_TO_DECK_TOP = 10610;
+	const std::size_t PURIFIED_MOVE_A_CARD_TO_GRAVE = 10700;
 }
 
 namespace interact_action_type

@@ -29,6 +29,7 @@ void battle_system::send_message(info_to_battle_sys input)
 	{
 		process_stack.push(*i);
 	}
+	process();
 }
 
 void battle_system::process()
@@ -96,15 +97,13 @@ void battle_system::process()
 				{
 					c_deck = my_random_engine::xipai(std::move(c_grave));
 				}
-				if (c_deck.size() && c_in_hand.size() <= MAX_CARDS_IN_HAND)
+				if (c_deck.size())
 				{
-					c_in_hand.push_back(c_deck.back());
-					c_deck.pop_back();
-				}
-				else
-				{
-					c_grave.push_back(c_deck.back());
-					c_deck.pop_back();
+					if (c_deck.size() && c_in_hand.size() <= MAX_CARDS_IN_HAND)
+					{
+						c_in_hand.push_back(c_deck.back());
+						c_deck.pop_back();
+					}
 				}
 			}
 			send_message(data.player_data.performing_action(temp));
@@ -174,7 +173,6 @@ void battle_system::process()
 			vector<card>& c_in_hand = data.cards_in_hand;
 			vector<card>& c_grave = data.cards_grave;
 			c_grave.push_back(c_in_hand[temp.value]);
-			send_message((c_in_hand.end() - 1)->discard(data));
 			c_in_hand.erase(c_in_hand.begin() + temp.value);
 			send_message(data.player_data.performing_action(temp));
 			break;
@@ -312,6 +310,14 @@ void battle_system::process()
 			send_message(data.player_data.performing_action(temp));
 			break;
 		}
+		case PURIFIED_MOVE_A_CARD_TO_GRAVE:
+		{
+			vector<card>& c_in_hand = data.cards_in_hand;
+			vector<card>& c_grave = data.cards_grave;
+			c_grave.push_back(c_in_hand[temp.value]);
+			c_in_hand.erase(c_in_hand.begin() + temp.value);
+			break;
+		}
 		default:
 			break;
 		}
@@ -326,6 +332,11 @@ bool battle_system::battle_succ()
 		if (i.is_alive())return 0;
 	}
 	return 1;
+}
+
+void battle_system::enemies_action()
+{
+	//for(auto& i:)
 }
 
 std::vector<card> my_random_engine::xipai(std::vector<card> v)

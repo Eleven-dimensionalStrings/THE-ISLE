@@ -1,11 +1,12 @@
 #include "data_sys.h"
 #include <random>
 #include <ctime>
+#include "battle_system.h"
 using namespace std;
 
 //TODO 6, 8，9, 12
 
-data_sys::data_sys() :player_data(*this), all_enemies(*this, MEANINGLESS_VALUE), random_enemy(*this, MEANINGLESS_VALUE)
+data_sys::data_sys() :b(nullptr), player_data(*this), all_enemies(*this, MEANINGLESS_VALUE), random_enemy(*this, MEANINGLESS_VALUE)
 , select_one_enemy(*this, MEANINGLESS_VALUE)
 {
 	for (auto&i : draw_select_card)i = 0;
@@ -50,9 +51,14 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	}
 	case 6://下劈斩
 	{
-		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &select_one_enemy, type_type::NORMAL, 12), action(battle_action_type::P_DISCARD_A_CARD
-				, MEANINGLESS_VALUE, random_engine().get_num(0, cards_in_hand.size()))});
+		info_to_battle_sys result(action(battle_action_type::CALLING_ACTION
+			, &player_data, &select_one_enemy, type_type::NORMAL, 12));
+		if (cards_in_hand.size() > 0)
+		{
+			result.append(action(battle_action_type::P_DISCARD_A_CARD
+				, MEANINGLESS_VALUE, random_engine().get_num(0, cards_in_hand.size() - 1)));
+		}
+		return result;
 		break;
 	}
 	case 7://横挥
@@ -139,12 +145,12 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 18://背水一战
 	{
 		info_to_battle_sys temp;
-		for (int i = 0; i < cards_in_hand.size(); ++i)
+		for (int i = cards_in_hand.size() - 1; i >= 0; --i)
 		{
 			if (cards_in_hand[i].card_type == card_type::STAT)
 			{
 				temp.append(action(battle_action_type::P_REMOVE_A_CARD
-					, MEANINGLESS_VALUE, i));
+					, &player_data, &player_data, card_type::STAT, i));
 				temp.append(action(battle_action_type::CALLING_ACTION
 					, &player_data, &all_enemies, type_type::NORMAL, 6));
 			}
@@ -493,9 +499,14 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	}
 	case 66://下劈斩+
 	{
-		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &select_one_enemy, type_type::NORMAL, 16), action(battle_action_type::P_DISCARD_A_CARD
-				, MEANINGLESS_VALUE, random_engine().get_num(0, cards_in_hand.size()))});
+		info_to_battle_sys result(action(battle_action_type::CALLING_ACTION
+			, &player_data, &select_one_enemy, type_type::NORMAL, 16));
+		if (cards_in_hand.size() > 0)
+		{
+			result.append(action(battle_action_type::P_DISCARD_A_CARD
+				, MEANINGLESS_VALUE, random_engine().get_num(0, cards_in_hand.size() - 1)));
+		}
+		return result;
 		break;
 	}
 	case 67://横挥+
@@ -583,12 +594,12 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 78://背水一战+
 	{
 		info_to_battle_sys temp;
-		for (int i = 0; i < cards_in_hand.size(); ++i)
+		for (int i = cards_in_hand.size() - 1; i >= 0; --i)
 		{
 			if (cards_in_hand[i].card_type == card_type::STAT)
 			{
 				temp.append(action(battle_action_type::P_REMOVE_A_CARD
-					, MEANINGLESS_VALUE, i));
+					,&player_data, &player_data, card_type::STAT, i));
 				temp.append(action(battle_action_type::CALLING_ACTION
 					, &player_data, &all_enemies, type_type::NORMAL, 8));
 			}

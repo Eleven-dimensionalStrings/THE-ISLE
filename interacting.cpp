@@ -3,6 +3,7 @@
 #include <ctime>
 #include <graphics.h>
 #include <Windows.h>
+#include "battle_system.h"
 using namespace std;
 using std::size_t;
 //写easyx的不知道哪个弱智把这宏放出来了,为什么要用这种垃圾
@@ -85,6 +86,7 @@ void battle_context::read_input()
 			//cur_state->click_turn_end();
 			get_data().i_to_b_pipe.append(get_data().player_data.on_turn_end());
 			get_data().i_to_b_pipe.append(get_data().player_data.on_turn_begin());
+			system("cls");
 			Sleep(100);
 			FlushMouseMsgBuffer();
 		}
@@ -161,8 +163,9 @@ present_battle_context(new battle_context(this)), present_explore_context(new ex
 }
 
 
-info_to_battle_sys interacting_sys::play_a_card(size_t card_pos, game_entity* target)
+/*info_to_battle_sys interacting_sys::play_a_card(size_t card_pos, game_entity* target)
 {
+	//maybe never used
 	info_to_battle_sys result(action(battle_action_type::USE_A_CARD, &data.player_data, target,
 		data.cards_in_hand[card_pos].card_type, card_pos));
 	auto ef = data.card_effect(data.cards_in_hand[card_pos].card_id);
@@ -170,7 +173,7 @@ info_to_battle_sys interacting_sys::play_a_card(size_t card_pos, game_entity* ta
 	for (auto& i : result.action_set)
 		i.caller = &data.player_data;
 	return result;
-}
+}*/
 
 void interacting_sys::move_player(int x, int y)
 {
@@ -244,7 +247,7 @@ b_vaccant_state::b_vaccant_state(battle_context * b_c)
 
 void b_vaccant_state::click_a_card(size_t card_pos)
 {
-	if (get_data().player_data.current_ap >= get_data().cards_in_hand[card_pos].cost)
+	if (card_pos < get_data().cards_in_hand.size() && get_data().player_data.current_ap >= get_data().cards_in_hand[card_pos].cost)
 	{
 		get_data().draw_select_card[card_pos] = 1;
 		ctx->set_state(new b_confirm_state(ctx, card_pos, get_data().cards_in_hand[card_pos].cost));
@@ -310,8 +313,11 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 		if (get_data().enemies_data[enemy_pos].is_alive())
 		{
 			target = &get_data().enemies_data[enemy_pos];
-			info_to_battle_sys temp(action(battle_action_type::USE_A_CARD, get_data().cards_in_hand[selected_card].card_type, selected_card));
-			temp.append(get_data().cards_in_hand[selected_card].use_card(get_data()));
+			info_to_battle_sys temp;
+			card tcard = get_data().cards_in_hand[selected_card];
+			get_data().b->send_message(action(battle_action_type::USE_A_CARD,
+				get_data().cards_in_hand[selected_card].card_type, selected_card));
+			temp.append(tcard.use_card(get_data()));
 			for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 			{
 				i->caller = &get_data().player_data;
@@ -353,9 +359,12 @@ void b_confirm_state::click_confirm()
 {
 	if (!require_target)
 	{
-		info_to_battle_sys temp(action(battle_action_type::USE_A_CARD, &get_data().player_data, &get_data().player_data,
+		info_to_battle_sys temp;
+		card tcard = get_data().cards_in_hand[selected_card];
+		get_data().b->send_message(action(battle_action_type::USE_A_CARD, 
 			get_data().cards_in_hand[selected_card].card_type, selected_card));
-		temp.append(get_data().cards_in_hand[selected_card].use_card(get_data()));
+		
+		temp.append(tcard.use_card(get_data()));
 		for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 		{
 			if (i->listener == &get_data().all_enemies)
@@ -376,6 +385,7 @@ void b_confirm_state::click_confirm()
 		send_to_battle_sys(temp);
 		get_data().draw_select_card[selected_card] = 0;
 		get_data().player_data.current_ap -= cost;
+		ctx->set_state(new b_vaccant_state(ctx));
 	}
 }
 

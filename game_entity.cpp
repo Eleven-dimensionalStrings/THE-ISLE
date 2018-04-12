@@ -50,24 +50,21 @@ info_to_battle_sys player::on_turn_begin()
 info_to_battle_sys player::on_turn_end()
 {
 	info_to_battle_sys t;
-	for (auto i = data.cards_in_hand.begin(); i != data.cards_in_hand.end();)
+	for (int i = data.cards_in_hand.size() - 1; i >= 0; --i)
 	{
-		if (!i->is_reserve)
+		if (!data.cards_in_hand[i].is_reserve)
 		{
-			if (i->vanity)
+			if (data.cards_in_hand[i].vanity)
 			{
 				t.append(action(battle_action_type::P_REMOVE_A_CARD, &data.player_data, &data.player_data,
-					data.cards_in_hand[i - data.cards_in_hand.begin()].card_type, i - data.cards_in_hand.begin()));
-				++i;
+					data.cards_in_hand[i].card_type, i));
 			}
 			else
 			{
-				data.cards_grave.push_back(*i);
-				i = data.cards_in_hand.erase(i);
+				t.append(action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &data.player_data, &data.player_data,
+					data.cards_in_hand[i].card_type, i));
 			}
 		}
-		else
-			++i;
 	}
 	for (auto& i : buff_pool)
 	{
@@ -83,7 +80,7 @@ info_to_battle_sys player::on_turn_end()
 
 
 game_entity::game_entity(data_sys& d) :data(d),
-max_hp(100), current_hp(100), max_ap(1), current_ap(1)
+max_hp(10000), current_hp(10000), max_ap(100), current_ap(1)
 {
 }
 
@@ -186,7 +183,7 @@ std::size_t game_entity::has_buff(std::size_t id)
 	return 0;
 }
 
-enemy::enemy(data_sys&d, std::size_t id) 
+enemy::enemy(data_sys&d, std::size_t id)
 	:game_entity(d)
 {
 }

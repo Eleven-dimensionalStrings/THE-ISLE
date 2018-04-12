@@ -25,7 +25,6 @@ public:
 	void read_input()override;
 	void change_to_select_state(info_battle_to_interacting);
 	data_sys& get_data();
-	void test_read();
 private:
 	b_state *cur_state;
 };
@@ -165,7 +164,6 @@ public:
 	data_sys& data;
 	battle_context* present_battle_context;
 	explore_context* present_explore_context;
-	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);
 	void move_player(int x, int y);
 	void set_map_location(int x, int y, int mark_type);
 	void reveal_map_location(int x, int y);

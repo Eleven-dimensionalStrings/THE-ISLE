@@ -6,7 +6,7 @@
 #include <functional>
 #include "game_entity.h"
 
-
+class battle_system;
 class data_sys
 {
 public:
@@ -22,6 +22,7 @@ public:
 	enemy all_enemies, random_enemy, select_one_enemy;
 	std::pair<std::string, std::size_t> get_buff(std::size_t);
 
+	battle_system* b;
 	std::size_t gold;
 	std::size_t food;
 	std::size_t strength;

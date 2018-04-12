@@ -16,6 +16,7 @@ private:
 	std::stack<action> process_stack;
 	void process();
 	bool battle_succ();
+	void enemies_action();
 };
 
 class my_random_engine

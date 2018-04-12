@@ -5,12 +5,15 @@ namespace my_container
 	template<class T>
 	class my_vector
 	{
+	private:
+		T * val;
+		std::size_t vsize;
 	public:
 		//ini
-		vector()
+		vector() :val(nullptr), vsize(0)
 		{
 		}
-		explicit vector(std::size_t tsize)
+		explicit vector(std::size_t tsize) :val(new T[tsize]), vsize(tsize)
 		{
 
 		}

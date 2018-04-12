@@ -23,6 +23,7 @@ int main()
 	explore_system e(d);
 	IMAGE buffer(gra_size::window_width, gra_size::window_height);
 	t_draw_sys dr(d);
+	d.b = &b;
 
 
 	//easyx
@@ -37,12 +38,26 @@ int main()
 	d.enemies_data.push_back(enemy(d, 1));
 	d.enemies_data.push_back(enemy(d, 1));
 	d.enemies_data.push_back(enemy(d, 1));
-	d.cards_pool.push_back(card(34));
+	/*for (int i = 1; i <= 60; ++i)
+	{
+		d.cards_pool.push_back(card(i));
+
+	}*/
+	d.cards_pool.push_back(card(30));
+	d.cards_pool.push_back(card(30));
+	d.cards_pool.push_back(card(30));
+	d.cards_pool.push_back(card(30));
+	d.cards_pool.push_back(card(30));
+	d.cards_pool.push_back(card(12));
+	d.cards_pool.push_back(card(4));
+	d.cards_pool.push_back(card(4));
+
+	/*d.cards_pool.push_back(card(34));
 	d.cards_pool.push_back(card(17));
 	d.cards_pool.push_back(card(55));
 	d.cards_pool.push_back(card(1));
 	d.cards_pool.push_back(card(30));
-	d.cards_pool.push_back(card(7));
+	d.cards_pool.push_back(card(7));*/
 
 
 explore:
@@ -70,7 +85,6 @@ battle:
 		dr.draw_battle();
 		dr.t_draw_b();
 		i.update();
-		b.update();
 		b.update();
 		//enemy act
 		Sleep(100);
