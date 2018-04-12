@@ -38,19 +38,11 @@ int main()
 	d.enemies_data.push_back(enemy(d, 1));
 	d.enemies_data.push_back(enemy(d, 1));
 	d.enemies_data.push_back(enemy(d, 1));
-	/*for (int i = 1; i <= 60; ++i)
+	for (int i = 1; i <= 60; ++i)
 	{
 		d.cards_pool.push_back(card(i));
 
-	}*/
-	d.cards_pool.push_back(card(30));
-	d.cards_pool.push_back(card(30));
-	d.cards_pool.push_back(card(30));
-	d.cards_pool.push_back(card(30));
-	d.cards_pool.push_back(card(30));
-	d.cards_pool.push_back(card(12));
-	d.cards_pool.push_back(card(4));
-	d.cards_pool.push_back(card(4));
+	}
 
 	/*d.cards_pool.push_back(card(34));
 	d.cards_pool.push_back(card(17));
@@ -75,12 +67,11 @@ explore:
 
 battle:
 
-	d.cards_deck = d.cards_pool;
+	d.cards_deck = my_random_engine::xipai(d.cards_pool);
 	//explore gives battle some info
 	b.send_message(d.player_data.on_turn_begin());
 	while (1)
 	{
-
 		b.update();
 		dr.draw_battle();
 		dr.t_draw_b();

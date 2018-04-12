@@ -945,7 +945,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	switch (enemies_data[pos].enemy_id)
 	{
 	default:
-		return action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5);
+		return action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 2);
 		break;
 	}
 	return info_to_battle_sys();

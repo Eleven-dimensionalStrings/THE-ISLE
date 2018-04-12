@@ -134,8 +134,9 @@ void battle_system::process()
 			{
 				if (*it - buff(temp.type, temp.value))
 				{
-					send_message(it->on_delete(temp.caller, temp.listener));
+					auto ti = *it;
 					temp.listener->buff_pool.erase(it);
+					send_message(ti.on_delete(temp.caller, temp.listener));
 				}
 				else
 				{
