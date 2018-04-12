@@ -173,7 +173,7 @@ void t_draw_sys::draw_battle()
 	cleardevice();
 	settextcolor(BLACK);
 	setfillcolor(BLACK);
-	//TODO �ñ���ͼƬ���� putimage(0, 0, image);
+	//TODO putimage(0, 0, image);
 	this->__draw_card_in_hand();
 	this->__draw_entities();
 	this->__draw_right_hand_info();

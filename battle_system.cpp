@@ -193,6 +193,7 @@ void battle_system::process()
 					c_in_hand.erase(c_in_hand.begin() + i);
 				}
 			}
+			enemies_action();
 			//TODO
 			break;
 		}
@@ -336,7 +337,18 @@ bool battle_system::battle_succ()
 
 void battle_system::enemies_action()
 {
-	//for(auto& i:)
+	for (auto& i : data.enemies_data)
+	{
+		send_message(i.on_turn_begin());
+	}
+	for (auto& i : data.enemies_data)
+	{
+		send_message(i.next_act);
+	}
+	for (auto& i : data.enemies_data)
+	{
+		send_message(i.on_turn_end());
+	}
 }
 
 std::vector<card> my_random_engine::xipai(std::vector<card> v)

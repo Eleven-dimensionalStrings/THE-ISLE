@@ -254,6 +254,8 @@ info_to_battle_sys buff::on_calling(info_to_battle_sys temp)
 			if (i.action_id == battle_action_type::CALLING_ACTION && (i.type == type_type::NORMAL
 				|| i.type == type_type::FLAME || (i.type > 100 && i.type < 500)))
 				i.value += buff_level;
+			if (i.value < 0)
+				i.value = 0;
 		}
 		break;
 	}
@@ -309,11 +311,28 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 	}
 	case buff_type::ARMOR:
 	{
-		for (auto& i : temp.action_set)
+		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (i.action_id == battle_action_type::PERFORMING_ACTION && (i.type == type_type::NORMAL
-				|| i.type == type_type::FLAME || (i.type > 100 && i.type < 500)))
-				i.value -= buff_level;
+			if (temp.action_set[i].action_id == battle_action_type::PERFORMING_ACTION 
+				&& (temp.action_set[i].type == type_type::NORMAL ||
+					temp.action_set[i].type == type_type::FLAME ||
+					(temp.action_set[i].type > 100 && temp.action_set[i].type < 500)))
+			{
+				if (buff_level > temp.action_set[i].value)
+				{
+					temp.action_set.push_back(action(battle_action_type::REMOVE_BUFF,
+						temp.action_set[i].caller, temp.action_set[i].listener, buff_id,
+						temp.action_set[i].value));
+
+					temp.action_set[i].value = 0;
+				}
+				else
+				{
+					temp.action_set[i].value -= buff_level;
+					temp.action_set.push_back(action(battle_action_type::REMOVE_BUFF,
+						temp.action_set[i].caller, temp.action_set[i].listener, buff_id, buff_level));
+				}
+			}
 		}
 		break;
 	}

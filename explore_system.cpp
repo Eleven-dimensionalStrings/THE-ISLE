@@ -41,6 +41,7 @@ void explore_system::process()
 		{
 		case ENCOUNTER_EVENT:
 		{
+			data.is_vaccant = 0;
 			send_message(data.event_effect(temp.value));
 			break;
 		}
@@ -218,6 +219,7 @@ void explore_system::process()
 		}
 		case END_EVENT:
 		{
+			data.is_vaccant = 1;
 			data.choice_list.clear();
 			data.choice_name_list.clear();
 			data.e_to_i_pipe = info_explore_to_interacting(interact_action_type::TO_VACCANT);

@@ -11,12 +11,12 @@ public:
 	battle_system(data_sys& d);
 	void update();
 	void send_message(info_to_battle_sys);
+	void enemies_action();
 private:
 	data_sys & data;
 	std::stack<action> process_stack;
 	void process();
 	bool battle_succ();
-	void enemies_action();
 };
 
 class my_random_engine

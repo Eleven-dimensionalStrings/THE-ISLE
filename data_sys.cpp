@@ -940,6 +940,17 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 }
 
+info_to_battle_sys data_sys::enemy_act(std::size_t pos)
+{
+	switch (enemies_data[pos].enemy_id)
+	{
+	default:
+		return action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5);
+		break;
+	}
+	return info_to_battle_sys();
+}
+
 pair<std::string, std::size_t> data_sys::get_buff(std::size_t id)
 {
 	switch (id)

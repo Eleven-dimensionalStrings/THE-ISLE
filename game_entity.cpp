@@ -38,11 +38,9 @@ info_to_battle_sys player::on_turn_begin()
 	{
 		t.append(i.on_turn_begin(this));
 	}
-	//这里调用enemies的on_turn_end
-
-	for (auto& i : data.enemies_data)
+	for (int i = 0; i < data.enemies_data.size(); ++i)
 	{
-		t.append(i.on_turn_end());
+		data.enemies_data[i].next_act = data.enemy_act(i);
 	}
 	return t;
 }
@@ -70,10 +68,7 @@ info_to_battle_sys player::on_turn_end()
 	{
 		t.append(i.on_turn_end(this));
 	}
-	for (auto& i : data.enemies_data)
-	{
-		t.append(i.on_turn_begin());
-	}
+	data.b->enemies_action();
 	return t;
 
 }
@@ -213,6 +208,7 @@ info_to_battle_sys enemy::on_turn_begin()
 
 	return t;
 }
+
 
 info_to_battle_sys enemy::on_turn_end()
 {
