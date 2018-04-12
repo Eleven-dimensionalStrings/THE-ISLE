@@ -3,7 +3,6 @@
 #include <ctime>
 using namespace std;
 
-//TODO 弃牌，消耗牌时，会爆炸； aoe会爆炸；各种莫名其妙爆炸
 //TODO 6, 8，9, 12
 
 data_sys::data_sys() :player_data(*this), all_enemies(*this), random_enemy(*this), select_one_enemy(*this)
@@ -212,8 +211,8 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	}
 	case 26://引爆
 	{
-		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &select_one_enemy, type_type::PURE, 2 * player_data.has_buff(buff_type::BURN))});
+		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
+			, &player_data, &select_one_enemy, buff_type::EXPLODE, 3)});
 		break;
 	}
 	case 27://肩撞
@@ -659,8 +658,8 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	}
 	case 86://引爆+
 	{
-		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &select_one_enemy, type_type::PURE, 2 * player_data.has_buff(buff_type::BURN))});
+		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
+			, &player_data, &select_one_enemy, buff_type::EXPLODE, 3)});
 		break;
 	}
 	case 87://肩撞+
@@ -908,6 +907,25 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 		break;
 	}
 	return info_to_battle_sys();
+}
+
+info_to_explore_sys data_sys::event_effect(std::size_t id)
+{
+	switch (id)
+	{
+	case 0:
+	{
+		return info_to_explore_sys(e_action(explore_action_type::END_EVENT));
+	}
+	case 1:
+	{
+		return info_to_explore_sys(vector<e_action>{e_action(explore_action_type::EVENT_BODY
+			, event_type::AQUIRE_GOLD, 100, "天空落下了金币"), e_action(explore_action_type::SELECTION, event_type::PROCEED, 0, "继续前进")});
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 pair<std::string, std::size_t> data_sys::get_buff(std::size_t id)

@@ -55,7 +55,8 @@ info_to_battle_sys player::on_turn_end()
 		{
 			if (i->vanity)
 			{
-				t.append(action(battle_action_type::P_REMOVE_A_CARD, MEANINGLESS_VALUE, i - data.cards_in_hand.begin()));
+				t.append(action(battle_action_type::P_REMOVE_A_CARD, data.cards_in_hand[i - data.cards_in_hand.begin()].card_type,
+					i - data.cards_in_hand.begin()));
 				++i;
 			}
 			else
@@ -107,9 +108,6 @@ info_to_battle_sys game_entity::calling_action(action iaction)
 info_to_battle_sys game_entity::performing_action(action iaction)
 {
 	//TODO
-
-
-
 
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if (!is_alive())

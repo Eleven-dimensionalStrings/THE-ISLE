@@ -125,6 +125,7 @@ void battle_system::process()
 				temp.listener->buff_pool.push_back(tbuff);
 				send_message(tbuff.on_create(temp.caller, temp.listener));
 			}
+			send_message(data.player_data.performing_action(temp));
 			break;
 		}
 		case REMOVE_BUFF:
@@ -143,13 +144,14 @@ void battle_system::process()
 				}
 				break;
 			}
-			else if(temp.type == buff_type::STRENGTH || temp.type == buff_type::AGILITY || temp.type == buff_type::VITALITY )
+			else if (temp.type == buff_type::STRENGTH || temp.type == buff_type::AGILITY || temp.type == buff_type::VITALITY)
 			{
 				pair<string, size_t> t = data.get_buff(temp.type); // pair<buff_name, priority>
 				buff tbuff(temp.type, t.first, t.second, -static_cast<int>(temp.value));
 				temp.listener->buff_pool.push_back(tbuff);
 				send_message(tbuff.on_create(temp.caller, temp.listener));
 			}
+			send_message(data.player_data.performing_action(temp));
 			break;
 		}
 		case P_KEEP_A_CARD:
@@ -181,7 +183,7 @@ void battle_system::process()
 		{
 			vector<card>& c_in_hand = data.cards_in_hand;
 			vector<card>& c_grave = data.cards_grave;
-			for (int i =  0; i < c_in_hand.size(); ++i)
+			for (int i = 0; i < c_in_hand.size(); ++i)
 			{
 				if (c_in_hand[i].vanity)
 				{
@@ -292,7 +294,7 @@ void battle_system::process()
 		case ADD_CARD_TO_DECK:
 		{
 			vector<card>& c_deck = data.cards_deck;
-			c_deck.push_back(card(temp.value));
+			c_deck.insert(c_deck.begin() + my_random_engine().get_num(c_deck.size() - 1), card(temp.value));
 			send_message(data.player_data.performing_action(temp));
 			break;
 		}
@@ -338,4 +340,16 @@ std::vector<card> my_random_engine::xipai(std::vector<card> v)
 		v.erase(v.begin() + ind);
 	}
 	return vv;
+}
+
+int my_random_engine::get_num(int max)
+{
+	if (max < 0)
+	{
+		max = 0;
+	}
+	default_random_engine e(static_cast<unsigned>(time(0)));
+	uniform_int_distribution<int> ran(0, static_cast<int>(max));
+	int ind = ran(e);
+	return ind;
 }

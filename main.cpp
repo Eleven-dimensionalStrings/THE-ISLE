@@ -38,10 +38,12 @@ int main()
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
 	d.enemies_data.push_back(enemy(d));
-	for (int i = 60; i > 0; i--)
-	{
-		d.cards_pool.push_back(card(i));
-	}
+	d.cards_pool.push_back(card(34));
+	d.cards_pool.push_back(card(17));
+	d.cards_pool.push_back(card(55));
+	d.cards_pool.push_back(card(1));
+	d.cards_pool.push_back(card(30));
+
 
 explore:
 	//explore loop

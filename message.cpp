@@ -64,31 +64,34 @@ info_battle_to_interacting::info_battle_to_interacting()
 
 }
 
-e_action::e_action(std::size_t id, std::size_t tvalue)
-	:action_id(id), value(tvalue)
+e_action::e_action(std::size_t id)
+	:action_id(id), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE), text("ERROR")
 {
 }
 
-e_action::e_action(std::size_t id, artifact tatf)
-	: action_id(id), atf(tatf)
+e_action::e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, std::string ttext)
+	: action_id(id), type(ttype), value(tvalue), text(ttext)
 {
 }
 
-e_action::e_action(std::size_t id, card tcard)
-	: action_id(id), selected_card(tcard)
+e_action::e_action(std::size_t id, std::size_t ttype, artifact tatf, std::string ttext)
+	: action_id(id), type(ttype), atf(tatf), text(ttext)
 {
 }
 
-e_action::e_action(explore_selection exp_s)
-	: selected_card(exp_s.selected_card)
+e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::string ttext)
+	: action_id(id), type(ttype), selected_card(tcard), text(ttext)
 {
-	action_id = exp_s.type;
-	value = exp_s.value;
-	atf = exp_s.atf;
+}
+
+e_action e_action::to_selection()
+{
+	action_id = explore_action_type::EVENT_BODY;
+	return *this;
 }
 
 info_to_explore_sys::info_to_explore_sys()
-	:info(), action_set()
+	: info(), action_set()
 {
 }
 
@@ -96,6 +99,10 @@ info_to_explore_sys::info_to_explore_sys(e_action ichange)
 	: info()
 {
 	action_set.push_back(ichange);
+}
+
+info_to_explore_sys::info_to_explore_sys(vector<e_action> ichange) : action_set(std::move(ichange))
+{
 }
 
 void info_to_explore_sys::append(info_to_explore_sys t)
@@ -110,53 +117,19 @@ info_explore_to_interacting::info_explore_to_interacting()
 {
 }
 
-info_explore_to_interacting::info_explore_to_interacting(std::size_t ttype, std::size_t tnum)
-	: type(ttype), num(tnum)
+info_explore_to_interacting::info_explore_to_interacting(std::size_t ttype)
+	: type(ttype)
 {
 }
 
 info_explore_to_interacting::operator bool()
 {
-	return (type || num);
+	return (type);
 }
 
 void info_explore_to_interacting::clear()
 {
-	type = num = 0;
-}
-
-explore_selection::explore_selection()
-{
-}
-
-explore_selection::explore_selection(std::size_t ttype, std::size_t tvalue)
-	:type(ttype), value(tvalue)
-{
-}
-
-explore_selection::explore_selection(std::size_t ttype, card tcard)
-	: type(ttype), selected_card(tcard)
-{
-}
-
-explore_selection::explore_selection(std::size_t ttype, artifact tatf)
-	: type(ttype), atf(tatf)
-{
-}
-
-explore_selection::explore_selection(std::size_t ttype, event_e tevent)
-	: type(ttype), next_event(tevent)
-{
-}
-
-explore_selection::explore_selection(std::size_t ttype, std::size_t tvalue, card tcard)
-	: type(ttype), value(tvalue), selected_card(tcard)
-{
-}
-
-explore_selection::explore_selection(std::size_t ttype, std::size_t tvalue, artifact tatf)
-	: type(ttype), value(tvalue), atf(tatf)
-{
+	type = 0;
 }
 
 card::card()
@@ -384,6 +357,7 @@ card::card(size_t id)
 		card_type = card_type::ATTACK;
 		cost = 1;
 		require_target = true;
+		exhaust = true;
 		break;
 	}
 	case 27:
@@ -613,7 +587,7 @@ card::card(size_t id)
 	{
 		card_name = "ÎÞÐ¸¿É»÷";
 		card_type = card_type::ABILITY;
-		cost = 2;
+		cost = 1;
 		require_target = false;
 		break;
 	}
@@ -872,6 +846,7 @@ card::card(size_t id)
 		card_type = card_type::ATTACK;
 		cost = 0;
 		require_target = true;
+		exhaust = true;
 		break;
 	}
 	case 87:
