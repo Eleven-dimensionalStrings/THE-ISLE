@@ -17,7 +17,6 @@ auto get_p_q()
 }
 int main()
 {
-
 	data_sys d;
 	battle_system b(d);
 	interacting_sys i(d);

@@ -158,6 +158,7 @@ void t_draw_sys::draw()
 		cout << (draw_queue.front().first) << ' ' << (draw_queue.front().second) << endl;
 		draw_queue.pop();
 	}
+	cout << data.cards_deck.size() << endl;
 }
 
 void t_draw_sys::draw_battle()

@@ -152,13 +152,13 @@ namespace buff_type
 
 namespace gra_size
 {
-	const std::size_t window_width = 1200;
-	const std::size_t window_height = 720;
+	const std::size_t window_width = 1450;
+	const std::size_t window_height = 750;
 	const std::size_t max_enemies = 5;
 	const std::size_t max_cards = 8;
 
 
-	const std::size_t card_width = 100;
+	const std::size_t card_width = 135;
 	const std::size_t card_closure = 10;
 	const std::size_t card_x = 0;
 	const std::size_t card_rx = card_x + card_width * max_cards + card_closure * (max_cards + 1);
@@ -174,9 +174,9 @@ namespace gra_size
 	const std::size_t cansel_button_x = card_width * max_cards + card_closure * (max_cards + 1) + 150;
 	const std::size_t turn_end_button_y = 630;
 	const std::size_t turn_end_button_x = card_width * max_cards + card_closure * (max_cards + 1) + 150;
-	const std::size_t enemy_x = 300;
+	const std::size_t enemy_x = 400;
 	const std::size_t enemy_y = 200;
-	const std::size_t enemy_width = 160;
+	const std::size_t enemy_width = 200;
 	const std::size_t player_x = 50;
 	const std::size_t player_y = 200;
 

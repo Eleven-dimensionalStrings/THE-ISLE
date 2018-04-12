@@ -2,6 +2,7 @@
 #include <random>
 #include <ctime>
 #include <graphics.h>
+#include <Windows.h>
 using namespace std;
 using std::size_t;
 //写easyx的不知道哪个弱智把这宏放出来了,为什么要用这种垃圾
@@ -75,6 +76,7 @@ void battle_context::read_input()
 				cur_state->click_confirm();
 			}
 
+			Sleep(100);
 			FlushMouseMsgBuffer();
 		}
 		//temp
@@ -83,6 +85,7 @@ void battle_context::read_input()
 			//cur_state->click_turn_end();
 			get_data().i_to_b_pipe.append(get_data().player_data.on_turn_end());
 			get_data().i_to_b_pipe.append(get_data().player_data.on_turn_begin());
+			Sleep(100);
 			FlushMouseMsgBuffer();
 		}
 	}
