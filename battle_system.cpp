@@ -99,7 +99,7 @@ void battle_system::process()
 				}
 				if (c_deck.size())
 				{
-					if (c_deck.size() && c_in_hand.size() <= MAX_CARDS_IN_HAND)
+					if (c_deck.size() && c_in_hand.size() < MAX_CARDS_IN_HAND)
 					{
 						c_in_hand.push_back(c_deck.back());
 						c_deck.pop_back();

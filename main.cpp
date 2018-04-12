@@ -68,6 +68,7 @@ explore:
 battle:
 
 	d.cards_deck = my_random_engine::xipai(d.cards_pool);
+	d.cards_deck.push_back(card(40));
 	//explore gives battle some info
 	b.send_message(d.player_data.on_turn_begin());
 	while (1)
