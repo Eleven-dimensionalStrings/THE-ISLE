@@ -135,6 +135,10 @@ void t_draw_sys::draw()
 	for (auto&i : data.enemies_data)
 	{
 		cout << "hp:" << i.current_hp << '/' << i.max_hp << endl;
+		for (auto& j : i.buff_pool)
+		{
+			cout << j.buff_name << "  " << j.buff_level << endl;
+		}
 	}
 	cout << "card:\n";
 	for (auto& i : data.cards_in_hand)

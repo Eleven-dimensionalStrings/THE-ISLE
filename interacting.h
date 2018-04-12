@@ -36,6 +36,8 @@ class explore_context : public context
 public:
 	explore_context(interacting_sys*);
 	explore_context(interacting_sys*, e_state*);
+	void change_to_select_state();
+	void change_to_vaccant_state();
 	~explore_context();
 	void set_state(e_state*);
 	void read_input();
@@ -143,7 +145,7 @@ public:
 class e_select_state : public e_state
 {
 public:
-	e_select_state(explore_context*, event_e);
+	e_select_state(explore_context*);
 	void click_an_option(std::size_t);
 	void click_next();
 	void click_up_arrow();
@@ -151,7 +153,6 @@ public:
 	void click_left_arrow();
 	void click_right_arrow();
 private:
-	event_e current_phase;
 	bool is_mandatory;
 	std::size_t max_amount;
 };

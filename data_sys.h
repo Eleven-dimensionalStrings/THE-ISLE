@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <string>
 #include <vector> 
 #include <map>
 #include <functional>
@@ -42,11 +43,12 @@ public:
 	std::size_t explore_map[6][6];
 	int map_marks[6][6];
 	std::pair<int, int> player_location;
-	std::vector<explore_selection> choice_list;
+	std::vector<e_action> choice_list;
+	std::vector<std::string> choice_name_list;
 	//to determine explore context
 	std::size_t current_select_page;//indicates the position of the first selection in choice_list.  
 	bool is_vaccant;
-	event_e current_event;
+	std::size_t next_event_id;//for "SKIP" button
 };
 
 class random_engine

@@ -3,7 +3,10 @@
 #include <vector>
 #include <queue>
 #include <cstddef>
+#include <string>
 #define MAX_ENEMIES 5
+#define MAP_UPPER_EDGE 8
+#define MAP_LOWER_EDGE 0
 #define MAX_CARDS_IN_HAND 8
 #define MEANINGLESS_VALUE static_cast<std::size_t>(31415926)
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
@@ -15,6 +18,16 @@ namespace map_mark_type
 	const int UNKNOWN = 1;
 	const int KNOWN = 2;
 	const int VISITED = 3;
+}
+
+namespace explore_action_type
+{
+	const std::size_t ENCOUNTER_EVENT = 95;
+	const std::size_t EVENT_BODY = 96;
+	const std::size_t SELECTION = 97;
+	const std::size_t START_BATTLE = 98;
+	const std::size_t NEXT_PHASE = 99;
+	const std::size_t END_EVENT = 100;
 }
 
 namespace battle_action_type
@@ -44,15 +57,39 @@ namespace battle_action_type
 	const std::size_t P_ADD_CARD_TO_DECK_TOP = 10610;
 }
 
+namespace interact_action_type
+{
+	const std::size_t TO_SELECT = 1;
+	const std::size_t TO_VACCANT = 2;
+}
+
 namespace event_type
 {
-	const unsigned int SELECT = 1;
-	const unsigned int BATTLE = 2;
-	const unsigned int REMOVE_CARDS = 3;
-	const unsigned int UPGRADE_CARDS = 4;
-	const unsigned int CHANGE_CARDS = 5;
-	const unsigned int REMOVE_ARTIFACTS = 6;
-	const unsigned int SELECT_NEXT_EVENT = 7;
+	const std::size_t MANDATORY = 1;
+	const std::size_t NOT_MANDATORY = 2;
+	const std::size_t PROCEED = 3;
+	const std::size_t AQUIRE_HIT_POINTS = 10;
+	const std::size_t AQUIRE_MAX_HIT_POINTS = 11;
+	const std::size_t REMOVE_HIT_POINTS = 12;
+	const std::size_t REMOVE_MAX_HIT_POINTS = 13;
+	const std::size_t AQUIRE_STRENGTH = 14;
+	const std::size_t AQUIRE_DEXRITY = 15;
+	const std::size_t AQUIRE_VITALITY = 16;
+	const std::size_t AQUIRE_LUCK = 17;
+	const std::size_t REMOVE_STRENGTH = 18;
+	const std::size_t REMOVE_DEXRITY = 19;
+	const std::size_t REMOVE_VITALITY = 20;
+	const std::size_t REMOVE_LUCK = 21;
+	const std::size_t AQUIRE_CARD = 30;//card
+	const std::size_t REMOVE_CARD = 31;//size_t
+	const std::size_t UPGRADE_CARD = 32;//size_t
+	const std::size_t CHANGE_CARD = 33;//size_t
+	const std::size_t AQUIRE_ARTIFACT = 34;//artifact
+	const std::size_t REMOVE_ARTIFACT = 35;//size_t
+	const std::size_t AQUIRE_GOLD = 36;
+	const std::size_t REMOVE_GOLD = 37;
+	const std::size_t AQUIRE_FOOD = 38;
+	const std::size_t REMOVE_FOOD = 39;
 }
 
 #undef PURE
@@ -100,6 +137,7 @@ namespace buff_type
 	const std::size_t MOVE_MUSSLE = 16;
 	const std::size_t STUN = 17;
 	const std::size_t STUN_RESIST = 18;
+	const std::size_t EXPLODE = 19;
 
 	//buff from ability cards
 	const std::size_t ETERNAL_FURY = 101;
@@ -179,8 +217,6 @@ public:
 };
 
 
-
-
 class artifact
 {
 public:
@@ -211,48 +247,24 @@ public:
 	//first two bytes buff_life, ....buff_level
 	std::size_t value;
 };
-class explore_selection;
 
-class event_e
-{
-public:
-	std::vector<explore_selection> selection;
-	std::vector<event_e> following_event;
-	std::string name;
-	std::string text;
-	std::size_t type;
-	std::size_t enemy_type;
-};
-
-class explore_selection
-{
-public:
-	explore_selection();
-	explore_selection(std::size_t ttype, std::size_t tvalue);
-	explore_selection(std::size_t ttype, card tcard);
-	explore_selection(std::size_t ttype, artifact tatf);
-	explore_selection(std::size_t ttype, event_e tevent);
-	explore_selection(std::size_t ttype, std::size_t tvalue, card tcard);
-	explore_selection(std::size_t ttype, std::size_t tvalue, artifact tatf);
-	std::size_t type;
-	std::size_t value;
-	artifact atf;
-	card selected_card;
-	event_e next_event;
-};
 class e_action
 {
 public:
-	e_action(std::size_t id, std::size_t tvalue);
-	e_action(std::size_t id, artifact tatf);
-	e_action(std::size_t id, card tcard);
-	e_action(explore_selection exp_s);
+	e_action(std::size_t id);
+	e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, std::string ttext);
+	e_action(std::size_t id, std::size_t ttype, artifact tatf, std::string ttext);
+	e_action(std::size_t id, std::size_t ttype, card tcard, std::string ttext);
 	std::size_t action_id;
+	std::size_t type;
 	std::size_t value;
 	artifact atf;
 	card selected_card;
-};
+	std::string text;
+	bool restriction; //TODO lambda表达式
 
+	e_action to_selection();
+};
 
 class info
 {
@@ -276,6 +288,7 @@ class info_to_explore_sys : public info
 public:
 	info_to_explore_sys();
 	info_to_explore_sys(e_action);
+	info_to_explore_sys(std::vector<e_action>);
 	void append(info_to_explore_sys);
 	std::vector<e_action> action_set;
 };
@@ -295,16 +308,10 @@ class info_explore_to_interacting : public info
 {
 public:
 	info_explore_to_interacting();
-	info_explore_to_interacting(std::size_t ttype, std::size_t tnum);
-	std::size_t type, num;
+	info_explore_to_interacting(std::size_t ttype);
+	std::size_t type;
 	operator bool();
 	void clear();
-};
-
-class event_card
-{
-public:
-	event_e root;
 };
 
 

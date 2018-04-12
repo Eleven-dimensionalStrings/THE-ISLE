@@ -22,4 +22,5 @@ class my_random_engine
 {
 public:
 	static std::vector<card> xipai(std::vector<card>);
+	int get_num(int);
 };

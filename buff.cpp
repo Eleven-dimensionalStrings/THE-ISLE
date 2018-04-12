@@ -69,6 +69,12 @@ info_to_battle_sys buff::on_create(game_entity* c, game_entity* p)
 		result.append(action(battle_action_type::ADD_BUFF, c, p, buff_type::STUN_RESIST, 2));
 		break;
 	}
+	case buff_type::EXPLODE:
+	{
+		result.append(action(battle_action_type::CALLING_ACTION, c, p, type_type::INDEPENDENT, buff_level * p->has_buff(buff_type::BURN)));
+		result.append(action(battle_action_type::REMOVE_BUFF, nullptr, p, buff_type::EXPLODE, buff_level));
+		break;
+	}
 	default:
 		break;
 	}
@@ -110,7 +116,12 @@ info_to_battle_sys buff::on_turn_begin(game_entity* p)
 	{
 	case buff_type::ARMOR:
 	{
-		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_type::ARMOR, 999));
+		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, 999));
+		break;
+	}
+	case buff_type::VULNERABLE:
+	{
+		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, 1));;
 		break;
 	}
 	case buff_type::POISON:
@@ -144,7 +155,7 @@ info_to_battle_sys buff::on_turn_begin(game_entity* p)
 	}
 	case buff_type::STUN:
 	{
-		break;//TODO ������ʵ��Ļغ�
+		break;//TODO skip the turn
 	}
 	case buff_type::ETERNAL_FURY:
 	{
@@ -170,7 +181,10 @@ info_to_battle_sys buff::on_turn_begin(game_entity* p)
 		for (int i = 0; i < d.enemies_data.size(); i++)
 		{
 			if (d.enemies_data[i].is_alive())
-				result.append(action(battle_action_type::ADD_BUFF, p, temp+i, buff_type::BURN, buff_level));
+			{
+				temp = &d.enemies_data[i];
+				result.append(action(battle_action_type::ADD_BUFF, p, temp, buff_type::BURN, buff_level));
+			}
 		}
 		break;
 	}
@@ -186,11 +200,6 @@ info_to_battle_sys buff::on_turn_end(game_entity* p)
 	switch (buff_id)
 	{
 	case buff_type::WEAK:
-	{
-		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, 1));;
-		break;
-	}
-	case buff_type::VULNERABLE:
 	{
 		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, 1));;
 		break;
@@ -350,7 +359,7 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 		for (int i = 0; i < temp.action_set.size(); i++)
 		{
 			if (temp.action_set[i].action_id == battle_action_type::ADD_BUFF && temp.action_set[i].type == buff_type::VULNERABLE)
-				temp.action_set.erase(temp.action_set.begin() + i);
+				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, nullptr, temp.action_set[i].listener, buff_type::ARMOR, buff_level));
 		}
 		break;
 	}
@@ -359,7 +368,7 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 		for (auto& i : temp.action_set)
 		{
 			if (i.action_id == battle_action_type::P_REMOVE_A_CARD && i.type == card_type::STAT)
-				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, buff_type::STRENGTH, buff_level));
+				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, nullptr, i.listener, buff_type::STRENGTH, buff_level));
 		}
 		break;
 	}
@@ -368,7 +377,7 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 		for (auto& i : temp.action_set)
 		{
 			if (i.action_id == battle_action_type::PERFORMING_ACTION && i.type == type_type::PURE)
-				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, buff_type::STRENGTH, buff_level));
+				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, nullptr, i.listener, buff_type::STRENGTH, buff_level));
 		}
 		break;
 	}
@@ -377,7 +386,7 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 		for (auto& i : temp.action_set)
 		{
 			if (i.action_id == battle_action_type::PERFORMING_ACTION && i.type == type_type::PURE)
-				buff_level += i.value;
+				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, nullptr, i.listener, buff_id, i.value));
 		}
 		break;
 	}

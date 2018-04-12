@@ -109,6 +109,16 @@ explore_context::explore_context(interacting_sys* i_s, e_state * pstate)
 
 }
 
+void explore_context::change_to_select_state()
+{
+	set_state(new e_select_state(this));
+}
+
+void explore_context::change_to_vaccant_state()
+{
+	set_state(new e_vaccant_state(this));
+}
+
 explore_context::~explore_context()
 {
 	delete cur_state;
@@ -164,7 +174,7 @@ info_to_battle_sys interacting_sys::play_a_card(size_t card_pos, game_entity* ta
 
 void interacting_sys::move_player(int x, int y)
 {
-	data.map_marks[data.player_location.first][data.player_location.second] = map_mark_type::VISITED;
+	set_map_location(data.player_location.first, data.player_location.second, map_mark_type::VISITED);
 	data.map_marks[x][y] = map_mark_type::PLAYER;
 	data.player_location = make_pair(x, y);
 }
@@ -172,12 +182,12 @@ void interacting_sys::move_player(int x, int y)
 void interacting_sys::set_map_location(int x, int y, int mark_type)
 {
 	data.map_marks[x][y] = mark_type;
-	//tell the renderer to reveal the map
+	//TODO tell the renderer to reveal the map
 }
 
 void interacting_sys::reveal_map_location(int x, int y)
 {
-	//call the renderer to reveal the map
+	//TODO call the renderer to reveal the map
 }
 
 //void interacting_sys::encounter_event(std::size_t event_id)
@@ -196,7 +206,14 @@ void interacting_sys::update()
 	}
 	else if (data.e_to_i_pipe)
 	{
-		//TODO
+		if (data.e_to_i_pipe.type == interact_action_type::TO_SELECT)
+		{
+			present_explore_context->change_to_select_state();
+		}
+		else
+		{
+			present_explore_context->change_to_vaccant_state();
+		}
 		data.e_to_i_pipe.clear();
 		return;
 	}
@@ -407,7 +424,7 @@ void b_select_state::click_confirm()
 	info_to_battle_sys t;
 	for (auto& i : selected_cards)
 	{
-		t.append(action(type + TYPE_TO_P_TYPE, get_data().cards_in_hand[i].card_type, i));
+		t.append(action(type + TYPE_TO_P_TYPE, nullptr, &get_data().player_data, get_data().cards_in_hand[i].card_type, i));
 	}
 	send_to_battle_sys(t);
 	ctx->set_state(new b_vaccant_state(ctx));
@@ -450,35 +467,31 @@ void e_vaccant_state::click_next()
 
 void e_vaccant_state::click_up_arrow()
 {
-	if (get_data().player_location.second == 5)
+	data_sys d = get_data();
+	int x = d.player_location.first;
+	int y = d.player_location.second;
+	if (d.player_location.second == MAP_UPPER_EDGE)
 	{
 		return;
 	}
-	int mark = get_data().map_marks[get_data().player_location.first][get_data().player_location.second + 1];
+	int mark = d.map_marks[x][y + 1];
 	switch (mark)
 	{
 	case map_mark_type::EMPTY:
 		break;
 	case map_mark_type::VISITED:
-		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second + 1);
+		ctx->i_s->move_player(x, y + 1);
 		break;
-	case map_mark_type::KNOWN:
-		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second + 1);
-		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second + 1, map_mark_type::VISITED);
-		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
-		break;
-	case map_mark_type::UNKNOWN:
-		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second + 1);
-		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second + 1, map_mark_type::VISITED);
-		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
-	default:
+	default://no matter the place is known or not
+		ctx->i_s->move_player(x, y + 1);
+		d.i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[x][y], ""));
 		break;
 	}
 }
 
 void e_vaccant_state::click_down_arrow()
 {
-	if (get_data().player_location.second == 0)
+	if (get_data().player_location.second == MAP_LOWER_EDGE)
 	{
 		return;
 	}
@@ -506,7 +519,7 @@ void e_vaccant_state::click_down_arrow()
 
 void e_vaccant_state::click_left_arrow()
 {
-	if (get_data().player_location.first == 0)
+	if (get_data().player_location.first == MAP_LOWER_EDGE)
 	{
 		return;
 	}
@@ -534,7 +547,7 @@ void e_vaccant_state::click_left_arrow()
 
 void e_vaccant_state::click_right_arrow()
 {
-	if (get_data().player_location.first == 5)
+	if (get_data().player_location.first == MAP_UPPER_EDGE)
 	{
 		return;
 	}
@@ -565,66 +578,17 @@ e_state::e_state(explore_context *tcontext)
 {
 }
 
-e_select_state::e_select_state(explore_context * e_c, event_e e_e)
-	: e_state(e_c), current_phase(e_e)
+e_select_state::e_select_state(explore_context * e_c)
+	: e_state(e_c)
 {
-	switch (current_phase.type)
-	{
-	case event_type::SELECT:
-		get_data().choice_list.clear();
-		get_data().choice_list = e_e.selection;
-		break;
-	case event_type::SELECT_NEXT_EVENT:
-		get_data().choice_list.clear();
-		get_data().choice_list = e_e.selection;
-		break;
-	case event_type::BATTLE:
-		get_data().i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::START_BATTLE, e_e.enemy_type));
-		break;
-	case event_type::REMOVE_CARDS:
-		get_data().choice_list.clear();
-		for (int i = 0; i < get_data().cards_pool.size(); i++)
-		{
-			get_data().choice_list.push_back(explore_selection(explore_action_type::REMOVE_CARD, i, get_data().cards_pool[i]));
-		}
-		break;
-	case event_type::UPGRADE_CARDS:
-		get_data().choice_list.clear();
-		for (int i = 0; i < get_data().cards_pool.size(); i++)
-		{
-			if (get_data().cards_pool[i].upgrade_version_id != 0)
-			{
-				get_data().choice_list.push_back(explore_selection(explore_action_type::UPGRADE_CARD, i, get_data().cards_pool[i]));
-			}
-		}
-		break;
-	case event_type::CHANGE_CARDS:
-		get_data().choice_list.clear();
-		for (int i = 0; i < get_data().cards_pool.size(); i++)
-		{
-			get_data().choice_list.push_back(explore_selection(explore_action_type::CHANGE_CARD, i, get_data().cards_pool[i]));
-		}
-		break;
-	case event_type::REMOVE_ARTIFACTS:
-		get_data().choice_list.clear();
-		for (int i = 0; i < get_data().artifacts.size(); i++)
-		{
-			get_data().choice_list.push_back(explore_selection(explore_action_type::REMOVE_ARTIFACT, i, get_data().artifacts[i]));
-		}
-		break;
-	}
 }
 
 void e_select_state::click_an_option(std::size_t pos)
 {
-	explore_selection temp = get_data().choice_list[pos + 3 * get_data().current_select_page];
-	get_data().i_to_e_pipe = info_to_explore_sys(e_action(temp));
-	get_data().choice_list.erase(get_data().choice_list.begin() + pos + 3 * get_data().current_select_page, get_data().choice_list.begin() + pos + get_data().current_select_page + 1);
-	if (get_data().choice_list.empty())
-	{
-		ctx->set_state(&e_select_state(ctx, current_phase.following_event[0]));
-	}
-	else if (get_data().choice_list.size() == 3 * get_data().current_select_page)
+	e_action temp = get_data().choice_list[pos + 3 * get_data().current_select_page];
+	get_data().i_to_e_pipe = info_to_explore_sys(temp);
+	get_data().choice_list.erase(get_data().choice_list.begin() + pos + 3 * get_data().current_select_page);
+	if (get_data().choice_list.size() == 3 * get_data().current_select_page)
 	{
 		get_data().current_select_page -= 1;
 	}
@@ -632,10 +596,7 @@ void e_select_state::click_an_option(std::size_t pos)
 
 void e_select_state::click_next()
 {
-	if (!is_mandatory)
-	{
-		ctx->set_state(&e_select_state(ctx, current_phase.following_event[0]));
-	}
+	get_data().i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, get_data().next_event_id, ""));
 }
 
 void e_select_state::click_up_arrow()
