@@ -1,8 +1,8 @@
 #include <random>
 #include <ctime>
+#include <stack>
 #include "explore_system.h"
 #include "message.h"
-#include "stack"
 #include "data_sys.h"
 
 using namespace std;
@@ -199,6 +199,11 @@ void explore_system::process()
 		{
 			data.choice_list.push_back(temp.to_selection());
 			data.choice_name_list.push_back(temp.text);
+			break;
+		}
+		case ENEMY:
+		{
+			temp_enemy_list.push_back(enemy(data, temp.value));
 			break;
 		}
 		case START_BATTLE:

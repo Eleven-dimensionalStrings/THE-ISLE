@@ -51,10 +51,11 @@ public:
 class enemy : public game_entity
 {
 public:
-	enemy(data_sys&);
+	enemy(data_sys&, std::size_t);
 	virtual ~enemy();
 	void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list)override;
 	virtual info_to_battle_sys kill()override;
 	info_to_battle_sys on_turn_begin()override;
 	info_to_battle_sys on_turn_end()override;
+	std::size_t enemy_id;
 };

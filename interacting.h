@@ -73,7 +73,7 @@ public:
 class b_confirm_state : public b_state
 {
 public:
-	b_confirm_state(battle_context*, std::size_t);
+	b_confirm_state(battle_context*, std::size_t, std::size_t);
 	void click_a_card(std::size_t);
 	void click_an_enemy(std::size_t);
 	void click_confirm();
@@ -81,6 +81,7 @@ public:
 	void click_turn_end();
 private:
 	std::size_t selected_card;
+	std::size_t cost;
 	bool require_target;
 };
 

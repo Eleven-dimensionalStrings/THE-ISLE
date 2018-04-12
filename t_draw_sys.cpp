@@ -16,7 +16,6 @@ void t_draw_sys::__draw_card_in_hand()
 		{
 			setfillcolor(BLUE);
 			//TODO
-			//˵��ѡ�������λ�õĿ�
 			solidrectangle(gra_size::card_x + i * (gra_size::card_closure + gra_size::card_width) + gra_size::card_closure / 2,
 				gra_size::card_y, gra_size::card_x + i * (gra_size::card_closure + gra_size::card_width) + gra_size::card_closure, gra_size::card_dy);
 			setfillcolor(BLACK);
@@ -123,7 +122,7 @@ buffer(gra_size::window_width, gra_size::window_height), timer(0), is_drawing(0)
 {
 }
 
-void t_draw_sys::draw()
+void t_draw_sys::t_draw_b()
 {
 	for (auto& i : data.b_to_d)
 	{
@@ -159,6 +158,11 @@ void t_draw_sys::draw()
 		draw_queue.pop();
 	}
 	cout << data.cards_deck.size() << endl;
+}
+
+void t_draw_sys::t_draw_e()
+{
+
 }
 
 void t_draw_sys::draw_battle()

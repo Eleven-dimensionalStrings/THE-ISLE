@@ -26,7 +26,8 @@ class t_draw_sys
 	void __draw_a_card(std::size_t pos, int x, int y);
 public:
 	t_draw_sys(data_sys&);
-	void draw();//控制台测试用
+	void t_draw_b();//控制台测试战斗用
+	void t_draw_e();//控制台测试探索用
 	void draw_battle();
 	void draw_explore();
 	void draw_begin();//开始页面

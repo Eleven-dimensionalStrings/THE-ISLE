@@ -27,6 +27,7 @@ info_to_battle_sys player::kill()
 
 info_to_battle_sys player::on_turn_begin()
 {
+	current_ap = max_ap;
 	for (auto &i : data.cards_in_hand)
 	{
 		i.is_reserve = 0;
@@ -55,8 +56,8 @@ info_to_battle_sys player::on_turn_end()
 		{
 			if (i->vanity)
 			{
-				t.append(action(battle_action_type::P_REMOVE_A_CARD, data.cards_in_hand[i - data.cards_in_hand.begin()].card_type,
-					i - data.cards_in_hand.begin()));
+				t.append(action(battle_action_type::P_REMOVE_A_CARD, &data.player_data, &data.player_data,
+					data.cards_in_hand[i - data.cards_in_hand.begin()].card_type, i - data.cards_in_hand.begin()));
 				++i;
 			}
 			else
@@ -185,7 +186,8 @@ std::size_t game_entity::has_buff(std::size_t id)
 	return 0;
 }
 
-enemy::enemy(data_sys&d) :game_entity(d)
+enemy::enemy(data_sys&d, std::size_t id) 
+	:game_entity(d)
 {
 }
 

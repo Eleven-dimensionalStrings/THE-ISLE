@@ -32,16 +32,17 @@ int main()
 
 
 
-	d.enemies_data.push_back(enemy(d));
-	d.enemies_data.push_back(enemy(d));
-	d.enemies_data.push_back(enemy(d));
-	d.enemies_data.push_back(enemy(d));
-	d.enemies_data.push_back(enemy(d));
+	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
 	d.cards_pool.push_back(card(34));
 	d.cards_pool.push_back(card(17));
 	d.cards_pool.push_back(card(55));
 	d.cards_pool.push_back(card(1));
 	d.cards_pool.push_back(card(30));
+	d.cards_pool.push_back(card(7));
 
 
 explore:
@@ -49,8 +50,9 @@ explore:
 	while (1)
 	{
 		e.update();
+
 		i.update();
-		e.update();
+		Sleep(100);
 		if (!d.enemies_data.empty())
 			goto battle;
 	}
@@ -66,7 +68,7 @@ battle:
 
 		b.update();
 		dr.draw_battle();
-		dr.draw();
+		dr.t_draw_b();
 		i.update();
 		b.update();
 		b.update();

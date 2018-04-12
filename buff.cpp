@@ -368,7 +368,7 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 		for (auto& i : temp.action_set)
 		{
 			if (i.action_id == battle_action_type::P_REMOVE_A_CARD && i.type == card_type::STAT)
-				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, nullptr, i.listener, buff_type::STRENGTH, buff_level));
+				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, i.caller, i.listener, buff_type::STRENGTH, buff_level));
 		}
 		break;
 	}

@@ -141,19 +141,19 @@ data_sys & battle_context::get_data()
 	return i_s->data;
 }
 
-void battle_context::test_read()
-{
-	size_t card_pos, target_pos;
-	cin >> card_pos;
-	set_state(new b_confirm_state(this, card_pos));
-	if (get_data().cards_in_hand[card_pos].require_target)
-	{
-		cin >> target_pos;
-		cur_state->click_an_enemy(target_pos);
-		return;
-	}
-	cur_state->click_confirm();
-}
+//void battle_context::test_read()
+//{
+//	size_t card_pos, target_pos;
+//	cin >> card_pos;
+//	set_state(new b_confirm_state(this, card_pos));
+//	if (get_data().cards_in_hand[card_pos].require_target)
+//	{
+//		cin >> target_pos;
+//		cur_state->click_an_enemy(target_pos);
+//		return;
+//	}
+//	cur_state->click_confirm();
+//}
 
 interacting_sys::interacting_sys(data_sys & d) :data(d),
 present_battle_context(new battle_context(this)), present_explore_context(new explore_context(this))
@@ -244,8 +244,11 @@ b_vaccant_state::b_vaccant_state(battle_context * b_c)
 
 void b_vaccant_state::click_a_card(size_t card_pos)
 {
-	get_data().draw_select_card[card_pos] = 1;
-	ctx->set_state(new b_confirm_state(ctx, card_pos));
+	if (get_data().player_data.current_ap >= get_data().cards_in_hand[card_pos].cost)
+	{
+		get_data().draw_select_card[card_pos] = 1;
+		ctx->set_state(new b_confirm_state(ctx, card_pos, get_data().cards_in_hand[card_pos].cost));
+	}
 }
 
 void b_vaccant_state::click_an_enemy(size_t enemy_No)
@@ -269,8 +272,8 @@ void b_vaccant_state::click_turn_end()
 	ctx->set_state(new b_lock_state(ctx));
 }
 
-b_confirm_state::b_confirm_state(battle_context * b_c, size_t card_pos)
-	:b_state(b_c), selected_card(card_pos), require_target(false)
+b_confirm_state::b_confirm_state(battle_context * b_c, size_t card_pos, std::size_t c)
+	:b_state(b_c), selected_card(card_pos), cost(c), require_target(false)
 {
 	if (get_data().cards_in_hand[card_pos].require_target)
 	{
@@ -285,11 +288,16 @@ void b_confirm_state::click_a_card(size_t card_pos)
 		get_data().draw_select_card[selected_card] = 0;
 		ctx->set_state(new b_vaccant_state(ctx));
 	}
-	else
+	else if (get_data().player_data.current_ap >= get_data().cards_in_hand[card_pos].cost)
 	{
 		get_data().draw_select_card[card_pos] = 1;
 		get_data().draw_select_card[selected_card] = 0;
-		ctx->set_state(new b_confirm_state(ctx, card_pos));
+		ctx->set_state(new b_confirm_state(ctx, card_pos, get_data().cards_in_hand[card_pos].cost));
+	}
+	else
+	{
+		get_data().draw_select_card[selected_card] = 0;
+		ctx->set_state(new b_vaccant_state(ctx));
 	}
 }
 
@@ -312,11 +320,30 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 					i->listener = target;
 				}
 			}
+			for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
+			{
+				if (i->listener == &get_data().all_enemies)
+				{
+					auto temp_action = *i;
+					i = temp.action_set.erase(i);
+					for (size_t j = 0; j < MAX_ENEMIES; ++j)
+					{
+						if (get_data().enemies_data[j].is_alive())
+						{
+							temp_action.listener = &get_data().enemies_data[j];
+							i = temp.action_set.insert(i, temp_action);
+							//++i;
+						}
+					}
+				}
+			}
 			send_to_battle_sys(temp);
+			get_data().player_data.current_ap -= cost;
 			ctx->set_state(new b_vaccant_state(ctx));
 		}
 		else
 		{
+			get_data().draw_select_card[selected_card] = 0;
 			ctx->set_state(new b_vaccant_state(ctx));
 		}
 	}
@@ -326,7 +353,8 @@ void b_confirm_state::click_confirm()
 {
 	if (!require_target)
 	{
-		info_to_battle_sys temp(action(battle_action_type::USE_A_CARD, get_data().cards_in_hand[selected_card].card_type, selected_card));
+		info_to_battle_sys temp(action(battle_action_type::USE_A_CARD, &get_data().player_data, &get_data().player_data,
+			get_data().cards_in_hand[selected_card].card_type, selected_card));
 		temp.append(get_data().cards_in_hand[selected_card].use_card(get_data()));
 		for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 		{
@@ -347,6 +375,7 @@ void b_confirm_state::click_confirm()
 		}
 		send_to_battle_sys(temp);
 		get_data().draw_select_card[selected_card] = 0;
+		get_data().player_data.current_ap -= cost;
 	}
 }
 

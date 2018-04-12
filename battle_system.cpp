@@ -187,7 +187,7 @@ void battle_system::process()
 			{
 				if (c_in_hand[i].vanity)
 				{
-					process_stack.push(action(battle_action_type::P_REMOVE_A_CARD, c_in_hand[i].card_type, i));
+					process_stack.push(action(battle_action_type::P_REMOVE_A_CARD, &data.player_data, &data.player_data, c_in_hand[i].card_type, i));
 				}
 				else if (!c_in_hand[i].is_reserve)
 				{
@@ -236,7 +236,7 @@ void battle_system::process()
 			vector<card>& c_equiped = data.cards_equiped;
 			if (data.cards_in_hand[temp.value].exhaust)
 			{
-				process_stack.push(action(battle_action_type::P_REMOVE_A_CARD, MEANINGLESS_VALUE, temp.value));
+				process_stack.push(action(battle_action_type::P_REMOVE_A_CARD, &data.player_data, &data.player_data, MEANINGLESS_VALUE, temp.value));
 				/*c_removed.push_back(c_in_hand[temp.value]);
 				c_in_hand.erase(c_in_hand.begin() + temp.value);*/
 			}

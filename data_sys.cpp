@@ -5,7 +5,8 @@ using namespace std;
 
 //TODO 6, 8，9, 12
 
-data_sys::data_sys() :player_data(*this), all_enemies(*this), random_enemy(*this), select_one_enemy(*this)
+data_sys::data_sys() :player_data(*this), all_enemies(*this, MEANINGLESS_VALUE), random_enemy(*this, MEANINGLESS_VALUE)
+, select_one_enemy(*this, MEANINGLESS_VALUE)
 {
 	for (auto&i : draw_select_card)i = 0;
 }
@@ -57,8 +58,8 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 7://横挥
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &select_one_enemy, type_type::NORMAL, 8), action(battle_action_type::DRAW_CARDS
-				, &player_data, &player_data, MEANINGLESS_VALUE, 1)});
+			, &player_data, &select_one_enemy, type_type::NORMAL, 4), action(battle_action_type::CALLING_ACTION
+				, &player_data, &all_enemies, type_type::NORMAL, 6)});
 		break;
 	}
 	case 8://旋风斩
@@ -85,7 +86,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 11://湮灭
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &select_one_enemy, type_type::NORMAL, 30)});
+			, &player_data, &select_one_enemy, type_type::NORMAL, 36)});
 		break;
 	}
 	case 12://蓄力劈砍
@@ -500,8 +501,8 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 67://横挥+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &select_one_enemy, type_type::NORMAL, 10), action(battle_action_type::DRAW_CARDS
-				, &player_data, &player_data, MEANINGLESS_VALUE, 1)});
+			, &player_data, &select_one_enemy, type_type::NORMAL, 4), action(battle_action_type::CALLING_ACTION
+				, &player_data, &select_one_enemy, type_type::NORMAL, 10)});
 		break;
 	}
 	case 68://旋风斩+
@@ -528,7 +529,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 71://湮灭+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &select_one_enemy, type_type::NORMAL, 40)});
+			, &player_data, &select_one_enemy, type_type::NORMAL, 42)});
 		break;
 	}
 	case 72://蓄力劈砍+
@@ -920,7 +921,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	case 1:
 	{
 		return info_to_explore_sys(vector<e_action>{e_action(explore_action_type::EVENT_BODY
-			, event_type::AQUIRE_GOLD, 100, "天空落下了金币"), e_action(explore_action_type::SELECTION, event_type::PROCEED, 0, "继续前进")});
+			, event_type::AQUIRE_GOLD, 100, "天空落下了金币.."), e_action(explore_action_type::SELECTION, event_type::PROCEED, 0, "继续前进..")});
 		break;
 	}
 	default:

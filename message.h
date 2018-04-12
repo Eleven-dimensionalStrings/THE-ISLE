@@ -22,9 +22,10 @@ namespace map_mark_type
 
 namespace explore_action_type
 {
-	const std::size_t ENCOUNTER_EVENT = 95;
-	const std::size_t EVENT_BODY = 96;
-	const std::size_t SELECTION = 97;
+	const std::size_t ENCOUNTER_EVENT = 94;
+	const std::size_t EVENT_BODY = 95;
+	const std::size_t SELECTION = 96;
+	const std::size_t ENEMY = 97;
 	const std::size_t START_BATTLE = 98;
 	const std::size_t NEXT_PHASE = 99;
 	const std::size_t END_EVENT = 100;
