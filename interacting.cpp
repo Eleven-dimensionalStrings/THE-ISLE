@@ -60,7 +60,7 @@ void battle_context::read_input()
 					//cur_state->click_confirm();
 				}
 			}
-			//检查点击敌人
+			//检测点击敌人
 			else if (hit.x > gra_size::enemy_x && hit.x<gra_size::enemy_x + gra_size::enemy_width*gra_size::max_enemies
 				&& hit.y>gra_size::enemy_y && hit.y < gra_size::enemy_y + 200)//需要改为敌人高度
 			{
@@ -70,11 +70,23 @@ void battle_context::read_input()
 					cur_state->click_an_enemy(pos);
 				}
 			}
-			//confirm, to revice the value
+			//检测点击confirm
 			else if (hit.x > gra_size::confirm_button_x && hit.y > gra_size::confirm_button_y
 				&& hit.x < gra_size::confirm_button_x + 100 && hit.y < gra_size::confirm_button_y + 50)
 			{
 				cur_state->click_confirm();
+			}
+			//检测点击cancel
+			else if (hit.x > gra_size::cancel_button_x && hit.y > gra_size::cancel_button_y
+				&& hit.x < gra_size::cancel_button_x + 100 && hit.y < gra_size::cancel_button_y + 50)
+			{
+				cur_state->click_cancel();
+			}
+			//
+			else if (hit.x > gra_size::turn_end_button_x && hit.y > gra_size::turn_end_button_y
+				&& hit.x < gra_size::turn_end_button_x + 100 && hit.y < gra_size::turn_end_button_y + 50)
+			{
+				cur_state->click_cancel();
 			}
 
 			Sleep(100);
