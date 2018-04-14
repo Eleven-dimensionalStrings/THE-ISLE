@@ -931,7 +931,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 			, event_type::AQUIRE_GOLD, 100, "some gold has fallen from the sky"), e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "proceed...")});
 		break;
 	}
-	case 9999:
+	case END:
 	{
 		return info_to_explore_sys(e_action(explore_action_type::END_EVENT));
 	}

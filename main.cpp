@@ -33,12 +33,14 @@ int main()
 
 	d.gold = 100;
 	d.food = 5;
+	d.player_s_class = player_class::WAR;
+	d.is_vaccant = 1;
 
+	/*d.enemies_data.push_back(enemy(d, 1));
 	d.enemies_data.push_back(enemy(d, 1));
 	d.enemies_data.push_back(enemy(d, 1));
 	d.enemies_data.push_back(enemy(d, 1));
-	d.enemies_data.push_back(enemy(d, 1));
-	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));*/
 
 	d.cards_pool.push_back(card(1));
 	d.cards_pool.push_back(card(1));
@@ -60,8 +62,8 @@ int main()
 		}
 	}
 	d.map_marks[0][0] = map_mark_type::PLAYER;
-	//e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
-	goto battle;
+	e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
+	//goto battle;
 
 explore:
 	//explore loop

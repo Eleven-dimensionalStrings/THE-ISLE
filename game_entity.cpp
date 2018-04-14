@@ -116,30 +116,25 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 	using namespace type_type;
 	if (iaction.action_id == battle_action_type::PERFORMING_ACTION)
 	{
-		if (present_act.type <= 500)//����˺�
+		if (present_act.type <= 500)
 		{
 			current_hp -= static_cast<int>(present_act.value);
 			result.append(action(battle_action_type::ENTITY_BE_ATK, present_act.caller, present_act.listener, 0, 0));
 			if (current_hp <= 0)
 				result.append(this->kill());
 		}
-		else if (present_act.type == ADD_HP)//��������ֵ
+		else if (present_act.type == ADD_HP)
 		{
 			current_hp += static_cast<int>(present_act.value);
 			if (current_hp > max_hp)
 				current_hp = max_hp;
 		}
-		/*else if (present_act.type < 30000)//�����ж���
-		{
-			current_ap -= static_cast<int>(present_act.value);
-		}*/
-		else if (present_act.type == ADD_AP)//�����ж���
+		else if (present_act.type == ADD_AP)
 		{
 			current_ap += static_cast<int>(present_act.value);
 		}
 	}
 	return result;
-
 }
 
 info_to_battle_sys game_entity::kill()

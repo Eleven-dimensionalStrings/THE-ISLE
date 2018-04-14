@@ -84,7 +84,12 @@ e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::string tt
 {
 }
 
-e_action e_action::to_selection()
+e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue)
+	: action_id(id), type(ttype), selected_card(tcard), text(""), value(tvalue)
+{
+}
+
+e_action e_action::to_event_body()
 {
 	action_id = explore_action_type::EVENT_BODY;
 	return *this;
@@ -119,6 +124,11 @@ info_explore_to_interacting::info_explore_to_interacting()
 
 info_explore_to_interacting::info_explore_to_interacting(std::size_t ttype)
 	: type(ttype)
+{
+}
+
+info_explore_to_interacting::info_explore_to_interacting(std::size_t ttype, std::size_t tvalue)
+	: type(ttype), value(tvalue)
 {
 }
 

@@ -51,13 +51,25 @@ void explore_system::process()
 		{
 		case ENCOUNTER_EVENT:
 		{
+			if (data.is_vaccant == 1)
+			{
+				for (int i = 0; i < data.artifacts.size(); ++i)
+				{
+					send_message(data.artifact_on_encounter_event(data.artifacts[i].artifact_id));
+				}
+			}
 			data.is_vaccant = 0;
+			max_selection = 1;
 			send_message(data.event_effect(temp.value));
 			break;
 		}
 		case EVENT_BODY:
 		{
 			data.text_to_be_displayed = temp.text;
+			for (int i = 0; i < data.artifacts.size(); ++i)
+			{
+				send_message(data.artifact_on_event_body(data.artifacts[i].artifact_id));
+			}
 			switch (temp.type)
 			{
 			case PROCEED:
@@ -141,16 +153,58 @@ void explore_system::process()
 				data.cards_pool.push_back(temp.selected_card);
 				break;
 			}
+			case DUPLICATE_CARD_FROM_DECK:
+			{
+				info_to_explore_sys message;
+				for (int i = 0; i < data.cards_pool.size(); ++i)
+				{
+					message.action_set.push_back(e_action(SELECTION, AQUIRE_CARD, data.cards_pool[i], i));
+				}
+				send_message(message);
+				break;
+			}
+			case AQUIRE_CARD_FROM_SELECTION:
+			{
+				info_to_explore_sys message;
+				for (int i = 0; i < temp.value; ++i)
+				{
+					message.action_set.push_back(e_action(SELECTION, AQUIRE_CARD,
+						e_random_engine().get_card_by_class(data.player_s_class), MEANINGLESS_VALUE));
+				}
+				send_message(message);
+				break;
+			}
 			case REMOVE_CARD:
 			{
 				//remove the card according to its position
 				data.cards_pool.erase(data.cards_pool.begin() + temp.value, data.cards_pool.begin() + temp.value + 1);
 				break;
 			}
+			case REMOVE_CARD_FROM_DECK:
+			{
+				info_to_explore_sys message;
+				for (int i = 0; i < data.cards_pool.size(); ++i)
+				{
+					message.action_set.push_back(e_action(SELECTION, REMOVE_CARD, data.cards_pool[i], i));
+				}
+				send_message(message);
+				break;
+			}
 			case UPGRADE_CARD:
 			{
 				//upgrade the card according to its position
 				data.cards_pool[temp.value] = card(data.cards_pool[temp.value].upgrade_version_id);
+				break;
+			}
+			case UPGRADE_CARD_FROM_DECK:
+			{
+				info_to_explore_sys message;
+				for (int i = 0; i < data.cards_pool.size(); ++i)
+				{
+					if (data.cards_pool[i].upgrade_version_id != 0)
+						message.action_set.push_back(e_action(SELECTION, UPGRADE_CARD, data.cards_pool[i], i));
+				}
+				send_message(message);
 				break;
 			}
 			case CHANGE_CARD:
@@ -160,14 +214,26 @@ void explore_system::process()
 				data.cards_pool.erase(data.cards_pool.begin() + temp.value);
 				break;
 			}
+			case CHANGE_CARD_FROM_DECK:
+			{
+				info_to_explore_sys message;
+				for (int i = 0; i < data.cards_pool.size(); ++i)
+				{
+					message.action_set.push_back(e_action(SELECTION, CHANGE_CARD, data.cards_pool[i], i));
+				}
+				send_message(message);
+				break;
+			}
 			case AQUIRE_ARTIFACT:
 			{
 				data.artifacts.push_back(temp.atf);
+				send_message(data.artifact_on_create(temp.atf.artifact_id));
 				break;
 			}
 			case REMOVE_ARTIFACT:
 			{
 				data.artifacts.erase(data.artifacts.begin() + temp.value);
+				send_message(data.artifact_on_remove(data.artifacts[temp.value].artifact_id));
 				break;
 			}
 			case AQUIRE_GOLD:
@@ -209,9 +275,13 @@ void explore_system::process()
 		}
 		case SELECTION:
 		{
-			data.choice_list.push_back(temp.to_selection());
+			data.choice_list.push_back(temp.to_event_body());
 			data.choice_name_list.push_back(temp.text);
 			break;
+		}
+		case MAX_SELECTION:
+		{
+			max_selection = temp.value;
 		}
 		case ENEMY:
 		{
@@ -239,6 +309,10 @@ void explore_system::process()
 		}
 		case END_EVENT:
 		{
+			for (int i = 0; i < data.artifacts.size(); ++i)
+			{
+				send_message(data.artifact_on_end_event(data.artifacts[i].artifact_id));
+			}
 			data.is_vaccant = 1;
 			data.choice_list.clear();
 			data.choice_name_list.clear();
@@ -251,7 +325,7 @@ void explore_system::process()
 	}
 	if (!data.choice_list.empty())
 	{
-		data.e_to_i_pipe = info_explore_to_interacting(interact_action_type::EXPLORE_TO_SELECT);
+		data.e_to_i_pipe = info_explore_to_interacting(interact_action_type::EXPLORE_TO_SELECT, max_selection);
 	}
 }
 

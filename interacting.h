@@ -37,11 +37,11 @@ public:
 	explore_context(interacting_sys*);
 	explore_context(interacting_sys*, e_state*);
 	virtual ~explore_context();
-	void change_to_select_state();
+	void change_to_select_state(std::size_t tmax);
 	void change_to_vaccant_state();
 	void set_state(e_state*);
 	void read_input()override;
-	//void test_read();//TODO testing version, should be replaced
+	data_sys& get_data();
 private:
 	e_state *cur_state;
 };
@@ -147,7 +147,7 @@ public:
 class e_select_state : public e_state
 {
 public:
-	e_select_state(explore_context*);
+	e_select_state(explore_context*, std::size_t tmax);
 	void click_an_option(std::size_t);
 	void click_next();
 	void click_up_arrow();
@@ -155,8 +155,8 @@ public:
 	void click_left_arrow();
 	void click_right_arrow();
 private:
-	bool is_mandatory;
-	std::size_t max_amount;
+	std::size_t max_selection;
+	std::size_t current;
 };
 
 class interacting_sys

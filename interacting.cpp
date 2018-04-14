@@ -51,7 +51,7 @@ void battle_context::read_input()
 		{
 			//检测点击卡
 			if (hit.x > gra_size::card_x + gra_size::card_starting_pos && hit.x < gra_size::card_x + gra_size::card_starting_pos + gra_size::card_rx
-				&& hit.y>gra_size::card_y && hit.y < gra_size::card_dy)
+				&& hit.y > gra_size::card_y && hit.y < gra_size::card_dy)
 			{
 				size_t pos = (hit.x - gra_size::card_closure - gra_size::card_starting_pos) / (gra_size::card_width + gra_size::card_closure);
 				if (pos <= get_data().cards_in_hand.size())
@@ -61,8 +61,8 @@ void battle_context::read_input()
 				}
 			}
 			//检测点击敌人
-			else if (hit.x > gra_size::enemy_x && hit.x<gra_size::enemy_x + gra_size::enemy_width*gra_size::max_enemies
-				&& hit.y>gra_size::enemy_y && hit.y < gra_size::enemy_y + 200)//需要改为敌人高度
+			else if (hit.x > gra_size::enemy_x && hit.x < gra_size::enemy_x + gra_size::enemy_width*gra_size::max_enemies
+				&& hit.y > gra_size::enemy_y && hit.y < gra_size::enemy_y + 200)//需要改为敌人高度
 			{
 				size_t pos = (hit.x - gra_size::enemy_x) / gra_size::enemy_width;
 				if (pos <= get_data().enemies_data.size())
@@ -125,9 +125,9 @@ explore_context::explore_context(interacting_sys* i_s, e_state * pstate)
 
 }
 
-void explore_context::change_to_select_state()
+void explore_context::change_to_select_state(std::size_t tmax)
 {
-	set_state(new e_select_state(this));
+	set_state(new e_select_state(this, tmax));
 }
 
 void explore_context::change_to_vaccant_state()
@@ -148,8 +148,50 @@ void explore_context::set_state(e_state * pstate)
 
 void explore_context::read_input()
 {
-	//TODO
-	//test_read();
+	while (MouseHit())
+	{
+		auto hit = GetMouseMsg();
+		if (hit.mkLButton)
+		{
+			if (get_data().is_vaccant)
+			{
+				//检测点击地图
+				//TODO
+			}
+			else
+			{
+				//检测点击选项
+				if (hit.x > gra_size::card_x + gra_size::card_starting_pos && hit.x < gra_size::card_x + gra_size::card_starting_pos + gra_size::card_rx
+					&& hit.y > gra_size::card_y && hit.y < gra_size::card_dy)
+				{
+					size_t pos = (hit.x - gra_size::card_closure - gra_size::card_starting_pos) / (gra_size::card_width + gra_size::card_closure);
+					if (pos <= get_data().cards_in_hand.size())
+					{
+						cur_state->click_an_option(pos);
+					}
+				}
+				//检测点击左箭头
+				else if (hit.x > gra_size::left_arrow_x && hit.x < gra_size::left_arrow_x + 100
+					&& hit.y > gra_size::left_arrow_y && hit.y < gra_size::left_arrow_y + 100)
+				{
+					cur_state->click_left_arrow();
+				}
+				//检测点击右箭头
+				else if (hit.x > gra_size::right_arrow_x && hit.x < gra_size::left_arrow_x + 100
+					&& hit.y > gra_size::right_arrow_y && hit.y < gra_size::right_arrow_y + 100)
+				{
+					cur_state->click_right_arrow();
+				}
+			}
+			Sleep(100);
+			FlushMouseMsgBuffer();
+		}
+	}
+}
+
+data_sys & explore_context::get_data()
+{
+	return i_s->data;
 }
 
 data_sys & battle_context::get_data()
@@ -201,19 +243,6 @@ present_battle_context(new battle_context(this)), present_explore_context(new ex
 {
 }
 
-
-/*info_to_battle_sys interacting_sys::play_a_card(size_t card_pos, game_entity* target)
-{
-	//maybe never used
-	info_to_battle_sys result(action(battle_action_type::USE_A_CARD, &data.player_data, target,
-		data.cards_in_hand[card_pos].card_type, card_pos));
-	auto ef = data.card_effect(data.cards_in_hand[card_pos].card_id);
-	result.append(ef);
-	for (auto& i : result.action_set)
-		t->caller = &data.player_data;
-	return result;
-}*/
-
 void interacting_sys::move_player(int x, int y)
 {
 	set_map_location(data.player_location.first, data.player_location.second, map_mark_type::VISITED);
@@ -251,7 +280,7 @@ void interacting_sys::update()
 	{
 		if (data.e_to_i_pipe.type == interact_action_type::EXPLORE_TO_SELECT)
 		{
-			present_explore_context->change_to_select_state();
+			present_explore_context->change_to_select_state(data.e_to_i_pipe.value);
 		}
 		else
 		{
@@ -650,20 +679,26 @@ e_state::e_state(explore_context *tcontext)
 {
 }
 
-e_select_state::e_select_state(explore_context * e_c)
-	: e_state(e_c)
+e_select_state::e_select_state(explore_context * e_c, std::size_t tmax)
+	: e_state(e_c), max_selection(tmax), current(0)
 {
 }
 
 void e_select_state::click_an_option(std::size_t pos)
 {
-	e_action temp = get_data().choice_list[pos + 3 * get_data().current_select_page];
-	get_data().i_to_e_pipe = info_to_explore_sys(temp);
-	get_data().choice_list.erase(get_data().choice_list.begin() + pos + 3 * get_data().current_select_page);
-	if (get_data().choice_list.size() == 3 * get_data().current_select_page)
+	info_to_explore_sys temp(e_action(get_data().choice_list[pos + 8 * get_data().current_select_page]));
+	get_data().choice_list.erase(get_data().choice_list.begin() + pos + 8 * get_data().current_select_page);
+	if (get_data().choice_list.size() == 8 * get_data().current_select_page)
 	{
 		get_data().current_select_page -= 1;
 	}
+	current++;
+	if (current == max_selection)
+	{
+		temp.action_set.push_back(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE,
+			MEANINGLESS_VALUE, get_data().next_event_id));
+	}
+	get_data().i_to_e_pipe = temp;
 }
 
 void e_select_state::click_next()
@@ -673,18 +708,12 @@ void e_select_state::click_next()
 
 void e_select_state::click_up_arrow()
 {
-	if (get_data().current_select_page > 0)
-	{
-		get_data().current_select_page -= 1;
-	}
+	//TODO delete
 }
 
 void e_select_state::click_down_arrow()
 {
-	if (get_data().current_select_page < get_data().choice_list.size() / 3)
-	{
-		get_data().current_select_page += 1;
-	}
+	//TODO delete
 }
 
 void e_select_state::click_left_arrow()

@@ -54,6 +54,7 @@ public:
 	std::size_t current_select_page;//indicates the position of the first selection in choice_list.  
 	bool is_vaccant;
 	std::size_t next_event_id;//for "SKIP" button
+	std::size_t player_s_class;
 
 	//TODO for artifacts
 	info_to_explore_sys artifact_on_create(std::size_t atf_id);

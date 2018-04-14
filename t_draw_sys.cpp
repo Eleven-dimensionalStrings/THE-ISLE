@@ -57,6 +57,22 @@ void t_draw_sys::__draw_battle_info()
 	outtextxy(gra_size::ap_x + 28, gra_size::ap_y, &to_string(data.player_data.max_ap)[0]); //TODO to be replaced by a compact pic
 }
 
+void t_draw_sys::__draw_explore_map()
+{
+	for (int i = 0; i < 13; ++i)
+	{
+		for (int j = 0; j < 5; ++j)
+		{
+			solidrectangle(230 + 85 * i, 200 + 85 * j, 290 + 85 * i, 260 + 85 * j);
+		}
+	}
+}
+
+void t_draw_sys::__draw_buff()
+{
+	//TODO
+}
+
 void t_draw_sys::__draw_artifacts()
 {
 	for (auto&i : data.artifacts)
@@ -91,6 +107,13 @@ void t_draw_sys::__draw_guiding_pics()
 	//remove_area_pic
 	solidrectangle(gra_size::remove_pic_x, gra_size::remove_pic_y,
 		gra_size::remove_pic_x + 45, gra_size::remove_pic_y + 50);
+}
+
+void t_draw_sys::__draw_lines()
+{
+	solidrectangle(0, 460,
+		1500, 465);
+	//TODO replace this by background pics
 }
 
 void t_draw_sys::__draw_player()
@@ -152,7 +175,29 @@ void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 	//TODO
 }
 
-void t_draw_sys::__draw_selections()
+void t_draw_sys::__draw_event_card()
+{
+	//event card pic
+	solidrectangle(gra_size::event_card_x, gra_size::event_card_y, gra_size::event_card_x + 240, gra_size::event_card_y + 300);
+
+	//event card text
+	solidrectangle(gra_size::event_text_x, gra_size::event_text_y, gra_size::event_text_x + 240, gra_size::event_text_y + 300);
+
+	//next button
+	if (data.next_event_id != 0)
+		solidrectangle(gra_size::next_x, gra_size::next_y, gra_size::next_x + 200, gra_size::next_y + 100);
+}
+
+void t_draw_sys::__draw_player_in_map()
+{
+	//player pic
+	solidrectangle(gra_size::player_x, gra_size::player_y, gra_size::player_x + 160, gra_size::player_y + 200);
+
+	//text
+	solidrectangle(gra_size::player_x, gra_size::player_y + 255, gra_size::player_x + 160, gra_size::player_y + 400);
+}
+
+void t_draw_sys::__draw_explore_info()
 {
 	for (int i = 0; i < data.choice_list.size(); ++i)
 	{
@@ -168,6 +213,13 @@ void t_draw_sys::__draw_selections()
 			setfillcolor(LIGHTBLUE);
 		}
 	}
+	//left arrow pic
+	solidrectangle(gra_size::left_arrow_x, gra_size::left_arrow_y,
+		gra_size::left_arrow_x + 100, gra_size::left_arrow_y + 100);
+
+	//right arrow pic
+	solidrectangle(gra_size::right_arrow_x, gra_size::right_arrow_y,
+		gra_size::right_arrow_x + 100, gra_size::right_arrow_y + 100);
 }
 
 void t_draw_sys::__draw_player_info()
@@ -256,23 +308,25 @@ void t_draw_sys::t_draw_e()
 				switch (data.map_marks[i][j])
 				{
 				case map_mark_type::EMPTY:
-					cout << " ";
+					cout << "*";
+					break;
 				case map_mark_type::KNOWN:
 					cout << "K";
+					break;
 				case map_mark_type::PLAYER:
-					cout << "*";
+					cout << "P";
+					break;
 				case map_mark_type::UNKNOWN:
 					cout << "U";
+					break;
 				case map_mark_type::VISITED:
 					cout << "V";
+					break;
 				}
 			}
 			cout << "\n";
 		}
-		cout << "press \"w\"  [move upwards]" << "\n";
-		cout << "press \"a\"  [move towards left]" << "\n";
-		cout << "press \"s\"  [move downwards]" << "\n";
-		cout << "press \"d\"  [move towards right]" << "\n";
+		cout << "click the map to move" << "\n";
 	}
 	else
 	{
@@ -305,6 +359,7 @@ void t_draw_sys::draw_battle()
 	this->__draw_entities();
 	this->__draw_battle_info();
 	this->__draw_guiding_pics();
+	this->__draw_lines();
 	SetWorkingImage(0);
 	putimage(0, 0, &buffer);
 }
@@ -317,11 +372,20 @@ void t_draw_sys::draw_explore()
 	settextcolor(BLACK);
 	setfillcolor(LIGHTBLUE);
 	//TODO putimage(0, 0, image);
-	//TODO this->__draw_event_card();
-	this->__draw_player();
 	this->__draw_player_info();
 	this->__draw_guiding_pics();
-	this->__draw_selections();
+	if (data.is_vaccant)
+	{
+		this->__draw_player_in_map();
+		this->__draw_explore_map();
+	}
+	else
+	{
+		this->__draw_event_card();
+		this->__draw_player();
+		this->__draw_explore_info();
+		this->__draw_lines();
+	}
 	SetWorkingImage(0);
 	putimage(0, 0, &buffer);
 }

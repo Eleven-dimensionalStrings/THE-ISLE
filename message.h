@@ -24,9 +24,10 @@ namespace map_mark_type
 
 namespace explore_action_type
 {
-	const std::size_t ENCOUNTER_EVENT = 94;
-	const std::size_t EVENT_BODY = 95;
-	const std::size_t SELECTION = 96;
+	const std::size_t ENCOUNTER_EVENT = 93;
+	const std::size_t EVENT_BODY = 94;
+	const std::size_t SELECTION = 95;
+	const std::size_t MAX_SELECTION = 96;
 	const std::size_t ENEMY = 97;
 	const std::size_t START_BATTLE = 98;
 	const std::size_t NEXT_PHASE = 99;
@@ -86,9 +87,14 @@ namespace event_type
 	const std::size_t REMOVE_VITALITY = 20;
 	const std::size_t REMOVE_LUCK = 21;
 	const std::size_t AQUIRE_CARD = 30;//card
+	const std::size_t DUPLICATE_CARD_FROM_DECK = 130;
+	const std::size_t AQUIRE_CARD_FROM_SELECTION = 230;
 	const std::size_t REMOVE_CARD = 31;//size_t
+	const std::size_t REMOVE_CARD_FROM_DECK = 131;
 	const std::size_t UPGRADE_CARD = 32;//size_t
+	const std::size_t UPGRADE_CARD_FROM_DECK = 132;
 	const std::size_t CHANGE_CARD = 33;//size_t
+	const std::size_t CHANGE_CARD_FROM_DECK = 133;
 	const std::size_t AQUIRE_ARTIFACT = 34;//artifact
 	const std::size_t REMOVE_ARTIFACT = 35;//size_t
 	const std::size_t AQUIRE_GOLD = 36;
@@ -195,6 +201,7 @@ namespace gra_size
 	const std::size_t ap_pic_x = 80;
 	const std::size_t ap_pic_y = 600;
 	const std::size_t ap_pic_radius = 60;
+
 	const std::size_t hp_pic_x = 20;
 	const std::size_t hp_pic_y = 20;
 	const std::size_t gold_pic_x = 120;
@@ -210,6 +217,17 @@ namespace gra_size
 	const std::size_t grave_pic_y = 80;
 	const std::size_t remove_pic_x = 1375;
 	const std::size_t remove_pic_y = 80;
+
+	const std::size_t left_arrow_x = 50;
+	const std::size_t left_arrow_y = 550;
+	const std::size_t right_arrow_x = 1300;
+	const std::size_t right_arrow_y = 550;
+	const std::size_t event_card_x = 500;
+	const std::size_t event_card_y = 150;
+	const std::size_t event_text_x = 800;
+	const std::size_t event_text_y = 150;
+	const std::size_t next_x = 1100;
+	const std::size_t next_y = 250;
 }
 
 namespace player_class
@@ -285,6 +303,7 @@ public:
 	e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, std::string ttext);
 	e_action(std::size_t id, std::size_t ttype, artifact tatf, std::string ttext);
 	e_action(std::size_t id, std::size_t ttype, card tcard, std::string ttext);
+	e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue);
 	std::size_t action_id;
 	std::size_t type;
 	std::size_t value;
@@ -293,7 +312,7 @@ public:
 	std::string text;
 	bool restriction; //TODO lambda表达式
 
-	e_action to_selection();
+	e_action to_event_body();
 };
 
 class info
@@ -339,7 +358,9 @@ class info_explore_to_interacting : public info
 public:
 	info_explore_to_interacting();
 	info_explore_to_interacting(std::size_t ttype);
+	info_explore_to_interacting(std::size_t ttype, std::size_t tvalue);
 	std::size_t type;
+	std::size_t value;
 	operator bool();
 	void clear();
 };
