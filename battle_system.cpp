@@ -37,7 +37,7 @@ void battle_system::initiate_battle()
 	//TODO place the inherent cards on the top of the deck
 
 	send_message(data.player_data.on_turn_begin());
-	data.player_data.current_hp = temp_ap;
+	data.player_data.current_ap = temp_ap;
 }
 
 void battle_system::send_message(info_to_battle_sys input)

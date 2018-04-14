@@ -31,7 +31,15 @@ int main()
 	setbkcolor(WHITE);
 	cleardevice();
 
-	//d.enemies_data.push_back(enemy(d, 1));
+	d.gold = 100;
+	d.food = 5;
+
+	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
+
 	d.cards_pool.push_back(card(1));
 	d.cards_pool.push_back(card(1));
 	d.cards_pool.push_back(card(1));
@@ -52,7 +60,8 @@ int main()
 		}
 	}
 	d.map_marks[0][0] = map_mark_type::PLAYER;
-	e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
+	//e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
+	goto battle;
 
 explore:
 	//explore loop
@@ -77,7 +86,7 @@ battle:
 		dr.draw_battle();
 		dr.t_draw_b();
 		i.update();
-		//b.update(); TODO seems useless, considering removing it
+		b.update(); //TODO seems useless, considering removing it
 		//enemy act
 		Sleep(100);
 		if (d.enemies_data.empty())

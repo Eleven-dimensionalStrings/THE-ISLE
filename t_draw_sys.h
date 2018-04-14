@@ -24,6 +24,13 @@ class t_draw_sys
 	void __draw_player();
 	void __draw_an_enemy(std::size_t pos);//draw the enemy in pos
 	void __draw_a_card(std::size_t pos, int x, int y);
+
+	//added by michael
+	//void __draw_event_card();
+	void __draw_selections();
+	void __draw_player_info();
+
+
 public:
 	t_draw_sys(data_sys&);
 	void t_draw_b();//控制台测试战斗用

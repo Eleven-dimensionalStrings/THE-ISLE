@@ -161,28 +161,42 @@ namespace gra_size
 	const std::size_t max_enemies = 5;
 	const std::size_t max_cards = 8;
 
-
 	const std::size_t card_width = 135;
 	const std::size_t card_closure = 10;
 	const std::size_t card_x = 0;
 	const std::size_t card_rx = card_x + card_width * max_cards + card_closure * (max_cards + 1);
 	const std::size_t card_y = 500;
 	const std::size_t card_dy = 700;
-	const std::size_t hp_y = 500;
-	const std::size_t hp_x = card_width * max_cards + card_closure * (max_cards + 1);
-	const std::size_t ap_y = 610;
-	const std::size_t ap_x = card_width * max_cards + card_closure * (max_cards + 1);
-	const std::size_t confirm_button_y = 500;
-	const std::size_t confirm_button_x = card_width * max_cards + card_closure * (max_cards + 1) + 150;
-	const std::size_t cansel_button_y = 565;
-	const std::size_t cansel_button_x = card_width * max_cards + card_closure * (max_cards + 1) + 150;
-	const std::size_t turn_end_button_y = 630;
-	const std::size_t turn_end_button_x = card_width * max_cards + card_closure * (max_cards + 1) + 150;
+	const std::size_t hp_y = 110;
+	const std::size_t hp_x = 35;
+	const std::size_t gold_y = 110;
+	const std::size_t gold_x = 155;
+	const std::size_t food_y = 110;
+	const std::size_t food_x = 260;
+	const std::size_t ap_y = 593;
+	const std::size_t ap_x = 1220;
+	const std::size_t confirm_button_y = 510;
+	const std::size_t confirm_button_x = 1320;
+	const std::size_t cancel_button_y = 575;
+	const std::size_t cancel_button_x = 1320;
+	const std::size_t turn_end_button_y = 640;
+	const std::size_t turn_end_button_x = 1320;
 	const std::size_t enemy_x = 400;
 	const std::size_t enemy_y = 200;
-	const std::size_t enemy_width = 200;
+	const std::size_t enemy_width = 160;
 	const std::size_t player_x = 50;
 	const std::size_t player_y = 200;
+
+	//TODO replace the ap_pic (a circle) to a pic(square), should change the following values
+	const std::size_t ap_pic_x = 1245;
+	const std::size_t ap_pic_y = 600;
+	const std::size_t ap_pic_radius = 60;
+	const std::size_t hp_pic_x = 20;
+	const std::size_t hp_pic_y = 20;
+	const std::size_t gold_pic_x = 120;
+	const std::size_t gold_pic_y = 20;
+	const std::size_t food_pic_x = 220;
+	const std::size_t food_pic_y = 20;
 
 }
 

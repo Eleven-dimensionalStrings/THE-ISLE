@@ -14,11 +14,11 @@ void t_draw_sys::__draw_card_in_hand()
 		__draw_a_card(i, x, y);
 		if (data.draw_select_card[i])
 		{
-			setfillcolor(BLUE);
+			setfillcolor(GREEN);
 			//TODO
 			solidrectangle(gra_size::card_x + i * (gra_size::card_closure + gra_size::card_width) + gra_size::card_closure / 2,
 				gra_size::card_y, gra_size::card_x + i * (gra_size::card_closure + gra_size::card_width) + gra_size::card_closure, gra_size::card_dy);
-			setfillcolor(BLACK);
+			setfillcolor(LIGHTBLUE);
 		}
 	}
 }
@@ -35,16 +35,26 @@ void t_draw_sys::__draw_entities()
 }
 void t_draw_sys::__draw_right_hand_info()
 {
-	outtextxy(gra_size::hp_x, gra_size::hp_y, &to_string(data.player_data.current_hp)[0]);
-	outtextxy(gra_size::hp_x + 70, gra_size::hp_y, '/');
-	outtextxy(gra_size::hp_x + 80, gra_size::hp_y, &to_string(data.player_data.max_hp)[0]);
-
-	outtextxy(gra_size::ap_x, gra_size::ap_y, &to_string(data.player_data.current_ap)[0]);
-	outtextxy(gra_size::ap_x + 70, gra_size::ap_y, '/');
-	outtextxy(gra_size::ap_x + 80, gra_size::ap_y, &to_string(data.player_data.max_ap)[0]);
-
+	//confirm button
 	solidrectangle(gra_size::confirm_button_x, gra_size::confirm_button_y,
 		gra_size::confirm_button_x + 100, gra_size::confirm_button_y + 50);
+	outtextxy(gra_size::confirm_button_x + 22, gra_size::confirm_button_y + 18, "CONFIRM"); //TODO to be replaced by a compact pic
+
+	//cancel button
+	solidrectangle(gra_size::cancel_button_x, gra_size::cancel_button_y,
+		gra_size::cancel_button_x + 100, gra_size::cancel_button_y + 50);
+	outtextxy(gra_size::cancel_button_x + 25, gra_size::cancel_button_y + 18, "CANCEL"); //TODO to be replaced by a compact pic
+
+	//turn end button
+	solidrectangle(gra_size::turn_end_button_x, gra_size::turn_end_button_y,
+		gra_size::turn_end_button_x + 100, gra_size::turn_end_button_y + 50);
+	outtextxy(gra_size::turn_end_button_x + 18, gra_size::turn_end_button_y + 18, "END TURN"); //TODO to be replaced by a compact pic
+
+	//ap_pic
+	solidcircle(gra_size::ap_pic_x, gra_size::ap_pic_y, gra_size::ap_pic_radius);
+	outtextxy(gra_size::ap_x, gra_size::ap_y, &to_string(data.player_data.current_ap)[0]);
+	outtextxy(gra_size::ap_x + 20, gra_size::ap_y, '/');
+	outtextxy(gra_size::ap_x + 28, gra_size::ap_y, &to_string(data.player_data.max_ap)[0]); //TODO to be replaced by a compact pic
 
 }
 void t_draw_sys::__draw_artifacts()
@@ -54,6 +64,7 @@ void t_draw_sys::__draw_artifacts()
 		//TODO
 	}
 }
+
 void t_draw_sys::__get_atk_entities()
 {
 	for (auto i = data.b_to_d.rbegin(); i != data.b_to_d.rend(); ++i)
@@ -62,6 +73,7 @@ void t_draw_sys::__get_atk_entities()
 	}
 	data.b_to_d.clear();
 }
+
 void t_draw_sys::__draw_player()
 {
 	pair<size_t, size_t> drawing;
@@ -80,6 +92,7 @@ void t_draw_sys::__draw_player()
 
 	}
 }
+
 void t_draw_sys::__draw_an_enemy(std::size_t pos)
 {
 	auto p = data.enemies_data.begin() + pos;
@@ -111,12 +124,52 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 
 	}
 }
+
 void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 {
 	solidrectangle(x, y, x + gra_size::card_width, y + 200);
 	//putimage(x,y,image path);
 	//TODO
 }
+
+void t_draw_sys::__draw_selections()
+{
+	for (int i = 0; i < data.choice_list.size(); ++i)
+	{
+		int y = gra_size::card_y, x = gra_size::card_closure * (i + 1)
+			+ gra_size::card_width * i + gra_size::card_x;
+		__draw_a_card(i, x, y);
+		if (data.draw_select_card[i])
+		{
+			setfillcolor(GREEN);
+			//TODO
+			solidrectangle(gra_size::card_x + i * (gra_size::card_closure + gra_size::card_width) + gra_size::card_closure / 2,
+				gra_size::card_y, gra_size::card_x + i * (gra_size::card_closure + gra_size::card_width) + gra_size::card_closure, gra_size::card_dy);
+			setfillcolor(LIGHTBLUE);
+		}
+	}
+}
+
+void t_draw_sys::__draw_player_info()
+{
+	//hp_pic
+	solidrectangle(gra_size::hp_pic_x, gra_size::hp_pic_y,
+		gra_size::hp_pic_x + 90, gra_size::hp_pic_y + 120);
+	outtextxy(gra_size::hp_x, gra_size::hp_y, &to_string(data.player_data.current_hp)[0]);
+	outtextxy(gra_size::hp_x + 25, gra_size::hp_y, '/');
+	outtextxy(gra_size::hp_x + 33, gra_size::hp_y, &to_string(data.player_data.max_hp)[0]);
+
+	//gold pic
+	solidrectangle(gra_size::gold_pic_x, gra_size::gold_pic_y,
+		gra_size::gold_pic_x + 90, gra_size::gold_pic_y + 120);
+	outtextxy(gra_size::gold_x, gra_size::gold_y, &to_string(data.gold)[0]);
+
+	//food pic
+	solidrectangle(gra_size::food_pic_x, gra_size::food_pic_y,
+		gra_size::food_pic_x + 90, gra_size::food_pic_y + 120);
+	outtextxy(gra_size::food_x, gra_size::food_y, &to_string(data.food)[0]);
+}
+
 t_draw_sys::t_draw_sys(data_sys &d) :data(d),
 buffer(gra_size::window_width, gra_size::window_height), timer(0), is_drawing(0)
 {
@@ -224,8 +277,9 @@ void t_draw_sys::draw_battle()
 	setbkcolor(WHITE);
 	cleardevice();
 	settextcolor(BLACK);
-	setfillcolor(BLACK);
+	setfillcolor(LIGHTBLUE);
 	//TODO putimage(0, 0, image);
+	this->__draw_player_info();
 	this->__draw_card_in_hand();
 	this->__draw_entities();
 	this->__draw_right_hand_info();
@@ -235,6 +289,17 @@ void t_draw_sys::draw_battle()
 
 void t_draw_sys::draw_explore()
 {
+	SetWorkingImage(&buffer);
+	setbkcolor(BLUE);
+	cleardevice();
+	settextcolor(YELLOW);
+	setfillcolor(YELLOW);
+	//TODO putimage(0, 0, image);
+	//TODO this->__draw_event_card();
+	//TODO this->__draw_entities();
+	//TODO this->__draw_right_hand_info();
+	SetWorkingImage(0);
+	putimage(0, 0, &buffer);
 }
 
 void t_draw_sys::draw_begin()

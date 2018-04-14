@@ -133,7 +133,8 @@ void explore_context::set_state(e_state * pstate)
 
 void explore_context::read_input()
 {
-	test_read();
+	//TODO
+	//test_read();
 }
 
 data_sys & battle_context::get_data()
@@ -155,30 +156,30 @@ data_sys & battle_context::get_data()
 //	cur_state->click_confirm();
 //}
 
-void explore_context::test_read()
-{
-	char input;
-	cin >> input;
-	switch (input)
-	{
-	case '0':
-		cur_state->click_an_option(0);
-	case '1':
-		cur_state->click_an_option(1);
-	case '2':
-		cur_state->click_an_option(2);
-	case 'n':
-		cur_state->click_next();
-	case 'w':
-		cur_state->click_up_arrow();
-	case 'a':
-		cur_state->click_left_arrow();
-	case 's':
-		cur_state->click_down_arrow();
-	case 'd':
-		cur_state->click_right_arrow();
-	}
-}
+//void explore_context::test_read()
+//{
+//	char input;
+//	cin >> input;
+//	switch (input)
+//	{
+//	case '0':
+//		cur_state->click_an_option(0);
+//	case '1':
+//		cur_state->click_an_option(1);
+//	case '2':
+//		cur_state->click_an_option(2);
+//	case 'n':
+//		cur_state->click_next();
+//	case 'w':
+//		cur_state->click_up_arrow();
+//	case 'a':
+//		cur_state->click_left_arrow();
+//	case 's':
+//		cur_state->click_down_arrow();
+//	case 'd':
+//		cur_state->click_right_arrow();
+//	}
+//}
 
 interacting_sys::interacting_sys(data_sys & d) :data(d),
 present_battle_context(new battle_context(this)), present_explore_context(new explore_context(this))

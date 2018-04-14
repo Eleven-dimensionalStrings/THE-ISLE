@@ -40,7 +40,7 @@ public:
 	void change_to_vaccant_state();
 	void set_state(e_state*);
 	void read_input()override;
-	void test_read();//TODO testing version, should be replaced
+	//void test_read();//TODO testing version, should be replaced
 private:
 	e_state *cur_state;
 };
