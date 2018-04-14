@@ -91,7 +91,6 @@ void battle_context::read_input()
 			FlushMouseMsgBuffer();
 		}
 	}
-	//test_read();
 }
 
 void battle_context::change_to_select_state(info_battle_to_interacting t)
@@ -134,8 +133,7 @@ void explore_context::set_state(e_state * pstate)
 
 void explore_context::read_input()
 {
-	//switch
-	//cur_state->xxxfunction
+	test_read();
 }
 
 data_sys & battle_context::get_data()
@@ -157,6 +155,31 @@ data_sys & battle_context::get_data()
 //	cur_state->click_confirm();
 //}
 
+void explore_context::test_read()
+{
+	char input;
+	cin >> input;
+	switch (input)
+	{
+	case '0':
+		cur_state->click_an_option(0);
+	case '1':
+		cur_state->click_an_option(1);
+	case '2':
+		cur_state->click_an_option(2);
+	case 'n':
+		cur_state->click_next();
+	case 'w':
+		cur_state->click_up_arrow();
+	case 'a':
+		cur_state->click_left_arrow();
+	case 's':
+		cur_state->click_down_arrow();
+	case 'd':
+		cur_state->click_right_arrow();
+	}
+}
+
 interacting_sys::interacting_sys(data_sys & d) :data(d),
 present_battle_context(new battle_context(this)), present_explore_context(new explore_context(this))
 {
@@ -171,7 +194,7 @@ present_battle_context(new battle_context(this)), present_explore_context(new ex
 	auto ef = data.card_effect(data.cards_in_hand[card_pos].card_id);
 	result.append(ef);
 	for (auto& i : result.action_set)
-		i.caller = &data.player_data;
+		t->caller = &data.player_data;
 	return result;
 }*/
 
@@ -192,12 +215,6 @@ void interacting_sys::reveal_map_location(int x, int y)
 {
 	//TODO call the renderer to reveal the map
 }
-
-//void interacting_sys::encounter_event(std::size_t event_id)
-//{
-//	data.i_to_e_pipe = data.event_effect(event_id);
-//	//	present_explore_context->set_state(&e_select_state(present_explore_context, temp.root));
-//}
 
 void interacting_sys::update()
 {
@@ -221,6 +238,7 @@ void interacting_sys::update()
 		return;
 	}
 	present_battle_context->read_input();
+	present_explore_context->read_input();
 }
 
 b_state::b_state(battle_context * b_c)
@@ -361,9 +379,9 @@ void b_confirm_state::click_confirm()
 	{
 		info_to_battle_sys temp;
 		card tcard = get_data().cards_in_hand[selected_card];
-		get_data().b->send_message(action(battle_action_type::USE_A_CARD, 
+		get_data().b->send_message(action(battle_action_type::USE_A_CARD,
 			get_data().cards_in_hand[selected_card].card_type, selected_card));
-		
+
 		temp.append(tcard.use_card(get_data()));
 		for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 		{
@@ -530,84 +548,72 @@ void e_vaccant_state::click_up_arrow()
 
 void e_vaccant_state::click_down_arrow()
 {
-	if (get_data().player_location.second == MAP_LOWER_EDGE)
+	data_sys d = get_data();
+	int x = d.player_location.first;
+	int y = d.player_location.second;
+	if (d.player_location.second == MAP_LOWER_EDGE)
 	{
 		return;
 	}
-	int mark = get_data().map_marks[get_data().player_location.first][get_data().player_location.second - 1];
+	int mark = d.map_marks[x][y + 1];
 	switch (mark)
 	{
 	case map_mark_type::EMPTY:
 		break;
 	case map_mark_type::VISITED:
-		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second - 1);
+		ctx->i_s->move_player(x, y - 1);
 		break;
-	case map_mark_type::KNOWN:
-		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second - 1);
-		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second - 1, map_mark_type::VISITED);
-		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
-		break;
-	case map_mark_type::UNKNOWN:
-		ctx->i_s->move_player(get_data().player_location.first, get_data().player_location.second - 1);
-		ctx->i_s->set_map_location(get_data().player_location.first, get_data().player_location.second - 1, map_mark_type::VISITED);
-		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
-	default:
+	default://no matter the place is known or not
+		ctx->i_s->move_player(x, y - 1);
+		d.i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[x][y], ""));
 		break;
 	}
 }
 
 void e_vaccant_state::click_left_arrow()
 {
-	if (get_data().player_location.first == MAP_LOWER_EDGE)
+	data_sys d = get_data();
+	int x = d.player_location.first;
+	int y = d.player_location.second;
+	if (d.player_location.first == MAP_LOWER_EDGE)
 	{
 		return;
 	}
-	int mark = get_data().map_marks[get_data().player_location.first - 1][get_data().player_location.second];
+	int mark = d.map_marks[x - 1][y];
 	switch (mark)
 	{
 	case map_mark_type::EMPTY:
 		break;
 	case map_mark_type::VISITED:
-		ctx->i_s->move_player(get_data().player_location.first - 1, get_data().player_location.second);
+		ctx->i_s->move_player(x - 1, y);
 		break;
-	case map_mark_type::KNOWN:
-		ctx->i_s->move_player(get_data().player_location.first - 1, get_data().player_location.second);
-		ctx->i_s->set_map_location(get_data().player_location.first - 1, get_data().player_location.second, map_mark_type::VISITED);
-		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
-		break;
-	case map_mark_type::UNKNOWN:
-		ctx->i_s->move_player(get_data().player_location.first - 1, get_data().player_location.second);
-		ctx->i_s->set_map_location(get_data().player_location.first - 1, get_data().player_location.second, map_mark_type::VISITED);
-		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
-	default:
+	default://no matter the place is known or not
+		ctx->i_s->move_player(x - 1, y);
+		d.i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[x][y], ""));
 		break;
 	}
 }
 
 void e_vaccant_state::click_right_arrow()
 {
-	if (get_data().player_location.first == MAP_UPPER_EDGE)
+	data_sys d = get_data();
+	int x = d.player_location.first;
+	int y = d.player_location.second;
+	if (d.player_location.first == MAP_UPPER_EDGE)
 	{
 		return;
 	}
-	int mark = get_data().map_marks[get_data().player_location.first + 1][get_data().player_location.second];
+	int mark = d.map_marks[x + 1][y];
 	switch (mark)
 	{
 	case map_mark_type::EMPTY:
 		break;
 	case map_mark_type::VISITED:
-		ctx->i_s->move_player(get_data().player_location.first + 1, get_data().player_location.second);
+		ctx->i_s->move_player(x + 1, y);
 		break;
-	case map_mark_type::KNOWN:
-		ctx->i_s->move_player(get_data().player_location.first + 1, get_data().player_location.second);
-		ctx->i_s->set_map_location(get_data().player_location.first + 1, get_data().player_location.second, map_mark_type::VISITED);
-		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
-		break;
-	case map_mark_type::UNKNOWN:
-		ctx->i_s->move_player(get_data().player_location.first + 1, get_data().player_location.second);
-		ctx->i_s->set_map_location(get_data().player_location.first + 1, get_data().player_location.second, map_mark_type::VISITED);
-		//ctx->i_s->encounter_event(get_data().explore_map[get_data().player_location.first][get_data().player_location.second]);
-	default:
+	default://no matter the place is known or not
+		ctx->i_s->move_player(x + 1, y);
+		d.i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[x][y], ""));
 		break;
 	}
 }

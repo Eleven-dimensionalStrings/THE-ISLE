@@ -10,6 +10,7 @@ class battle_system
 public:
 	battle_system(data_sys& d);
 	void update();
+	void initiate_battle();
 	void send_message(info_to_battle_sys);
 	void enemies_action();
 private:
@@ -22,6 +23,6 @@ private:
 class my_random_engine
 {
 public:
-	static std::vector<card> xipai(std::vector<card>);
+	static std::vector<card> shuffle(std::vector<card>);
 	int get_num(int);
 };

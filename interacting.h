@@ -35,11 +35,12 @@ class explore_context : public context
 public:
 	explore_context(interacting_sys*);
 	explore_context(interacting_sys*, e_state*);
+	virtual ~explore_context();
 	void change_to_select_state();
 	void change_to_vaccant_state();
-	~explore_context();
 	void set_state(e_state*);
-	void read_input();
+	void read_input()override;
+	void test_read();//TODO testing version, should be replaced
 private:
 	e_state *cur_state;
 };

@@ -5,11 +5,13 @@
 #include <cstddef>
 #include <string>
 #define MAX_ENEMIES 5
-#define MAP_UPPER_EDGE 8
+#define MAP_UPPER_EDGE 6
 #define MAP_LOWER_EDGE 0
 #define MAX_CARDS_IN_HAND 8
 #define MEANINGLESS_VALUE static_cast<std::size_t>(31415926)
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
+#define END 9999
+
 class data_sys;
 namespace map_mark_type
 {
@@ -33,7 +35,6 @@ namespace explore_action_type
 
 namespace battle_action_type
 {
-	const std::size_t INITIATE = 99;
 	const std::size_t TURN_BEGIN = 100;
 	const std::size_t TURN_END = 101;
 	const std::size_t CALLING_ACTION = 1;
@@ -140,6 +141,7 @@ namespace buff_type
 	const std::size_t STUN = 17;
 	const std::size_t STUN_RESIST = 18;
 	const std::size_t EXPLODE = 19;
+	const std::size_t PASSED_TURNS = 20;
 
 	//buff from ability cards
 	const std::size_t ETERNAL_FURY = 101;
@@ -192,6 +194,8 @@ namespace player_class
 }
 
 class info_to_battle_sys;
+class info_to_explore_sys;
+
 class card
 {
 public:
@@ -222,11 +226,9 @@ public:
 class artifact
 {
 public:
-	//~artifact();
-	//info_to_battle_sys on_battle_begin(); // adds buff to the player entity or the enemy entity(s)
-	//info_to_battle_sys on_exploring(); //has the same working theory as buffs does in battles
-	//void on_create();
-	//void on_delete();
+	artifact();
+	artifact(std::size_t id);
+	std::size_t artifact_id;
 };
 
 class game_entity;
@@ -246,7 +248,7 @@ public:
 	std::size_t type;
 
 	//value is the damage/healing value when action_id is not ADD_BUFF or REMOVE_BUFF.
-	//first two bytes buff_life, ....buff_level
+	//value is the buff's level when action_id is ADD_BUFF or REMOVE_BUFF.
 	std::size_t value;
 };
 

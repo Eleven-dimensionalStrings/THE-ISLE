@@ -1186,3 +1186,13 @@ info_to_battle_sys card::on_turn_end(data_sys&)
 	return info_to_battle_sys();
 }
 
+artifact::artifact()
+	:artifact_id(0)
+{
+}
+
+artifact::artifact(std::size_t id)
+	: artifact_id(id)
+{
+}
+

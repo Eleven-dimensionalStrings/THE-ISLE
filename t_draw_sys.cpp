@@ -104,7 +104,7 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 		}
 		outtextxy(gra_size::enemy_x + gra_size::enemy_width * pos, gra_size::enemy_y - 30,
 			&to_string(data.enemies_data[pos].current_hp)[0]);
-		
+
 	}
 	else
 	{
@@ -157,12 +157,64 @@ void t_draw_sys::t_draw_b()
 		cout << (draw_queue.front().first) << ' ' << (draw_queue.front().second) << endl;
 		draw_queue.pop();
 	}
-	cout << data.cards_deck.size() << endl;
+	cout << "cards remaining in deck:" << data.cards_deck.size() << endl;
 }
 
 void t_draw_sys::t_draw_e()
 {
-
+	system("cls");
+	cout << "player status:\n";
+	cout << "hp: " << data.player_data.current_hp << "/" << data.player_data.max_hp << "    ";
+	cout << "ap: " << data.player_data.current_ap << "/" << data.player_data.max_ap << "\n";
+	cout << "gold: " << data.gold << "    ";
+	cout << "food: " << data.food << "\n";
+	cout << "str: " << data.strength << "    ";
+	cout << "dex: " << data.dexterity << "    ";
+	cout << "vit: " << data.vitality << "\n";
+	cout << "deck: " << data.cards_pool.size() << "    ";
+	cout << "artifacts: " << data.artifacts.size() << "\n\n";
+	if (data.is_vaccant)
+	{
+		for (int i = MAP_LOWER_EDGE; i < MAP_UPPER_EDGE; i++)
+		{
+			for (int j = MAP_LOWER_EDGE; j < MAP_UPPER_EDGE; j++)
+			{
+				switch (data.map_marks[i][j])
+				{
+				case map_mark_type::EMPTY:
+					cout << " ";
+				case map_mark_type::KNOWN:
+					cout << "K";
+				case map_mark_type::PLAYER:
+					cout << "*";
+				case map_mark_type::UNKNOWN:
+					cout << "U";
+				case map_mark_type::VISITED:
+					cout << "V";
+				}
+			}
+			cout << "\n";
+		}
+		cout << "press \"w\"  [move upwards]" << "\n";
+		cout << "press \"a\"  [move towards left]" << "\n";
+		cout << "press \"s\"  [move downwards]" << "\n";
+		cout << "press \"d\"  [move towards right]" << "\n";
+	}
+	else
+	{
+		cout << data.text_to_be_displayed << "\n";
+		for (int i = 0; i < 3; i++)
+		{
+			if (i + 3 * data.current_select_page < data.choice_list.size())
+			{
+				cout << "press \"" << i << "\"  [" << data.choice_name_list[i + 3 * data.current_select_page] << "]" << "\n";
+			}
+		}
+		if (data.next_event_id > 0)
+		{
+			cout << "press \"n\"  [Ìø¹ýÑ¡Ïî]" << "\n";
+		}
+	}
 }
 
 void t_draw_sys::draw_battle()

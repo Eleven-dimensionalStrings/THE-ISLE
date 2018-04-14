@@ -31,53 +31,53 @@ int main()
 	setbkcolor(WHITE);
 	cleardevice();
 
-
-
-	d.enemies_data.push_back(enemy(d, 1));
-	d.enemies_data.push_back(enemy(d, 1));
-	d.enemies_data.push_back(enemy(d, 1));
-	d.enemies_data.push_back(enemy(d, 1));
-	d.enemies_data.push_back(enemy(d, 1));
-	for (int i = 1; i <= 60; ++i)
-	{
-		d.cards_pool.push_back(card(i));
-
-	}
-
-	/*d.cards_pool.push_back(card(34));
-	d.cards_pool.push_back(card(17));
-	d.cards_pool.push_back(card(55));
+	//d.enemies_data.push_back(enemy(d, 1));
+	d.cards_pool.push_back(card(1));
+	d.cards_pool.push_back(card(1));
+	d.cards_pool.push_back(card(1));
 	d.cards_pool.push_back(card(1));
 	d.cards_pool.push_back(card(30));
-	d.cards_pool.push_back(card(7));*/
+	d.cards_pool.push_back(card(30));
+	d.cards_pool.push_back(card(30));
+	d.cards_pool.push_back(card(30));
+	d.cards_pool.push_back(card(2));
+	d.cards_pool.push_back(card(3));
 
+	for (int i = MAP_LOWER_EDGE; i < MAP_UPPER_EDGE; i++)
+	{
+		for (int j = MAP_LOWER_EDGE; j < MAP_UPPER_EDGE; j++)
+		{
+			d.map_marks[i][j] = map_mark_type::UNKNOWN;
+			d.explore_map[i][j] = 1;
+		}
+	}
+	d.map_marks[0][0] = map_mark_type::PLAYER;
+	e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
 
 explore:
 	//explore loop
 	while (1)
 	{
 		e.update();
-
+		dr.t_draw_e();
 		i.update();
 		Sleep(100);
 		if (!d.enemies_data.empty())
 			goto battle;
 	}
 
-
 battle:
-
-	d.cards_deck = my_random_engine::xipai(d.cards_pool);
-	d.cards_deck.push_back(card(40));
-	//explore gives battle some info
-	b.send_message(d.player_data.on_turn_begin());
+	//battle loop
+	//explore sys sends message to battle sys through e_to_b_pipe
+	//the message is processed in the initiate_battle function
+	b.initiate_battle();
 	while (1)
 	{
 		b.update();
 		dr.draw_battle();
 		dr.t_draw_b();
 		i.update();
-		b.update();
+		//b.update(); TODO seems useless, considering removing it
 		//enemy act
 		Sleep(100);
 		if (d.enemies_data.empty())

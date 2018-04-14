@@ -31,6 +31,16 @@ void explore_system::update()
 	this->process();
 }
 
+void explore_system::end_battle()
+{
+	for (auto i = data.b_to_e_pipe.action_set.rbegin(); i != data.b_to_e_pipe.action_set.rend(); ++i)
+	{
+		process_stack.push(*i);
+	}
+	data.b_to_e_pipe.action_set.clear();
+	this->process();
+}
+
 void explore_system::process()
 {
 	while (!process_stack.empty())
@@ -47,11 +57,12 @@ void explore_system::process()
 		}
 		case EVENT_BODY:
 		{
+			data.text_to_be_displayed = temp.text;
 			switch (temp.type)
 			{
 			case PROCEED:
 			{
-				//TODO
+				process_stack.push(e_action(ENCOUNTER_EVENT, MEANINGLESS_VALUE, temp.value, ""));
 				break;
 			}
 			case AQUIRE_HIT_POINTS:
@@ -204,12 +215,21 @@ void explore_system::process()
 		}
 		case ENEMY:
 		{
-			temp_enemy_list.push_back(enemy(data, temp.value));
+			data.enemies_data.push_back(enemy(data, temp.value));
 			break;
 		}
 		case START_BATTLE:
 		{
-			//TODO
+			info_to_battle_sys initiate_info;
+			for (int i = 0; i < data.artifacts.size(); ++i)
+			{
+				initiate_info.append(data.artifact_on_start_battle(data.artifacts[i].artifact_id));
+			}
+			for (int i = 0; i < data.enemies_data.size(); ++i)
+			{
+				initiate_info.append(data.enemy_battle_start(data.enemies_data[i].enemy_id));
+			}
+			data.e_to_b_pipe = initiate_info;
 			break;
 		}
 		case NEXT_PHASE:

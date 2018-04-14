@@ -23,6 +23,23 @@ void battle_system::update()
 	this->process();
 }
 
+void battle_system::initiate_battle()
+{
+	for (auto i = data.e_to_b_pipe.action_set.rbegin(); i != data.e_to_b_pipe.action_set.rend(); ++i)
+	{
+		process_stack.push(*i);
+	}
+	data.e_to_b_pipe.action_set.clear();
+	this->process();
+	data.cards_deck = my_random_engine::shuffle(data.cards_pool);
+	std::size_t temp_ap = data.player_data.current_ap;//to set the ap on the first round properly
+
+	//TODO place the inherent cards on the top of the deck
+
+	send_message(data.player_data.on_turn_begin());
+	data.player_data.current_hp = temp_ap;
+}
+
 void battle_system::send_message(info_to_battle_sys input)
 {
 	for (auto i = input.action_set.rbegin(); i != input.action_set.rend(); ++i)
@@ -95,7 +112,7 @@ void battle_system::process()
 			{
 				if (c_deck.empty())
 				{
-					c_deck = my_random_engine::xipai(std::move(c_grave));
+					c_deck = my_random_engine::shuffle(std::move(c_grave));
 				}
 				if (c_deck.size())
 				{
@@ -352,7 +369,7 @@ void battle_system::enemies_action()
 	}
 }
 
-std::vector<card> my_random_engine::xipai(std::vector<card> v)
+std::vector<card> my_random_engine::shuffle(std::vector<card> v)
 {
 	vector<card>vv;
 	default_random_engine e(static_cast<unsigned>(time(0)));

@@ -175,7 +175,6 @@ info_to_battle_sys buff::on_turn_begin(game_entity* p)
 	}
 	case buff_type::SCORCHED_EARTH:
 	{
-		//TODO
 		data_sys& d = (dynamic_cast<player*>(p))->data;
 		enemy* temp = &d.enemies_data[0];
 		for (int i = 0; i < d.enemies_data.size(); i++)
@@ -229,13 +228,18 @@ info_to_battle_sys buff::on_turn_end(game_entity* p)
 	}
 	case buff_type::STUN_RESIST:
 	{
-		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, 1));;
+		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, 1));
 		break;
 	}
 	case buff_type::RESUSCITATE:
 	{
 		result.append(action(battle_action_type::CALLING_ACTION, p, p, type_type::ADD_HP, buff_level));
 		break;
+	}
+	case buff_type::PASSED_TURNS:
+	{
+		if (p == &p->data.player_data)
+		result.append(action(battle_action_type::ADD_BUFF, nullptr, p, buff_id, 1));
 	}
 	default:
 		break;
@@ -249,43 +253,52 @@ info_to_battle_sys buff::on_calling(info_to_battle_sys temp)
 	{
 	case buff_type::STRENGTH:
 	{
-		for (auto& i : temp.action_set)
+		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (i.action_id == battle_action_type::CALLING_ACTION && (i.type == type_type::NORMAL
-				|| i.type == type_type::FLAME || (i.type > 100 && i.type < 500)))
-				i.value += buff_level;
-			if (i.value < 0)
-				i.value = 0;
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::CALLING_ACTION && (t.type == type_type::NORMAL
+				|| t.type == type_type::FLAME || (t.type > 100 && t.type < 500)))
+				if (temp.action_set[i].value < -buff_level)
+				{
+					temp.action_set[i].value = 0;
+				}
+				else
+				{
+					temp.action_set[i].value += buff_level;
+				}
 		}
 		break;
 	}
 	case buff_type::VITALITY:
 	{
-		for (auto& i : temp.action_set)
+		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (i.action_id == battle_action_type::ADD_BUFF && (i.type == buff_type::ARMOR))
-				i.value += buff_level;
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::ADD_BUFF && (t.type == buff_type::ARMOR))
+				temp.action_set[i].value += buff_level;
 		}
 		break;
 	}
 	case buff_type::USED_SKILL_CARDS:
 	{
-		for (auto& i : temp.action_set)
+		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (i.action_id == battle_action_type::CALLING_ACTION && i.type == type_type::WAR_12)
-				i.value += 6 * buff_level;
-			if (i.action_id == battle_action_type::CALLING_ACTION && i.type == type_type::WAR_12_PLUS)
-				i.value += 8 * buff_level;
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::CALLING_ACTION && t.type == type_type::WAR_12)
+				temp.action_set[i].value += 6 * buff_level;
+			if (t.action_id == battle_action_type::CALLING_ACTION && t.type == type_type::WAR_12_PLUS)
+				temp.action_set[i].value += 8 * buff_level;
 		}
 		break;
 	}
 	case buff_type::ABILITY_BURN:
 	{
-		for (auto& i : temp.action_set)
+		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (i.action_id == battle_action_type::CALLING_ACTION && (i.type == type_type::NORMAL
-				|| i.type == type_type::FLAME || (i.type > 100 && i.type < 500)))
-				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, i.caller, i.listener, buff_type::BURN, buff_level));
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::CALLING_ACTION && (t.type == type_type::NORMAL
+				|| t.type == type_type::FLAME || (t.type > 100 && t.type < 500)))
+				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, t.caller, t.listener, buff_type::BURN, buff_level));
 		}
 		break;
 	}
@@ -301,11 +314,12 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 	{
 	case buff_type::AGILITY:
 	{
-		for (auto& i : temp.action_set)
+		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (i.action_id == battle_action_type::PERFORMING_ACTION && (i.type == type_type::NORMAL
-				|| i.type == type_type::FLAME || i.type == type_type::INDEPENDENT || (i.type > 100 && i.type < 500)))
-				i.value -= buff_level;
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::PERFORMING_ACTION && (t.type == type_type::NORMAL
+				|| t.type == type_type::FLAME || t.type == type_type::INDEPENDENT || (t.type > 100 && t.type < 500)))
+				temp.action_set[i].value -= buff_level;
 		}
 		break;
 	}
@@ -313,24 +327,23 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 	{
 		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (temp.action_set[i].action_id == battle_action_type::PERFORMING_ACTION 
-				&& (temp.action_set[i].type == type_type::NORMAL ||
-					temp.action_set[i].type == type_type::FLAME ||
-					(temp.action_set[i].type > 100 && temp.action_set[i].type < 500)))
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::PERFORMING_ACTION
+				&& (t.type == type_type::NORMAL ||
+					t.type == type_type::FLAME ||
+					(t.type > 100 && t.type < 500)))
 			{
-				if (buff_level > temp.action_set[i].value)
+				if (buff_level > t.value)
 				{
 					temp.action_set.push_back(action(battle_action_type::REMOVE_BUFF,
-						temp.action_set[i].caller, temp.action_set[i].listener, buff_id,
-						temp.action_set[i].value));
-
+						t.caller, t.listener, buff_id, t.value));
 					temp.action_set[i].value = 0;
 				}
 				else
 				{
 					temp.action_set[i].value -= buff_level;
 					temp.action_set.push_back(action(battle_action_type::REMOVE_BUFF,
-						temp.action_set[i].caller, temp.action_set[i].listener, buff_id, buff_level));
+						t.caller, temp.action_set[i].listener, buff_id, buff_level));
 				}
 			}
 		}
@@ -338,74 +351,82 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 	}
 	case buff_type::FRAGILE:
 	{
-		for (auto& i : temp.action_set)
+		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (i.action_id == battle_action_type::ADD_BUFF && (i.type == buff_type::ARMOR))
-				i.value *= 0.5;
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::ADD_BUFF && (t.type == buff_type::ARMOR))
+				temp.action_set[i].value *= 0.5;
 		}
 		break;
 	}
 	case buff_type::VULNERABLE:
 	{
-		for (auto& i : temp.action_set)
+		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (i.action_id == battle_action_type::PERFORMING_ACTION && (i.type == type_type::NORMAL
-				|| i.type == type_type::FLAME || (i.type > 100 && i.type < 500)))
-				i.value *= 1.5;
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::PERFORMING_ACTION && (t.type == type_type::NORMAL
+				|| t.type == type_type::FLAME || (t.type > 100 && t.type < 500)))
+				temp.action_set[i].value *= 1.5;
 		}
 		break;
 	}
 	case buff_type::BURN:
 	{
-		for (auto& i : temp.action_set)
+		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (i.action_id == battle_action_type::PERFORMING_ACTION && i.type == type_type::FLAME)
-				i.value += buff_level;
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::PERFORMING_ACTION && t.type == type_type::FLAME)
+				temp.action_set[i].value += buff_level;
 		}
 		break;
 	}
 	case buff_type::STUN_RESIST:
 	{
-		for (int i = 0; i < temp.action_set.size(); i++)
+		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (temp.action_set[i].action_id == battle_action_type::ADD_BUFF && temp.action_set[i].type == buff_type::STUN)
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::ADD_BUFF && t.type == buff_type::STUN)
 				temp.action_set.erase(temp.action_set.begin() + i);
 		}
 		break;
 	}
 	case buff_type::INVULNARABLE:
 	{
-		for (int i = 0; i < temp.action_set.size(); i++)
+		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (temp.action_set[i].action_id == battle_action_type::ADD_BUFF && temp.action_set[i].type == buff_type::VULNERABLE)
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::ADD_BUFF && t.type == buff_type::VULNERABLE)
 				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, nullptr, temp.action_set[i].listener, buff_type::ARMOR, buff_level));
 		}
 		break;
 	}
 	case buff_type::FIGHTING_SPIRIT:
 	{
-		for (auto& i : temp.action_set)
+		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (i.action_id == battle_action_type::P_REMOVE_A_CARD && i.type == card_type::STAT)
-				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, i.caller, i.listener, buff_type::STRENGTH, buff_level));
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::P_REMOVE_A_CARD && t.type == card_type::STAT)
+				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, t.caller, t.listener, buff_type::STRENGTH, buff_level));
 		}
 		break;
 	}
 	case buff_type::RITE:
 	{
-		for (auto& i : temp.action_set)
+		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (i.action_id == battle_action_type::PERFORMING_ACTION && i.type == type_type::PURE)
-				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, nullptr, i.listener, buff_type::STRENGTH, buff_level));
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::PERFORMING_ACTION && t.type == type_type::PURE)
+				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, nullptr, t.listener, buff_type::STRENGTH, buff_level));
 		}
 		break;
 	}
 	case buff_type::RESUSCITATE:
 	{
-		for (auto& i : temp.action_set)
+		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			if (i.action_id == battle_action_type::PERFORMING_ACTION && i.type == type_type::PURE)
-				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, nullptr, i.listener, buff_id, i.value));
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::PERFORMING_ACTION && t.type == type_type::PURE)
+				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, nullptr, t.listener, buff_id, t.value));
 		}
 		break;
 	}

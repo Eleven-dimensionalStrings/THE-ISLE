@@ -12,9 +12,9 @@ public:
 	explore_system(data_sys& d);
 	void send_message(info_to_explore_sys);
 	void update();
+	void end_battle();
 private:
 	std::stack<e_action> process_stack;
-	std::vector<enemy> temp_enemy_list;
 	void process();
 	data_sys& data;
 };

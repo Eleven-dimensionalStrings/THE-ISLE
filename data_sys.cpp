@@ -599,7 +599,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 			if (cards_in_hand[i].card_type == card_type::STAT)
 			{
 				temp.append(action(battle_action_type::P_REMOVE_A_CARD
-					,&player_data, &player_data, card_type::STAT, i));
+					, &player_data, &player_data, card_type::STAT, i));
 				temp.append(action(battle_action_type::CALLING_ACTION
 					, &player_data, &all_enemies, type_type::NORMAL, 8));
 			}
@@ -925,19 +925,24 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 {
 	switch (id)
 	{
-	case 0:
-	{
-		return info_to_explore_sys(e_action(explore_action_type::END_EVENT));
-	}
 	case 1:
 	{
 		return info_to_explore_sys(vector<e_action>{e_action(explore_action_type::EVENT_BODY
-			, event_type::AQUIRE_GOLD, 100, "天空落下了金币.."), e_action(explore_action_type::SELECTION, event_type::PROCEED, 0, "继续前进..")});
+			, event_type::AQUIRE_GOLD, 100, "some gold has fallen from the sky"), e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "proceed...")});
 		break;
+	}
+	case 9999:
+	{
+		return info_to_explore_sys(e_action(explore_action_type::END_EVENT));
 	}
 	default:
 		break;
 	}
+}
+
+info_to_battle_sys data_sys::enemy_battle_start(std::size_t enemy_id)
+{
+	return info_to_battle_sys();
 }
 
 info_to_battle_sys data_sys::enemy_act(std::size_t pos)
@@ -953,6 +958,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 
 pair<std::string, std::size_t> data_sys::get_buff(std::size_t id)
 {
+	//TODO set buff priority
 	switch (id)
 	{
 	case buff_type::STRENGTH:
@@ -1011,6 +1017,36 @@ pair<std::string, std::size_t> data_sys::get_buff(std::size_t id)
 		return pair<string, size_t>(string("fuck"), 2);
 		//throw exception("failed to find buff id");
 	}
+}
+
+info_to_explore_sys data_sys::artifact_on_create(std::size_t atf_id)
+{
+	return info_to_explore_sys();
+}
+
+info_to_explore_sys data_sys::artifact_on_remove(std::size_t atf_id)
+{
+	return info_to_explore_sys();
+}
+
+info_to_explore_sys data_sys::artifact_on_encounter_event(std::size_t atf_id)
+{
+	return info_to_explore_sys();
+}
+
+info_to_explore_sys data_sys::artifact_on_event_body(std::size_t atf_id)
+{
+	return info_to_explore_sys();
+}
+
+info_to_battle_sys data_sys::artifact_on_start_battle(std::size_t atf_id)
+{
+	return info_to_battle_sys();
+}
+
+info_to_explore_sys data_sys::artifact_on_end_event(std::size_t atf_id)
+{
+	return info_to_explore_sys();
 }
 
 size_t random_engine::get_num(int lb, int ub)
