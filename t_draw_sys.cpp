@@ -16,8 +16,8 @@ void t_draw_sys::__draw_card_in_hand()
 		{
 			setfillcolor(GREEN);
 			//TODO
-			solidrectangle(gra_size::card_x + i * (gra_size::card_closure + gra_size::card_width) + gra_size::card_closure / 2,
-				gra_size::card_y, gra_size::card_x + i * (gra_size::card_closure + gra_size::card_width) + gra_size::card_closure, gra_size::card_dy);
+			solidrectangle(gra_size::card_x + gra_size::card_starting_pos + i * (gra_size::card_closure + gra_size::card_width) + gra_size::card_closure / 2,
+				gra_size::card_y, gra_size::card_x + gra_size::card_starting_pos + i * (gra_size::card_closure + gra_size::card_width) + gra_size::card_closure, gra_size::card_dy);
 			setfillcolor(LIGHTBLUE);
 		}
 	}
@@ -140,7 +140,7 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 	}
 	else
 	{
-
+		solidrectangle(enemy_pos(pos).first, enemy_pos(pos).second + 100, enemy_pos(pos).first + gra_size::enemy_width, enemy_pos(pos).second + 200);
 	}
 }
 

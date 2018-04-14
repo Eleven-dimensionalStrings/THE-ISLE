@@ -50,10 +50,10 @@ void battle_context::read_input()
 		if (hit.mkLButton)
 		{
 			//检测点击卡
-			if (hit.x > gra_size::card_x && hit.x < gra_size::card_x + gra_size::card_rx
+			if (hit.x > gra_size::card_x + gra_size::card_starting_pos && hit.x < gra_size::card_x + gra_size::card_starting_pos + gra_size::card_rx
 				&& hit.y>gra_size::card_y && hit.y < gra_size::card_dy)
 			{
-				size_t pos = (hit.x - gra_size::card_closure) / (gra_size::card_width + gra_size::card_closure);
+				size_t pos = (hit.x - gra_size::card_closure - gra_size::card_starting_pos) / (gra_size::card_width + gra_size::card_closure);
 				if (pos <= get_data().cards_in_hand.size())
 				{
 					cur_state->click_a_card(pos);
