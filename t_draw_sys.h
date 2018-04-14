@@ -17,15 +17,18 @@ class t_draw_sys
 	//»æÖÆ,·ÖÄ£¿é
 	void __draw_card_in_hand();
 	void __draw_entities();
-	void __draw_right_hand_info();
+	void __draw_battle_info();//three buttons on the right and ap on the left
+	void __draw_explore_select_info(); // the left and right arrow keys
+	void __draw_explore_map_info(); // the map and the four arrow keys
+	//void __draw_buff(); //TODO
 	void __draw_artifacts();//top of window
 	void __get_atk_entities();//get pair of caller and listener from pipe on data_sys
+	void __draw_guiding_pics();//static pics used to remind the player of the hotkeys
 
 	void __draw_player();
 	void __draw_an_enemy(std::size_t pos);//draw the enemy in pos
 	void __draw_a_card(std::size_t pos, int x, int y);
 
-	//added by michael
 	//void __draw_event_card();
 	void __draw_selections();
 	void __draw_player_info();

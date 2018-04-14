@@ -3,7 +3,7 @@
 using namespace std;
 inline pair<int, int> enemy_pos(size_t pos)
 {
-	return pair<int, int>(gra_size::enemy_x + pos * gra_size::enemy_width, gra_size::enemy_y);
+	return pair<int, int>(gra_size::enemy_x + pos * (gra_size::enemy_width + gra_size::enemy_closure), gra_size::enemy_y);
 }
 void t_draw_sys::__draw_card_in_hand()
 {
@@ -12,7 +12,7 @@ void t_draw_sys::__draw_card_in_hand()
 		int y = gra_size::card_y, x = gra_size::card_closure * (i + 1)
 			+ gra_size::card_width * i + gra_size::card_x;
 		__draw_a_card(i, x, y);
-		if (data.draw_select_card[i])
+		if (data.render_select_card[i])
 		{
 			setfillcolor(GREEN);
 			//TODO
@@ -33,7 +33,7 @@ void t_draw_sys::__draw_entities()
 	this->__draw_player();
 	if (timer >= 20) { timer = 0; is_drawing = 0; }//TODO
 }
-void t_draw_sys::__draw_right_hand_info()
+void t_draw_sys::__draw_battle_info()
 {
 	//confirm button
 	solidrectangle(gra_size::confirm_button_x, gra_size::confirm_button_y,
@@ -55,8 +55,8 @@ void t_draw_sys::__draw_right_hand_info()
 	outtextxy(gra_size::ap_x, gra_size::ap_y, &to_string(data.player_data.current_ap)[0]);
 	outtextxy(gra_size::ap_x + 20, gra_size::ap_y, '/');
 	outtextxy(gra_size::ap_x + 28, gra_size::ap_y, &to_string(data.player_data.max_ap)[0]); //TODO to be replaced by a compact pic
-
 }
+
 void t_draw_sys::__draw_artifacts()
 {
 	for (auto&i : data.artifacts)
@@ -72,6 +72,25 @@ void t_draw_sys::__get_atk_entities()
 		draw_queue.push(*i);
 	}
 	data.b_to_d.clear();
+}
+
+void t_draw_sys::__draw_guiding_pics()
+{
+	//deck_pic
+	solidrectangle(gra_size::deck_pic_x, gra_size::deck_pic_y,
+		gra_size::deck_pic_x + 45, gra_size::deck_pic_y + 50);
+
+	//remaining_deck_pic
+	solidrectangle(gra_size::r_deck_pic_x, gra_size::r_deck_pic_y,
+		gra_size::r_deck_pic_x + 45, gra_size::r_deck_pic_y + 50);
+
+	//grave_pic
+	solidrectangle(gra_size::grave_pic_x, gra_size::grave_pic_y,
+		gra_size::grave_pic_x + 45, gra_size::grave_pic_y + 50);
+
+	//remove_area_pic
+	solidrectangle(gra_size::remove_pic_x, gra_size::remove_pic_y,
+		gra_size::remove_pic_x + 45, gra_size::remove_pic_y + 50);
 }
 
 void t_draw_sys::__draw_player()
@@ -115,7 +134,7 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 		{
 
 		}
-		outtextxy(gra_size::enemy_x + gra_size::enemy_width * pos, gra_size::enemy_y - 30,
+		outtextxy(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos, gra_size::enemy_y - 30,
 			&to_string(data.enemies_data[pos].current_hp)[0]);
 
 	}
@@ -127,6 +146,7 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 
 void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 {
+	x += gra_size::card_starting_pos;
 	solidrectangle(x, y, x + gra_size::card_width, y + 200);
 	//putimage(x,y,image path);
 	//TODO
@@ -139,7 +159,7 @@ void t_draw_sys::__draw_selections()
 		int y = gra_size::card_y, x = gra_size::card_closure * (i + 1)
 			+ gra_size::card_width * i + gra_size::card_x;
 		__draw_a_card(i, x, y);
-		if (data.draw_select_card[i])
+		if (data.render_select_card[i])
 		{
 			setfillcolor(GREEN);
 			//TODO
@@ -219,12 +239,13 @@ void t_draw_sys::t_draw_e()
 	cout << "player status:\n";
 	cout << "hp: " << data.player_data.current_hp << "/" << data.player_data.max_hp << "    ";
 	cout << "ap: " << data.player_data.current_ap << "/" << data.player_data.max_ap << "\n";
-	cout << "gold: " << data.gold << "    ";
+	cout << "gold: " << data.gold << "      ";
 	cout << "food: " << data.food << "\n";
-	cout << "str: " << data.strength << "    ";
-	cout << "dex: " << data.dexterity << "    ";
-	cout << "vit: " << data.vitality << "\n";
-	cout << "deck: " << data.cards_pool.size() << "    ";
+	cout << "strength: " << data.strength << "    ";
+	cout << "dexterity: " << data.dexterity << "\n";
+	cout << "vitality: " << data.vitality << "    ";
+	cout << "luck: " << data.luck << "\n";
+	cout << "deck: " << data.cards_pool.size() << "       ";
 	cout << "artifacts: " << data.artifacts.size() << "\n\n";
 	if (data.is_vaccant)
 	{
@@ -282,7 +303,8 @@ void t_draw_sys::draw_battle()
 	this->__draw_player_info();
 	this->__draw_card_in_hand();
 	this->__draw_entities();
-	this->__draw_right_hand_info();
+	this->__draw_battle_info();
+	this->__draw_guiding_pics();
 	SetWorkingImage(0);
 	putimage(0, 0, &buffer);
 }
@@ -290,14 +312,16 @@ void t_draw_sys::draw_battle()
 void t_draw_sys::draw_explore()
 {
 	SetWorkingImage(&buffer);
-	setbkcolor(BLUE);
+	setbkcolor(WHITE);
 	cleardevice();
-	settextcolor(YELLOW);
-	setfillcolor(YELLOW);
+	settextcolor(BLACK);
+	setfillcolor(LIGHTBLUE);
 	//TODO putimage(0, 0, image);
 	//TODO this->__draw_event_card();
-	//TODO this->__draw_entities();
-	//TODO this->__draw_right_hand_info();
+	this->__draw_player();
+	this->__draw_player_info();
+	this->__draw_guiding_pics();
+	this->__draw_selections();
 	SetWorkingImage(0);
 	putimage(0, 0, &buffer);
 }

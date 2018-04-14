@@ -68,6 +68,7 @@ explore:
 	while (1)
 	{
 		e.update();
+		dr.draw_explore();
 		dr.t_draw_e();
 		i.update();
 		Sleep(100);

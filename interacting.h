@@ -24,6 +24,7 @@ public:
 	void set_state(b_state*);
 	void read_input()override;
 	void change_to_select_state(info_battle_to_interacting);
+	void change_to_vaccant_state();
 	data_sys& get_data();
 private:
 	b_state *cur_state;

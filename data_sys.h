@@ -36,7 +36,7 @@ public:
 	std::vector<card> cards_in_hand;
 	std::vector<card> cards_removed;
 	std::vector<card> cards_equiped;
-	std::array<bool, MAX_CARDS_IN_HAND>draw_select_card;
+	std::array<bool, MAX_CARDS_IN_HAND>render_select_card;
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
 	info_to_explore_sys i_to_e_pipe;

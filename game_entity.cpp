@@ -47,29 +47,27 @@ info_to_battle_sys player::on_turn_begin()
 
 info_to_battle_sys player::on_turn_end()
 {
-	info_to_battle_sys t;
+	info_to_battle_sys temp;
+	vector<card>& c_in_hand = data.cards_in_hand;
+	vector<card>& c_grave = data.cards_grave;
 	for (int i = data.cards_in_hand.size() - 1; i >= 0; --i)
 	{
-		if (!data.cards_in_hand[i].is_reserve)
+		if (c_in_hand[i].vanity)
 		{
-			if (data.cards_in_hand[i].vanity)
-			{
-				t.append(action(battle_action_type::P_REMOVE_A_CARD, &data.player_data, &data.player_data,
-					data.cards_in_hand[i].card_type, i));
-			}
-			else
-			{
-				t.append(action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &data.player_data, &data.player_data,
-					data.cards_in_hand[i].card_type, i));
-			}
+			temp.append((action(battle_action_type::P_REMOVE_A_CARD, &data.player_data, &data.player_data, c_in_hand[i].card_type, i)));
+		}
+		else if (!c_in_hand[i].is_reserve)
+		{
+			temp.append(action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &data.player_data, &data.player_data,
+				c_in_hand[i].card_type, i));
 		}
 	}
 	for (auto& i : buff_pool)
 	{
-		t.append(i.on_turn_end(this));
+		temp.append(i.on_turn_end(this));
 	}
 	data.b->enemies_action();
-	return t;
+	return temp;
 
 }
 

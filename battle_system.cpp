@@ -195,24 +195,13 @@ void battle_system::process()
 			send_message(data.player_data.performing_action(temp));
 			break;
 		}
+
 		case TURN_END:
 		{
-			vector<card>& c_in_hand = data.cards_in_hand;
-			vector<card>& c_grave = data.cards_grave;
-			for (int i = 0; i < c_in_hand.size(); ++i)
-			{
-				if (c_in_hand[i].vanity)
-				{
-					process_stack.push(action(battle_action_type::P_REMOVE_A_CARD, &data.player_data, &data.player_data, c_in_hand[i].card_type, i));
-				}
-				else if (!c_in_hand[i].is_reserve)
-				{
-					c_grave.push_back(c_in_hand[i]);
-					c_in_hand.erase(c_in_hand.begin() + i);
-				}
-			}
+			send_message(data.player_data.on_turn_end());
 			enemies_action();
-			//TODO
+			send_message(data.player_data.on_turn_begin());
+			data.b_to_i_pipe = info_battle_to_interacting(interact_action_type::BATTLE_TO_VACCANT, MEANINGLESS_VALUE, MEANINGLESS_VALUE);
 			break;
 		}
 		case ENTITY_BE_ATK:

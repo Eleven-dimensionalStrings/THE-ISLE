@@ -9,7 +9,7 @@ using namespace std;
 data_sys::data_sys() :b(nullptr), player_data(*this), all_enemies(*this, MEANINGLESS_VALUE), random_enemy(*this, MEANINGLESS_VALUE)
 , select_one_enemy(*this, MEANINGLESS_VALUE)
 {
-	for (auto&i : draw_select_card)i = 0;
+	for (auto&i : render_select_card)i = 0;
 }
 
 info_to_battle_sys data_sys::card_effect(std::size_t id)

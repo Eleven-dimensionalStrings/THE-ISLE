@@ -242,7 +242,7 @@ void explore_system::process()
 			data.is_vaccant = 1;
 			data.choice_list.clear();
 			data.choice_name_list.clear();
-			data.e_to_i_pipe = info_explore_to_interacting(interact_action_type::TO_VACCANT);
+			data.e_to_i_pipe = info_explore_to_interacting(interact_action_type::EXPLORE_TO_VACCANT);
 			break;
 		}
 		default:
@@ -251,7 +251,7 @@ void explore_system::process()
 	}
 	if (!data.choice_list.empty())
 	{
-		data.e_to_i_pipe = info_explore_to_interacting(interact_action_type::TO_SELECT);
+		data.e_to_i_pipe = info_explore_to_interacting(interact_action_type::EXPLORE_TO_SELECT);
 	}
 }
 

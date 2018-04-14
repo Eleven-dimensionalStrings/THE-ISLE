@@ -62,8 +62,10 @@ namespace battle_action_type
 
 namespace interact_action_type
 {
-	const std::size_t TO_SELECT = 1;
-	const std::size_t TO_VACCANT = 2;
+	const std::size_t EXPLORE_TO_SELECT = 1;
+	const std::size_t EXPLORE_TO_VACCANT = 2;
+	const std::size_t BATTLE_TO_SELECT = 30000;
+	const std::size_t BATTLE_TO_VACCANT = 40000;
 }
 
 namespace event_type
@@ -161,6 +163,7 @@ namespace gra_size
 	const std::size_t max_enemies = 5;
 	const std::size_t max_cards = 8;
 
+	const std::size_t card_starting_pos = 150;
 	const std::size_t card_width = 135;
 	const std::size_t card_closure = 10;
 	const std::size_t card_x = 0;
@@ -174,7 +177,7 @@ namespace gra_size
 	const std::size_t food_y = 110;
 	const std::size_t food_x = 260;
 	const std::size_t ap_y = 593;
-	const std::size_t ap_x = 1220;
+	const std::size_t ap_x = 60;
 	const std::size_t confirm_button_y = 510;
 	const std::size_t confirm_button_x = 1320;
 	const std::size_t cancel_button_y = 575;
@@ -184,11 +187,12 @@ namespace gra_size
 	const std::size_t enemy_x = 400;
 	const std::size_t enemy_y = 200;
 	const std::size_t enemy_width = 160;
+	const std::size_t enemy_closure = 10;
 	const std::size_t player_x = 50;
 	const std::size_t player_y = 200;
 
 	//TODO replace the ap_pic (a circle) to a pic(square), should change the following values
-	const std::size_t ap_pic_x = 1245;
+	const std::size_t ap_pic_x = 80;
 	const std::size_t ap_pic_y = 600;
 	const std::size_t ap_pic_radius = 60;
 	const std::size_t hp_pic_x = 20;
@@ -198,6 +202,14 @@ namespace gra_size
 	const std::size_t food_pic_x = 220;
 	const std::size_t food_pic_y = 20;
 
+	const std::size_t deck_pic_x = 1320;
+	const std::size_t deck_pic_y = 20;
+	const std::size_t r_deck_pic_x = 1375;
+	const std::size_t r_deck_pic_y = 20;
+	const std::size_t grave_pic_x = 1320;
+	const std::size_t grave_pic_y = 80;
+	const std::size_t remove_pic_x = 1375;
+	const std::size_t remove_pic_y = 80;
 }
 
 namespace player_class

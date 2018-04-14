@@ -82,11 +82,11 @@ void battle_context::read_input()
 			{
 				cur_state->click_cancel();
 			}
-			//
+			//检测点击turn end
 			else if (hit.x > gra_size::turn_end_button_x && hit.y > gra_size::turn_end_button_y
 				&& hit.x < gra_size::turn_end_button_x + 100 && hit.y < gra_size::turn_end_button_y + 50)
 			{
-				cur_state->click_cancel();
+				cur_state->click_turn_end();
 			}
 
 			Sleep(100);
@@ -95,9 +95,7 @@ void battle_context::read_input()
 		//temp
 		else if (hit.mkRButton)
 		{
-			//cur_state->click_turn_end();
-			get_data().i_to_b_pipe.append(get_data().player_data.on_turn_end());
-			get_data().i_to_b_pipe.append(get_data().player_data.on_turn_begin());
+			cur_state->click_cancel();
 			system("cls");
 			Sleep(100);
 			FlushMouseMsgBuffer();
@@ -108,6 +106,11 @@ void battle_context::read_input()
 void battle_context::change_to_select_state(info_battle_to_interacting t)
 {
 	set_state(new b_select_state(this, t.num, t.type, t.is_m));
+}
+
+void battle_context::change_to_vaccant_state()
+{
+	set_state(new b_vaccant_state(this));
 }
 
 explore_context::explore_context(interacting_sys* i_s)
@@ -233,13 +236,20 @@ void interacting_sys::update()
 {
 	if (data.b_to_i_pipe)
 	{
-		present_battle_context->change_to_select_state(data.b_to_i_pipe);
+		if (data.b_to_i_pipe.type == interact_action_type::BATTLE_TO_VACCANT)
+		{
+			present_battle_context->change_to_vaccant_state();
+		}
+		else
+		{
+			present_battle_context->change_to_select_state(data.b_to_i_pipe);
+		}
 		data.b_to_i_pipe.clear();
 		return;
 	}
 	else if (data.e_to_i_pipe)
 	{
-		if (data.e_to_i_pipe.type == interact_action_type::TO_SELECT)
+		if (data.e_to_i_pipe.type == interact_action_type::EXPLORE_TO_SELECT)
 		{
 			present_explore_context->change_to_select_state();
 		}
@@ -280,7 +290,7 @@ void b_vaccant_state::click_a_card(size_t card_pos)
 {
 	if (card_pos < get_data().cards_in_hand.size() && get_data().player_data.current_ap >= get_data().cards_in_hand[card_pos].cost)
 	{
-		get_data().draw_select_card[card_pos] = 1;
+		get_data().render_select_card[card_pos] = 1;
 		ctx->set_state(new b_confirm_state(ctx, card_pos, get_data().cards_in_hand[card_pos].cost));
 	}
 }
@@ -319,18 +329,18 @@ void b_confirm_state::click_a_card(size_t card_pos)
 {
 	if (card_pos == selected_card)
 	{
-		get_data().draw_select_card[selected_card] = 0;
+		get_data().render_select_card[selected_card] = 0;
 		ctx->set_state(new b_vaccant_state(ctx));
 	}
 	else if (get_data().player_data.current_ap >= get_data().cards_in_hand[card_pos].cost)
 	{
-		get_data().draw_select_card[card_pos] = 1;
-		get_data().draw_select_card[selected_card] = 0;
+		get_data().render_select_card[card_pos] = 1;
+		get_data().render_select_card[selected_card] = 0;
 		ctx->set_state(new b_confirm_state(ctx, card_pos, get_data().cards_in_hand[card_pos].cost));
 	}
 	else
 	{
-		get_data().draw_select_card[selected_card] = 0;
+		get_data().render_select_card[selected_card] = 0;
 		ctx->set_state(new b_vaccant_state(ctx));
 	}
 }
@@ -340,7 +350,7 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 	if (require_target)
 	{
 		game_entity* target;
-		get_data().draw_select_card[selected_card] = 0;
+		get_data().render_select_card[selected_card] = 0;
 		if (get_data().enemies_data[enemy_pos].is_alive())
 		{
 			target = &get_data().enemies_data[enemy_pos];
@@ -380,7 +390,7 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 		}
 		else
 		{
-			get_data().draw_select_card[selected_card] = 0;
+			get_data().render_select_card[selected_card] = 0;
 			ctx->set_state(new b_vaccant_state(ctx));
 		}
 	}
@@ -414,7 +424,7 @@ void b_confirm_state::click_confirm()
 			}
 		}
 		send_to_battle_sys(temp);
-		get_data().draw_select_card[selected_card] = 0;
+		get_data().render_select_card[selected_card] = 0;
 		get_data().player_data.current_ap -= cost;
 		ctx->set_state(new b_vaccant_state(ctx));
 	}
@@ -422,6 +432,10 @@ void b_confirm_state::click_confirm()
 
 void b_confirm_state::click_cancel()
 {
+	for (int i = 0; i < get_data().render_select_card.size(); ++i)
+	{
+		get_data().render_select_card[i] = 0;
+	}
 	ctx->set_state(new b_vaccant_state(ctx));
 }
 
@@ -474,14 +488,14 @@ void b_select_state::click_a_card(std::size_t card_pos)
 	{
 		if (*i == card_pos)
 		{
-			get_data().draw_select_card[card_pos] = 0;
+			get_data().render_select_card[card_pos] = 0;
 			selected_cards.erase(i);
 			return;
 		}
 	}
 	if (selected_cards.size() == max)return;
 	selected_cards.push_back(card_pos);
-	get_data().draw_select_card[card_pos] = 1;
+	get_data().render_select_card[card_pos] = 1;
 }
 
 void b_select_state::click_an_enemy(std::size_t)
