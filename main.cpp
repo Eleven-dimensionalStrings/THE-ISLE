@@ -53,16 +53,16 @@ int main()
 	d.cards_pool.push_back(card(2));
 	d.cards_pool.push_back(card(3));
 
-	for (int i = MAP_LOWER_EDGE; i < MAP_UPPER_EDGE; i++)
+	for (int i = 0; i < MAP_WIDTH; i++)
 	{
-		for (int j = MAP_LOWER_EDGE; j < MAP_UPPER_EDGE; j++)
+		for (int j = 0; j < MAP_LENGTH; j++)
 		{
-			d.map_marks[i][j] = map_mark_type::UNKNOWN;
-			d.explore_map[i][j] = 1;
+			d.map_marks[j][i] = map_mark_type::UNKNOWN;
+			d.explore_map[j][i] = 1;
 		}
 	}
 	d.map_marks[0][0] = map_mark_type::PLAYER;
-	e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
+	//e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
 	//goto battle;
 
 explore:

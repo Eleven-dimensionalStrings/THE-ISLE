@@ -304,11 +304,11 @@ void t_draw_sys::t_draw_e()
 	cout << "artifacts: " << data.artifacts.size() << "\n\n";
 	if (data.is_vaccant)
 	{
-		for (int i = MAP_LOWER_EDGE; i < MAP_UPPER_EDGE; i++)
+		for (int i = 0; i < MAP_WIDTH; i++)
 		{
-			for (int j = MAP_LOWER_EDGE; j < MAP_UPPER_EDGE; j++)
+			for (int j = 0; j < MAP_LENGTH; j++)
 			{
-				switch (data.map_marks[i][j])
+				switch (data.map_marks[j][i])
 				{
 				case map_mark_type::EMPTY:
 					cout << "*";

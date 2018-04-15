@@ -5,8 +5,8 @@
 #include <cstddef>
 #include <string>
 #define MAX_ENEMIES 5
-#define MAP_UPPER_EDGE 6
-#define MAP_LOWER_EDGE 0
+#define MAP_LENGTH 13
+#define MAP_WIDTH 5
 #define MAX_CARDS_IN_HAND 8
 #define MEANINGLESS_VALUE static_cast<std::size_t>(31415926)
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)

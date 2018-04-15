@@ -44,8 +44,8 @@ public:
 	info_to_battle_sys e_to_b_pipe;
 	info_to_explore_sys b_to_e_pipe;
 	std::vector<std::pair<std::size_t, std::size_t>>b_to_d;
-	std::size_t explore_map[MAP_UPPER_EDGE][MAP_UPPER_EDGE];
-	int map_marks[MAP_UPPER_EDGE][MAP_UPPER_EDGE];
+	std::size_t explore_map[MAP_LENGTH][MAP_LENGTH];
+	int map_marks[MAP_LENGTH][MAP_LENGTH];
 	std::pair<int, int> player_location;
 	std::vector<e_action> choice_list;
 	std::vector<std::string> choice_name_list;
