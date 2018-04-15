@@ -22,7 +22,7 @@ bool buff::operator-=(buff t)
 {
 	buff_level -= t.buff_level;
 	if (buff_id == buff_type::STRENGTH
-		|| buff_id == buff_type::AGILITY
+		|| buff_id == buff_type::DEXTERITY
 		|| buff_id == buff_type::VITALITY
 		|| buff_id == buff_type::RESUSCITATE)
 		return 0;
@@ -35,7 +35,7 @@ bool buff::operator-(buff t)
 	if (buff_level <= t.buff_level)
 	{
 		if (buff_id == buff_type::STRENGTH
-			|| buff_id == buff_type::AGILITY
+			|| buff_id == buff_type::DEXTERITY
 			|| buff_id == buff_type::VITALITY
 			|| buff_id == buff_type::RESUSCITATE)
 			return 0;
@@ -192,6 +192,34 @@ info_to_battle_sys buff::on_turn_begin(game_entity* p)
 		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, buff_level));
 		break;
 	}
+	case buff_type::INCREASE_DRAW:
+	{
+		result.append(action(battle_action_type::DRAW_CARDS, p, p, MEANINGLESS_VALUE, buff_level));
+		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, buff_level));
+		break;
+	}
+	case buff_type::REDUCE_AP:
+	{
+		p->data.player_data.current_ap -= buff_level;
+		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, buff_level));
+		break;
+	}
+	case buff_type::INCREASE_AP:
+	{
+		p->data.player_data.current_ap += buff_level;
+		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, buff_level));
+		break;
+	}
+	case buff_type::CULTIST_RITE:
+	{
+		result.append(action(battle_action_type::ADD_BUFF, p, p, buff_type::STRENGTH, buff_level));
+		break;
+	}
+	case buff_type::PAIN_CURSE:
+	{
+		result.append(action(battle_action_type::ADD_BUFF, nullptr, p, buff_type::PAIN, buff_level));
+		break;
+	}
 	default:
 		break;
 	}
@@ -241,10 +269,17 @@ info_to_battle_sys buff::on_turn_end(game_entity* p)
 		result.append(action(battle_action_type::CALLING_ACTION, p, p, type_type::ADD_HP, buff_level));
 		break;
 	}
-	case buff_type::PASSED_TURNS:
+	case buff_type::PAIN:
 	{
-		if (p == &p->data.player_data)
-		result.append(action(battle_action_type::ADD_BUFF, nullptr, p, buff_id, 1));
+		result.append(action(battle_action_type::CALLING_ACTION, nullptr, p, type_type::INDEPENDENT, buff_level * p->has_buff(buff_type::USED_ATTACK_CARDS)));
+		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, buff_level));
+		break;
+	}
+	case buff_type::CORRUPT:
+	{
+		result.append(action(battle_action_type::CALLING_ACTION, nullptr, p, type_type::INDEPENDENT, buff_level));
+		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, 1));
+		break;
 	}
 	default:
 		break;
@@ -317,7 +352,7 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 {
 	switch (buff_id)
 	{
-	case buff_type::AGILITY:
+	case buff_type::DEXTERITY:
 	{
 		for (int i = 0; i < temp.action_set.size(); ++i)
 		{

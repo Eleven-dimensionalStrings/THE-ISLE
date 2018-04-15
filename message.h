@@ -12,6 +12,9 @@
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
 #define END 9999
 
+#undef PURE
+//a fucking sb define PURE without namespace or other protect
+
 class data_sys;
 namespace map_mark_type
 {
@@ -103,8 +106,6 @@ namespace event_type
 	const std::size_t REMOVE_FOOD = 39;
 }
 
-#undef PURE
-//a fucking sb define PURE without namespace or other protect
 namespace type_type
 {
 	const std::size_t NORMAL = 1;
@@ -131,7 +132,7 @@ namespace card_type
 namespace buff_type
 {
 	const std::size_t STRENGTH = 1;
-	const std::size_t AGILITY = 2;
+	const std::size_t DEXTERITY = 2;
 	const std::size_t VITALITY = 3;
 	const std::size_t ARMOR = 4;
 	const std::size_t WEAK = 5;
@@ -150,6 +151,9 @@ namespace buff_type
 	const std::size_t STUN_RESIST = 18;
 	const std::size_t EXPLODE = 19;
 	const std::size_t PASSED_TURNS = 20;
+	const std::size_t INCREASE_DRAW = 22;
+	const std::size_t REDUCE_AP = 23;
+	const std::size_t INCREASE_AP = 24;
 
 	//buff from ability cards
 	const std::size_t ETERNAL_FURY = 101;
@@ -164,6 +168,10 @@ namespace buff_type
 	//enemies' buffs
 	const std::size_t LOADED = 1001;
 	const std::size_t PAIN = 1002;
+	const std::size_t CULTIST_RITE = 1003;
+	const std::size_t PAIN_CURSE = 1004;
+	const std::size_t CORRUPT = 1005;
+	const std::size_t FEAST = 1006; //TODO not done yet	
 }
 
 namespace gra_size

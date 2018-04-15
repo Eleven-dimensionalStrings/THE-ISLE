@@ -11,7 +11,10 @@ class data_sys
 {
 public:
 	data_sys();
-	info_to_battle_sys card_effect(std::size_t card_id);
+	info_to_battle_sys card_effect(std::size_t id);
+	info_to_battle_sys card_remove(std::size_t id);
+	info_to_battle_sys card_discard(std::size_t id);
+	info_to_battle_sys card_on_turn_end(std::size_t id);
 	info_to_explore_sys event_effect(std::size_t event_id);
 	info_to_battle_sys enemy_battle_start(std::size_t enemy_id);//TODO
 	info_to_battle_sys enemy_act(std::size_t enemy_id);

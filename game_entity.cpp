@@ -52,6 +52,7 @@ info_to_battle_sys player::on_turn_end()
 	vector<card>& c_grave = data.cards_grave;
 	for (int i = data.cards_in_hand.size() - 1; i >= 0; --i)
 	{
+		temp.append(c_in_hand[i].on_turn_end(data));
 		if (c_in_hand[i].vanity)
 		{
 			temp.append(action(battle_action_type::P_REMOVE_A_CARD, &data.player_data, &data.player_data, c_in_hand[i].card_type, i));
@@ -174,7 +175,7 @@ std::size_t game_entity::has_buff(std::size_t id)
 }
 
 enemy::enemy(data_sys&d, std::size_t id)
-	:game_entity(d)
+	:game_entity(d), enemy_id(id)
 {
 }
 

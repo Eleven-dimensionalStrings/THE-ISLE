@@ -261,6 +261,7 @@ void t_draw_sys::t_draw_b()
 	cout << "enemy:\n";
 	for (auto&i : data.enemies_data)
 	{
+		cout << "enemy id:" << i.enemy_id << endl;
 		cout << "hp:" << i.current_hp << '/' << i.max_hp << endl;
 		for (auto& j : i.buff_pool)
 		{

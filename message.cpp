@@ -1165,6 +1165,33 @@ card::card(size_t id)
 		vanity = true;
 		break;
 	}
+	case 1004:
+	{
+		card_name = "¡—…À";
+		card_type = card_type::STAT;
+		cost = 100;
+		require_target = false;
+		vanity = false;
+		break;
+	}
+	case 1005:
+	{
+		card_name = "»±—ı";
+		card_type = card_type::STAT;
+		cost = 100;
+		require_target = false;
+		vanity = true;
+		break;
+	}
+	case 1006:
+	{
+		card_name = "Œﬁ¡¶";
+		card_type = card_type::STAT;
+		cost = 100;
+		require_target = false;
+		vanity = false;
+		break;
+	}
 	default:
 		break;
 	}
@@ -1199,19 +1226,19 @@ info_to_battle_sys card::use_card(data_sys&d)
 	return d.card_effect(card_id);
 }
 
-info_to_battle_sys card::discard(data_sys&)
+info_to_battle_sys card::discard(data_sys&d)
 {
-	return info_to_battle_sys();
+	return d.card_discard(card_id);
 }
 
-info_to_battle_sys card::remove(data_sys&)
+info_to_battle_sys card::remove(data_sys&d)
 {
-	return info_to_battle_sys();
+	return d.card_remove(card_id);
 }
 
-info_to_battle_sys card::on_turn_end(data_sys&)
+info_to_battle_sys card::on_turn_end(data_sys&d)
 {
-	return info_to_battle_sys();
+	return d.card_on_turn_end(card_id);
 }
 
 artifact::artifact()
