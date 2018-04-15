@@ -65,6 +65,9 @@ void explore_system::process()
 			data.next_event_id = 0;
 			data.is_vaccant = 0;
 			max_selection = 1;
+			data.current_select_page = 0;
+			data.choice_list.clear();
+			data.choice_name_list.clear();
 			send_message(data.event_effect(temp.value));
 			break;
 		}
@@ -320,7 +323,9 @@ void explore_system::process()
 			{
 				send_message(data.artifact_on_end_event(data.artifacts[i].artifact_id));
 			}
+			data.next_event_id = 0;
 			data.is_vaccant = 1;
+			data.current_select_page = 0;
 			data.choice_list.clear();
 			data.choice_name_list.clear();
 			data.e_to_i_pipe = info_explore_to_interacting(interact_action_type::EXPLORE_TO_VACCANT);
