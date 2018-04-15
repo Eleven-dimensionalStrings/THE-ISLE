@@ -67,12 +67,14 @@ int main()
 
 explore:
 	//explore loop
+	e.end_battle();
 	while (1)
 	{
 		e.update();
 		dr.draw_explore();
 		dr.t_draw_e();
 		i.update();
+		e.update();
 		Sleep(100);
 		if (!d.enemies_data.empty())
 			goto battle;

@@ -53,6 +53,7 @@ public:
 	//to determine explore context
 	std::size_t current_select_page;//indicates the position of the first selection in choice_list.  
 	bool is_vaccant;
+	bool is_battle;
 	std::size_t next_event_id;//for "SKIP" button
 	std::size_t player_s_class;
 

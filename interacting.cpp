@@ -156,7 +156,33 @@ void explore_context::read_input()
 			if (get_data().is_vaccant)
 			{
 				//检测点击地图
-				//TODO
+				if (hit.x > gra_size::map_start_x && hit.x < gra_size::map_end_x
+					&& hit.y > gra_size::map_start_y && hit.y < gra_size::map_end_y)
+				{
+					bool is_block = true;
+					for (int i = 0; i < 11; ++i)
+					{
+						if (hit.x - gra_size::map_start_x > 60 + 85 * i && hit.x - gra_size::map_start_x < 85 + 85 * i)
+						{
+							is_block = false;
+							break;
+						}
+					}
+					for (int i = 0; i < 4; ++i)
+					{
+						if (hit.y - gra_size::map_start_y > 60 + 85 * i && hit.y - gra_size::map_start_y < 85 + 85 * i)
+						{
+							is_block = false;
+							break;
+						}
+					}
+					if (is_block)
+					{
+						size_t x = (hit.x - gra_size::map_start_x) / (gra_size::map_block_size + gra_size::map_closure);
+						size_t y = (hit.y - gra_size::map_start_y) / (gra_size::map_block_size + gra_size::map_closure);
+						cur_state->click_map_location(x, y);
+					}
+				}
 			}
 			else
 			{
@@ -165,7 +191,7 @@ void explore_context::read_input()
 					&& hit.y > gra_size::card_y && hit.y < gra_size::card_dy)
 				{
 					size_t pos = (hit.x - gra_size::card_closure - gra_size::card_starting_pos) / (gra_size::card_width + gra_size::card_closure);
-					if (pos <= get_data().cards_in_hand.size())
+					if (pos <= get_data().choice_list.size())
 					{
 						cur_state->click_an_option(pos);
 					}
@@ -289,8 +315,14 @@ void interacting_sys::update()
 		data.e_to_i_pipe.clear();
 		return;
 	}
-	present_battle_context->read_input();
-	present_explore_context->read_input();
+	if (data.is_battle)
+	{
+		present_battle_context->read_input();
+	}
+	else
+	{
+		present_explore_context->read_input();
+	}
 }
 
 b_state::b_state(battle_context * b_c)
@@ -578,99 +610,36 @@ void e_vaccant_state::click_next()
 	//nothing happens
 }
 
-void e_vaccant_state::click_up_arrow()
-{
-	data_sys d = get_data();
-	int x = d.player_location.first;
-	int y = d.player_location.second;
-	if (d.player_location.second == MAP_UPPER_EDGE)
-	{
-		return;
-	}
-	int mark = d.map_marks[x][y + 1];
-	switch (mark)
-	{
-	case map_mark_type::EMPTY:
-		break;
-	case map_mark_type::VISITED:
-		ctx->i_s->move_player(x, y + 1);
-		break;
-	default://no matter the place is known or not
-		ctx->i_s->move_player(x, y + 1);
-		d.i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[x][y], ""));
-		break;
-	}
-}
-
-void e_vaccant_state::click_down_arrow()
-{
-	data_sys d = get_data();
-	int x = d.player_location.first;
-	int y = d.player_location.second;
-	if (d.player_location.second == MAP_LOWER_EDGE)
-	{
-		return;
-	}
-	int mark = d.map_marks[x][y + 1];
-	switch (mark)
-	{
-	case map_mark_type::EMPTY:
-		break;
-	case map_mark_type::VISITED:
-		ctx->i_s->move_player(x, y - 1);
-		break;
-	default://no matter the place is known or not
-		ctx->i_s->move_player(x, y - 1);
-		d.i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[x][y], ""));
-		break;
-	}
-}
-
 void e_vaccant_state::click_left_arrow()
 {
-	data_sys d = get_data();
-	int x = d.player_location.first;
-	int y = d.player_location.second;
-	if (d.player_location.first == MAP_LOWER_EDGE)
-	{
-		return;
-	}
-	int mark = d.map_marks[x - 1][y];
-	switch (mark)
-	{
-	case map_mark_type::EMPTY:
-		break;
-	case map_mark_type::VISITED:
-		ctx->i_s->move_player(x - 1, y);
-		break;
-	default://no matter the place is known or not
-		ctx->i_s->move_player(x - 1, y);
-		d.i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[x][y], ""));
-		break;
-	}
+	//nothing happens
 }
 
 void e_vaccant_state::click_right_arrow()
 {
-	data_sys d = get_data();
-	int x = d.player_location.first;
-	int y = d.player_location.second;
-	if (d.player_location.first == MAP_UPPER_EDGE)
+	//nothing happens
+}
+
+void e_vaccant_state::click_map_location(std::size_t x, std::size_t y)
+{
+	int p_x = get_data().player_location.first;
+	int p_y = get_data().player_location.second;
+	if ((x == p_x + 1 && y == p_y) || (x == p_x - 1 && y == p_y) || (x == p_x && y == p_y + 1) || (x == p_x && y == p_y - 1))
 	{
-		return;
-	}
-	int mark = d.map_marks[x + 1][y];
-	switch (mark)
-	{
-	case map_mark_type::EMPTY:
-		break;
-	case map_mark_type::VISITED:
-		ctx->i_s->move_player(x + 1, y);
-		break;
-	default://no matter the place is known or not
-		ctx->i_s->move_player(x + 1, y);
-		d.i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[x][y], ""));
-		break;
+		int mark = get_data().map_marks[x][y];
+		switch (mark)
+		{
+		case map_mark_type::EMPTY:
+			break;
+		case map_mark_type::VISITED:
+			ctx->i_s->move_player(x, y);
+			break;
+		default://no matter the place is known or not
+			ctx->i_s->move_player(x, y);
+			get_data().i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT
+				, MEANINGLESS_VALUE, get_data().explore_map[x][y], ""));
+			break;
+		}
 	}
 }
 
@@ -693,7 +662,7 @@ void e_select_state::click_an_option(std::size_t pos)
 		get_data().current_select_page -= 1;
 	}
 	current++;
-	if (current == max_selection)
+	if (current == max_selection && get_data().next_event_id != 0)
 	{
 		temp.action_set.push_back(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE,
 			MEANINGLESS_VALUE, get_data().next_event_id));
@@ -704,16 +673,6 @@ void e_select_state::click_an_option(std::size_t pos)
 void e_select_state::click_next()
 {
 	get_data().i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, get_data().next_event_id, ""));
-}
-
-void e_select_state::click_up_arrow()
-{
-	//TODO delete
-}
-
-void e_select_state::click_down_arrow()
-{
-	//TODO delete
 }
 
 void e_select_state::click_left_arrow()
@@ -730,5 +689,10 @@ void e_select_state::click_right_arrow()
 	{
 		get_data().current_select_page += 1;
 	}
+}
+
+void e_select_state::click_map_location(std::size_t x, std::size_t y)
+{
+	//nothing happens
 }
 

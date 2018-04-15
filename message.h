@@ -228,6 +228,13 @@ namespace gra_size
 	const std::size_t event_text_y = 150;
 	const std::size_t next_x = 1100;
 	const std::size_t next_y = 250;
+
+	const std::size_t map_start_x = 230;
+	const std::size_t map_start_y = 200;
+	const std::size_t map_block_size = 60;
+	const std::size_t map_closure = 25;
+	const std::size_t map_end_x = map_start_x + 13 * map_block_size + 12 * map_closure;
+	const std::size_t map_end_y = map_start_y + 5 * map_block_size + 4 * map_closure;
 }
 
 namespace player_class

@@ -63,7 +63,10 @@ void t_draw_sys::__draw_explore_map()
 	{
 		for (int j = 0; j < 5; ++j)
 		{
-			solidrectangle(230 + 85 * i, 200 + 85 * j, 290 + 85 * i, 260 + 85 * j);
+			solidrectangle(gra_size::map_start_x + (gra_size::map_block_size + gra_size::map_closure) * i,
+				gra_size::map_start_y + (gra_size::map_block_size + gra_size::map_closure) * j,
+				gra_size::map_start_x + gra_size::map_block_size + (gra_size::map_block_size + gra_size::map_closure) * i,
+				gra_size::map_start_y + gra_size::map_block_size + (gra_size::map_block_size + gra_size::map_closure) * j);
 		}
 	}
 }

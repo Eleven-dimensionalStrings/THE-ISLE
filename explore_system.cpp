@@ -33,12 +33,16 @@ void explore_system::update()
 
 void explore_system::end_battle()
 {
-	for (auto i = data.b_to_e_pipe.action_set.rbegin(); i != data.b_to_e_pipe.action_set.rend(); ++i)
+	if (data.is_battle == 1)
 	{
-		process_stack.push(*i);
+		for (auto i = data.b_to_e_pipe.action_set.rbegin(); i != data.b_to_e_pipe.action_set.rend(); ++i)
+		{
+			process_stack.push(*i);
+		}
+		data.b_to_e_pipe.action_set.clear();
+		data.is_battle = 0;
+		this->process();
 	}
-	data.b_to_e_pipe.action_set.clear();
-	this->process();
 }
 
 void explore_system::process()
@@ -58,6 +62,7 @@ void explore_system::process()
 					send_message(data.artifact_on_encounter_event(data.artifacts[i].artifact_id));
 				}
 			}
+			data.next_event_id = 0;
 			data.is_vaccant = 0;
 			max_selection = 1;
 			send_message(data.event_effect(temp.value));
@@ -282,6 +287,7 @@ void explore_system::process()
 		case MAX_SELECTION:
 		{
 			max_selection = temp.value;
+			break;
 		}
 		case ENEMY:
 		{
@@ -300,6 +306,7 @@ void explore_system::process()
 				initiate_info.append(data.enemy_battle_start(data.enemies_data[i].enemy_id));
 			}
 			data.e_to_b_pipe = initiate_info;
+			data.is_battle = 1;
 			break;
 		}
 		case NEXT_PHASE:

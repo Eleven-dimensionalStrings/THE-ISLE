@@ -13,7 +13,7 @@ public:
 	void send_message(info_to_explore_sys);
 	void update();
 	void end_battle();
-	void create_map();
+	//void create_map(); //TODO 
 private:
 	std::stack<e_action> process_stack;
 	std::size_t max_selection;

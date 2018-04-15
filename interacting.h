@@ -123,10 +123,9 @@ public:
 	e_state(explore_context*);
 	virtual void click_an_option(std::size_t) = 0;
 	virtual void click_next() = 0;
-	virtual void click_up_arrow() = 0;
-	virtual void click_down_arrow() = 0;
 	virtual void click_left_arrow() = 0;
 	virtual void click_right_arrow() = 0;
+	virtual void click_map_location(std::size_t, std::size_t) = 0;
 	data_sys& get_data();
 	void send_to_explore_sys(info_to_explore_sys);
 	explore_context* ctx;
@@ -138,10 +137,9 @@ public:
 	e_vaccant_state(explore_context*);
 	void click_an_option(std::size_t);
 	void click_next();
-	void click_up_arrow();
-	void click_down_arrow();
 	void click_left_arrow();
 	void click_right_arrow();
+	void click_map_location(std::size_t x, std::size_t y);
 };
 
 class e_select_state : public e_state
@@ -150,10 +148,9 @@ public:
 	e_select_state(explore_context*, std::size_t tmax);
 	void click_an_option(std::size_t);
 	void click_next();
-	void click_up_arrow();
-	void click_down_arrow();
 	void click_left_arrow();
 	void click_right_arrow();
+	void click_map_location(std::size_t x, std::size_t y);
 private:
 	std::size_t max_selection;
 	std::size_t current;
