@@ -56,6 +56,8 @@ public:
 	bool is_battle;
 	std::size_t next_event_id;//for "SKIP" button
 	std::size_t player_s_class;
+	std::size_t passed_turns;
+	bool has_other_enemy(std::size_t pos);
 
 	//TODO for artifacts
 	info_to_explore_sys artifact_on_create(std::size_t atf_id);
@@ -69,5 +71,10 @@ public:
 class random_engine
 {
 public:
+	random_engine(data_sys *d);
 	size_t get_num(int lb, int ub);
+	size_t get_enemy();
+	size_t get_other_enemy(int pos);
+	bool chance(std::size_t c);
+	data_sys* data;
 };

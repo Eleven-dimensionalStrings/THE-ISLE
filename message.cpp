@@ -1147,6 +1147,24 @@ card::card(size_t id)
 		vanity = true;
 		break;
 	}
+	case 1002:
+	{
+		card_name = "ик©з";
+		card_type = card_type::STAT;
+		cost = 100;
+		require_target = false;
+		vanity = false;
+		break;
+	}
+	case 1003:
+	{
+		card_name = "яётн";
+		card_type = card_type::STAT;
+		cost = 100;
+		require_target = false;
+		vanity = true;
+		break;
+	}
 	default:
 		break;
 	}

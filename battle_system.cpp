@@ -33,6 +33,7 @@ void battle_system::initiate_battle()
 	this->process();
 	data.cards_deck = my_random_engine::shuffle(data.cards_pool);
 	std::size_t temp_ap = data.player_data.current_ap;//to set the ap on the first round properly
+	data.passed_turns = 0;
 
 	//TODO place the inherent cards on the top of the deck
 

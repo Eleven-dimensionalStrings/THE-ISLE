@@ -187,6 +187,11 @@ info_to_battle_sys buff::on_turn_begin(game_entity* p)
 		}
 		break;
 	}
+	case buff_type::LOADED:
+	{
+		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, buff_level));
+		break;
+	}
 	default:
 		break;
 	}

@@ -54,7 +54,7 @@ info_to_battle_sys player::on_turn_end()
 	{
 		if (c_in_hand[i].vanity)
 		{
-			temp.append((action(battle_action_type::P_REMOVE_A_CARD, &data.player_data, &data.player_data, c_in_hand[i].card_type, i)));
+			temp.append(action(battle_action_type::P_REMOVE_A_CARD, &data.player_data, &data.player_data, c_in_hand[i].card_type, i));
 		}
 		else if (!c_in_hand[i].is_reserve)
 		{
@@ -62,6 +62,8 @@ info_to_battle_sys player::on_turn_end()
 				c_in_hand[i].card_type, i));
 		}
 	}
+	temp.append(action(battle_action_type::ADD_BUFF, nullptr, &data.player_data, buff_type::PASSED_TURNS, 1));
+	data.passed_turns++;
 	for (auto& i : buff_pool)
 	{
 		temp.append(i.on_turn_end(this));
