@@ -283,8 +283,11 @@ void explore_system::process()
 		}
 		case SELECTION:
 		{
-			data.choice_list.push_back(temp.to_event_body());
-			data.choice_name_list.push_back(temp.text);
+			if (temp.restriction(&data))
+			{
+				data.choice_list.push_back(temp.to_event_body());
+				data.choice_name_list.push_back(temp.text);
+			}
 			break;
 		}
 		case MAX_SELECTION:

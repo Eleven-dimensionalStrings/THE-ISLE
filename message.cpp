@@ -3,6 +3,10 @@
 #include "data_sys.h"
 using namespace std;
 
+bool default_res(data_sys*)
+{
+	return 1;
+}
 info_to_battle_sys::info_to_battle_sys()
 	:info(), action_set()
 {
@@ -65,29 +69,30 @@ info_battle_to_interacting::info_battle_to_interacting()
 }
 
 e_action::e_action(std::size_t id)
-	:action_id(id), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE), text("ERROR")
+	:action_id(id), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE), text("ERROR"), restriction(default_res)
 {
 }
 
-e_action::e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, std::string ttext)
-	: action_id(id), type(ttype), value(tvalue), text(ttext)
+e_action::e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, std::string ttext, bool(*func)(data_sys*))
+	: action_id(id), type(ttype), value(tvalue), text(ttext), restriction(func)
 {
 }
 
-e_action::e_action(std::size_t id, std::size_t ttype, artifact tatf, std::string ttext)
-	: action_id(id), type(ttype), atf(tatf), text(ttext)
+e_action::e_action(std::size_t id, std::size_t ttype, artifact tatf, std::string ttext, bool(*func)(data_sys*))
+	: action_id(id), type(ttype), atf(tatf), text(ttext), restriction(func)
 {
 }
 
-e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::string ttext)
-	: action_id(id), type(ttype), selected_card(tcard), text(ttext)
+e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::string ttext, bool(*func)(data_sys*))
+	: action_id(id), type(ttype), selected_card(tcard), text(ttext), restriction(func)
 {
 }
 
-e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue)
-	: action_id(id), type(ttype), selected_card(tcard), text(""), value(tvalue)
+e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue, bool(*func)(data_sys*))
+	: action_id(id), type(ttype), selected_card(tcard), text(""), value(tvalue), restriction(func)
 {
 }
+
 
 e_action e_action::to_event_body()
 {
