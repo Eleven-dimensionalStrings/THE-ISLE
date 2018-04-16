@@ -281,6 +281,15 @@ info_to_battle_sys buff::on_turn_end(game_entity* p)
 		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, 1));
 		break;
 	}
+	case buff_type::SHELL:
+	{
+		result.append(action(battle_action_type::ADD_BUFF, p, p, buff_type::ARMOR, buff_level));
+		break;
+	}
+	case buff_type::MARK:
+	{
+		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, 1));
+	}
 	default:
 		break;
 	}
@@ -467,6 +476,16 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 			action &t = (temp.action_set[i]);
 			if (t.action_id == battle_action_type::PERFORMING_ACTION && t.type == type_type::PURE)
 				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, nullptr, t.listener, buff_id, t.value));
+		}
+		break;
+	}
+	case buff_type::ANGER:
+	{
+		for (int i = 0; i < temp.action_set.size(); ++i)
+		{
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::PERFORMING_ACTION && t.type != type_type::PURE && t.value > 0)
+				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, t.listener, t.listener, buff_type::STRENGTH, buff_level));
 		}
 		break;
 	}
