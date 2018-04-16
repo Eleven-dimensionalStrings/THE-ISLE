@@ -162,7 +162,7 @@ void battle_system::process()
 				}
 				break;
 			}
-			else if (temp.type == buff_type::STRENGTH || temp.type == buff_type::AGILITY || temp.type == buff_type::VITALITY)
+			else if (temp.type == buff_type::STRENGTH || temp.type == buff_type::DEXTERITY || temp.type == buff_type::VITALITY)
 			{
 				pair<string, size_t> t = data.get_buff(temp.type); // pair<buff_name, priority>
 				buff tbuff(temp.type, t.first, t.second, -static_cast<int>(temp.value));
@@ -182,6 +182,7 @@ void battle_system::process()
 		{
 			vector<card>& c_in_hand = data.cards_in_hand;
 			vector<card>& c_removed = data.cards_removed;
+			send_message(c_in_hand[temp.value].remove(data));
 			c_removed.push_back(c_in_hand[temp.value]);
 			c_in_hand.erase(c_in_hand.begin() + temp.value);
 			send_message(data.player_data.performing_action(temp));
@@ -191,6 +192,7 @@ void battle_system::process()
 		{
 			vector<card>& c_in_hand = data.cards_in_hand;
 			vector<card>& c_grave = data.cards_grave;
+			send_message(c_in_hand[temp.value].discard(data));
 			c_grave.push_back(c_in_hand[temp.value]);
 			c_in_hand.erase(c_in_hand.begin() + temp.value);
 			send_message(data.player_data.performing_action(temp));

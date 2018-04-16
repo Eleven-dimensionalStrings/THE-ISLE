@@ -1599,6 +1599,187 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 42:
 	{
+		if (random_engine(this).chance(50))
+		{
+			return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 15));
+		}
+		else
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 8),
+				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 1005)});
+		}
+		break;
+	}
+	case 43:
+	{
+		if (random_engine(this).chance(60))
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1003)});
+		}
+		else
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 4),
+				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 4),
+				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 4)});
+		}
+		break;
+	}
+	case 44:
+	{
+		if (random_engine(this).chance(60))
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::ARMOR, 20),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 2)});
+		}
+		else
+		{
+			return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 15));
+		}
+		break;
+	}
+	case 45:
+	{
+		if (passed_turns == 0)
+		{
+			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::SHELL, 8));
+		}
+		else if (random_engine(this).chance(60))
+		{
+			return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 20));
+		}
+		else
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 10),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::FRAGILE, 2)});
+		}
+		break;
+	}
+	case 46:
+	{
+		if (passed_turns % 2 == 0)
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::MARK, 1),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 1)});
+		}
+		else
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::CORRUPT, 3)});
+		}
+		break;
+	}
+	case 47:
+	{
+		if (player_data.has_buff(buff_type::MARK))
+		{
+			return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 18));
+		}
+		else
+		{
+			return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5));
+		}
+		break;
+	}
+	case 48:
+	{
+		if (passed_turns == 0)
+		{
+			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::ANGER, 1));
+		}
+		else
+		{
+			return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 20));
+		}
+		break;
+	}
+	case 49:
+	{
+		if (random_engine(this).chance(33))
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::CORRUPT, 3)});
+		}
+		else if (random_engine(this).chance(50))
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 1),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::CORRUPT, 1),
+				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 1),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::CORRUPT, 1),
+				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 1),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::CORRUPT, 1)});
+		}
+		else
+		{
+			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::STRENGTH, 1));
+		}
+		break;
+	}
+	case 50:
+	{
+		if (passed_turns == 0)
+		{
+			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::FEAST, 2));
+		}
+		else if (passed_turns % 3 == 1)
+		{
+			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::CORRUPT, 4));
+		}
+		else
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 3),
+				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 3),
+				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 3)});
+		}
+		break;
+	}
+	case 51:
+	{
+		if (passed_turns == 0)
+		{
+			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::FEAST, 3));
+		}
+		else if (passed_turns % 3 == 1)
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 10),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::CORRUPT, 4)});
+		}
+		else
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5),
+				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5),
+				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5)});
+		}
+		break;
+		break;
+	}
+	case 52: //TODO REGENERATE
+	{
+		if (passed_turns % 2 == 1)
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 12),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 1)});
+		}
+		else
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1003),
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1003)});
+		}
+		break;
+	}
+	case 53: //TODO REGENERATE
+	{
+		if (passed_turns % 2 == 0)
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 12),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::FRAGILE, 1)});
+		}
+		else
+		{
+			return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1003),
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1003)});
+		}
+		break;
 		break;
 	}
 	default:

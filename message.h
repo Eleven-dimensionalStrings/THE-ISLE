@@ -164,6 +164,7 @@ namespace buff_type
 	const std::size_t RESUSCITATE = 106;
 	const std::size_t ABILITY_BURN = 107;
 	const std::size_t SCORCHED_EARTH = 108;
+	const std::size_t SHELL = 109;
 
 	//enemies' buffs
 	const std::size_t LOADED = 1001;
@@ -172,6 +173,9 @@ namespace buff_type
 	const std::size_t PAIN_CURSE = 1004;
 	const std::size_t CORRUPT = 1005;
 	const std::size_t FEAST = 1006; //TODO not done yet	
+	const std::size_t MARK = 1007;
+	const std::size_t ANGER = 1008;
+
 }
 
 namespace gra_size
