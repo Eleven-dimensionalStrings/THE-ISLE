@@ -319,21 +319,22 @@ public:
 	std::size_t value;
 };
 
+bool default_res(data_sys*);
 class e_action
 {
 public:
 	e_action(std::size_t id);
-	e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, std::string ttext);
-	e_action(std::size_t id, std::size_t ttype, artifact tatf, std::string ttext);
-	e_action(std::size_t id, std::size_t ttype, card tcard, std::string ttext);
-	e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue);
+	e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, std::string ttext, bool(*func)(data_sys*)=default_res);
+	e_action(std::size_t id, std::size_t ttype, artifact tatf, std::string ttext, bool(*func)(data_sys*) = default_res);
+	e_action(std::size_t id, std::size_t ttype, card tcard, std::string ttext, bool(*func)(data_sys*) = default_res);
+	e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue, bool(*func)(data_sys*) = default_res);
 	std::size_t action_id;
 	std::size_t type;
 	std::size_t value;
 	artifact atf;
 	card selected_card;
 	std::string text;
-	bool restriction; //TODO lambda表达式
+	bool (*restriction)(data_sys*); //TODO lambda表达式
 
 	e_action to_event_body();
 };

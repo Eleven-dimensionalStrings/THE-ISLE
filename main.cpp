@@ -37,7 +37,7 @@ int main()
 	d.is_vaccant = 1;
 	d.is_battle = 1;
 
-	d.enemies_data.push_back(enemy(d, 35));
+	//d.enemies_data.push_back(enemy(d, 35));
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
@@ -62,6 +62,7 @@ int main()
 			d.explore_map[j][i] = 1;
 		}
 	}
+	d.explore_map[2][0] = 2;
 	d.map_marks[0][0] = map_mark_type::PLAYER;
 	//e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
 	goto battle;

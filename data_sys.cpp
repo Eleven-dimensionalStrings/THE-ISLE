@@ -968,8 +968,15 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	case 1:
 	{
 		return info_to_explore_sys(vector<e_action>{e_action(explore_action_type::EVENT_BODY
-			, event_type::AQUIRE_GOLD, 100, "some gold has fallen from the sky"), e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "proceed...")});
+			, event_type::AQUIRE_GOLD, 100, string("天上掉下了金币.")), e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "proceed...")});
 		break;
+	}
+	case 2:
+	{
+		return info_to_explore_sys(vector<e_action>{e_action(explore_action_type::SELECTION, event_type::AQUIRE_GOLD, 100, "success",
+			[](data_sys* d)->bool {if (d->gold > 300)return 1; return 0; })
+			, e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "proceed...")});
+
 	}
 	case END:
 	{
