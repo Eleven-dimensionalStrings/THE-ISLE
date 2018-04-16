@@ -29,21 +29,26 @@ namespace my_container
 		class iterator
 		{
 		public:
-			iterator(T* p) :ptr(p)
+			iterator(T* begin, T* now, T* end) :_begin(begin), _now(now), _end(end)
 			{
 
 			}
 		private:
-			T * ptr;
+			T * _begin, * _now, * _end;
 		};
 		class const_iterator
 		{
 		public:
+
 		private:
-			const T* ptr;
+			const T * _begin, * _now, * _end;
 		};
 		class reverse_iterator
 		{
+		public:
+
+		private:
+			T * _begin, *_now, *_end;
 
 		};
 		//insert and push
@@ -51,9 +56,9 @@ namespace my_container
 		{
 
 		}
-		void insert(const_iterator)
+		void insert(typename my_vector<T>::iterator i,const T& val)
 		{
-
+			
 		}
 	};
 }
