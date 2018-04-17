@@ -10,6 +10,7 @@
 #define MAX_CARDS_IN_HAND 8
 #define MEANINGLESS_VALUE static_cast<std::size_t>(31415926)
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
+#define MAX_ARTIFACT_NO 20 //TODO
 #define END 9999
 
 #undef PURE
@@ -83,11 +84,11 @@ namespace event_type
 	const std::size_t REMOVE_HIT_POINTS = 12;
 	const std::size_t REMOVE_MAX_HIT_POINTS = 13;
 	const std::size_t AQUIRE_STRENGTH = 14;
-	const std::size_t AQUIRE_DEXRITY = 15;
+	const std::size_t AQUIRE_DEXTERITY = 15;
 	const std::size_t AQUIRE_VITALITY = 16;
 	const std::size_t AQUIRE_LUCK = 17;
 	const std::size_t REMOVE_STRENGTH = 18;
-	const std::size_t REMOVE_DEXRITY = 19;
+	const std::size_t REMOVE_DEXTERITY = 19;
 	const std::size_t REMOVE_VITALITY = 20;
 	const std::size_t REMOVE_LUCK = 21;
 	const std::size_t AQUIRE_CARD = 30;//card
@@ -105,6 +106,7 @@ namespace event_type
 	const std::size_t REMOVE_GOLD = 37;
 	const std::size_t AQUIRE_FOOD = 38;
 	const std::size_t REMOVE_FOOD = 39;
+	const std::size_t REVEAL_MAP = 40;
 }
 
 namespace type_type
