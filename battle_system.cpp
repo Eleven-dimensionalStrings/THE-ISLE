@@ -35,9 +35,9 @@ void battle_system::initiate_battle()
 	deck = my_random_engine::shuffle(data.cards_pool);
 	std::size_t temp_ap = data.player_data.current_ap;//to set the ap on the first round properly
 	data.passed_turns = 0;
-	for (int i = deck.size()-1; i >= 0;--i)
+	for (int i = deck.size() - 1; i >= 0; --i)
 	{
-		if (deck[i].inherent) 
+		if (deck[i].inherent)
 		{
 			deck.push_back(deck[i]);
 			deck.erase(deck.begin() + i);
@@ -137,6 +137,10 @@ void battle_system::process()
 		}
 		case ADD_BUFF:
 		{
+			for (int i = 0; i < temp.listener->buff_pool.size(); ++i)
+			{
+				(temp.listener->buff_pool[i].on_manipulate_buff(temp));
+			}
 			auto it = temp.listener->buff_pool.end();
 			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
 			{
@@ -154,6 +158,10 @@ void battle_system::process()
 		}
 		case REMOVE_BUFF:
 		{
+			for (int i = 0; i < temp.listener->buff_pool.size(); ++i)
+			{
+				(temp.listener->buff_pool[i].on_manipulate_buff(temp));
+			}
 			auto it = temp.listener->buff_pool.end();
 			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
 			{

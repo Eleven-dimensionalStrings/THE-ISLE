@@ -225,45 +225,6 @@ data_sys & battle_context::get_data()
 	return i_s->data;
 }
 
-//void battle_context::test_read()
-//{
-//	size_t card_pos, target_pos;
-//	cin >> card_pos;
-//	set_state(new b_confirm_state(this, card_pos));
-//	if (get_data().cards_in_hand[card_pos].require_target)
-//	{
-//		cin >> target_pos;
-//		cur_state->click_an_enemy(target_pos);
-//		return;
-//	}
-//	cur_state->click_confirm();
-//}
-
-//void explore_context::test_read()
-//{
-//	char input;
-//	cin >> input;
-//	switch (input)
-//	{
-//	case '0':
-//		cur_state->click_an_option(0);
-//	case '1':
-//		cur_state->click_an_option(1);
-//	case '2':
-//		cur_state->click_an_option(2);
-//	case 'n':
-//		cur_state->click_next();
-//	case 'w':
-//		cur_state->click_up_arrow();
-//	case 'a':
-//		cur_state->click_left_arrow();
-//	case 's':
-//		cur_state->click_down_arrow();
-//	case 'd':
-//		cur_state->click_right_arrow();
-//	}
-//}
-
 interacting_sys::interacting_sys(data_sys & d) :data(d),
 present_battle_context(new battle_context(this)), present_explore_context(new explore_context(this))
 {
@@ -473,7 +434,7 @@ void b_confirm_state::click_confirm()
 			{
 				auto temp_action = *i;
 				i = temp.action_set.erase(i);
-				for (size_t j = 0; j < MAX_ENEMIES; ++j)
+				for (size_t j = 0; j < get_data().enemies_data.size(); ++j)
 				{
 					if (get_data().enemies_data[j].is_alive())
 					{

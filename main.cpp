@@ -43,16 +43,10 @@ int main()
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
 
-	d.cards_pool.push_back(card(1));
-	d.cards_pool.push_back(card(1));
-	d.cards_pool.push_back(card(1));
-	d.cards_pool.push_back(card(1));
-	d.cards_pool.push_back(card(29));
-	d.cards_pool.push_back(card(29));
-	d.cards_pool.push_back(card(29));
-	d.cards_pool.push_back(card(29));
-	d.cards_pool.push_back(card(29));
-	for (int i = 0; i < 60; ++i)d.cards_pool.push_back(card(1));
+	d.cards_pool.push_back(card(9));
+	d.cards_pool.push_back(card(30));
+	d.cards_pool.push_back(card(54));
+	d.cards_pool.push_back(card(38));
 	d.cards_pool.push_back(card(29));
 
 	for (int i = 0; i < MAP_WIDTH; i++)
