@@ -2028,7 +2028,8 @@ size_t random_engine::get_enemy()
 size_t random_engine::get_other_enemy(int pos)
 {
 	default_random_engine e(static_cast<unsigned>(time(0)));
-	uniform_int_distribution<int> ran(0, data->enemies_data.size());
+	uniform_int_distribution<int> ran(0, data->enemies_data.size() - 1);//<-are you fucking kidding me?
+	//fuck!!!
 	while (true)
 	{
 		int result = ran(e);

@@ -44,4 +44,5 @@ public:
 	void draw_begin();//开始页面
 	void view_cards(std::vector<card>&v);//按键后查看卡组等
 	void view_artifacts();
+	void end_battle();
 };

@@ -12,18 +12,12 @@ void t_draw_sys::__draw_card_in_hand()
 		int y = gra_size::card_y, x = gra_size::card_closure * (i + 1)
 			+ gra_size::card_width * i + gra_size::card_x;
 		__draw_a_card(i, x, y);
-		if (data.render_select_card[i])
-		{
-			setfillcolor(GREEN);
-			//TODO
-			solidrectangle(gra_size::card_x + gra_size::card_starting_pos + i * (gra_size::card_closure + gra_size::card_width) + gra_size::card_closure / 2,
-				gra_size::card_y, gra_size::card_x + gra_size::card_starting_pos + i * (gra_size::card_closure + gra_size::card_width) + gra_size::card_closure, gra_size::card_dy);
-			setfillcolor(LIGHTBLUE);
-		}
 	}
 }
 void t_draw_sys::__draw_entities()
 {
+	if (draw_queue.size())
+		is_drawing = 1;
 	if (is_drawing)
 		++timer;
 	for (int i = 0; i < data.enemies_data.size(); ++i)
@@ -31,7 +25,7 @@ void t_draw_sys::__draw_entities()
 		this->__draw_an_enemy(i);
 	}
 	this->__draw_player();
-	if (timer >= 20) { timer = 0; is_drawing = 0; }//TODO
+	if (timer >= 10) { timer = 0; is_drawing = 0; draw_queue.pop(); }//TODO
 }
 void t_draw_sys::__draw_battle_info()
 {
@@ -123,18 +117,27 @@ void t_draw_sys::__draw_player()
 {
 	pair<size_t, size_t> drawing;
 	if (!draw_queue.empty())drawing = this->draw_queue.front();
-	solidrectangle(gra_size::player_x, gra_size::player_y, gra_size::player_x + 160, gra_size::player_y + 200);
+	solidrectangle(gra_size::player_x, gra_size::player_y,
+		gra_size::player_x + 160, gra_size::player_y + 200);
 	if (drawing.first == 666)
 	{
-
+		setfillcolor(BLUE);
+		solidrectangle(gra_size::player_x, gra_size::player_y,
+			gra_size::player_x + 160, gra_size::player_y + 200);
+		setfillcolor(LIGHTBLUE);
 	}
 	else if (drawing.second == 666)
 	{
 
+		setfillcolor(BLACK);
+		solidrectangle(gra_size::player_x, gra_size::player_y,
+			gra_size::player_x + 160, gra_size::player_y + 200);
+		setfillcolor(LIGHTBLUE);
 	}
 	else
 	{
-
+		solidrectangle(gra_size::player_x, gra_size::player_y,
+			gra_size::player_x + 160, gra_size::player_y + 200);
 	}
 }
 
@@ -147,17 +150,25 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 		drawing = draw_queue.front();
 	if (p->is_alive())
 	{
-		solidrectangle(enemy_pos(pos).first, enemy_pos(pos).second, enemy_pos(pos).first + gra_size::enemy_width, enemy_pos(pos).second + 200);
+
 		if (p - b == drawing.second)
 		{
-
+			setfillcolor(BLACK);
+			solidrectangle(enemy_pos(pos).first, enemy_pos(pos).second,
+				enemy_pos(pos).first + gra_size::enemy_width, enemy_pos(pos).second + 200);
+			setfillcolor(LIGHTBLUE);
 		}
 		else if (p - b == drawing.first)
 		{
-
+			setfillcolor(BLUE);
+			solidrectangle(enemy_pos(pos).first, enemy_pos(pos).second,
+				enemy_pos(pos).first + gra_size::enemy_width, enemy_pos(pos).second + 200);
+			setfillcolor(LIGHTBLUE);
 		}
 		else
 		{
+			solidrectangle(enemy_pos(pos).first, enemy_pos(pos).second,
+				enemy_pos(pos).first + gra_size::enemy_width, enemy_pos(pos).second + 200);
 
 		}
 		outtextxy(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos, gra_size::enemy_y - 30,
@@ -166,14 +177,23 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 	}
 	else
 	{
-		solidrectangle(enemy_pos(pos).first, enemy_pos(pos).second + 100, enemy_pos(pos).first + gra_size::enemy_width, enemy_pos(pos).second + 200);
+		solidrectangle(enemy_pos(pos).first, enemy_pos(pos).second + 100,
+			enemy_pos(pos).first + gra_size::enemy_width, enemy_pos(pos).second + 200);
 	}
 }
 
 void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 {
 	x += gra_size::card_starting_pos;
-	solidrectangle(x, y, x + gra_size::card_width, y + 200);
+
+	if (data.render_select_card[pos])
+	{
+		setfillcolor(GREEN);
+		//TODO
+		solidrectangle(x, y - 15, x + gra_size::card_width, y + 185);
+		setfillcolor(LIGHTBLUE);
+	}
+	else solidrectangle(x, y, x + gra_size::card_width, y + 200);
 	//putimage(x,y,image path);
 	//TODO
 }
@@ -252,11 +272,6 @@ buffer(gra_size::window_width, gra_size::window_height), timer(0), is_drawing(0)
 
 void t_draw_sys::t_draw_b()
 {
-	for (auto& i : data.b_to_d)
-	{
-		draw_queue.push(i);
-	}
-	data.b_to_d.clear();
 	system("cls");
 	cout << "enemy:\n";
 	for (auto&i : data.enemies_data)
@@ -281,12 +296,13 @@ void t_draw_sys::t_draw_b()
 	cout << "hp:" << data.player_data.current_hp << '/' << data.player_data.max_hp << endl
 		<< "ap:" << data.player_data.current_ap << '/' << data.player_data.max_ap << endl;
 
-	while (!draw_queue.empty())
+	/*while (!draw_queue.empty())
 	{
 		cout << (draw_queue.front().first) << ' ' << (draw_queue.front().second) << endl;
 		draw_queue.pop();
-	}
+	}*/
 	cout << "cards remaining in deck:" << data.cards_deck.size() << endl;
+	cout << "draw_queue.size()=" << draw_queue.size() << endl;
 }
 
 void t_draw_sys::t_draw_e()
@@ -409,4 +425,10 @@ void t_draw_sys::view_cards(vector<card>& v)
 
 void t_draw_sys::view_artifacts()
 {
+}
+
+void t_draw_sys::end_battle()
+{
+	data.b_to_d.clear();
+	while (!draw_queue.empty())draw_queue.pop();
 }

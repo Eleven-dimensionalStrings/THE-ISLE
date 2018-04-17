@@ -118,7 +118,7 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 	using namespace type_type;
 	if (iaction.action_id == battle_action_type::PERFORMING_ACTION)
 	{
-		if (present_act.type <= 500)
+		if (present_act.type <= 7)
 		{
 			current_hp -= static_cast<int>(present_act.value);
 			result.append(action(battle_action_type::ENTITY_BE_ATK, present_act.caller, present_act.listener, 0, 0));

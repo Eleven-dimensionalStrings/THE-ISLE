@@ -66,6 +66,7 @@ int main()
 explore:
 	//explore loop
 	e.end_battle();
+	dr.end_battle();
 	while (1)
 	{
 		e.update();
@@ -85,11 +86,10 @@ battle:
 	b.initiate_battle();
 	while (1)
 	{
-		b.update();
+		b.update(); 
 		dr.draw_battle();
 		dr.t_draw_b();
 		i.update();
-		b.update(); //TODO seems useless, considering removing it
 		//enemy act
 		Sleep(100);
 		if (d.enemies_data.empty())
