@@ -31,11 +31,19 @@ void battle_system::initiate_battle()
 	}
 	data.e_to_b_pipe.action_set.clear();
 	this->process();
-	data.cards_deck = my_random_engine::shuffle(data.cards_pool);
+	vector<card>&deck = data.cards_deck;
+	deck = my_random_engine::shuffle(data.cards_pool);
 	std::size_t temp_ap = data.player_data.current_ap;//to set the ap on the first round properly
 	data.passed_turns = 0;
+	for (int i = deck.size()-1; i >= 0;--i)
+	{
+		if (deck[i].inherent) 
+		{
+			deck.push_back(deck[i]);
+			deck.erase(deck.begin() + i);
+		}
+	}
 
-	//TODO place the inherent cards on the top of the deck
 
 	send_message(data.player_data.on_turn_begin());
 	data.player_data.current_ap = temp_ap;
@@ -142,7 +150,6 @@ void battle_system::process()
 				temp.listener->buff_pool.push_back(tbuff);
 				send_message(tbuff.on_create(temp.caller, temp.listener));
 			}
-			send_message(data.player_data.performing_action(temp));
 			break;
 		}
 		case REMOVE_BUFF:
@@ -169,7 +176,7 @@ void battle_system::process()
 				temp.listener->buff_pool.push_back(tbuff);
 				send_message(tbuff.on_create(temp.caller, temp.listener));
 			}
-			send_message(data.player_data.performing_action(temp));
+			send_message(temp.listener->performing_action(temp));
 			break;
 		}
 		case P_KEEP_A_CARD:

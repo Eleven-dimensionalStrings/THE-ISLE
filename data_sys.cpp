@@ -965,13 +965,27 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 {
 	switch (id)
 	{
-	case 1:
+	case 1: //TODO bonfire
 	{
 		return info_to_explore_sys(vector<e_action>{e_action(explore_action_type::EVENT_BODY
 			, event_type::AQUIRE_GOLD, 100, string("天上掉下了金币.")), e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "proceed...")});
 		break;
 	}
-	case 2:
+	case 2://苹果树
+	{
+		return info_to_explore_sys(vector<e_action>{
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, string("天上掉下了金币.")),
+				e_action(explore_action_type::SELECTION, event_type::AQUIRE_HIT_POINTS, 20, "吃掉"),
+				e_action(explore_action_type::SELECTION, event_type::AQUIRE_FOOD, 3, "收集"),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开"),
+				e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END, "吃掉")});
+		break;
+	}
+	case 1001:
+	{
+
+	}
+	case 210424:
 	{
 		return info_to_explore_sys(vector<e_action>{e_action(explore_action_type::SELECTION, event_type::AQUIRE_GOLD, 100, "success",
 			[](data_sys* d)->bool {if (d->gold > 300)return 1; return 0; })
