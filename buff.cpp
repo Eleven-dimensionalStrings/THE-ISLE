@@ -155,7 +155,8 @@ info_to_battle_sys buff::on_turn_begin(game_entity* p)
 	}
 	case buff_type::STUN:
 	{
-		break;//TODO skip the turn
+		dynamic_cast<enemy*>(p)->next_act.action_set.clear();
+		break;
 	}
 	case buff_type::ETERNAL_FURY:
 	{
@@ -259,6 +260,11 @@ info_to_battle_sys buff::on_turn_end(game_entity* p)
 		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, buff_level));
 		break;
 	}
+	case buff_type::STUN:
+	{
+		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, 1));
+		break;
+	}
 	case buff_type::STUN_RESIST:
 	{
 		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, 1));
@@ -315,16 +321,6 @@ info_to_battle_sys buff::on_calling(info_to_battle_sys temp)
 				{
 					temp.action_set[i].value += buff_level;
 				}
-		}
-		break;
-	}
-	case buff_type::VITALITY:
-	{
-		for (int i = 0; i < temp.action_set.size(); ++i)
-		{
-			action &t = (temp.action_set[i]);
-			if (t.action_id == battle_action_type::ADD_BUFF && (t.type == buff_type::ARMOR))
-				temp.action_set[i].value += buff_level;
 		}
 		break;
 	}
@@ -398,16 +394,6 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 		}
 		break;
 	}
-	case buff_type::FRAGILE:
-	{
-		for (int i = 0; i < temp.action_set.size(); ++i)
-		{
-			action &t = (temp.action_set[i]);
-			if (t.action_id == battle_action_type::ADD_BUFF && (t.type == buff_type::ARMOR))
-				temp.action_set[i].value *= 0.5;
-		}
-		break;
-	}
 	case buff_type::VULNERABLE:
 	{
 		for (int i = 0; i < temp.action_set.size(); ++i)
@@ -426,26 +412,6 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 			action &t = (temp.action_set[i]);
 			if (t.action_id == battle_action_type::PERFORMING_ACTION && t.type == type_type::FLAME)
 				temp.action_set[i].value += buff_level;
-		}
-		break;
-	}
-	case buff_type::STUN_RESIST:
-	{
-		for (int i = 0; i < temp.action_set.size(); ++i)
-		{
-			action &t = (temp.action_set[i]);
-			if (t.action_id == battle_action_type::ADD_BUFF && t.type == buff_type::STUN)
-				temp.action_set.erase(temp.action_set.begin() + i);
-		}
-		break;
-	}
-	case buff_type::INVULNARABLE:
-	{
-		for (int i = 0; i < temp.action_set.size(); ++i)
-		{
-			action &t = (temp.action_set[i]);
-			if (t.action_id == battle_action_type::ADD_BUFF && t.type == buff_type::VULNERABLE)
-				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, nullptr, temp.action_set[i].listener, buff_type::ARMOR, buff_level));
 		}
 		break;
 	}
@@ -493,4 +459,37 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 		break;
 	}
 	return temp;
+}
+
+void buff::on_manipulate_buff(action & temp)
+{
+	switch (buff_id)
+	{
+	case buff_type::FRAGILE:
+	{
+		if (temp.action_id == battle_action_type::ADD_BUFF && (temp.type == buff_type::ARMOR))
+			temp.value *= 0.5;
+		break;
+	}
+	case buff_type::STUN_RESIST:
+	{
+		if (temp.action_id == battle_action_type::ADD_BUFF && temp.type == buff_type::STUN)
+			temp.value = 0;
+		break;
+	}
+	case buff_type::VITALITY:
+	{
+		if (temp.action_id == battle_action_type::ADD_BUFF && (temp.type == buff_type::ARMOR))
+			temp.value += buff_level;
+		break;
+	}
+	case buff_type::INVULNARABLE:
+	{
+		if (temp.action_id == battle_action_type::ADD_BUFF && (temp.type == buff_type::VULNERABLE))
+			temp.value = 0;
+		break;
+	}
+	default:
+		break;
+	}
 }

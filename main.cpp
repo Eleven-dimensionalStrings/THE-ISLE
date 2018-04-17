@@ -37,22 +37,16 @@ int main()
 	d.is_vaccant = 1;
 	d.is_battle = 1;
 
-	d.enemies_data.push_back(enemy(d, 35));
+	/*d.enemies_data.push_back(enemy(d, 35));*/
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
 
-	d.cards_pool.push_back(card(1));
-	d.cards_pool.push_back(card(1));
-	d.cards_pool.push_back(card(1));
-	d.cards_pool.push_back(card(1));
-	d.cards_pool.push_back(card(29));
-	d.cards_pool.push_back(card(29));
-	d.cards_pool.push_back(card(29));
-	d.cards_pool.push_back(card(29));
-	d.cards_pool.push_back(card(29));
-	for (int i = 0; i < 60; ++i)d.cards_pool.push_back(card(1));
+	d.cards_pool.push_back(card(9));
+	d.cards_pool.push_back(card(30));
+	d.cards_pool.push_back(card(54));
+	d.cards_pool.push_back(card(38));
 	d.cards_pool.push_back(card(29));
 
 	for (int i = 0; i < MAP_WIDTH; i++)
@@ -60,13 +54,13 @@ int main()
 		for (int j = 0; j < MAP_LENGTH; j++)
 		{
 			d.map_marks[j][i] = map_mark_type::UNKNOWN;
-			d.explore_map[j][i] = 2;
+			d.explore_map[j][i] = 4;
 		}
 	}
 	//d.explore_map[2][0] = 2;
 	d.map_marks[0][0] = map_mark_type::PLAYER;
 	//e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
-	goto battle;
+	//goto battle;
 
 explore:
 	//explore loop

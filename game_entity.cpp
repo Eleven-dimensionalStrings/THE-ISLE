@@ -199,13 +199,16 @@ info_to_battle_sys enemy::on_turn_begin()
 	{
 		t.append(i.on_turn_begin(this));
 	}
-
-
 	return t;
 }
 
 
 info_to_battle_sys enemy::on_turn_end()
 {
-	return info_to_battle_sys();
+	info_to_battle_sys t;
+	for (auto& i : buff_pool)
+	{
+		t.append(i.on_turn_end(this));
+	}
+	return t;
 }

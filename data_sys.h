@@ -5,8 +5,19 @@
 #include <map>
 #include <functional>
 #include "game_entity.h"
-
 class battle_system;
+
+class random_engine
+{
+public:
+	random_engine(data_sys *d);
+	size_t get_num(int lb, int ub);
+	size_t get_enemy();
+	size_t get_other_enemy(int pos);
+	bool chance(std::size_t c);
+	data_sys* data;
+};
+
 class data_sys
 {
 public:
@@ -53,6 +64,7 @@ public:
 	std::vector<e_action> choice_list;
 	std::vector<std::string> choice_name_list;
 	std::string text_to_be_displayed;
+	std::string map_text;
 	//to determine explore context
 	std::size_t current_select_page;//indicates the position of the first selection in choice_list.  
 	bool is_vaccant;
@@ -61,6 +73,8 @@ public:
 	std::size_t player_s_class;
 	std::size_t passed_turns;
 	bool has_other_enemy(std::size_t pos);
+	bool event_is_not_mandetory;
+	random_engine re;
 
 	//TODO for artifacts
 	info_to_explore_sys artifact_on_create(std::size_t atf_id);
@@ -71,13 +85,3 @@ public:
 	info_to_explore_sys artifact_on_end_event(std::size_t atf_id);
 };
 
-class random_engine
-{
-public:
-	random_engine(data_sys *d);
-	size_t get_num(int lb, int ub);
-	size_t get_enemy();
-	size_t get_other_enemy(int pos);
-	bool chance(std::size_t c);
-	data_sys* data;
-};

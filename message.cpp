@@ -69,27 +69,27 @@ info_battle_to_interacting::info_battle_to_interacting()
 }
 
 e_action::e_action(std::size_t id)
-	:action_id(id), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE), text("ERROR"), restriction(default_res)
+	:action_id(id), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE), text("ERROR"), end_text("ERROR"), restriction(default_res)
 {
 }
 
-e_action::e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, std::string ttext, bool(*func)(data_sys*))
-	: action_id(id), type(ttype), value(tvalue), text(ttext), restriction(func)
+e_action::e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, std::string ttext, std::string etext, bool(*func)(data_sys*))
+	: action_id(id), type(ttype), value(tvalue), text(ttext), end_text(etext), restriction(func)
 {
 }
 
-e_action::e_action(std::size_t id, std::size_t ttype, artifact tatf, std::string ttext, bool(*func)(data_sys*))
-	: action_id(id), type(ttype), atf(tatf), text(ttext), restriction(func)
+e_action::e_action(std::size_t id, std::size_t ttype, artifact tatf, std::string ttext, std::string etext, bool(*func)(data_sys*))
+	: action_id(id), type(ttype), atf(tatf), text(ttext), end_text(etext), restriction(func)
 {
 }
 
-e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::string ttext, bool(*func)(data_sys*))
-	: action_id(id), type(ttype), selected_card(tcard), text(ttext), restriction(func)
+e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::string ttext, std::string etext, bool(*func)(data_sys*))
+	: action_id(id), type(ttype), selected_card(tcard), text(ttext), end_text(etext), restriction(func)
 {
 }
 
-e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue, bool(*func)(data_sys*))
-	: action_id(id), type(ttype), selected_card(tcard), text(""), value(tvalue), restriction(func)
+e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue, std::string etext, bool(*func)(data_sys*))
+	: action_id(id), type(ttype), selected_card(tcard), text(""), value(tvalue), end_text(etext), restriction(func)
 {
 }
 

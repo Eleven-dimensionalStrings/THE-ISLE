@@ -187,7 +187,7 @@ void t_draw_sys::__draw_event_card()
 	solidrectangle(gra_size::event_text_x, gra_size::event_text_y, gra_size::event_text_x + 240, gra_size::event_text_y + 300);
 
 	//next button
-	if (data.next_event_id != 0)
+	if (data.event_is_not_mandetory)
 		solidrectangle(gra_size::next_x, gra_size::next_y, gra_size::next_x + 200, gra_size::next_y + 100);
 }
 
