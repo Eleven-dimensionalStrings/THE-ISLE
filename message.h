@@ -77,6 +77,7 @@ namespace event_type
 	//const std::size_t MANDATORY = 1;
 	//const std::size_t NOT_MANDATORY = 2;
 	const std::size_t PROCEED = 3;
+	const std::size_t PURE_TEXT = 4;
 	const std::size_t AQUIRE_HIT_POINTS = 10;
 	const std::size_t AQUIRE_MAX_HIT_POINTS = 11;
 	const std::size_t REMOVE_HIT_POINTS = 12;

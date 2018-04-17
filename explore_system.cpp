@@ -80,6 +80,11 @@ void explore_system::process()
 			}
 			switch (temp.type)
 			{
+			case PURE_TEXT:
+			{
+				//nothing happens but display the text
+				break;
+			}
 			case PROCEED:
 			{
 				process_stack.push(e_action(ENCOUNTER_EVENT, MEANINGLESS_VALUE, temp.value, ""));
