@@ -1067,6 +1067,17 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 			, e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "proceed...")});
 
 	}*/
+	case 123465://TODO( delete
+	{
+		return info_to_explore_sys(vector<e_action>{
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, 1, ""),
+				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, 2, ""),
+				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, 3, ""),
+				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, 4, ""),
+				e_action(explore_action_type::NEXT_PHASE, 0, END, ""),
+				e_action(explore_action_type::EVENT_BODY, event_type::START_BATTLE, MEANINGLESS_VALUE, ""),
+				e_action(explore_action_type::EVENT_BODY, event_type::PROCEED, END, "")});
+	}
 	case END:
 	{
 		return info_to_explore_sys(e_action(explore_action_type::END_EVENT));

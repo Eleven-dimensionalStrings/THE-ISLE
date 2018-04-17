@@ -41,6 +41,16 @@ void explore_system::end_battle()
 		}
 		data.b_to_e_pipe.action_set.clear();
 		data.is_battle = 0;
+		data.player_data.current_ap = data.player_data.max_ap;
+		data.cards_in_hand.clear();
+		if (data.player_data.current_hp < data.player_data.max_hp)
+		{
+			if (data.food > 0)
+			{
+				process_stack.push(e_action(EVENT_BODY, REMOVE_FOOD, 1));
+				process_stack.push(e_action(EVENT_BODY, AQUIRE_HIT_POINTS, 5));
+			}
+		}
 		this->process();
 	}
 }

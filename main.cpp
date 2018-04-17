@@ -43,18 +43,19 @@ int main()
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
 
-	d.cards_pool.push_back(card(9));
-	d.cards_pool.push_back(card(30));
-	d.cards_pool.push_back(card(54));
-	d.cards_pool.push_back(card(38));
-	d.cards_pool.push_back(card(29));
+	d.cards_pool.push_back(card(23));
+	d.cards_pool.push_back(card(23));
+	d.cards_pool.push_back(card(23));
+	d.cards_pool.push_back(card(23));
+	d.cards_pool.push_back(card(23));
+	d.cards_pool.push_back(card(23));
 
 	for (int i = 0; i < MAP_WIDTH; i++)
 	{
 		for (int j = 0; j < MAP_LENGTH; j++)
 		{
 			d.map_marks[j][i] = map_mark_type::UNKNOWN;
-			d.explore_map[j][i] = 4;
+			d.explore_map[j][i] = 123465;
 		}
 	}
 	//d.explore_map[2][0] = 2;
@@ -92,7 +93,9 @@ battle:
 		//enemy act
 		Sleep(100);
 		if (d.enemies_data.empty())
+		{
 			goto explore;
+		}
 	}
 	return 0;
 }

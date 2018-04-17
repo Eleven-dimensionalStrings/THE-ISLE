@@ -35,6 +35,7 @@ void battle_system::initiate_battle()
 	deck = my_random_engine::shuffle(data.cards_pool);
 	std::size_t temp_ap = data.player_data.current_ap;//to set the ap on the first round properly
 	data.passed_turns = 0;
+	//put inherent cards at the top
 	for (int i = deck.size() - 1; i >= 0; --i)
 	{
 		if (deck[i].inherent)
@@ -67,6 +68,11 @@ void battle_system::process()
 		{
 			while (!process_stack.empty())process_stack.pop();
 			//TODO
+			info_to_battle_sys temp;
+			for (auto&i : data.player_data.buff_pool)
+			{
+				data.b_to_e_pipe.append(i.on_battle_end(&data.player_data));
+			}
 			data.enemies_data.clear();
 			break;
 		}

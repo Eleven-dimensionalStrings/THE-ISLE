@@ -461,6 +461,14 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 	return temp;
 }
 
+info_to_explore_sys buff::on_battle_end(game_entity *)
+{
+	//TODO
+	return info_to_explore_sys();
+}
+
+
+
 void buff::on_manipulate_buff(action & temp)
 {
 	switch (buff_id)

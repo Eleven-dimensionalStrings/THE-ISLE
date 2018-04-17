@@ -32,6 +32,7 @@ public:
 	info_to_battle_sys on_turn_end(game_entity*);
 	info_to_battle_sys on_calling(info_to_battle_sys);
 	info_to_battle_sys on_performing(info_to_battle_sys);
+	info_to_explore_sys on_battle_end(game_entity*);
 	void on_manipulate_buff(action &temp);
 	void operator--();
 	void operator--(int);
