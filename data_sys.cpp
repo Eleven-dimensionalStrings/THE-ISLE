@@ -7,7 +7,7 @@ using namespace std;
 //TODO 6, 8，9, 12
 
 data_sys::data_sys() :b(nullptr), player_data(*this), all_enemies(*this, MEANINGLESS_VALUE), random_enemy(*this, MEANINGLESS_VALUE)
-, select_one_enemy(*this, MEANINGLESS_VALUE)
+, select_one_enemy(*this, MEANINGLESS_VALUE), re(this)
 {
 	for (auto&i : render_select_card)i = 0;
 }
@@ -56,7 +56,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 		if (cards_in_hand.size() > 0)
 		{
 			result.append(action(battle_action_type::P_DISCARD_A_CARD
-				, MEANINGLESS_VALUE, random_engine(this).get_num(0, cards_in_hand.size() - 1)));
+				, MEANINGLESS_VALUE, re.get_num(0, cards_in_hand.size() - 1)));
 		}
 		return result;
 		break;
@@ -504,7 +504,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 		if (cards_in_hand.size() > 0)
 		{
 			result.append(action(battle_action_type::P_DISCARD_A_CARD
-				, MEANINGLESS_VALUE, random_engine(this).get_num(0, cards_in_hand.size() - 1)));
+				, MEANINGLESS_VALUE, re.get_num(0, cards_in_hand.size() - 1)));
 		}
 		return result;
 		break;
@@ -974,24 +974,99 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	case 2://苹果树
 	{
 		return info_to_explore_sys(vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, string("天上掉下了金币.")),
-				e_action(explore_action_type::SELECTION, event_type::AQUIRE_HIT_POINTS, 20, "吃掉"),
-				e_action(explore_action_type::SELECTION, event_type::AQUIRE_FOOD, 3, "收集"),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开"),
-				e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END, "吃掉")});
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "你来到一颗苹果树前，树上结满了青色的苹果."),
+				e_action(explore_action_type::SELECTION, event_type::AQUIRE_HIT_POINTS, 20, "吃掉.", "苹果很美味，你感觉到你恢复了一些体力."),
+				e_action(explore_action_type::SELECTION, event_type::AQUIRE_FOOD, 3, "收集.", "你收集了一些苹果，然后迅速的离开了."),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "\"路边的果子一定不会是甜的\"，你喃喃道."),
+				e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END)});
 		break;
 	}
-	case 1001:
+	case 3: //酒馆
 	{
-
+		return info_to_explore_sys(vector<e_action>{
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "天色渐暗，一间亮着灯的酒馆引起了你的注意."),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1003, "推开门."),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开", "你很快打消了休息的想法，快步走向黑暗中."), });
+		break;
 	}
-	case 210424:
+	case 1003: //酒馆part2 //TODO ENEMY
+	{
+		if (re.chance(25))
+		{
+			return info_to_explore_sys(vector<e_action>{
+				e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "酒馆里空无一人，你却能感受到视线从阴影中看向你。你熟练地拔出武器."),
+					//TODO
+					e_action(explore_action_type::SELECTION, event_type::START_BATTLE, 1004, "战斗!")});
+		}
+		else
+		{
+			return info_to_explore_sys(vector<e_action>{
+				e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "酒馆里充满了快乐的氛围，你在一个火堆边找了个位置坐下."),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1005, "25金币  要一份茴香豆.", "", [](data_sys* d)->bool {if (d->gold >= 25)return 1; return 0; }),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1006, "50金币  要一只烤鸡.", "", [](data_sys* d)->bool {if (d->gold = 50)return 1; return 0; }),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1007, "75金币  要一桶好酒.", "", [](data_sys* d)->bool {if (d->gold = 75)return 1; return 0; }),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "身体暖和之后，你重新踏上了旅途.")});
+		}
+		break;
+	}
+	case 1004://酒馆part3
+	{
+		//TODO
+		break;
+	}
+	case 1005://酒馆part3
+	{
+		return info_to_explore_sys(vector<e_action>{
+			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_HIT_POINTS, 15, "酒馆里的诗人一直在哼哼些奇怪的调子，不过茴香豆很好吃，你的体力恢复了."),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "身体暖和之后，你重新踏上了旅途.")});
+		break;
+	}
+	case 1006://酒馆part3
+	{
+		return info_to_explore_sys(vector<e_action>{
+			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_MAX_HIT_POINTS, 8, "你抓起一只鸡腿，大口地吃了起来，你的生命值上限增加了."),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "身体暖和之后，你重新踏上了旅途.")});
+		break;
+	}
+	case 1007://酒馆part3
+	{
+		return info_to_explore_sys(vector<e_action>{
+			e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_CARD_FROM_DECK, 1, "清晨的第一缕日光唤醒了你，你却怎么也想不起来昨天发生了什么."),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "你的头还是有些晕，不过你很快就收拾好装备继续上路.")});
+		break;
+	}
+	case 4://升级神龛
+	{
+		return info_to_explore_sys(vector<e_action>{
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "你来到一座红色的神龛前，你感觉到力量不断从神龛中涌出."),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1008, "触摸.", "",
+					[](data_sys* t)->bool
+			{
+				for (auto i : t->cards_pool)
+				{
+					if (i.upgrade_version_id)
+					{
+						return true;
+					}
+				}
+				return false;
+			}),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "你对这类祭祀器具没有兴趣.")});
+		break;
+	}
+	case 1008://升级神龛part2
+	{
+		return info_to_explore_sys(vector<e_action>{
+			e_action(explore_action_type::EVENT_BODY, event_type::UPGRADE_CARD_FROM_DECK, 1, "红光环绕你的身体，你感到力量从体内不断涌出."),
+				e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, "", "神龛的光渐渐熄灭，你继续踏上旅程.")});
+	}
+	/*case 210424:
 	{
 		return info_to_explore_sys(vector<e_action>{e_action(explore_action_type::SELECTION, event_type::AQUIRE_GOLD, 100, "success",
 			[](data_sys* d)->bool {if (d->gold > 300)return 1; return 0; })
 			, e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "proceed...")});
 
-	}
+	}*/
 	case END:
 	{
 		return info_to_explore_sys(e_action(explore_action_type::END_EVENT));
@@ -1013,12 +1088,12 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 	case 1:
 	{
-		if (random_engine(this).chance(50))
+		if (re.chance(50))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5),
 				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1002)});
 		}
-		else if (random_engine(this).chance(50))
+		else if (re.chance(50))
 		{
 			return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 8));
 		}
@@ -1050,10 +1125,10 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (has_other_enemy(pos))
 		{
-			if (random_engine(this).chance(75))
+			if (re.chance(75))
 			{
 				return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos],
-					&enemies_data[random_engine(this).get_other_enemy(pos)], buff_type::ARMOR, 10));
+					&enemies_data[re.get_other_enemy(pos)], buff_type::ARMOR, 10));
 			}
 			else
 			{
@@ -1068,7 +1143,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 5:
 	{
-		if (random_engine(this).chance(50))
+		if (re.chance(50))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
 				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
@@ -1091,11 +1166,11 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 6:
 	{
-		if (random_engine(this).chance(50))
+		if (re.chance(50))
 		{
 			return action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6);;
 		}
-		else if (random_engine(this).chance(50))
+		else if (re.chance(50))
 		{
 			return action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 2);
 		}
@@ -1107,7 +1182,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 7:
 	{
-		if (random_engine(this).chance(50))
+		if (re.chance(50))
 		{
 			return action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 7);
 			return action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 2);
@@ -1124,7 +1199,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (has_other_enemy(pos))
 		{
-			int target = random_engine(this).get_other_enemy(pos);
+			int target = re.get_other_enemy(pos);
 			return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[pos],
 				&enemies_data[target], buff_type::ARMOR, 15), action(battle_action_type::ADD_BUFF, &enemies_data[pos],
 					&enemies_data[target], buff_type::STRENGTH, 2)});
@@ -1139,10 +1214,10 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (has_other_enemy(pos))
 		{
-			if (random_engine(this).chance(50))
+			if (re.chance(50))
 			{
 				return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos],
-					&enemies_data[random_engine(this).get_other_enemy(pos)], type_type::ADD_HP, 16));
+					&enemies_data[re.get_other_enemy(pos)], type_type::ADD_HP, 16));
 			}
 			else
 			{
@@ -1169,7 +1244,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			if (random_engine(this).chance(50))
+			if (re.chance(50))
 			{
 				info_to_battle_sys result;
 				for (int i = 0; i < enemies_data.size(); ++i)
@@ -1212,7 +1287,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 12:
 	{
-		if (random_engine(this).chance(50))
+		if (re.chance(50))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
 				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6)});
@@ -1226,7 +1301,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 13:
 	{
-		if (random_engine(this).chance(50))
+		if (re.chance(50))
 		{
 			return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 14));
 		}
@@ -1239,12 +1314,12 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 14:
 	{
-		if (random_engine(this).chance(50))
+		if (re.chance(50))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 2),
 				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 2)});
 		}
-		else if (random_engine(this).chance(50))
+		else if (re.chance(50))
 		{
 			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 2));
 		}
@@ -1256,7 +1331,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 15:
 	{
-		if (random_engine(this).chance(75))
+		if (re.chance(75))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 12),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::PAIN, 3)});
@@ -1292,7 +1367,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 17:
 	{
-		if (random_engine(this).chance(75))
+		if (re.chance(75))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 16),
 				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1003),
@@ -1318,7 +1393,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 20:
 	{
-		if (random_engine(this).chance(50))
+		if (re.chance(50))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 2)});
@@ -1349,7 +1424,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		if (has_other_enemy(pos))
 		{
 			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos],
-				&enemies_data[random_engine(this).get_other_enemy(pos)], buff_type::STRENGTH, 2));
+				&enemies_data[re.get_other_enemy(pos)], buff_type::STRENGTH, 2));
 		}
 		else
 		{
@@ -1361,10 +1436,10 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (has_other_enemy(pos))
 		{
-			if (random_engine(this).chance(50))
+			if (re.chance(50))
 			{
 				return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos],
-					&enemies_data[random_engine(this).get_other_enemy(pos)], buff_type::ARMOR, 10));
+					&enemies_data[re.get_other_enemy(pos)], buff_type::ARMOR, 10));
 			}
 			else
 			{
@@ -1417,7 +1492,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		{
 			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::PAIN_CURSE, 3));
 		}
-		else if (random_engine(this).chance(40))
+		else if (re.chance(40))
 		{
 			return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 16));
 		}
@@ -1478,7 +1553,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 31:
 	{
-		if (random_engine(this).chance(50))
+		if (re.chance(50))
 		{
 			return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5));
 
@@ -1547,7 +1622,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 37:
 	{
-		if (random_engine(this).chance(50))
+		if (re.chance(50))
 		{
 			return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 8));
 		}
@@ -1559,7 +1634,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 38:
 	{
-		if (random_engine(this).chance(50))
+		if (re.chance(50))
 		{
 			return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6));
 		}
@@ -1591,7 +1666,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 2),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::FRAGILE, 2)});
 		}
-		else if (random_engine(this).chance(50))
+		else if (re.chance(50))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 14),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::REDUCE_AP, 1)});
@@ -1607,7 +1682,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 41:
 	{
-		if (random_engine(this).chance(50))
+		if (re.chance(50))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::REDUCE_AP, 1)});
@@ -1620,7 +1695,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 42:
 	{
-		if (random_engine(this).chance(50))
+		if (re.chance(50))
 		{
 			return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 15));
 		}
@@ -1633,7 +1708,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 43:
 	{
-		if (random_engine(this).chance(60))
+		if (re.chance(60))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
 				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1003)});
@@ -1648,7 +1723,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 44:
 	{
-		if (random_engine(this).chance(60))
+		if (re.chance(60))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::ARMOR, 20),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 2)});
@@ -1665,7 +1740,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		{
 			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::SHELL, 8));
 		}
-		else if (random_engine(this).chance(60))
+		else if (re.chance(60))
 		{
 			return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 20));
 		}
@@ -1716,12 +1791,12 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	}
 	case 49:
 	{
-		if (random_engine(this).chance(33))
+		if (re.chance(33))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::CORRUPT, 3)});
 		}
-		else if (random_engine(this).chance(50))
+		else if (re.chance(50))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 1),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::CORRUPT, 1),

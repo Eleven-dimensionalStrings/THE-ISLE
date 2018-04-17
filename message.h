@@ -27,12 +27,11 @@ namespace map_mark_type
 
 namespace explore_action_type
 {
-	const std::size_t ENCOUNTER_EVENT = 93;
-	const std::size_t EVENT_BODY = 94;
-	const std::size_t SELECTION = 95;
-	const std::size_t MAX_SELECTION = 96;
-	const std::size_t ENEMY = 97;
-	const std::size_t START_BATTLE = 98;
+	const std::size_t ENCOUNTER_EVENT = 94;
+	const std::size_t EVENT_BODY = 95;
+	const std::size_t SELECTION = 96;
+	const std::size_t MAX_SELECTION = 97;
+	const std::size_t ENEMY = 98;
 	const std::size_t NEXT_PHASE = 99;
 	const std::size_t END_EVENT = 100;
 }
@@ -78,6 +77,7 @@ namespace event_type
 	//const std::size_t NOT_MANDATORY = 2;
 	const std::size_t PROCEED = 3;
 	const std::size_t PURE_TEXT = 4;
+	const std::size_t START_BATTLE = 5;
 	const std::size_t AQUIRE_HIT_POINTS = 10;
 	const std::size_t AQUIRE_MAX_HIT_POINTS = 11;
 	const std::size_t REMOVE_HIT_POINTS = 12;
@@ -325,17 +325,18 @@ class e_action
 {
 public:
 	e_action(std::size_t id);
-	e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, std::string ttext, bool(*func)(data_sys*)=default_res);
-	e_action(std::size_t id, std::size_t ttype, artifact tatf, std::string ttext, bool(*func)(data_sys*) = default_res);
-	e_action(std::size_t id, std::size_t ttype, card tcard, std::string ttext, bool(*func)(data_sys*) = default_res);
-	e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue, bool(*func)(data_sys*) = default_res);
+	e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, std::string ttext = "", std::string etext = "", bool(*func)(data_sys*) = default_res);
+	e_action(std::size_t id, std::size_t ttype, artifact tatf, std::string ttext = "", std::string etext = "", bool(*func)(data_sys*) = default_res);
+	e_action(std::size_t id, std::size_t ttype, card tcard, std::string ttext = "", std::string etext = "", bool(*func)(data_sys*) = default_res);
+	e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue, std::string etext = "", bool(*func)(data_sys*) = default_res);
 	std::size_t action_id;
 	std::size_t type;
 	std::size_t value;
 	artifact atf;
 	card selected_card;
 	std::string text;
-	bool (*restriction)(data_sys*); //TODO lambda表达式
+	std::string end_text;
+	bool(*restriction)(data_sys*); //TODO lambda表达式
 
 	e_action to_event_body();
 };
