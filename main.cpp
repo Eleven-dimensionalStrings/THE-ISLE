@@ -65,7 +65,7 @@ int main()
 	d.explore_map[2][0] = 2;
 	d.map_marks[0][0] = map_mark_type::PLAYER;
 	//e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
-	goto battle;
+	//goto battle;
 
 explore:
 	//explore loop

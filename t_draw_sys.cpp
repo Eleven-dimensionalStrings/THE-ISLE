@@ -114,8 +114,8 @@ void t_draw_sys::__draw_guiding_pics()
 
 void t_draw_sys::__draw_lines()
 {
-	solidrectangle(0, 460,
-		1500, 465);
+	solidrectangle(0, 470,
+		1500, 475);
 	//TODO replace this by background pics
 }
 
@@ -364,6 +364,11 @@ void t_draw_sys::draw_battle()
 	this->__draw_battle_info();
 	this->__draw_guiding_pics();
 	this->__draw_lines();
+	solidrectangle(gra_size::player_x, gra_size::player_y + 205, gra_size::player_x + 15, gra_size::player_y + 220);
+	settextstyle(12, 0, _T("Arial"));
+	outtextxy(gra_size::player_x + 11, gra_size::player_y + 214, &to_string(99)[0]);
+	settextstyle(20, 0, _T("Arial"));
+	solidrectangle(gra_size::player_x, gra_size::player_y + 225, gra_size::player_x + 15, gra_size::player_y + 240);
 	SetWorkingImage(0);
 	putimage(0, 0, &buffer);
 }
