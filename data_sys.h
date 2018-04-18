@@ -15,6 +15,8 @@ public:
 	size_t get_enemy();
 	size_t get_other_enemy(int pos);
 	bool chance(std::size_t c);
+	bool chance_luck_increase(std::size_t c);
+	bool chance_luck_decrease(std::size_t c);
 	data_sys* data;
 };
 

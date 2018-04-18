@@ -55,6 +55,11 @@ void explore_system::end_battle()
 	}
 }
 
+void explore_system::create_map()
+{
+	//TODO 
+}
+
 void explore_system::process()
 {
 	while (!process_stack.empty())
@@ -75,6 +80,7 @@ void explore_system::process()
 			data.next_event_id = 0;
 			data.is_vaccant = 0;
 			max_selection = 1;
+			data.event_is_not_mandetory = false;
 			data.current_select_page = 0;
 			data.choice_list.clear();
 			data.choice_name_list.clear();
@@ -152,7 +158,7 @@ void explore_system::process()
 				data.strength += temp.value;
 				break;
 			}
-			case AQUIRE_DEXRITY:
+			case AQUIRE_DEXTERITY:
 			{
 				data.dexterity += temp.value;
 				break;
@@ -172,7 +178,7 @@ void explore_system::process()
 				data.strength -= temp.value;
 				break;
 			}
-			case REMOVE_DEXRITY:
+			case REMOVE_DEXTERITY:
 			{
 				data.dexterity -= temp.value;
 				break;
@@ -308,6 +314,25 @@ void explore_system::process()
 					data.food -= temp.value;
 				}
 				break;
+			}
+			case REVEAL_MAP:
+			{
+				int max = temp.value;
+				for (int i = 0; i < MAP_LENGTH; ++i)
+				{
+					for (int j = 0; j < MAP_WIDTH; ++j)
+					{
+						if (data.map_marks[i][j] == map_mark_type::UNKNOWN)
+						{
+							data.map_marks[i][j] = map_mark_type::KNOWN;
+							max--;
+							if (!max)
+								break;
+						}
+						if (!max)
+							break;
+					}
+				}
 			}
 			}
 			break;
