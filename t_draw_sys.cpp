@@ -25,7 +25,7 @@ void t_draw_sys::__draw_entities()
 		this->__draw_an_enemy(i);
 	}
 	this->__draw_player();
-	if (timer >= 10) { timer = 0; is_drawing = 0; draw_queue.pop(); }//TODO
+	if (timer >= 5) { timer = 0; is_drawing = 0; if (!draw_queue.empty())draw_queue.pop(); }//TODO
 }
 void t_draw_sys::__draw_battle_info()
 {
@@ -185,16 +185,22 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 {
 	x += gra_size::card_starting_pos;
-
 	if (data.render_select_card[pos])
 	{
 		setfillcolor(GREEN);
 		//TODO
 		solidrectangle(x, y - 15, x + gra_size::card_width, y + 185);
+		outtextxy(x, y - 15, &data.cards_in_hand[pos].card_name[0]);
 		setfillcolor(LIGHTBLUE);
 	}
-	else solidrectangle(x, y, x + gra_size::card_width, y + 200);
-	//putimage(x,y,image path);
+	else
+	{
+		solidrectangle(x, y, x + gra_size::card_width, y + 200);
+		outtextxy(x, y, &data.cards_in_hand[pos].card_name[0]);
+	}
+	IMAGE t;
+	loadimage(&t, "C:\\Users\\Lemon\\Desktop\\作业\\数据结构\\data_structure_hw\\无标题.jpg");
+	putimage(x,y,&t);
 	//TODO
 }
 
@@ -263,6 +269,52 @@ void t_draw_sys::__draw_player_info()
 	solidrectangle(gra_size::food_pic_x, gra_size::food_pic_y,
 		gra_size::food_pic_x + 90, gra_size::food_pic_y + 120);
 	outtextxy(gra_size::food_x, gra_size::food_y, &to_string(data.food)[0]);
+}
+
+void t_draw_sys::__flash_view_cards(std::vector<card>& v, int page)
+{
+	SetWorkingImage(&this->buffer);
+	cleardevice();
+	for (int i = page * 16; i < (((page * 16 + 8) < v.size()) ? (page * 16 + 8) : v.size()); ++i)
+	{
+		//TODO putimage()
+		solidrectangle(gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
+			, gra_size::viewcard_firrow_y,
+			gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8) + gra_size::card_width,
+			gra_size::viewcard_firrow_y + 200);
+		outtextxy(gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
+			, gra_size::viewcard_firrow_y, &data.cards_pool[i].card_name[0]);
+		outtextxy(gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
+			, gra_size::viewcard_firrow_y + 50, &to_string(data.cards_pool[i].card_id)[0]);
+	}
+	for (int i = page * 16 + 8; i < (((page * 16 + 16) < v.size()) ? (page * 16 + 16) : v.size()); ++i)
+	{
+		solidrectangle(gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
+			, gra_size::viewcard_secrow_y,
+			gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8) + gra_size::card_width,
+			gra_size::viewcard_secrow_y + 200);
+		outtextxy(gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
+			, gra_size::viewcard_secrow_y, &data.cards_pool[i].card_name[0]);
+		outtextxy(gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
+			, gra_size::viewcard_secrow_y + 50, &to_string(data.cards_pool[i].card_id)[0]);
+	}
+	SetWorkingImage();
+	putimage(0, 0, &buffer);
+}
+
+void t_draw_sys::check_view()
+{
+	if (data.view_cards)
+	{
+		switch (data.view_cards)
+		{
+		case 1:
+			this->view_cards(data.cards_pool);
+		default:
+			break;
+		}
+	}
+	data.view_cards = 0;
 }
 
 t_draw_sys::t_draw_sys(data_sys &d) :data(d),
@@ -374,6 +426,8 @@ void t_draw_sys::draw_battle()
 	settextcolor(BLACK);
 	setfillcolor(LIGHTBLUE);
 	//TODO putimage(0, 0, image);
+
+	this->check_view();
 	this->__draw_player_info();
 	this->__draw_card_in_hand();
 	this->__draw_entities();
@@ -419,8 +473,27 @@ void t_draw_sys::draw_begin()
 {
 }
 
+
 void t_draw_sys::view_cards(vector<card>& v)
 {
+	int page = 0;
+	__flash_view_cards(v, page);
+	while (1)
+	{
+		auto hit = GetMouseMsg();
+		if (hit.mkLButton)
+		{
+			//TODO next/last page and exit
+			if (page < v.size() / 16)++page;
+			else page = 0;
+			__flash_view_cards(v, page);
+		}
+		//temp exit
+		if (hit.mkRButton)
+		{
+			break;
+		}
+	}
 }
 
 void t_draw_sys::view_artifacts()

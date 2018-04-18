@@ -43,12 +43,10 @@ int main()
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
 
-	d.cards_pool.push_back(card(23));
-	d.cards_pool.push_back(card(23));
-	d.cards_pool.push_back(card(23));
-	d.cards_pool.push_back(card(23));
-	d.cards_pool.push_back(card(23));
-	d.cards_pool.push_back(card(23));
+	for (int i = 1; i < 60; ++i)
+	{
+		d.cards_pool.push_back(6);
+	}
 
 	for (int i = 0; i < MAP_WIDTH; i++)
 	{
@@ -91,7 +89,7 @@ battle:
 		dr.t_draw_b();
 		i.update();
 		//enemy act
-		Sleep(100);
+		Sleep(30);
 		if (d.enemies_data.empty())
 		{
 			goto explore;

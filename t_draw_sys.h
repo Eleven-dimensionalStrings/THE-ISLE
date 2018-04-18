@@ -34,7 +34,8 @@ class t_draw_sys
 	void __draw_explore_info();
 	void __draw_player_info();
 
-
+	void __flash_view_cards(std::vector<card>&v, int page);
+	void check_view();
 public:
 	t_draw_sys(data_sys&);
 	void t_draw_b();//控制台测试战斗用

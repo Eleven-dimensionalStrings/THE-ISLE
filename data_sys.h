@@ -66,15 +66,16 @@ public:
 	std::string text_to_be_displayed;
 	std::string map_text;
 	//to determine explore context
-	std::size_t current_select_page;//indicates the position of the first selection in choice_list.  
-	bool is_vaccant;
-	bool is_battle;
+	std::size_t current_select_page;//indicates the position of the first selection in choice_list. 
 	std::size_t next_event_id;//for "SKIP" button
 	std::size_t player_s_class;
 	std::size_t passed_turns;
-	bool has_other_enemy(std::size_t pos);
-	bool event_is_not_mandetory;
+	std::size_t view_cards;
 	random_engine re;
+	bool has_other_enemy(std::size_t pos);
+	bool event_is_not_mandetory; 
+	bool is_vaccant;
+	bool is_battle;
 
 	//TODO for artifacts
 	info_to_explore_sys artifact_on_create(std::size_t atf_id);

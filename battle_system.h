@@ -16,6 +16,7 @@ public:
 private:
 	data_sys & data;
 	std::stack<action> process_stack;
+	void deal_an_action();
 	void process();
 	bool battle_succ();
 };

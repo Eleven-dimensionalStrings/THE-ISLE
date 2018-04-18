@@ -65,7 +65,7 @@ void battle_context::read_input()
 				&& hit.y > gra_size::enemy_y && hit.y < gra_size::enemy_y + 200)//需要改为敌人高度
 			{
 				size_t pos = (hit.x - gra_size::enemy_x) / gra_size::enemy_width;
-				if (pos <= get_data().enemies_data.size())
+				if (pos < get_data().enemies_data.size())
 				{
 					cur_state->click_an_enemy(pos);
 				}
@@ -95,10 +95,7 @@ void battle_context::read_input()
 		//temp
 		else if (hit.mkRButton)
 		{
-			cur_state->click_cancel();
-			system("cls");
-			Sleep(100);
-			FlushMouseMsgBuffer();
+			get_data().view_cards = 1;
 		}
 	}
 }
@@ -395,7 +392,7 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 				{
 					auto temp_action = *i;
 					i = temp.action_set.erase(i);
-					for (size_t j = 0; j < MAX_ENEMIES; ++j)
+					for (size_t j = 0; j < get_data().enemies_data.size(); ++j)
 					{
 						if (get_data().enemies_data[j].is_alive())
 						{
@@ -430,6 +427,7 @@ void b_confirm_state::click_confirm()
 		temp.append(tcard.use_card(get_data()));
 		for (auto i = temp.action_set.begin(); i != temp.action_set.end(); ++i)
 		{
+			//可能要改成直接传all_enemies
 			if (i->listener == &get_data().all_enemies)
 			{
 				auto temp_action = *i;

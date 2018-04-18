@@ -7,7 +7,7 @@ using namespace std;
 //TODO 6, 8，9, 12
 
 data_sys::data_sys() :b(nullptr), player_data(*this), all_enemies(*this, MEANINGLESS_VALUE), random_enemy(*this, MEANINGLESS_VALUE)
-, select_one_enemy(*this, MEANINGLESS_VALUE), re(this)
+, select_one_enemy(*this, MEANINGLESS_VALUE), re(this), view_cards(0)
 {
 	for (auto&i : render_select_card)i = 0;
 }
@@ -53,10 +53,10 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	{
 		info_to_battle_sys result(action(battle_action_type::CALLING_ACTION
 			, &player_data, &select_one_enemy, type_type::NORMAL, 12));
-		if (cards_in_hand.size() > 0)
+		if (cards_in_hand.size() > 1)
 		{
 			result.append(action(battle_action_type::P_DISCARD_A_CARD
-				, MEANINGLESS_VALUE, re.get_num(0, cards_in_hand.size() - 1)));
+				, MEANINGLESS_VALUE, cards_in_hand.size() - 2));
 		}
 		return result;
 		break;
@@ -501,10 +501,10 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	{
 		info_to_battle_sys result(action(battle_action_type::CALLING_ACTION
 			, &player_data, &select_one_enemy, type_type::NORMAL, 16));
-		if (cards_in_hand.size() > 0)
+		if (cards_in_hand.size() > 1)
 		{
 			result.append(action(battle_action_type::P_DISCARD_A_CARD
-				, MEANINGLESS_VALUE, re.get_num(0, cards_in_hand.size() - 1)));
+				, MEANINGLESS_VALUE, re.get_num(0, cards_in_hand.size() - 2)));
 		}
 		return result;
 		break;

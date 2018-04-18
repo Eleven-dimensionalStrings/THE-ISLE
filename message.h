@@ -193,6 +193,11 @@ namespace gra_size
 	const std::size_t card_rx = card_x + card_width * max_cards + card_closure * (max_cards + 1);
 	const std::size_t card_y = 500;
 	const std::size_t card_dy = 700;
+	const std::size_t viewcard_firrow_x = 150;
+	const std::size_t viewcard_firrow_y = 80;
+	const std::size_t viewcard_secrow_x = 150;
+	const std::size_t viewcard_secrow_y = 320;
+
 	const std::size_t hp_y = 110;
 	const std::size_t hp_x = 35;
 	const std::size_t gold_y = 110;
