@@ -1,10 +1,4 @@
 
 \.vs/
 
-Release/
-
-x64/
-
 Debug/
-
-debug\.log

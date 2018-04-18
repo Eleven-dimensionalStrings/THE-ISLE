@@ -1,6 +1,8 @@
 #include <random>
 #include <ctime>
 #include <stack>
+#include <queue>
+#include <iostream>
 #include "explore_system.h"
 #include "message.h"
 #include "data_sys.h"
@@ -55,9 +57,94 @@ void explore_system::end_battle()
 	}
 }
 
-void explore_system::create_map()
+void bfs(size_t x, size_t y, int result[13][5], int visited[13][5], size_t& count)
 {
-	//TODO 
+	cout << count << endl;
+	if (result[x - 1][y] == 0 && visited[x - 1][y] == 0)
+	{
+		visited[x - 1][y] = 1;
+		count++;
+		bfs(x - 1, y, result, visited, count);
+	}
+	if (result[x][y - 1] == 0 && visited[x][y - 1] == 0)
+	{
+		visited[x][y - 1] = 1;
+		count++;
+		bfs(x, y - 1, result, visited, count);
+	}
+	if (result[x + 1][y] == 0 && visited[x + 1][y] == 0)
+	{
+		visited[x + 1][y] = 1;
+		count++;
+		bfs(x + 1, y, result, visited, count);
+	}
+	if (result[x][y + 1] == 0 && visited[x][y + 1] == 0)
+	{
+		visited[x][y + 1] = 1;
+		count++;
+		bfs(x, y + 1, result, visited, count);
+	}
+}
+
+void explore_system::create_map(std::size_t map_type)
+{
+	default_random_engine e(static_cast<unsigned int>(time(0)));
+	size_t count = 0;
+	int visited[13][5] = {};
+	int result[13][5] = {};
+	while (count < 35)
+	{
+		count = 0;
+		memset(visited, 0, sizeof(visited));
+		memset(result, 0, sizeof(result));
+		uniform_int_distribution<unsigned> a(0, 12);
+		uniform_int_distribution<unsigned> b(0, 4);
+		int begin_x;
+		int begin_y;
+		for (int i = 0; i < 30;)
+		{
+			size_t x = a(e);
+			size_t y = b(e);
+			if (result[x][y] == 0)
+			{
+				result[x][y] = 1;
+				i++;
+			}
+		}
+		for (int i = 0; i < 13; i++)
+		{
+			for (int j = 0; j < 5; j++)
+			{
+				if (result[i][j] == 0)
+				{
+					begin_x = i;
+					begin_y = j;
+					break;
+				}
+			}
+		}
+		bfs(begin_x, begin_y, result, visited, count);
+	}
+
+	bool no_player = true;
+	for (int i = 0; i < MAP_WIDTH; ++i)
+	{
+		for (int j = 0; j < MAP_LENGTH; ++j)
+		{
+			if (result[j][i] == 1)
+				data.map_marks[j][i] = map_mark_type::EMPTY;
+			else if (no_player)
+			{
+				data.map_marks[j][i] = map_mark_type::PLAYER;
+				no_player = false;
+			}
+			else
+			{
+				data.map_marks[j][i] = map_mark_type::UNKNOWN;
+				data.explore_map[j][i] = e_random_engine().get_event(map_type);
+			}
+		}
+	}
 }
 
 void explore_system::process()
@@ -404,5 +491,23 @@ size_t e_random_engine::get_card_by_class(int class_id)
 	default_random_engine e(static_cast<unsigned>(time(0)));
 	uniform_int_distribution<int> ran(lb, ub);
 	int result = ran(e);
+	return result;
+}
+
+size_t e_random_engine::get_event(size_t map_type)
+{
+	int lb, ub;
+	switch (map_type)
+	{
+	case 1:
+		break;
+	default:
+		lb = 1;
+		ub = 14;
+		break;
+	}
+	default_random_engine e(static_cast<unsigned>(time(0)));
+	uniform_int_distribution<int> ran(lb, ub);
+	size_t result = ran(e);
 	return result;
 }

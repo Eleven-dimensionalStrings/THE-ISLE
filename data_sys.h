@@ -62,6 +62,7 @@ public:
 	std::vector<std::pair<std::size_t, std::size_t>>b_to_d;
 	std::size_t explore_map[MAP_LENGTH][MAP_WIDTH];
 	int map_marks[MAP_LENGTH][MAP_WIDTH];
+	std::size_t map_event_type[MAP_LENGTH][MAP_WIDTH];
 	std::pair<int, int> player_location;
 	std::vector<e_action> choice_list;
 	std::vector<std::string> choice_name_list;

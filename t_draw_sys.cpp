@@ -380,20 +380,30 @@ void t_draw_sys::t_draw_e()
 				switch (data.map_marks[j][i])
 				{
 				case map_mark_type::EMPTY:
-					cout << "*";
+				{
+					cout << " ";
 					break;
+				}
 				case map_mark_type::KNOWN:
+				{
 					cout << "K";
 					break;
+				}
 				case map_mark_type::PLAYER:
+				{
 					cout << "P";
 					break;
+				}
 				case map_mark_type::UNKNOWN:
+				{
 					cout << "U";
 					break;
+				}
 				case map_mark_type::VISITED:
+				{
 					cout << "V";
 					break;
+				}
 				}
 			}
 			cout << "\n";

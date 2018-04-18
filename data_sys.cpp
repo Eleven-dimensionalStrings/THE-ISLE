@@ -1102,7 +1102,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 85),
 			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_STRENGTH, 1, "你站在雕像前，仰望雕像手中的巨斧。你的脑海中浮现出一位名叫鲍德温的国王的传奇故事。当你回过神来，你发现你的力量增加了."),
-			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, "", "雕像静静的伫在那里，等待着下一个渴望成为传奇的人")});
+			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, "", "雕像静静的伫在那里，等待着下一个渴望成为传奇的人.")});
 	}
 	case 8://骑士雕像
 	{
@@ -1116,7 +1116,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 85),
 			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_VITALITY, 1, "你跪在雕像前，让长剑贴在你的肩上。你的脑海中浮现出一位名叫雷诺德的十字军的传奇故事。当你回过神来，你发现你的体质增加了."),
-			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, "", "雕像静静的伫在那里，等待着下一个渴望成为传奇的人")});
+			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, "", "雕像静静的伫在那里，等待着下一个渴望成为传奇的人.")});
 	}
 	case 9://盗贼雕像
 	{
@@ -1130,7 +1130,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 85),
 			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_DEXTERITY, 1, "你拨开缠绕着雕像的杂草，尝试解读雕像上的文字。你的脑海中浮现出一位名叫迪斯玛的盗贼的传奇故事。当你回过神来，你发现你的敏捷增加了."),
-			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, "", "雕像静静的伫在那里，等待着下一个渴望成为传奇的人")});
+			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, "", "雕像静静的伫在那里，等待着下一个渴望成为传奇的人.")});
 	}
 	case 10://吟游诗人雕像
 	{
@@ -1144,7 +1144,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 85),
 			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_LUCK, 1, "你向喷泉中丢了几枚银币，霎时间，一道彩虹划过了天空。你的脑海中浮现出一位名叫法兰恩的神明的传奇故事， 当你回过神来，你发现你的幸运增加了."),
-			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, "", "雕像静静的伫在那里，等待着下一个渴望成为传奇的人")});
+			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, "", "雕像静静的伫在那里，等待着下一个渴望成为传奇的人.")});
 	}
 	case 11://许愿井
 	{

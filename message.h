@@ -19,11 +19,11 @@
 class data_sys;
 namespace map_mark_type
 {
-	const int EMPTY = -1;
-	const int PLAYER = 0;
-	const int UNKNOWN = 1;
-	const int KNOWN = 2;
-	const int VISITED = 3;
+	const int EMPTY = 0;
+	const int PLAYER = 2;
+	const int UNKNOWN = 3;
+	const int KNOWN = 5;
+	const int VISITED = 6;
 }
 
 namespace explore_action_type

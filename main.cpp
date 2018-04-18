@@ -35,7 +35,7 @@ int main()
 	d.food = 5;
 	d.player_s_class = player_class::WAR;
 	d.is_vaccant = 1;
-	d.is_battle = 1;
+	d.is_battle = 0;
 
 	/*d.enemies_data.push_back(enemy(d, 35));*/
 	//d.enemies_data.push_back(enemy(d, 1));
@@ -48,16 +48,8 @@ int main()
 		d.cards_pool.push_back(6);
 	}
 
-	for (int i = 0; i < MAP_WIDTH; i++)
-	{
-		for (int j = 0; j < MAP_LENGTH; j++)
-		{
-			d.map_marks[j][i] = map_mark_type::UNKNOWN;
-			d.explore_map[j][i] = 123465;
-		}
-	}
-	//d.explore_map[2][0] = 2;
-	d.map_marks[0][0] = map_mark_type::PLAYER;
+	e.create_map();
+
 	//e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
 	//goto battle;
 
