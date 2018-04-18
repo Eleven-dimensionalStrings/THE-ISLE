@@ -2,3 +2,9 @@
 \.vs/
 
 Debug/
+
+EasyXWithGDIPlus/
+
+*.txt
+
+*.7z

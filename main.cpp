@@ -35,13 +35,13 @@ int main()
 	d.food = 5;
 	d.player_s_class = player_class::WAR;
 	d.is_vaccant = 1;
-	d.is_battle = 0;
+	d.is_battle = 1;
 
 	/*d.enemies_data.push_back(enemy(d, 35));*/
-	//d.enemies_data.push_back(enemy(d, 1));
-	//d.enemies_data.push_back(enemy(d, 1));
-	//d.enemies_data.push_back(enemy(d, 1));
-	//d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
 
 	for (int i = 1; i < 60; ++i)
 	{
@@ -51,7 +51,7 @@ int main()
 	e.create_map();
 
 	//e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
-	//goto battle;
+	goto battle;
 
 explore:
 	//explore loop
@@ -76,7 +76,7 @@ battle:
 	b.initiate_battle();
 	while (1)
 	{
-		b.update(); 
+		b.update();
 		dr.draw_battle();
 		dr.t_draw_b();
 		i.update();
