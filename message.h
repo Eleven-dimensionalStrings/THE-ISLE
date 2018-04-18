@@ -188,6 +188,8 @@ namespace gra_size
 	const std::size_t max_enemies = 5;
 	const std::size_t max_cards = 8;
 
+	const std::size_t buff_side_len = 15;
+	const std::size_t buff_closure = 5;
 	const std::size_t card_starting_pos = 150;
 	const std::size_t card_width = 135;
 	const std::size_t card_closure = 10;

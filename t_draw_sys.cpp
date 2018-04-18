@@ -67,7 +67,24 @@ void t_draw_sys::__draw_explore_map()
 
 void t_draw_sys::__draw_buff()
 {
-	//TODO
+	//player
+	for (int i = 0; i < 3; ++i)
+	{
+		for (int j = 0; j < 8; ++j)
+		{
+			solidrectangle(gra_size::player_x + (gra_size::buff_side_len + gra_size::buff_closure)*j,
+				gra_size::player_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
+				gra_size::player_x + gra_size::buff_side_len*(j + 1) + gra_size::buff_closure*j,
+				gra_size::player_y + 205 + gra_size::buff_side_len*(i + 1) + gra_size::buff_closure*i);
+			settextstyle(12, 0, _T("Arial"));
+			outtextxy(gra_size::player_x + (gra_size::buff_side_len + gra_size::buff_closure)*j + 10,
+				gra_size::player_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i + 8,
+				&to_string(99)[0]);
+			settextstyle(20, 0, _T("Arial"));
+		}
+	}
+
+	//enemy
 }
 
 void t_draw_sys::__draw_artifacts()
@@ -200,7 +217,7 @@ void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 	}
 	IMAGE t;
 	loadimage(&t, "C:\\Users\\Lemon\\Desktop\\作业\\数据结构\\data_structure_hw\\无标题.jpg");
-	putimage(x,y,&t);
+	putimage(x, y, &t);
 	//TODO
 }
 
@@ -444,11 +461,7 @@ void t_draw_sys::draw_battle()
 	this->__draw_battle_info();
 	this->__draw_guiding_pics();
 	this->__draw_lines();
-	solidrectangle(gra_size::player_x, gra_size::player_y + 205, gra_size::player_x + 15, gra_size::player_y + 220);
-	settextstyle(12, 0, _T("Arial"));
-	outtextxy(gra_size::player_x + 11, gra_size::player_y + 214, &to_string(99)[0]);
-	settextstyle(20, 0, _T("Arial"));
-	solidrectangle(gra_size::player_x, gra_size::player_y + 225, gra_size::player_x + 15, gra_size::player_y + 240);
+	this->__draw_buff();
 	SetWorkingImage(0);
 	putimage(0, 0, &buffer);
 }
