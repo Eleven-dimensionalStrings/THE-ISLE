@@ -57,10 +57,34 @@ void t_draw_sys::__draw_explore_map()
 	{
 		for (int j = 0; j < 5; ++j)
 		{
-			solidrectangle(gra_size::map_start_x + (gra_size::map_block_size + gra_size::map_closure) * i,
-				gra_size::map_start_y + (gra_size::map_block_size + gra_size::map_closure) * j,
-				gra_size::map_start_x + gra_size::map_block_size + (gra_size::map_block_size + gra_size::map_closure) * i,
-				gra_size::map_start_y + gra_size::map_block_size + (gra_size::map_block_size + gra_size::map_closure) * j);
+			switch (data.map_marks[i][j])
+			{
+			case map_mark_type::EMPTY:
+				break;
+			case map_mark_type::PLAYER:
+				setfillcolor(LIGHTRED);
+				solidrectangle(gra_size::map_start_x + (gra_size::map_block_size + gra_size::map_closure) * i,
+					gra_size::map_start_y + (gra_size::map_block_size + gra_size::map_closure) * j,
+					gra_size::map_start_x + gra_size::map_block_size + (gra_size::map_block_size + gra_size::map_closure) * i,
+					gra_size::map_start_y + gra_size::map_block_size + (gra_size::map_block_size + gra_size::map_closure) * j);
+				setfillcolor(LIGHTBLUE);
+				break;
+			case map_mark_type::VISITED:
+				setfillcolor(LIGHTGREEN);
+				solidrectangle(gra_size::map_start_x + (gra_size::map_block_size + gra_size::map_closure) * i,
+					gra_size::map_start_y + (gra_size::map_block_size + gra_size::map_closure) * j,
+					gra_size::map_start_x + gra_size::map_block_size + (gra_size::map_block_size + gra_size::map_closure) * i,
+					gra_size::map_start_y + gra_size::map_block_size + (gra_size::map_block_size + gra_size::map_closure) * j);
+				setfillcolor(LIGHTBLUE);
+				break;
+			default:
+				solidrectangle(gra_size::map_start_x + (gra_size::map_block_size + gra_size::map_closure) * i,
+					gra_size::map_start_y + (gra_size::map_block_size + gra_size::map_closure) * j,
+					gra_size::map_start_x + gra_size::map_block_size + (gra_size::map_block_size + gra_size::map_closure) * i,
+					gra_size::map_start_y + gra_size::map_block_size + (gra_size::map_block_size + gra_size::map_closure) * j);
+				break;
+			}
+
 		}
 	}
 }
@@ -244,7 +268,7 @@ void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 		outtextxy(x, y, &data.cards_in_hand[pos].card_name[0]);
 	}
 	IMAGE t;
-	loadimage(&t, "C:\\Users\\Lemon\\Desktop\\×÷Òµ\\Êý¾Ý½á¹¹\\data_structure_hw\\ÎÞ±êÌâ.jpg");
+	loadimage(&t, "C:\\Users\\Michael\\Desktop\\ï¿½ï¿½ï¿½Ý½á¹¹ï¿½ï¿½ï¿½ï¿½Òµ\\Data_Structure_Homework\\Data_Structure_Homework\\resource\\1.jpg");
 	putimage(x, y, &t);
 	//TODO
 }
@@ -273,11 +297,16 @@ void t_draw_sys::__draw_player_in_map()
 
 void t_draw_sys::__draw_explore_info()
 {
-	for (int i = 0; i < data.choice_list.size(); ++i)
+	int temp = data.choice_list.size() - data.current_select_page * 8;
+	if (temp > 8)
+	{
+		temp = 8;
+	}
+	for (int i = data.current_select_page * 8; i < data.current_select_page * 8 + temp; ++i)
 	{
 		int y = gra_size::card_y, x = gra_size::card_closure * (i + 1)
 			+ gra_size::card_width * i + gra_size::card_x;
-		__draw_a_card(i, x, y);
+		__draw_an_explore_card(i, x, y);
 		if (data.render_select_card[i])
 		{
 			setfillcolor(GREEN);
@@ -288,12 +317,25 @@ void t_draw_sys::__draw_explore_info()
 		}
 	}
 	//left arrow pic
+
 	solidrectangle(gra_size::left_arrow_x, gra_size::left_arrow_y,
 		gra_size::left_arrow_x + 100, gra_size::left_arrow_y + 100);
+	IMAGE t;
+	loadimage(&t, "C:\\Users\\Michael\\Desktop\\ï¿½ï¿½ï¿½Ý½á¹¹ï¿½ï¿½ï¿½ï¿½Òµ\\Data_Structure_Homework\\Data_Structure_Homework\\resource\\components\\left_arrow.jpg");
+	putimage(gra_size::left_arrow_x, gra_size::left_arrow_y, &t);
 
 	//right arrow pic
 	solidrectangle(gra_size::right_arrow_x, gra_size::right_arrow_y,
 		gra_size::right_arrow_x + 100, gra_size::right_arrow_y + 100);
+}
+
+void t_draw_sys::__draw_an_explore_card(std::size_t pos, int x, int y)
+{
+	x += gra_size::card_starting_pos;
+	setfillcolor(LIGHTRED);
+	solidrectangle(x, y, x + gra_size::card_width, y + 200);
+	setfillcolor(LIGHTBLUE);
+	//TODO
 }
 
 void t_draw_sys::__draw_player_info()
@@ -441,7 +483,7 @@ void t_draw_sys::t_draw_e()
 				}
 				case map_mark_type::UNKNOWN:
 				{
-					cout << "U";
+					cout << data.explore_map[j][i];
 					break;
 				}
 				case map_mark_type::VISITED:
@@ -454,6 +496,7 @@ void t_draw_sys::t_draw_e()
 			cout << "\n";
 		}
 		cout << "click the map to move" << "\n";
+		cout << data.player_location.first << " " << data.player_location.second << endl;
 	}
 	else
 	{
@@ -467,7 +510,7 @@ void t_draw_sys::t_draw_e()
 		}
 		if (data.next_event_id > 0)
 		{
-			cout << "press \"n\"  [Ìø¹ýÑ¡Ïî]" << "\n";
+			cout << "press \"n\"  [ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½]" << "\n";
 		}
 	}
 }

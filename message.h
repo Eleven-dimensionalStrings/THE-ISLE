@@ -246,7 +246,7 @@ namespace gra_size
 
 	const std::size_t left_arrow_x = 50;
 	const std::size_t left_arrow_y = 550;
-	const std::size_t right_arrow_x = 1300;
+	const std::size_t right_arrow_x = 1320;
 	const std::size_t right_arrow_y = 550;
 	const std::size_t event_card_x = 500;
 	const std::size_t event_card_y = 150;

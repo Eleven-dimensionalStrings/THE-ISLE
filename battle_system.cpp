@@ -60,7 +60,8 @@ void battle_system::send_message(info_to_battle_sys input)
 }
 
 void battle_system::deal_an_action()
-{//TODO battle_fail
+{
+	//TODO battle_fail
 	if (battle_succ())
 	{
 		while (!process_stack.empty())process_stack.pop();
@@ -327,7 +328,7 @@ void battle_system::deal_an_action()
 		vector<card>& c_in_hand = data.cards_in_hand;
 		vector<card>& c_deck = data.cards_deck;
 		vector<card>& c_grave = data.cards_grave;
-		if (c_in_hand.size() <= MAX_CARDS_IN_HAND)
+		if (c_in_hand.size() < MAX_CARDS_IN_HAND)
 		{
 			c_in_hand.push_back(card(temp.value));
 		}

@@ -2,6 +2,8 @@
 #include <string>
 #include <stack>
 #include <vector>
+#include <random>
+#include <time.h>
 #include "message.h"
 #include "game_entity.h"
 class data_sys;
@@ -24,6 +26,8 @@ private:
 class e_random_engine
 {
 public:
+	e_random_engine();
+	std::default_random_engine egn;
 	size_t get_card_by_id(int id);
 	size_t get_card_by_class(int class_id);
 	size_t get_event(std::size_t map_type = 0);

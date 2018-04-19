@@ -43,10 +43,16 @@ int main()
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
 
-	for (int i = 1; i < 60; ++i)
+	/*for (int i = 1; i <= 60; ++i)
 	{
-		d.cards_pool.push_back(6);
-	}
+		d.cards_pool.push_back(i);
+	}*/
+
+	d.cards_pool.push_back(52);
+	d.cards_pool.push_back(52);
+	d.cards_pool.push_back(52);
+	d.cards_pool.push_back(1);
+	d.cards_pool.push_back(1);
 
 	//e.create_map();
 
@@ -76,7 +82,7 @@ battle:
 	b.initiate_battle();
 	while (1)
 	{
-		b.update(); 
+		b.update();
 		dr.draw_battle();
 		dr.t_draw_b();
 		i.update();

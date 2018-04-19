@@ -57,28 +57,27 @@ void explore_system::end_battle()
 	}
 }
 
-void bfs(size_t x, size_t y, int result[13][5], int visited[13][5], size_t& count)
+void bfs(size_t x, size_t y, int result[][5], int visited[][5], size_t& count)
 {
-	cout << count << endl;
-	if (result[x - 1][y] == 0 && visited[x - 1][y] == 0)
+	if (x >= 1 && result[x - 1][y] == 0 && visited[x - 1][y] == 0)
 	{
 		visited[x - 1][y] = 1;
 		count++;
 		bfs(x - 1, y, result, visited, count);
 	}
-	if (result[x][y - 1] == 0 && visited[x][y - 1] == 0)
+	if (y >= 1 && result[x][y - 1] == 0 && visited[x][y - 1] == 0)
 	{
 		visited[x][y - 1] = 1;
 		count++;
 		bfs(x, y - 1, result, visited, count);
 	}
-	if (result[x + 1][y] == 0 && visited[x + 1][y] == 0)
+	if (x <= 11 && result[x + 1][y] == 0 && visited[x + 1][y] == 0)
 	{
 		visited[x + 1][y] = 1;
 		count++;
 		bfs(x + 1, y, result, visited, count);
 	}
-	if (result[x][y + 1] == 0 && visited[x][y + 1] == 0)
+	if (y <= 3 && result[x][y + 1] == 0 && visited[x][y + 1] == 0)
 	{
 		visited[x][y + 1] = 1;
 		count++;
@@ -90,13 +89,14 @@ void explore_system::create_map(std::size_t map_type)
 {
 	default_random_engine e(static_cast<unsigned int>(time(0)));
 	size_t count = 0;
-	int visited[13][5] = {};
-	int result[13][5] = {};
-	while (count < 35)
+	int visited[13][5];
+	int result[13][5];
+	bool generate_succ = 0;
+	while (!generate_succ)
 	{
 		count = 0;
-		memset(visited, 0, sizeof(visited));
-		memset(result, 0, sizeof(result));
+		memset(visited, 0, sizeof(int) * 65);
+		memset(result, 0, sizeof(int) * 65);
 		uniform_int_distribution<unsigned> a(0, 12);
 		uniform_int_distribution<unsigned> b(0, 4);
 		int begin_x;
@@ -111,22 +111,35 @@ void explore_system::create_map(std::size_t map_type)
 				i++;
 			}
 		}
-		for (int i = 0; i < 13; i++)
+		for (int i = 0; i < 5; i++)
 		{
-			for (int j = 0; j < 5; j++)
+			for (int j = 0; j < 13; j++)
 			{
-				if (result[i][j] == 0)
+				if (result[j][i] == 0)
 				{
-					begin_x = i;
-					begin_y = j;
-					break;
+					begin_x = j;
+					begin_y = i;
+					goto fuck;
 				}
 			}
 		}
+		fuck:
 		bfs(begin_x, begin_y, result, visited, count);
+		generate_succ = 1;
+		for (int i = 0; i < 5; i++)
+		{
+			for (int j = 0; j < 13; j++)
+			{
+				if (result[j][i] == 0 && visited[j][i] == 0)
+				{
+					generate_succ = 0;
+				}
+			}
+		}
 	}
 
 	bool no_player = true;
+	e_random_engine t;
 	for (int i = 0; i < MAP_WIDTH; ++i)
 	{
 		for (int j = 0; j < MAP_LENGTH; ++j)
@@ -136,12 +149,14 @@ void explore_system::create_map(std::size_t map_type)
 			else if (no_player)
 			{
 				data.map_marks[j][i] = map_mark_type::PLAYER;
+				data.player_location = pair<int, int>(j, i);
 				no_player = false;
 			}
 			else
 			{
 				data.map_marks[j][i] = map_mark_type::UNKNOWN;
-				data.explore_map[j][i] = e_random_engine().get_event(map_type);
+				//data.explore_map[j][i] = t.get_event(map_type);
+				data.explore_map[j][i] = 5;//TODO test
 			}
 		}
 	}
@@ -472,14 +487,18 @@ void explore_system::process()
 	}
 }
 
+e_random_engine::e_random_engine()
+	:egn(static_cast<unsigned>(time(0)))
+{
+}
+
 size_t e_random_engine::get_card_by_id(int id)
 {
 	int lb, ub, dis = (id - 1) / 60;
 	lb = 1 + 60 * dis;
 	ub = 60 + 60 * dis;
-	default_random_engine e(static_cast<unsigned>(time(0)));
 	uniform_int_distribution<int> ran(lb, ub);
-	int result = ran(e);
+	int result = ran(egn);
 	return result;
 }
 
@@ -488,9 +507,8 @@ size_t e_random_engine::get_card_by_class(int class_id)
 	int lb, ub, dis = (class_id - 1) / 120;
 	lb = 1 + 120 * dis;
 	ub = 120 + 120 * dis;
-	default_random_engine e(static_cast<unsigned>(time(0)));
 	uniform_int_distribution<int> ran(lb, ub);
-	int result = ran(e);
+	int result = ran(egn);
 	return result;
 }
 
@@ -500,14 +518,15 @@ size_t e_random_engine::get_event(size_t map_type)
 	switch (map_type)
 	{
 	case 1:
+		lb = 1;
+		ub = 12;
 		break;
 	default:
 		lb = 1;
-		ub = 14;
+		ub = 9;
 		break;
 	}
-	default_random_engine e(static_cast<unsigned>(time(0)));
 	uniform_int_distribution<int> ran(lb, ub);
-	size_t result = ran(e);
+	size_t result = ran(egn);
 	return result;
 }

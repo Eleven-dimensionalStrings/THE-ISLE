@@ -152,6 +152,7 @@ void explore_context::read_input()
 		{
 			if (get_data().is_vaccant)
 			{
+				auto d = get_data();
 				//检测点击地图
 				if (hit.x > gra_size::map_start_x && hit.x < gra_size::map_end_x
 					&& hit.y > gra_size::map_start_y && hit.y < gra_size::map_end_y)
