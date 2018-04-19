@@ -358,7 +358,8 @@ void t_draw_sys::__draw_player_info()
 	outtextxy(gra_size::food_x, gra_size::food_y, &to_string(data.food)[0]);
 }
 
-void t_draw_sys::__flash_view_cards(std::vector<card>& v, int page)
+template<class T>
+void t_draw_sys::__flash_view(T& v, int page)
 {
 	SetWorkingImage(&this->buffer);
 	cleardevice();
@@ -568,10 +569,11 @@ void t_draw_sys::draw_begin()
 }
 
 
-void t_draw_sys::view_cards(vector<card>& v)
+template<class Container>
+void t_draw_sys::view_cards(Container&v)
 {
 	int page = 0;
-	__flash_view_cards(v, page);
+	__flash_view(v, page);
 	while (1)
 	{
 		auto hit = GetMouseMsg();
@@ -580,7 +582,7 @@ void t_draw_sys::view_cards(vector<card>& v)
 			//TODO next/last page and exit
 			if (page < v.size() / 16)++page;
 			else page = 0;
-			__flash_view_cards(v, page);
+			__flash_view(v, page);
 		}
 		//temp exit
 		if (hit.mkRButton)
@@ -590,9 +592,6 @@ void t_draw_sys::view_cards(vector<card>& v)
 	}
 }
 
-void t_draw_sys::view_artifacts()
-{
-}
 
 void t_draw_sys::end_battle()
 {

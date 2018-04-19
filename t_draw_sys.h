@@ -35,7 +35,8 @@ class t_draw_sys
 	void __draw_an_explore_card(std::size_t pos, int x, int y);
 	void __draw_player_info();
 
-	void __flash_view_cards(std::vector<card>&v, int page);
+	template<class T>
+	void __flash_view(T&v, int page);
 	void check_view();
 public:
 	t_draw_sys(data_sys&);
@@ -44,7 +45,7 @@ public:
 	void draw_battle();
 	void draw_explore();
 	void draw_begin();//开始页面
-	void view_cards(std::vector<card>&v);//按键后查看卡组等
-	void view_artifacts();
+	template<class Container>
+	void view_cards(Container&v);//按键后查看卡组等
 	void end_battle();
 };
