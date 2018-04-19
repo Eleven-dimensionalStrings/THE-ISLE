@@ -234,6 +234,8 @@ namespace gra_size
 	const std::size_t gold_pic_y = 20;
 	const std::size_t food_pic_x = 220;
 	const std::size_t food_pic_y = 20;
+	const std::size_t ability_num_x = 400;
+	const std::size_t ability_num_y = 20;
 
 	const std::size_t deck_pic_x = 1320;
 	const std::size_t deck_pic_y = 20;
@@ -243,6 +245,10 @@ namespace gra_size
 	const std::size_t grave_pic_y = 80;
 	const std::size_t remove_pic_x = 1375;
 	const std::size_t remove_pic_y = 80;
+	const std::size_t deck_width = 45;
+	const std::size_t deck_height = 50;
+	const std::size_t view_artifact_x = 1250;
+	const std::size_t view_artifact_y = 60;
 
 	const std::size_t left_arrow_x = 50;
 	const std::size_t left_arrow_y = 550;
@@ -280,6 +286,9 @@ public:
 	card(std::size_t id);
 	card(const card& copy_card);
 	card& operator=(const card& copy_card);
+	//TODO 要改成获得卡图
+	std::string get_name();
+	std::size_t get_id();
 
 
 	std::size_t card_id;
@@ -306,6 +315,9 @@ public:
 	artifact();
 	artifact(std::size_t id);
 	std::size_t artifact_id;
+	//TODO 要改成获得卡图
+	std::string get_name();
+	std::size_t get_id();
 };
 
 class game_entity;

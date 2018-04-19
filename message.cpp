@@ -1225,6 +1225,16 @@ card & card::operator=(const card & c)
 	return *this;
 }
 
+std::string card::get_name()
+{
+	return card_name;
+}
+
+std::size_t card::get_id()
+{
+	return card_id;
+}
+
 
 info_to_battle_sys card::use_card(data_sys&d)
 {
@@ -1254,5 +1264,15 @@ artifact::artifact()
 artifact::artifact(std::size_t id)
 	: artifact_id(id)
 {
+}
+
+std::string artifact::get_name()
+{
+	return "54664654";
+}
+
+std::size_t artifact::get_id()
+{
+	return artifact_id;
 }
 
