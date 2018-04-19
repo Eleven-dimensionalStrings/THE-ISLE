@@ -313,7 +313,8 @@ info_to_battle_sys buff::on_calling(info_to_battle_sys temp)
 			action &t = (temp.action_set[i]);
 			if (t.action_id == battle_action_type::CALLING_ACTION && (t.type == type_type::NORMAL
 				|| t.type == type_type::FLAME || (t.type > 100 && t.type < 500)))
-				if (temp.action_set[i].value < -buff_level)
+			{
+				if ((buff_level * (-1)) > static_cast<int>(temp.action_set[i].value))
 				{
 					temp.action_set[i].value = 0;
 				}
@@ -321,6 +322,7 @@ info_to_battle_sys buff::on_calling(info_to_battle_sys temp)
 				{
 					temp.action_set[i].value += buff_level;
 				}
+			}
 		}
 		break;
 	}
@@ -364,7 +366,16 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 			action &t = (temp.action_set[i]);
 			if (t.action_id == battle_action_type::PERFORMING_ACTION && (t.type == type_type::NORMAL
 				|| t.type == type_type::FLAME || t.type == type_type::INDEPENDENT || (t.type > 100 && t.type < 500)))
-				temp.action_set[i].value -= buff_level;
+			{
+				if (buff_level < 0)
+				{
+					temp.action_set[i].value -= static_cast<std::size_t>((-1) * buff_level);
+				}
+				else
+				{
+					temp.action_set[i].value += buff_level;
+				}
+			}
 		}
 		break;
 	}
@@ -488,7 +499,16 @@ void buff::on_manipulate_buff(action & temp)
 	case buff_type::VITALITY:
 	{
 		if (temp.action_id == battle_action_type::ADD_BUFF && (temp.type == buff_type::ARMOR))
-			temp.value += buff_level;
+		{
+			if (buff_level < 0)
+			{
+				temp.value -= static_cast<std::size_t>((-1) * buff_level);
+			}
+			else
+			{
+				temp.value += buff_level;
+			}
+		}
 		break;
 	}
 	case buff_type::INVULNARABLE:

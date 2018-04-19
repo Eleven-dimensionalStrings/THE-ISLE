@@ -60,7 +60,8 @@ void battle_system::send_message(info_to_battle_sys input)
 }
 
 void battle_system::deal_an_action()
-{//TODO battle_fail
+{
+	//TODO battle_fail
 	if (battle_succ())
 	{
 		while (!process_stack.empty())process_stack.pop();
