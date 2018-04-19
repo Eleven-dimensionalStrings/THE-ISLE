@@ -68,9 +68,13 @@ void t_draw_sys::__draw_explore_map()
 void t_draw_sys::__draw_buff()
 {
 	//player
-	for (int i = 0; i < 3; ++i)
+	int unv = 0;
+	//TODO visible
+	auto pool = data.player_data.buff_pool;
+	for (int i = 0; i <= (static_cast<int>(pool.size()) - 1) / 8; ++i)
 	{
-		for (int j = 0; j < 8; ++j)
+		for (int j = 0; j < ((pool.size() >= (i + 1) * 8)
+			? 8 : pool.size() % 8); ++j)
 		{
 			solidrectangle(gra_size::player_x + (gra_size::buff_side_len + gra_size::buff_closure)*j,
 				gra_size::player_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
@@ -79,12 +83,36 @@ void t_draw_sys::__draw_buff()
 			settextstyle(12, 0, _T("Arial"));
 			outtextxy(gra_size::player_x + (gra_size::buff_side_len + gra_size::buff_closure)*j + 10,
 				gra_size::player_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i + 8,
-				&to_string(99)[0]);
+				&to_string(pool[i * 8 + j].buff_level)[0]);
 			settextstyle(20, 0, _T("Arial"));
 		}
 	}
 
 	//enemy
+	for (int pos = 0; pos < data.enemies_data.size(); ++pos)
+	{
+		//TODO visible
+		pool.clear();
+		pool = data.enemies_data[pos].buff_pool;
+		for (int i = 0; i <= (static_cast<int>(pool.size()) - 1) / 8; ++i)
+		{
+			for (int j = 0; j < (pool.size() - i * 8) % 8; ++j)
+			{
+				solidrectangle(pos*(gra_size::enemy_width + gra_size::enemy_closure) + gra_size::enemy_x +
+					(gra_size::buff_side_len + gra_size::buff_closure)*j,
+					gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
+					pos*(gra_size::enemy_width + gra_size::enemy_closure) +
+					gra_size::enemy_x + gra_size::buff_side_len*(j + 1) + gra_size::buff_closure*j,
+					gra_size::enemy_y + 205 + gra_size::buff_side_len*(i + 1) + gra_size::buff_closure*i);
+				settextstyle(12, 0, _T("Arial"));
+				outtextxy(pos*(gra_size::enemy_width + gra_size::enemy_closure) +
+					gra_size::enemy_x + (gra_size::buff_side_len + gra_size::buff_closure)*j + 10,
+					gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i + 8,
+					&to_string(pool[i * 8 + j].buff_level)[0]);
+				settextstyle(20, 0, _T("Arial"));
+			}
+		}
+	}
 }
 
 void t_draw_sys::__draw_artifacts()
