@@ -34,21 +34,21 @@ int main()
 	d.gold = 100;
 	d.food = 5;
 	d.player_s_class = player_class::WAR;
-	d.is_vaccant = 1;
+	d.is_vaccant = 0;
 	d.is_battle = 1;
 
-	/*d.enemies_data.push_back(enemy(d, 35));*/
-	d.enemies_data.push_back(enemy(d, 1));
-	d.enemies_data.push_back(enemy(d, 1));
-	d.enemies_data.push_back(enemy(d, 1));
-	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 35));
+	//d.enemies_data.push_back(enemy(d, 1));
+	//d.enemies_data.push_back(enemy(d, 1));
+	//d.enemies_data.push_back(enemy(d, 1));
+	//d.enemies_data.push_back(enemy(d, 1));
 
 	for (int i = 1; i < 60; ++i)
 	{
 		d.cards_pool.push_back(6);
 	}
 
-	e.create_map();
+	//e.create_map();
 
 	//e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
 	goto battle;

@@ -91,7 +91,24 @@ void t_draw_sys::__draw_explore_map()
 
 void t_draw_sys::__draw_buff()
 {
-	//TODO
+	//player
+	for (int i = 0; i < 3; ++i)
+	{
+		for (int j = 0; j < 8; ++j)
+		{
+			solidrectangle(gra_size::player_x + (gra_size::buff_side_len + gra_size::buff_closure)*j,
+				gra_size::player_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
+				gra_size::player_x + gra_size::buff_side_len*(j + 1) + gra_size::buff_closure*j,
+				gra_size::player_y + 205 + gra_size::buff_side_len*(i + 1) + gra_size::buff_closure*i);
+			settextstyle(12, 0, _T("Arial"));
+			outtextxy(gra_size::player_x + (gra_size::buff_side_len + gra_size::buff_closure)*j + 10,
+				gra_size::player_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i + 8,
+				&to_string(99)[0]);
+			settextstyle(20, 0, _T("Arial"));
+		}
+	}
+
+	//enemy
 }
 
 void t_draw_sys::__draw_artifacts()
@@ -223,7 +240,7 @@ void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 		outtextxy(x, y, &data.cards_in_hand[pos].card_name[0]);
 	}
 	IMAGE t;
-	loadimage(&t, "C:\\Users\\Michael\\Desktop\\数据结构大作业\\Data_Structure_Homework\\Data_Structure_Homework\\resource\\1.jpg");
+	loadimage(&t, "C:\\Users\\Michael\\Desktop\\锟斤拷锟捷结构锟斤拷锟斤拷业\\Data_Structure_Homework\\Data_Structure_Homework\\resource\\1.jpg");
 	putimage(x, y, &t);
 	//TODO
 }
@@ -276,7 +293,7 @@ void t_draw_sys::__draw_explore_info()
 	solidrectangle(gra_size::left_arrow_x, gra_size::left_arrow_y,
 		gra_size::left_arrow_x + 100, gra_size::left_arrow_y + 100);
 	IMAGE t;
-	loadimage(&t, "C:\\Users\\Michael\\Desktop\\数据结构大作业\\Data_Structure_Homework\\Data_Structure_Homework\\resource\\components\\left_arrow.jpg");
+	loadimage(&t, "C:\\Users\\Michael\\Desktop\\锟斤拷锟捷结构锟斤拷锟斤拷业\\Data_Structure_Homework\\Data_Structure_Homework\\resource\\components\\left_arrow.jpg");
 	putimage(gra_size::left_arrow_x, gra_size::left_arrow_y, &t);
 
 	//right arrow pic
@@ -465,7 +482,7 @@ void t_draw_sys::t_draw_e()
 		}
 		if (data.next_event_id > 0)
 		{
-			cout << "press \"n\"  [跳过选项]" << "\n";
+			cout << "press \"n\"  [锟斤拷锟斤拷选锟斤拷]" << "\n";
 		}
 	}
 }
@@ -487,11 +504,7 @@ void t_draw_sys::draw_battle()
 	this->__draw_battle_info();
 	this->__draw_guiding_pics();
 	this->__draw_lines();
-	solidrectangle(gra_size::player_x, gra_size::player_y + 205, gra_size::player_x + 15, gra_size::player_y + 220);
-	settextstyle(12, 0, _T("Arial"));
-	outtextxy(gra_size::player_x + 11, gra_size::player_y + 214, &to_string(99)[0]);
-	settextstyle(20, 0, _T("Arial"));
-	solidrectangle(gra_size::player_x, gra_size::player_y + 225, gra_size::player_x + 15, gra_size::player_y + 240);
+	this->__draw_buff();
 	SetWorkingImage(0);
 	putimage(0, 0, &buffer);
 }
