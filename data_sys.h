@@ -5,6 +5,8 @@
 #include <map>
 #include <functional>
 #include "game_entity.h"
+#include <graphics.h>
+#undef PURE
 class battle_system;
 
 class random_engine
@@ -52,6 +54,11 @@ public:
 	std::vector<card> cards_in_hand;
 	std::vector<card> cards_removed;
 	std::vector<card> cards_equiped;
+	std::vector<IMAGE> cards_thumbnail;
+	std::vector<IMAGE> cards_original;
+	std::vector<IMAGE> cards_mask;//both thumbnails and originals are stored here
+	std::vector<IMAGE> back_grounds;
+	std::vector<IMAGE> components;
 	std::array<bool, MAX_CARDS_IN_HAND>render_select_card;
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
@@ -76,9 +83,10 @@ public:
 	std::size_t view_cards;
 	random_engine re;
 	bool has_other_enemy(std::size_t pos);
-	bool event_is_not_mandetory; 
+	bool event_is_not_mandetory;
 	bool is_vaccant;
 	bool is_battle;
+	int get_enemy(std::size_t enemy_id);
 
 	//TODO for artifacts
 	info_to_explore_sys artifact_on_create(std::size_t atf_id);

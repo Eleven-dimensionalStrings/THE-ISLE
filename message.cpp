@@ -494,7 +494,7 @@ card::card(size_t id)
 	{
 		card_name = "怒吼";
 		card_type = card_type::SKILL;
-		cost = 1;
+		cost = 2;
 		require_target = false;
 		break;
 	}
@@ -504,6 +504,7 @@ card::card(size_t id)
 		card_type = card_type::SKILL;
 		cost = 1;
 		require_target = false;
+		exhaust = true;
 		break;
 	}
 	case 43:
@@ -602,7 +603,7 @@ card::card(size_t id)
 	{
 		card_name = "无懈可击";
 		card_type = card_type::ABILITY;
-		cost = 1;
+		cost = 2;
 		require_target = false;
 		break;
 	}
@@ -634,7 +635,7 @@ card::card(size_t id)
 	{
 		card_name = "活力再生";
 		card_type = card_type::ABILITY;
-		cost = 3;
+		cost = 2;
 		require_target = false;
 		break;
 	}
@@ -983,7 +984,7 @@ card::card(size_t id)
 	{
 		card_name = "怒吼+";
 		card_type = card_type::SKILL;
-		cost = 1;
+		cost = 2;
 		require_target = false;
 		break;
 	}
@@ -993,6 +994,7 @@ card::card(size_t id)
 		card_type = card_type::SKILL;
 		cost = 1;
 		require_target = false;
+		exhaust = true;	
 		break;
 	}
 	case 103:
@@ -1123,7 +1125,7 @@ card::card(size_t id)
 	{
 		card_name = "活力再生+";
 		card_type = card_type::ABILITY;
-		cost = 2;
+		cost = 1;
 		require_target = false;
 		break;
 	}
@@ -1143,7 +1145,7 @@ card::card(size_t id)
 		require_target = false;
 		break;
 	}
-	case 1001:
+	case 401:
 	{
 		card_name = "疲惫";
 		card_type = card_type::STAT;
@@ -1152,7 +1154,7 @@ card::card(size_t id)
 		vanity = true;
 		break;
 	}
-	case 1002:
+	case 402:
 	{
 		card_name = "伤口";
 		card_type = card_type::STAT;
@@ -1161,7 +1163,7 @@ card::card(size_t id)
 		vanity = false;
 		break;
 	}
-	case 1003:
+	case 403:
 	{
 		card_name = "眩晕";
 		card_type = card_type::STAT;
@@ -1170,7 +1172,7 @@ card::card(size_t id)
 		vanity = true;
 		break;
 	}
-	case 1004:
+	case 404:
 	{
 		card_name = "裂伤";
 		card_type = card_type::STAT;
@@ -1179,7 +1181,7 @@ card::card(size_t id)
 		vanity = false;
 		break;
 	}
-	case 1005:
+	case 405:
 	{
 		card_name = "缺氧";
 		card_type = card_type::STAT;
@@ -1188,7 +1190,7 @@ card::card(size_t id)
 		vanity = true;
 		break;
 	}
-	case 1006:
+	case 406:
 	{
 		card_name = "无力";
 		card_type = card_type::STAT;

@@ -25,24 +25,15 @@ void t_draw_sys::__draw_entities()
 		this->__draw_an_enemy(i);
 	}
 	this->__draw_player();
-	if (timer >= 5) { timer = 0; is_drawing = 0; if (!draw_queue.empty())draw_queue.pop(); }//TODO
+	if (timer >= 3) { timer = 0; is_drawing = 0; if (!draw_queue.empty())draw_queue.pop(); }//TODO
 }
 void t_draw_sys::__draw_battle_info()
 {
-	//confirm button
-	solidrectangle(gra_size::confirm_button_x, gra_size::confirm_button_y,
-		gra_size::confirm_button_x + 100, gra_size::confirm_button_y + 50);
-	outtextxy(gra_size::confirm_button_x + 22, gra_size::confirm_button_y + 18, "CONFIRM"); //TODO to be replaced by a compact pic
+	putimage(gra_size::confirm_button_x, gra_size::confirm_button_y, &data.components[1]);
 
-	//cancel button
-	solidrectangle(gra_size::cancel_button_x, gra_size::cancel_button_y,
-		gra_size::cancel_button_x + 100, gra_size::cancel_button_y + 50);
-	outtextxy(gra_size::cancel_button_x + 25, gra_size::cancel_button_y + 18, "CANCEL"); //TODO to be replaced by a compact pic
+	putimage(gra_size::cancel_button_x, gra_size::cancel_button_y, &data.components[2]);
 
-	//turn end button
-	solidrectangle(gra_size::turn_end_button_x, gra_size::turn_end_button_y,
-		gra_size::turn_end_button_x + 100, gra_size::turn_end_button_y + 50);
-	outtextxy(gra_size::turn_end_button_x + 18, gra_size::turn_end_button_y + 18, "END TURN"); //TODO to be replaced by a compact pic
+	putimage(gra_size::turn_end_button_x, gra_size::turn_end_button_y, &data.components[3]);
 
 	//ap_pic
 	solidcircle(gra_size::ap_pic_x, gra_size::ap_pic_y, gra_size::ap_pic_radius);
@@ -175,13 +166,6 @@ void t_draw_sys::__draw_guiding_pics()
 		gra_size::remove_pic_x + 45, gra_size::remove_pic_y + 50);
 }
 
-void t_draw_sys::__draw_lines()
-{
-	solidrectangle(0, 470,
-		1500, 475);
-	//TODO replace this by background pics
-}
-
 void t_draw_sys::__draw_player()
 {
 	pair<size_t, size_t> drawing;
@@ -254,23 +238,35 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 {
 	x += gra_size::card_starting_pos;
-	if (data.render_select_card[pos])
+	int id = data.cards_in_hand[pos].card_id;
+	int mask;
+	if ((id > 0 && id <= 29) || (id > 60 && id <= 89))
 	{
-		setfillcolor(GREEN);
-		//TODO
-		solidrectangle(x, y - 15, x + gra_size::card_width, y + 185);
-		outtextxy(x, y - 15, &data.cards_in_hand[pos].card_name[0]);
-		setfillcolor(LIGHTBLUE);
+		mask = 2;
+	}
+	else if ((id > 29 && id <= 51) || (id > 89 && id <= 111))
+	{
+		mask = 1;
+	}
+	else if (id < 400)
+	{
+		mask = 0;
 	}
 	else
 	{
-		solidrectangle(x, y, x + gra_size::card_width, y + 200);
-		outtextxy(x, y, &data.cards_in_hand[pos].card_name[0]);
+		mask = 3;
 	}
-	IMAGE t;
-	loadimage(&t, "C:\\Users\\Michael\\Desktop\\���ݽṹ����ҵ\\Data_Structure_Homework\\Data_Structure_Homework\\resource\\1.jpg");
-	putimage(x, y, &t);
-	//TODO
+	if (data.render_select_card[pos])
+	{
+		putimage(x, y - 15, &data.cards_mask[mask], NOTSRCERASE);
+		putimage(x, y - 15, &data.cards_thumbnail[id], SRCINVERT);
+	}
+	else
+	{
+		putimage(x, y, &data.cards_mask[mask], NOTSRCERASE);
+		putimage(x, y, &data.cards_thumbnail[id], SRCINVERT);
+
+	}
 }
 
 void t_draw_sys::__draw_event_card()
@@ -316,17 +312,11 @@ void t_draw_sys::__draw_explore_info()
 			setfillcolor(LIGHTBLUE);
 		}
 	}
-	//left arrow pic
+	putimage(gra_size::left_arrow_x, gra_size::left_arrow_y, &data.components[5], NOTSRCERASE);
+	putimage(gra_size::left_arrow_x, gra_size::left_arrow_y, &data.components[4], SRCINVERT);
 
-	solidrectangle(gra_size::left_arrow_x, gra_size::left_arrow_y,
-		gra_size::left_arrow_x + 100, gra_size::left_arrow_y + 100);
-	IMAGE t;
-	loadimage(&t, "C:\\Users\\Michael\\Desktop\\���ݽṹ����ҵ\\Data_Structure_Homework\\Data_Structure_Homework\\resource\\components\\left_arrow.jpg");
-	putimage(gra_size::left_arrow_x, gra_size::left_arrow_y, &t);
-
-	//right arrow pic
-	solidrectangle(gra_size::right_arrow_x, gra_size::right_arrow_y,
-		gra_size::right_arrow_x + 100, gra_size::right_arrow_y + 100);
+	putimage(gra_size::right_arrow_x, gra_size::right_arrow_y, &data.components[7], NOTSRCERASE);
+	putimage(gra_size::right_arrow_x, gra_size::right_arrow_y, &data.components[6], SRCINVERT);
 }
 
 void t_draw_sys::__draw_an_explore_card(std::size_t pos, int x, int y)
@@ -408,6 +398,61 @@ void t_draw_sys::check_view()
 t_draw_sys::t_draw_sys(data_sys &d) :data(d),
 buffer(gra_size::window_width, gra_size::window_height), timer(0), is_drawing(0)
 {
+	// settextstyle(20, 0, _T("Arial"));
+}
+
+void t_draw_sys::load_all()
+{
+	for (int i = 0; i < 4; ++i)
+	{
+		auto s = (".\\resource\\cards_thumbnail\\mask"
+			+ to_string(i) + ".bmp" + '\0');
+		loadimage(&data.cards_mask[i], &(".\\resource\\cards_thumbnail\\mask"
+			+ to_string(i) + ".bmp" + '\0')[0]);
+	}
+	for (int i = 0; i < 4; ++i)
+	{
+		loadimage(&data.cards_mask[i + 4], &(".\\resource\\cards_original\\mask"
+			+ to_string(i) + ".bmp" + '\0')[0]);
+	}
+	for (int i = 1; i < 10; ++i)
+	{
+		loadimage(&data.cards_thumbnail[i], &(".\\resource\\cards_thumbnail\\00"
+			+ to_string(i) + ".bmp" + '\0')[0]);
+		loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\00"
+			+ to_string(i) + ".bmp" + '\0')[0]);
+	}
+	for (int i = 10; i < 100; ++i)
+	{
+		loadimage(&data.cards_thumbnail[i], &(".\\resource\\cards_thumbnail\\0"
+			+ to_string(i) + ".bmp" + '\0')[0]);
+		loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\0"
+			+ to_string(i) + ".bmp" + '\0')[0]);
+	}
+	for (int i = 100; i < 121; ++i)
+	{
+		loadimage(&data.cards_thumbnail[i], &(".\\resource\\cards_thumbnail\\"
+			+ to_string(i) + ".bmp" + '\0')[0]);
+		loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\"
+			+ to_string(i) + ".bmp" + '\0')[0]);
+	}
+	for (int i = 401; i < 407; ++i)
+	{
+		loadimage(&data.cards_thumbnail[i], &(".\\resource\\cards_thumbnail\\"
+			+ to_string(i) + ".bmp" + '\0')[0]);
+		loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\"
+			+ to_string(i) + ".bmp" + '\0')[0]);
+	}
+	for (int i = 0; i < 7; ++i)//TODO, change 7 when new backgrounds are added;
+	{
+		loadimage(&data.back_grounds[i], &(".\\resource\\backgrounds\\"
+			+ to_string(i) + ".bmp" + '\0')[0]);
+	}
+	for (int i = 0; i < 8; ++i)//TODO to replace 8
+	{
+		loadimage(&data.components[i], &(".\\resource\\components\\"
+			+ to_string(i) + ".bmp" + '\0')[0]);
+	}
 }
 
 void t_draw_sys::t_draw_b()
@@ -524,7 +569,8 @@ void t_draw_sys::draw_battle()
 	cleardevice();
 	settextcolor(BLACK);
 	setfillcolor(LIGHTBLUE);
-	//TODO putimage(0, 0, image);
+	putimage(0, 0, &data.back_grounds[0]);
+	putimage(0, 470, &data.components[0]);
 
 	this->check_view();
 	this->__draw_player_info();
@@ -532,7 +578,6 @@ void t_draw_sys::draw_battle()
 	this->__draw_entities();
 	this->__draw_battle_info();
 	this->__draw_guiding_pics();
-	this->__draw_lines();
 	this->__draw_buff();
 	SetWorkingImage(0);
 	putimage(0, 0, &buffer);
@@ -558,7 +603,6 @@ void t_draw_sys::draw_explore()
 		this->__draw_event_card();
 		this->__draw_player();
 		this->__draw_explore_info();
-		this->__draw_lines();
 	}
 	SetWorkingImage(0);
 	putimage(0, 0, &buffer);

@@ -7,7 +7,7 @@
 #define MAX_ENEMIES 5
 #define MAP_LENGTH 13
 #define MAP_WIDTH 5
-#define MAX_CARDS_IN_HAND 8
+#define MAX_CARDS_IN_HAND 7
 #define MEANINGLESS_VALUE static_cast<std::size_t>(31415926)
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
 #define MAX_ARTIFACT_NO 20 //TODO
@@ -159,25 +159,25 @@ namespace buff_type
 	const std::size_t INCREASE_AP = 24;
 
 	//buff from ability cards
-	const std::size_t ETERNAL_FURY = 101;
-	const std::size_t INVULNARABLE = 102;
-	const std::size_t FIGHTING_SPIRIT = 103;
-	const std::size_t FRENZY = 104;
-	const std::size_t RITE = 105;
-	const std::size_t RESUSCITATE = 106;
-	const std::size_t ABILITY_BURN = 107;
-	const std::size_t SCORCHED_EARTH = 108;
-	const std::size_t SHELL = 109;
+	const std::size_t ETERNAL_FURY = 41;
+	const std::size_t INVULNARABLE = 42;
+	const std::size_t FIGHTING_SPIRIT = 43;
+	const std::size_t FRENZY = 44;
+	const std::size_t RITE = 45;
+	const std::size_t RESUSCITATE = 46;
+	const std::size_t ABILITY_BURN = 47;
+	const std::size_t SCORCHED_EARTH = 48;
+	const std::size_t SHELL = 49;
 
 	//enemies' buffs
-	const std::size_t LOADED = 1001;
-	const std::size_t PAIN = 1002;
-	const std::size_t CULTIST_RITE = 1003;
-	const std::size_t PAIN_CURSE = 1004;
-	const std::size_t CORRUPT = 1005;
-	const std::size_t FEAST = 1006; //TODO not done yet	
-	const std::size_t MARK = 1007;
-	const std::size_t ANGER = 1008;
+	const std::size_t LOADED = 71;
+	const std::size_t PAIN = 72;
+	const std::size_t CULTIST_RITE = 73;
+	const std::size_t PAIN_CURSE = 74;
+	const std::size_t CORRUPT = 75;
+	const std::size_t FEAST = 76; //TODO not done yet	
+	const std::size_t MARK = 77;
+	const std::size_t ANGER = 78;
 
 }
 
@@ -186,17 +186,17 @@ namespace gra_size
 	const std::size_t window_width = 1450;
 	const std::size_t window_height = 750;
 	const std::size_t max_enemies = 5;
-	const std::size_t max_cards = 8;
+	const std::size_t max_cards = 7;
 
 	const std::size_t buff_side_len = 15;
 	const std::size_t buff_closure = 5;
-	const std::size_t card_starting_pos = 150;
+	const std::size_t card_starting_pos = 200;
 	const std::size_t card_width = 135;
 	const std::size_t card_closure = 10;
 	const std::size_t card_x = 0;
 	const std::size_t card_rx = card_x + card_width * max_cards + card_closure * (max_cards + 1);
-	const std::size_t card_y = 500;
-	const std::size_t card_dy = 700;
+	const std::size_t card_y = 510;
+	const std::size_t card_dy = 710;
 	const std::size_t viewcard_firrow_x = 150;
 	const std::size_t viewcard_firrow_y = 80;
 	const std::size_t viewcard_secrow_x = 150;
@@ -210,12 +210,12 @@ namespace gra_size
 	const std::size_t food_x = 260;
 	const std::size_t ap_y = 593;
 	const std::size_t ap_x = 60;
-	const std::size_t confirm_button_y = 510;
-	const std::size_t confirm_button_x = 1320;
-	const std::size_t cancel_button_y = 575;
-	const std::size_t cancel_button_x = 1320;
-	const std::size_t turn_end_button_y = 640;
-	const std::size_t turn_end_button_x = 1320;
+	const std::size_t confirm_button_y = 520;
+	const std::size_t confirm_button_x = 1315;
+	const std::size_t cancel_button_y = 585;
+	const std::size_t cancel_button_x = 1315;
+	const std::size_t turn_end_button_y = 650;
+	const std::size_t turn_end_button_x = 1315;
 	const std::size_t enemy_x = 400;
 	const std::size_t enemy_y = 200;
 	const std::size_t enemy_width = 160;

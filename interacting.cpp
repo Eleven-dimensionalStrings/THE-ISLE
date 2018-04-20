@@ -57,7 +57,6 @@ void battle_context::read_input()
 				if (pos <= get_data().cards_in_hand.size())
 				{
 					cur_state->click_a_card(pos);
-					//cur_state->click_confirm();
 				}
 			}
 			//检测点击敌人
@@ -201,7 +200,7 @@ void explore_context::read_input()
 					cur_state->click_left_arrow();
 				}
 				//检测点击右箭头
-				else if (hit.x > gra_size::right_arrow_x && hit.x < gra_size::left_arrow_x + 100
+				else if (hit.x > gra_size::right_arrow_x && hit.x < gra_size::right_arrow_x + 100
 					&& hit.y > gra_size::right_arrow_y && hit.y < gra_size::right_arrow_y + 100)
 				{
 					cur_state->click_right_arrow();

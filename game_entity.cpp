@@ -75,7 +75,7 @@ info_to_battle_sys player::on_turn_end()
 
 
 game_entity::game_entity(data_sys& d) :data(d),
-max_hp(10000), current_hp(10000), max_ap(10), current_ap(10)
+max_hp(100), current_hp(100), max_ap(10), current_ap(10)
 {
 }
 

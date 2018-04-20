@@ -7,7 +7,8 @@ using namespace std;
 //TODO 6, 8，9, 12
 
 data_sys::data_sys() :b(nullptr), player_data(*this), all_enemies(*this, MEANINGLESS_VALUE), random_enemy(*this, MEANINGLESS_VALUE)
-, select_one_enemy(*this, MEANINGLESS_VALUE), re(this), view_cards(0)
+, select_one_enemy(*this, MEANINGLESS_VALUE), re(this), view_cards(0), cards_thumbnail(1020), cards_original(1020), cards_mask(10), back_grounds(20)
+,components(20)
 {
 	for (auto&i : render_select_card)i = 0;
 }
@@ -139,7 +140,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
 			, &player_data, &all_enemies, type_type::NORMAL, 10), action(battle_action_type::ADD_CARD_TO_DECK
-				, MEANINGLESS_VALUE, 1001)});
+				, MEANINGLESS_VALUE, 401)});
 		break;
 	}
 	case 18://背水一战
@@ -168,7 +169,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
 			, &player_data, &select_one_enemy, type_type::NORMAL, 12), action(battle_action_type::ADD_CARD_TO_DECK
-				, MEANINGLESS_VALUE, 1001)});
+				, MEANINGLESS_VALUE, 401)});
 		break;
 	}
 	case 21://灼热打击
@@ -189,23 +190,19 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 23://火焰风暴
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::FLAME, 4), action(battle_action_type::ADD_BUFF
-				, &player_data, &all_enemies, buff_type::BURN, 2), action(battle_action_type::CALLING_ACTION
-					, &player_data, &all_enemies, type_type::FLAME, 4), action(battle_action_type::ADD_BUFF
-						, &player_data, &all_enemies, buff_type::BURN, 2), action(battle_action_type::CALLING_ACTION
-							, &player_data, &all_enemies, type_type::FLAME, 4), action(battle_action_type::ADD_BUFF
-								, &player_data, &all_enemies, buff_type::BURN, 2), action(battle_action_type::CALLING_ACTION
-									, &player_data, &all_enemies, type_type::FLAME, 4), action(battle_action_type::ADD_BUFF
-										, &player_data, &all_enemies, buff_type::BURN, 2)});
+			, &player_data, &all_enemies, type_type::FLAME, 4), action(battle_action_type::CALLING_ACTION
+				, &player_data, &all_enemies, type_type::FLAME, 4), action(battle_action_type::CALLING_ACTION
+					, &player_data, &all_enemies, type_type::FLAME, 4), action(battle_action_type::CALLING_ACTION
+						, &player_data, &all_enemies, type_type::FLAME, 4), action(battle_action_type::ADD_BUFF
+							, &player_data, &all_enemies, buff_type::BURN, 4)});
 		break;
 	}
 	case 24://火焰漩涡
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::FLAME, 2), action(battle_action_type::ADD_BUFF
-				, &player_data, &all_enemies, buff_type::BURN, 1), action(battle_action_type::CALLING_ACTION
-					, &player_data, &all_enemies, type_type::FLAME, 2), action(battle_action_type::ADD_BUFF
-						, &player_data, &all_enemies, buff_type::BURN, 1)});
+			, &player_data, &all_enemies, type_type::FLAME, 2), action(battle_action_type::CALLING_ACTION
+				, &player_data, &all_enemies, type_type::FLAME, 2), action(battle_action_type::ADD_BUFF
+					, &player_data, &all_enemies, buff_type::BURN, 1)});
 		break;
 	}
 	case 25://火蛇
@@ -260,7 +257,9 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 32://武装
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
-			, &player_data, &player_data, buff_type::ARMOR, 10) });
+			, &player_data, &player_data, buff_type::ARMOR, 10), action(battle_action_type::REMOVE_BUFF
+				, &player_data, &player_data, buff_type::FRAGILE, 999), action(battle_action_type::REMOVE_BUFF
+					, &player_data, &player_data, buff_type::VULNERABLE, 999) });
 		break;
 	}
 	case 33://挑衅
@@ -275,8 +274,8 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
 			, &player_data, &player_data, buff_type::ARMOR, 15), action(battle_action_type::ADD_BUFF
 				, &player_data, &player_data, buff_type::VULNERABLE, 1), action(battle_action_type::ADD_CARD_TO_DECK
-					, MEANINGLESS_VALUE, 1001), action(battle_action_type::ADD_CARD_TO_DECK
-						, MEANINGLESS_VALUE, 1001) });
+					, MEANINGLESS_VALUE, 401), action(battle_action_type::ADD_CARD_TO_DECK
+						, MEANINGLESS_VALUE, 401) });
 		break;
 	}
 	case 35://磨刀
@@ -331,15 +330,16 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::DRAW_CARDS
 			, &player_data, &player_data, MEANINGLESS_VALUE, 3), action(battle_action_type::ADD_CARD_TO_DECK
-				, MEANINGLESS_VALUE, 1001), action(battle_action_type::ADD_CARD_TO_DECK
-					, MEANINGLESS_VALUE, 1001) });
+				, MEANINGLESS_VALUE, 401), action(battle_action_type::ADD_CARD_TO_DECK
+					, MEANINGLESS_VALUE, 401) });
 		break;
 	}
 	case 41://怒吼
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
-			, &player_data, &all_enemies, buff_type::VULNERABLE, 1), action(battle_action_type::DRAW_CARDS
-				, &player_data, &player_data, MEANINGLESS_VALUE, 1) });
+			, &player_data, &all_enemies, buff_type::VULNERABLE, 2), action(battle_action_type::ADD_BUFF
+				, &player_data, &player_data, buff_type::STRENGTH, 1), action(battle_action_type::DRAW_CARDS
+					, &player_data, &player_data, MEANINGLESS_VALUE, 2) });
 		break;
 	}
 	case 42://神之力量
@@ -424,7 +424,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 54://无懈可击
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
-			, &player_data, &player_data, buff_type::INVULNARABLE, 10)});
+			, &player_data, &player_data, buff_type::INVULNARABLE, 1)});
 		break;
 	}
 	case 55://斗志
@@ -519,7 +519,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 68://旋风斩+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::NORMAL, 10)});
+			, &player_data, &all_enemies, type_type::NORMAL, 12)});
 		break;
 	}
 	case 69://突破+
@@ -588,7 +588,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
 			, &player_data, &all_enemies, type_type::NORMAL, 14), action(battle_action_type::ADD_CARD_TO_DECK
-				, MEANINGLESS_VALUE, 1001)});
+				, MEANINGLESS_VALUE, 401)});
 		break;
 	}
 	case 78://背水一战+
@@ -617,7 +617,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
 			, &player_data, &select_one_enemy, type_type::NORMAL, 16), action(battle_action_type::ADD_CARD_TO_DECK
-				, MEANINGLESS_VALUE, 1001)});
+				, MEANINGLESS_VALUE, 401)});
 		break;
 	}
 	case 81://灼热打击+
@@ -638,34 +638,28 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 83://火焰风暴+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::FLAME, 5), action(battle_action_type::ADD_BUFF
-				, &player_data, &all_enemies, buff_type::BURN, 2), action(battle_action_type::CALLING_ACTION
-					, &player_data, &all_enemies, type_type::FLAME, 5), action(battle_action_type::ADD_BUFF
-						, &player_data, &all_enemies, buff_type::BURN, 2), action(battle_action_type::CALLING_ACTION
-							, &player_data, &all_enemies, type_type::FLAME, 5), action(battle_action_type::ADD_BUFF
-								, &player_data, &all_enemies, buff_type::BURN, 2), action(battle_action_type::CALLING_ACTION
-									, &player_data, &all_enemies, type_type::FLAME, 5), action(battle_action_type::ADD_BUFF
-										, &player_data, &all_enemies, buff_type::BURN, 2)});
+			, &player_data, &all_enemies, type_type::FLAME, 5), action(battle_action_type::CALLING_ACTION
+				, &player_data, &all_enemies, type_type::FLAME, 5), action(battle_action_type::CALLING_ACTION
+					, &player_data, &all_enemies, type_type::FLAME, 5), action(battle_action_type::CALLING_ACTION
+						, &player_data, &all_enemies, type_type::FLAME, 5), action(battle_action_type::ADD_BUFF
+							, &player_data, &all_enemies, buff_type::BURN, 5)});
 		break;
 	}
 	case 84://火焰漩涡+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &all_enemies, type_type::FLAME, 2), action(battle_action_type::ADD_BUFF
-				, &player_data, &all_enemies, buff_type::BURN, 1), action(battle_action_type::CALLING_ACTION
+			, &player_data, &all_enemies, type_type::FLAME, 2), action(battle_action_type::CALLING_ACTION
+				, &player_data, &all_enemies, type_type::FLAME, 2), action(battle_action_type::CALLING_ACTION
 					, &player_data, &all_enemies, type_type::FLAME, 2), action(battle_action_type::ADD_BUFF
-						, &player_data, &all_enemies, buff_type::BURN, 1), action(battle_action_type::CALLING_ACTION
-							, &player_data, &all_enemies, type_type::FLAME, 2), action(battle_action_type::ADD_BUFF
-								, &player_data, &all_enemies, buff_type::BURN, 1)});
+						, &player_data, &all_enemies, buff_type::BURN, 1)});
 		break;
 	}
 	case 85://火蛇+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION
-			, &player_data, &random_enemy, type_type::FLAME, 3), action(battle_action_type::CALLING_ACTION
-				, &player_data, &random_enemy, type_type::FLAME, 3), action(battle_action_type::CALLING_ACTION
-					, &player_data, &random_enemy, type_type::FLAME, 3), action(battle_action_type::CALLING_ACTION
-						, &player_data, &random_enemy, type_type::FLAME, 3)});
+			, &player_data, &random_enemy, type_type::FLAME, 4), action(battle_action_type::CALLING_ACTION
+				, &player_data, &random_enemy, type_type::FLAME, 4), action(battle_action_type::CALLING_ACTION
+					, &player_data, &random_enemy, type_type::FLAME, 4)});
 		break;
 	}
 	case 86://引爆+
@@ -712,7 +706,9 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 92://武装+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
-			, &player_data, &player_data, buff_type::ARMOR, 13) });
+			, &player_data, &player_data, buff_type::ARMOR, 13), action(battle_action_type::REMOVE_BUFF
+				, &player_data, &player_data, buff_type::FRAGILE, 999), action(battle_action_type::REMOVE_BUFF
+					, &player_data, &player_data, buff_type::VULNERABLE, 999) });
 		break;
 	}
 	case 93://挑衅+
@@ -727,8 +723,8 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
 			, &player_data, &player_data, buff_type::ARMOR, 20), action(battle_action_type::ADD_BUFF
 				, &player_data, &player_data, buff_type::VULNERABLE, 1), action(battle_action_type::ADD_CARD_TO_DECK
-					, MEANINGLESS_VALUE, 1001), action(battle_action_type::ADD_CARD_TO_DECK
-						, MEANINGLESS_VALUE, 1001) });
+					, MEANINGLESS_VALUE, 401), action(battle_action_type::ADD_CARD_TO_DECK
+						, MEANINGLESS_VALUE, 401) });
 		break;
 	}
 	case 95://磨刀+
@@ -783,15 +779,16 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::DRAW_CARDS
 			, &player_data, &player_data, MEANINGLESS_VALUE, 3), action(battle_action_type::ADD_CARD_TO_DECK
-				, MEANINGLESS_VALUE, 1001), action(battle_action_type::ADD_CARD_TO_DECK
-					, MEANINGLESS_VALUE, 1001) });
+				, MEANINGLESS_VALUE, 401), action(battle_action_type::ADD_CARD_TO_DECK
+					, MEANINGLESS_VALUE, 401) });
 		break;
 	}
 	case 101://怒吼+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
-			, &player_data, &all_enemies, buff_type::VULNERABLE, 1), action(battle_action_type::DRAW_CARDS
-				, &player_data, &player_data, MEANINGLESS_VALUE, 2) });
+			, &player_data, &all_enemies, buff_type::VULNERABLE, 2), action(battle_action_type::ADD_BUFF
+				, &player_data, &player_data, buff_type::STRENGTH, 2), action(battle_action_type::DRAW_CARDS
+					, &player_data, &player_data, MEANINGLESS_VALUE, 3) });
 		break;
 	}
 	case 102://神之力量+
@@ -876,7 +873,7 @@ info_to_battle_sys data_sys::card_effect(std::size_t id)
 	case 114://无懈可击+
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_BUFF
-			, &player_data, &player_data, buff_type::INVULNARABLE, 12)});
+			, &player_data, &player_data, buff_type::INVULNARABLE, 1)});
 		break;
 	}
 	case 115://斗志+
@@ -945,13 +942,13 @@ info_to_battle_sys data_sys::card_on_turn_end(std::size_t id)
 {
 	switch (id)
 	{
-	case 1004:
+	case 404:
 		return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, nullptr, &player_data, type_type::INDEPENDENT, 3));
 		break;
-	case 1005:
+	case 405:
 		return info_to_battle_sys(action(battle_action_type::ADD_BUFF, nullptr, &player_data, buff_type::REDUCE_AP, 1));
 		break;
-	case 1006:
+	case 406:
 		return info_to_battle_sys(action(battle_action_type::ADD_BUFF, nullptr, &player_data, buff_type::WEAK, 1));
 		break;
 	default:
@@ -1253,7 +1250,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		if (re.chance(50))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5),
-				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1002)});
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 402)});
 		}
 		else if (re.chance(50))
 		{
@@ -1532,8 +1529,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		if (re.chance(75))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 16),
-				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1003),
-				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1003)});
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 403),
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 403)});
 		}
 		else
 		{
@@ -1550,7 +1547,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	case 19:
 	{
 		return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
-			action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 1002)});
+			action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 402)});
 		break;
 	}
 	case 20:
@@ -1576,7 +1573,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		else
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 12),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 1002)});
+				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 402)});
 			break;
 		}
 		break;
@@ -1625,10 +1622,10 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (passed_turns == 0)
 		{
-			return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1002),
-				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1002),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 1002),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 1002)});
+			return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 402),
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 402),
+				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 402),
+				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 402)});
 		}
 		else
 		{
@@ -1702,14 +1699,14 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 3),
 				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 3),
 				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 3),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 1004),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 1004),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 1004)});
+				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 404),
+				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 404),
+				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 404)});
 		}
 		else
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 1004)});
+				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 404)});
 		}
 		break;
 	}
@@ -1761,8 +1758,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		if (passed_turns == 0)
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 10),
-				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1002),
-				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1002)});
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 402),
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 402)});
 		}
 		else if (passed_turns % 3 == 1)
 		{
@@ -1790,7 +1787,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 1005));
+			return info_to_battle_sys(action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 405));
 		}
 		break;
 	}
@@ -1802,7 +1799,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1006));
+			return info_to_battle_sys(action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 406));
 		}
 		break;
 	}
@@ -1837,8 +1834,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
 				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 1005),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 1005)});
+				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 405),
+				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 405)});
 		}
 		break;
 	}
@@ -1864,7 +1861,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		else
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 8),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 1005)});
+				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 405)});
 		}
 		break;
 	}
@@ -1873,7 +1870,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		if (re.chance(60))
 		{
 			return info_to_battle_sys(vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
-				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1003)});
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 403)});
 		}
 		else
 		{
@@ -2020,8 +2017,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1003),
-				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1003)});
+			return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 403),
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 403)});
 		}
 		break;
 	}
@@ -2034,8 +2031,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1003),
-				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 1003)});
+			return info_to_battle_sys(vector<action>{action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 403),
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 403)});
 		}
 		break;
 		break;
@@ -2117,6 +2114,17 @@ bool data_sys::has_other_enemy(std::size_t pos)
 			return true;
 	}
 	return false;
+}
+
+//TODO
+int data_sys::get_enemy(std::size_t enemy_id)
+{
+	switch (enemy_id)
+	{
+	case 1:
+	default:
+		return 1;
+	}
 }
 
 info_to_explore_sys data_sys::artifact_on_create(std::size_t atf_id)

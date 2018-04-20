@@ -18,12 +18,11 @@ class t_draw_sys
 	void __draw_card_in_hand();
 	void __draw_entities();
 	void __draw_battle_info();//three buttons on the right and ap on the left
-	void __draw_explore_map(); 
+	void __draw_explore_map();
 	void __draw_buff(); // on below every game_entity, has two rows
 	void __draw_artifacts();//on top of window, has two rows
 	void __get_atk_entities();//get pair of caller and listener from pipe on data_sys
 	void __draw_guiding_pics();//static pics used to remind the player of the hotkeys
-	void __draw_lines();
 
 	void __draw_player();
 	void __draw_an_enemy(std::size_t pos);//draw the enemy in pos
@@ -40,6 +39,7 @@ class t_draw_sys
 	void check_view();
 public:
 	t_draw_sys(data_sys&);
+	void load_all();
 	void t_draw_b();//控制台测试战斗用
 	void t_draw_e();//控制台测试探索用
 	void draw_battle();

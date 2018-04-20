@@ -24,7 +24,7 @@ int main()
 	IMAGE buffer(gra_size::window_width, gra_size::window_height);
 	t_draw_sys dr(d);
 	d.b = &b;
-
+	dr.load_all();
 
 	//easyx
 	initgraph(gra_size::window_width, gra_size::window_height, SHOWCONSOLE);
@@ -37,24 +37,24 @@ int main()
 	d.is_vaccant = 0;
 	d.is_battle = 1;
 
-	d.enemies_data.push_back(enemy(d, 35));
-	//d.enemies_data.push_back(enemy(d, 1));
-	//d.enemies_data.push_back(enemy(d, 1));
-	//d.enemies_data.push_back(enemy(d, 1));
-	//d.enemies_data.push_back(enemy(d, 1));
+	//d.enemies_data.push_back(enemy(d, 35));
+	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
 
-	/*for (int i = 1; i <= 60; ++i)
-	{
-		d.cards_pool.push_back(i);
-	}*/
-
-	d.cards_pool.push_back(52);
-	d.cards_pool.push_back(52);
-	d.cards_pool.push_back(52);
 	d.cards_pool.push_back(1);
 	d.cards_pool.push_back(1);
+	d.cards_pool.push_back(1);
+	d.cards_pool.push_back(1);
+	d.cards_pool.push_back(30);
+	d.cards_pool.push_back(30);
+	d.cards_pool.push_back(30);
+	d.cards_pool.push_back(30);
+	d.cards_pool.push_back(2);
+	d.cards_pool.push_back(3);
 
-	//e.create_map();
+	e.create_map();
 
 	//e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
 	goto battle;
