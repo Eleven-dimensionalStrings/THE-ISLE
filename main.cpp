@@ -4,11 +4,11 @@
 #include "battle_system.h"
 #include "t_draw_sys.h"
 #include "explore_system.h"
-using namespace std;
+using namespace std;using namespace my_container;
 template<class T = int, class Comp = decltype(comp)>
 auto get_p_q(Comp comp)
 {
-	return priority_queue<T, vector<T>, Comp>(comp);
+	return priority_queue<T, my_vector<T>, Comp>(comp);
 }
 template<class T = int>
 auto get_p_q()

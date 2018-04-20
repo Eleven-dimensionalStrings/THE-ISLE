@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdlib>
-#include <vector>
+#include "container.h"
 #include <queue>
 #include <cstddef>
 #include <string>
@@ -374,9 +374,9 @@ class info_to_battle_sys : public info
 public:
 	info_to_battle_sys();
 	info_to_battle_sys(action);
-	info_to_battle_sys(std::vector<action>);
+	info_to_battle_sys(my_container::my_vector<action>);
 	void append(info_to_battle_sys);
-	std::vector<action> action_set;
+	my_container::my_vector<action> action_set;
 };
 
 class info_to_explore_sys : public info
@@ -384,9 +384,9 @@ class info_to_explore_sys : public info
 public:
 	info_to_explore_sys();
 	info_to_explore_sys(e_action);
-	info_to_explore_sys(std::vector<e_action>);
+	info_to_explore_sys(my_container::my_vector<e_action>);
 	void append(info_to_explore_sys);
-	std::vector<e_action> action_set;
+	my_container::my_vector<e_action> action_set;
 };
 
 class info_battle_to_interacting : public info

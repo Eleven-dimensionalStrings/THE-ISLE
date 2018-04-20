@@ -3,7 +3,7 @@
 #include "battle_system.h"
 #include "game_entity.h"
 #include "data_sys.h"
-using namespace std;
+using namespace std;using namespace my_container;
 using std::size_t;
 
 player::player(data_sys &d) :game_entity(d)
@@ -15,7 +15,7 @@ player::~player()
 	//TODO
 }
 
-void player::initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list)
+void player::initiate(my_container::my_vector<card>&card_pool, my_container::my_vector<artifact>&artifact_list)
 {
 
 }
@@ -48,8 +48,8 @@ info_to_battle_sys player::on_turn_begin()
 info_to_battle_sys player::on_turn_end()
 {
 	info_to_battle_sys temp;
-	vector<card>& c_in_hand = data.cards_in_hand;
-	vector<card>& c_grave = data.cards_grave;
+	my_vector<card>& c_in_hand = data.cards_in_hand;
+	my_vector<card>& c_grave = data.cards_grave;
 	for (int i = data.cards_in_hand.size() - 1; i >= 0; --i)
 	{
 		temp.append(c_in_hand[i].on_turn_end(data));
@@ -150,7 +150,7 @@ bool game_entity::is_alive()
 	return 1;
 }
 
-vector<buff>::iterator game_entity::find_buff(std::size_t id)
+my_vector<buff>::iterator game_entity::find_buff(std::size_t id)
 {
 	for (auto i = buff_pool.begin(); i != buff_pool.end(); ++i)
 	{
@@ -182,7 +182,7 @@ enemy::~enemy()
 	//TODO
 }
 
-void enemy::initiate(std::vector<card>& card_pool, std::vector<artifact>& artifact_list)
+void enemy::initiate(my_container::my_vector<card>& card_pool, my_container::my_vector<artifact>& artifact_list)
 {
 }
 

@@ -10,14 +10,14 @@ class game_entity
 public:
 	game_entity(data_sys&);
 	virtual ~game_entity();
-	virtual void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list) = 0;
+	virtual void initiate(my_container::my_vector<card>&card_pool, my_container::my_vector<artifact>&artifact_list) = 0;
 	info_to_battle_sys calling_action(action);
 	info_to_battle_sys performing_action(action);
 	virtual info_to_battle_sys kill() = 0;
 	bool is_alive();
 	virtual info_to_battle_sys on_turn_begin() = 0;
 	virtual info_to_battle_sys on_turn_end() = 0;
-	std::vector<buff>::iterator find_buff(std::size_t id);
+	my_container::my_vector<buff>::iterator find_buff(std::size_t id);
 	std::size_t has_buff(std::size_t id);
 
 	data_sys& data;
@@ -25,7 +25,7 @@ public:
 	int current_hp;
 	int max_ap;
 	int current_ap;
-	std::vector<buff> buff_pool;
+	my_container::my_vector<buff> buff_pool;
 
 };
 
@@ -38,7 +38,7 @@ class player : public game_entity
 public:
 	player(data_sys&);
 	virtual ~player();
-	void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list)override;
+	void initiate(my_container::my_vector<card>&card_pool, my_container::my_vector<artifact>&artifact_list)override;
 	info_to_battle_sys kill()override;
 	info_to_battle_sys on_turn_begin()override;
 	info_to_battle_sys on_turn_end()override;
@@ -53,7 +53,7 @@ class enemy : public game_entity
 public:
 	enemy(data_sys&, std::size_t);
 	virtual ~enemy();
-	void initiate(std::vector<card>&card_pool, std::vector<artifact>&artifact_list)override;
+	void initiate(my_container::my_vector<card>&card_pool, my_container::my_vector<artifact>&artifact_list)override;
 	info_to_battle_sys kill()override;
 	info_to_battle_sys on_turn_begin()override;
 	info_to_battle_sys on_turn_end()override;

@@ -99,7 +99,7 @@ public:
 	void click_turn_end();
 private:
 	std::size_t type;
-	std::vector<std::size_t> selected_cards;
+	my_container::my_vector<std::size_t> selected_cards;
 	std::size_t max; //indicates the max amount of cards to select
 	bool is_mandatory; //indicates if the player is forced to select the max amount of cards
 };

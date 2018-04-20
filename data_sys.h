@@ -1,7 +1,7 @@
 #pragma once
 #include <array>
 #include <string>
-#include <vector> 
+#include "container.h" 
 #include <map>
 #include <functional>
 #include "game_entity.h"
@@ -33,12 +33,12 @@ public:
 	info_to_explore_sys event_effect(std::size_t event_id);
 	info_to_battle_sys enemy_battle_start(std::size_t enemy_id);//TODO
 	info_to_battle_sys enemy_act(std::size_t enemy_id);
-	std::vector<card> cards_pool;
-	std::vector<artifact> artifacts;
+	my_container::my_vector<card> cards_pool;
+	my_container::my_vector<artifact> artifacts;
 	std::map<std::size_t, std::size_t> card_upgrade_id;
 	std::map<std::size_t, std::string> card_name;
 	player player_data;
-	std::vector<enemy> enemies_data;
+	my_container::my_vector<enemy> enemies_data;
 	enemy all_enemies, random_enemy, select_one_enemy;
 	std::pair<std::string, std::size_t> get_buff(std::size_t);
 
@@ -49,16 +49,16 @@ public:
 	std::size_t dexterity;
 	std::size_t vitality;
 	std::size_t luck;
-	std::vector<card> cards_deck;
-	std::vector<card> cards_grave;
-	std::vector<card> cards_in_hand;
-	std::vector<card> cards_removed;
-	std::vector<card> cards_equiped;
-	std::vector<IMAGE> cards_thumbnail;
-	std::vector<IMAGE> cards_original;
-	std::vector<IMAGE> cards_mask;//both thumbnails and originals are stored here
-	std::vector<IMAGE> back_grounds;
-	std::vector<IMAGE> components;
+	my_container::my_vector<card> cards_deck;
+	my_container::my_vector<card> cards_grave;
+	my_container::my_vector<card> cards_in_hand;
+	my_container::my_vector<card> cards_removed;
+	my_container::my_vector<card> cards_equiped;
+	my_container::my_vector<IMAGE> cards_thumbnail;
+	my_container::my_vector<IMAGE> cards_original;
+	my_container::my_vector<IMAGE> cards_mask;//both thumbnails and originals are stored here
+	my_container::my_vector<IMAGE> back_grounds;
+	my_container::my_vector<IMAGE> components;
 	std::array<bool, MAX_CARDS_IN_HAND>render_select_card;
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
@@ -66,13 +66,13 @@ public:
 	info_explore_to_interacting e_to_i_pipe;
 	info_to_battle_sys e_to_b_pipe;
 	info_to_explore_sys b_to_e_pipe;
-	std::vector<std::pair<std::size_t, std::size_t>>b_to_d;
+	my_container::my_vector<std::pair<std::size_t, std::size_t>>b_to_d;
 	std::size_t explore_map[MAP_LENGTH][MAP_WIDTH];
 	int map_marks[MAP_LENGTH][MAP_WIDTH];
 	std::size_t map_event_type[MAP_LENGTH][MAP_WIDTH];
 	std::pair<int, int> player_location;
-	std::vector<e_action> choice_list;
-	std::vector<std::string> choice_name_list;
+	my_container::my_vector<e_action> choice_list;
+	my_container::my_vector<std::string> choice_name_list;
 	std::string text_to_be_displayed;
 	std::string map_text;
 	//to determine explore context
