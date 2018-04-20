@@ -241,33 +241,15 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 {
 	x += gra_size::card_starting_pos;
-	int id = data.cards_in_hand[pos].card_id;
-	int mask;
-	if ((id > 0 && id <= 29) || (id > 60 && id <= 89))
-	{
-		mask = 2;
-	}
-	else if ((id > 29 && id <= 51) || (id > 89 && id <= 111))
-	{
-		mask = 1;
-	}
-	else if (id < 400)
-	{
-		mask = 0;
-	}
-	else
-	{
-		mask = 3;
-	}
 	if (data.render_select_card[pos])
 	{
-		putimage(x, y - 15, &data.cards_mask[mask], NOTSRCERASE);
-		putimage(x, y - 15, &data.cards_thumbnail[id], SRCINVERT);
+		putimage(x, y - 15, &data.get_pic(data.cards_in_hand[pos].id), NOTSRCERASE);
+		putimage(x, y - 15, &data.get_mask_pic(data.cards_in_hand[pos].id), SRCINVERT);
 	}
 	else
 	{
-		putimage(x, y, &data.cards_mask[mask], NOTSRCERASE);
-		putimage(x, y, &data.cards_thumbnail[id], SRCINVERT);
+		putimage(x, y, &data.get_pic(data.cards_in_hand[pos].id), NOTSRCERASE);
+		putimage(x, y, &data.get_mask_pic(data.cards_in_hand[pos].id), SRCINVERT);
 
 	}
 }
@@ -358,7 +340,7 @@ void t_draw_sys::__draw_player_info()
 }
 
 template<class T>
-void t_draw_sys::__flash_view(T& v, int page)
+void t_draw_sys::__flash_view(T& v, int page, int is_artifact)
 {
 	SetWorkingImage(&this->buffer);
 	cleardevice();
@@ -369,30 +351,19 @@ void t_draw_sys::__flash_view(T& v, int page)
 	for (int i = page * 16; i < (((page * 16 + 8) < v.size()) ? (page * 16 + 8) : v.size()); ++i)
 	{
 		//TODO putimage()
-		solidrectangle(gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
-			, gra_size::viewcard_firrow_y,
-			gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8) + gra_size::card_width,
-			gra_size::viewcard_firrow_y + 200);
-		outtextxy(gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
-			, gra_size::viewcard_firrow_y, &v[i].get_name()[0]);
-		outtextxy(gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
-			, gra_size::viewcard_firrow_y + 50, &to_string(v[i].get_id())[0]);
+		putimage(gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
+			, gra_size::viewcard_firrow_y, &data.get_mask_pic(v[i].id, is_artifact), NOTSRCERASE);
+		putimage(gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
+			, gra_size::viewcard_firrow_y, &data.get_pic(v[i].id, is_artifact), SRCINVERT);
+
 	}
 	for (int i = page * 16 + 8; i < (((page * 16 + 16) < v.size()) ? (page * 16 + 16) : v.size()); ++i)
 	{
-		solidrectangle(gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
-			, gra_size::viewcard_secrow_y,
-			gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8) + gra_size::card_width,
-			gra_size::viewcard_secrow_y + 200);
-		outtextxy(gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
-			, gra_size::viewcard_secrow_y, &v[i].get_name()[0]);
-		outtextxy(gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
-			, gra_size::viewcard_secrow_y + 50, &to_string(v[i].get_id())[0]);
+		putimage(gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
+			, gra_size::viewcard_secrow_y, &data.get_mask_pic(v[i].id, is_artifact), NOTSRCERASE);
+		putimage(gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
+			, gra_size::viewcard_secrow_y, &data.get_pic(v[i].id, is_artifact), SRCINVERT);
 	}
-	solidrectangle(gra_size::left_arrow_x, gra_size::left_arrow_y,
-		gra_size::left_arrow_x + 100, gra_size::left_arrow_y + 100);
-	solidrectangle(gra_size::right_arrow_x, gra_size::right_arrow_y,
-		gra_size::right_arrow_x + 100, gra_size::right_arrow_y + 100);
 	SetWorkingImage();
 	putimage(0, 0, &buffer);
 }
@@ -416,7 +387,7 @@ void t_draw_sys::check_view()
 			this->view_cards(data.cards_removed);
 			break;
 		case 5:
-			this->view_cards(data.artifacts);
+			this->view_cards(data.artifacts, 2);
 			break;
 		default:
 			break;
@@ -598,6 +569,7 @@ void t_draw_sys::draw_battle()
 	setbkcolor(WHITE);
 	cleardevice();
 	settextcolor(BLACK);
+	settextstyle(20, 0, "Airial");
 	setfillcolor(LIGHTBLUE);
 	putimage(0, 0, &data.back_grounds[0]);
 	putimage(0, 470, &data.components[0]);
@@ -646,10 +618,10 @@ void t_draw_sys::draw_begin()
 
 
 template<class Container>
-void t_draw_sys::view_cards(Container&v)
+void t_draw_sys::view_cards(Container&v,int is_art)
 {
 	int page = 0;
-	__flash_view(v, page);
+	__flash_view(v, page, is_art);
 	while (1)
 	{
 		auto hit = GetMouseMsg();
@@ -667,14 +639,14 @@ void t_draw_sys::view_cards(Container&v)
 				&& hit.y > gra_size::left_arrow_y && hit.y < gra_size::left_arrow_y + 100)
 			{
 				if (page > 0)--page;
-				__flash_view(v, page);
+				__flash_view(v, page, is_art);
 			}
 			//检测点击右箭头
 			else if (hit.x > gra_size::right_arrow_x && hit.x < gra_size::right_arrow_x + 100
 				&& hit.y > gra_size::right_arrow_y && hit.y < gra_size::right_arrow_y + 100)
 			{
 				if (page < v.size() / 16)++page;
-				__flash_view(v, page);
+				__flash_view(v, page, is_art);
 			}
 		}
 	}

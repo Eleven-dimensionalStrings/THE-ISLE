@@ -4,6 +4,7 @@
 #include "battle_system.h"
 #include "t_draw_sys.h"
 #include "explore_system.h"
+#include "data_sys.h"
 using namespace std;
 template<class T = int, class Comp = decltype(comp)>
 auto get_p_q(Comp comp)
@@ -29,13 +30,14 @@ int main()
 	//easyx
 	initgraph(gra_size::window_width, gra_size::window_height, SHOWCONSOLE);
 	setbkcolor(WHITE);
+	settextstyle(20, 0, "Airial");
 	cleardevice();
 
 	d.gold = 100;
 	d.food = 5;
 	d.player_s_class = player_class::WAR;
-	d.is_vaccant = 1;
-	d.is_battle = 0;
+	d.is_vaccant = 0;
+	d.is_battle = 1;
 
 	//d.enemies_data.push_back(enemy(d, 35));
 	d.enemies_data.push_back(enemy(d, 1));
@@ -52,12 +54,14 @@ int main()
 	d.cards_pool.push_back(30);
 	d.cards_pool.push_back(30);
 	d.cards_pool.push_back(2);
-	d.cards_pool.push_back(3);
+	for (int i = 1; i < 60; ++i)
+		d.cards_pool.push_back(i);
+	d.artifacts.push_back(1);
 
 	e.create_map();
 
 	//e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
-	//goto battle;
+	goto battle;
 
 explore:
 	//explore loop
@@ -82,6 +86,7 @@ battle:
 	b.initiate_battle();
 	while (1)
 	{
+		settextstyle(20, 0, "Airial");
 		b.update();
 		dr.draw_battle();
 		dr.t_draw_b();

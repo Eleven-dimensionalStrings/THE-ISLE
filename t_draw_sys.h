@@ -35,7 +35,7 @@ class t_draw_sys
 	void __draw_player_info();
 
 	template<class T>
-	void __flash_view(T&v, int page);
+	void __flash_view(T&v, int page, int is_art = 0);
 	void check_view();
 public:
 	t_draw_sys(data_sys&);
@@ -46,6 +46,9 @@ public:
 	void draw_explore();
 	void draw_begin();//开始页面
 	template<class Container>
-	void view_cards(Container&v);//按键后查看卡组等
+	void view_cards(Container&v, int is_art = 0);//按键后查看卡组等
 	void end_battle();
+
+
+
 };

@@ -176,7 +176,7 @@ void explore_system::process()
 			{
 				for (int i = 0; i < data.artifacts.size(); ++i)
 				{
-					send_message(data.artifact_on_encounter_event(data.artifacts[i].artifact_id));
+					send_message(data.artifact_on_encounter_event(data.artifacts[i].id));
 				}
 			}
 			data.next_event_id = 0;
@@ -195,7 +195,7 @@ void explore_system::process()
 			data.map_text = temp.end_text;
 			for (int i = 0; i < data.artifacts.size(); ++i)
 			{
-				send_message(data.artifact_on_event_body(data.artifacts[i].artifact_id));
+				send_message(data.artifact_on_event_body(data.artifacts[i].id));
 			}
 			switch (temp.type)
 			{
@@ -214,7 +214,7 @@ void explore_system::process()
 				info_to_battle_sys initiate_info;
 				for (int i = 0; i < data.artifacts.size(); ++i)
 				{
-					initiate_info.append(data.artifact_on_start_battle(data.artifacts[i].artifact_id));
+					initiate_info.append(data.artifact_on_start_battle(data.artifacts[i].id));
 				}
 				for (int i = 0; i < data.enemies_data.size(); ++i)
 				{
@@ -357,7 +357,7 @@ void explore_system::process()
 			case CHANGE_CARD:
 			{
 				//change the card according to its position
-				data.cards_pool.push_back(card((e_random_engine().get_card_by_id(data.cards_pool[temp.value].card_id))));
+				data.cards_pool.push_back(card((e_random_engine().get_card_by_id(data.cards_pool[temp.value].id))));
 				data.cards_pool.erase(data.cards_pool.begin() + temp.value);
 				break;
 			}
@@ -374,13 +374,13 @@ void explore_system::process()
 			case AQUIRE_ARTIFACT:
 			{
 				data.artifacts.push_back(temp.atf);
-				send_message(data.artifact_on_create(temp.atf.artifact_id));
+				send_message(data.artifact_on_create(temp.atf.id));
 				break;
 			}
 			case REMOVE_ARTIFACT:
 			{
 				data.artifacts.erase(data.artifacts.begin() + temp.value);
-				send_message(data.artifact_on_remove(data.artifacts[temp.value].artifact_id));
+				send_message(data.artifact_on_remove(data.artifacts[temp.value].id));
 				break;
 			}
 			case AQUIRE_GOLD:
@@ -467,7 +467,7 @@ void explore_system::process()
 		{
 			for (int i = 0; i < data.artifacts.size(); ++i)
 			{
-				send_message(data.artifact_on_end_event(data.artifacts[i].artifact_id));
+				send_message(data.artifact_on_end_event(data.artifacts[i].id));
 			}
 			data.next_event_id = 0;
 			data.is_vaccant = 1;

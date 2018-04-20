@@ -152,9 +152,9 @@ card::card()
 }
 
 card::card(size_t id)
-	:card_id(id), is_reserve(0), exhaust(false), inherent(false), vanity(false)
+	:id(id), is_reserve(0), exhaust(false), inherent(false), vanity(false)
 {
-	card_id = id;
+	id = id;
 	if ((id >= 1 && id <= 60) || (id >= 121 && id <= 180) || (id >= 241 && id <= 300))
 	{
 		upgrade_version_id = id + 60;
@@ -1204,7 +1204,7 @@ card::card(size_t id)
 	}
 }
 
-card::card(const card& copy_card) : card_id(copy_card.card_id),
+card::card(const card& copy_card) : id(copy_card.id),
 card_name(copy_card.card_name), card_type(copy_card.card_type), upgrade_version_id(copy_card.upgrade_version_id),
 cost(copy_card.cost), is_reserve(copy_card.is_reserve), require_target(copy_card.require_target),
 exhaust(copy_card.exhaust), inherent(copy_card.inherent), vanity(copy_card.vanity)
@@ -1215,7 +1215,7 @@ exhaust(copy_card.exhaust), inherent(copy_card.inherent), vanity(copy_card.vanit
 card & card::operator=(const card & c)
 {
 	this->is_reserve = c.is_reserve;
-	this->card_id = c.card_id;
+	this->id = c.id;
 	this->card_name = c.card_name;
 	this->card_type = c.card_type;
 	this->upgrade_version_id = c.upgrade_version_id;
@@ -1227,54 +1227,34 @@ card & card::operator=(const card & c)
 	return *this;
 }
 
-std::string card::get_name()
-{
-	return card_name;
-}
-
-std::size_t card::get_id()
-{
-	return card_id;
-}
-
-
 info_to_battle_sys card::use_card(data_sys&d)
 {
-	return d.card_effect(card_id);
+	return d.card_effect(id);
 }
 
 info_to_battle_sys card::discard(data_sys&d)
 {
-	return d.card_discard(card_id);
+	return d.card_discard(id);
 }
 
 info_to_battle_sys card::remove(data_sys&d)
 {
-	return d.card_remove(card_id);
+	return d.card_remove(id);
 }
 
 info_to_battle_sys card::on_turn_end(data_sys&d)
 {
-	return d.card_on_turn_end(card_id);
+	return d.card_on_turn_end(id);
 }
 
 artifact::artifact()
-	:artifact_id(0)
+	:id(0)
 {
 }
 
 artifact::artifact(std::size_t id)
-	: artifact_id(id)
+	: id(id)
 {
 }
 
-std::string artifact::get_name()
-{
-	return "54664654";
-}
-
-std::size_t artifact::get_id()
-{
-	return artifact_id;
-}
 

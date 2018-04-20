@@ -8,7 +8,7 @@ using namespace std;
 
 data_sys::data_sys() :b(nullptr), player_data(*this), all_enemies(*this, MEANINGLESS_VALUE), random_enemy(*this, MEANINGLESS_VALUE)
 , select_one_enemy(*this, MEANINGLESS_VALUE), re(this), view_cards(0), cards_thumbnail(1020), cards_original(1020), cards_mask(10), back_grounds(20)
-,components(20)
+, components(20)
 {
 	for (auto&i : render_select_card)i = 0;
 }
@@ -2124,6 +2124,51 @@ int data_sys::get_enemy(std::size_t enemy_id)
 	case 1:
 	default:
 		return 1;
+	}
+}
+
+IMAGE & data_sys::get_pic(int id, int det)
+{
+	switch (det)
+	{
+	case 0:
+		return cards_thumbnail[id];
+		break;
+	case 1:
+		//TODO return artifact pic
+	default:
+		return cards_thumbnail[402];
+	}
+}
+
+IMAGE & data_sys::get_mask_pic(int id, int det)
+{
+	switch (det)
+	{
+	case 0:
+		int mask;
+		if ((id > 0 && id <= 29) || (id > 60 && id <= 89))
+		{
+			mask = 2;
+		}
+		else if ((id > 29 && id <= 51) || (id > 89 && id <= 111))
+		{
+			mask = 1;
+		}
+		else if (id < 400)
+		{
+			mask = 0;
+		}
+		else
+		{
+			mask = 3;
+		}
+		return cards_mask[mask];
+		break;
+	case 1:
+		//TODO return artifact mask pic;
+	default:
+		return cards_mask[3];
 	}
 }
 

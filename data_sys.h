@@ -87,6 +87,8 @@ public:
 	bool is_vaccant;
 	bool is_battle;
 	int get_enemy(std::size_t enemy_id);
+	IMAGE& get_pic(int id, int det = 0);
+	IMAGE& get_mask_pic(int id, int det = 0);
 
 	//TODO for artifacts
 	info_to_explore_sys artifact_on_create(std::size_t atf_id);

@@ -16,7 +16,6 @@
 #undef PURE
 //a fucking sb define PURE without namespace or other protect
 
-class data_sys;
 namespace map_mark_type
 {
 	const int EMPTY = 0;
@@ -278,7 +277,8 @@ namespace player_class
 
 class info_to_battle_sys;
 class info_to_explore_sys;
-
+class IMAGE;
+class data_sys;
 class card
 {
 public:
@@ -286,12 +286,8 @@ public:
 	card(std::size_t id);
 	card(const card& copy_card);
 	card& operator=(const card& copy_card);
-	//TODO 要改成获得卡图
-	std::string get_name();
-	std::size_t get_id();
 
-
-	std::size_t card_id;
+	std::size_t id;
 	std::string card_name;
 	std::size_t card_type;
 	std::size_t upgrade_version_id; //0 means the card has no upgrade version(already upgraded);
@@ -314,10 +310,7 @@ class artifact
 public:
 	artifact();
 	artifact(std::size_t id);
-	std::size_t artifact_id;
-	//TODO 要改成获得卡图
-	std::string get_name();
-	std::size_t get_id();
+	std::size_t id;
 };
 
 class game_entity;
