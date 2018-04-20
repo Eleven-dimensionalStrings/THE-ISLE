@@ -164,6 +164,9 @@ void t_draw_sys::__draw_guiding_pics()
 	//remove_area_pic
 	solidrectangle(gra_size::remove_pic_x, gra_size::remove_pic_y,
 		gra_size::remove_pic_x + 45, gra_size::remove_pic_y + 50);
+
+	solidrectangle(gra_size::view_artifact_x, gra_size::view_artifact_y
+		, gra_size::view_artifact_x + gra_size::deck_width, gra_size::view_artifact_y + gra_size::deck_height);
 }
 
 void t_draw_sys::__draw_player()
@@ -346,6 +349,12 @@ void t_draw_sys::__draw_player_info()
 	solidrectangle(gra_size::food_pic_x, gra_size::food_pic_y,
 		gra_size::food_pic_x + 90, gra_size::food_pic_y + 120);
 	outtextxy(gra_size::food_x, gra_size::food_y, &to_string(data.food)[0]);
+
+
+	outtextxy(gra_size::ability_num_x, gra_size::ability_num_y, &("strength:  " + to_string(data.strength))[0]);
+	outtextxy(gra_size::ability_num_x, gra_size::ability_num_y + 30, &("dexterity:  " + to_string(data.dexterity))[0]);
+	outtextxy(gra_size::ability_num_x, gra_size::ability_num_y + 60, &("luck:  " + to_string(data.luck))[0]);
+	outtextxy(gra_size::ability_num_x, gra_size::ability_num_y + 90, &("vitality:  " + to_string(data.vitality))[0]);
 }
 
 template<class T>
@@ -353,6 +362,10 @@ void t_draw_sys::__flash_view(T& v, int page)
 {
 	SetWorkingImage(&this->buffer);
 	cleardevice();
+	solidrectangle(gra_size::left_arrow_x, gra_size::left_arrow_y,
+		gra_size::left_arrow_x + 100, gra_size::left_arrow_y + 100);
+	solidrectangle(gra_size::right_arrow_x, gra_size::right_arrow_y,
+		gra_size::right_arrow_x + 100, gra_size::right_arrow_y + 100);
 	for (int i = page * 16; i < (((page * 16 + 8) < v.size()) ? (page * 16 + 8) : v.size()); ++i)
 	{
 		//TODO putimage()
@@ -361,9 +374,9 @@ void t_draw_sys::__flash_view(T& v, int page)
 			gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8) + gra_size::card_width,
 			gra_size::viewcard_firrow_y + 200);
 		outtextxy(gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
-			, gra_size::viewcard_firrow_y, &data.cards_pool[i].card_name[0]);
+			, gra_size::viewcard_firrow_y, &v[i].get_name()[0]);
 		outtextxy(gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
-			, gra_size::viewcard_firrow_y + 50, &to_string(data.cards_pool[i].card_id)[0]);
+			, gra_size::viewcard_firrow_y + 50, &to_string(v[i].get_id())[0]);
 	}
 	for (int i = page * 16 + 8; i < (((page * 16 + 16) < v.size()) ? (page * 16 + 16) : v.size()); ++i)
 	{
@@ -372,10 +385,14 @@ void t_draw_sys::__flash_view(T& v, int page)
 			gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8) + gra_size::card_width,
 			gra_size::viewcard_secrow_y + 200);
 		outtextxy(gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
-			, gra_size::viewcard_secrow_y, &data.cards_pool[i].card_name[0]);
+			, gra_size::viewcard_secrow_y, &v[i].get_name()[0]);
 		outtextxy(gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
-			, gra_size::viewcard_secrow_y + 50, &to_string(data.cards_pool[i].card_id)[0]);
+			, gra_size::viewcard_secrow_y + 50, &to_string(v[i].get_id())[0]);
 	}
+	solidrectangle(gra_size::left_arrow_x, gra_size::left_arrow_y,
+		gra_size::left_arrow_x + 100, gra_size::left_arrow_y + 100);
+	solidrectangle(gra_size::right_arrow_x, gra_size::right_arrow_y,
+		gra_size::right_arrow_x + 100, gra_size::right_arrow_y + 100);
 	SetWorkingImage();
 	putimage(0, 0, &buffer);
 }
@@ -388,6 +405,19 @@ void t_draw_sys::check_view()
 		{
 		case 1:
 			this->view_cards(data.cards_pool);
+			break;
+		case 2:
+			this->view_cards(data.cards_deck);
+			break;
+		case 3:
+			this->view_cards(data.cards_grave);
+			break;
+		case 4:
+			this->view_cards(data.cards_removed);
+			break;
+		case 5:
+			this->view_cards(data.artifacts);
+			break;
 		default:
 			break;
 		}
@@ -579,6 +609,7 @@ void t_draw_sys::draw_battle()
 	this->__draw_battle_info();
 	this->__draw_guiding_pics();
 	this->__draw_buff();
+	this->__draw_artifacts();
 	SetWorkingImage(0);
 	putimage(0, 0, &buffer);
 }
@@ -591,6 +622,7 @@ void t_draw_sys::draw_explore()
 	settextcolor(BLACK);
 	setfillcolor(LIGHTBLUE);
 	//TODO putimage(0, 0, image);
+	this->check_view();
 	this->__draw_player_info();
 	this->__draw_guiding_pics();
 	if (data.is_vaccant)
@@ -621,17 +653,29 @@ void t_draw_sys::view_cards(Container&v)
 	while (1)
 	{
 		auto hit = GetMouseMsg();
-		if (hit.mkLButton)
-		{
-			//TODO next/last page and exit
-			if (page < v.size() / 16)++page;
-			else page = 0;
-			__flash_view(v, page);
-		}
-		//temp exit
 		if (hit.mkRButton)
 		{
+			FlushMouseMsgBuffer();
+			Sleep(50);
 			break;
+		}
+		if (hit.mkLButton)
+		{
+			FlushMouseMsgBuffer();
+			Sleep(50);
+			if (hit.x > gra_size::left_arrow_x && hit.x < gra_size::left_arrow_x + 100
+				&& hit.y > gra_size::left_arrow_y && hit.y < gra_size::left_arrow_y + 100)
+			{
+				if (page > 0)--page;
+				__flash_view(v, page);
+			}
+			//检测点击右箭头
+			else if (hit.x > gra_size::right_arrow_x && hit.x < gra_size::right_arrow_x + 100
+				&& hit.y > gra_size::right_arrow_y && hit.y < gra_size::right_arrow_y + 100)
+			{
+				if (page < v.size() / 16)++page;
+				__flash_view(v, page);
+			}
 		}
 	}
 }
