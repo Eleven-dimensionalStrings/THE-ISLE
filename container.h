@@ -1,40 +1,93 @@
 #pragma once
 #include <initializer_list>
+#include <memory>
 namespace my_container
 {
 
-	template<class T>
+	template<class T, class Alloc = std::allocator<T>>
 	class my_vector
 	{
 	private:
+		Alloc alloc;
 		T * val;
 		std::size_t vsize;
-		std::size_t vmsize;
+		std::size_t vcap;
 	public:
 		//ini
-		my_vector() :val(nullptr), vsize(0), vmsize(0)
+		my_vector() :val(nullptr), vsize(0), vcap(0)
 		{
 		}
-		explicit my_vector(std::size_t tsize) :val(new T[tsize]), vsize(tsize), vmsize(tsize)
+		explicit my_vector(std::size_t tsize) :val(new T[tsize]), vsize(tsize), vcap(tsize)
 		{
 
 		}
-		explicit my_vector(std::size_t tsize, const T& val) :val(new T[tsize]), vsize(tsize), vmsize(tsize)
+		explicit my_vector(std::size_t tsize, const T& a, const Alloc& talloc = Alloc()) :
+			alloc(talloc), val(alloc.allocate(tsize)), vsize(tsize), vcap(tsize)
 		{
-			for (auto&i : *this)
+			std::uninitialized_fill_n(val, vsize, a);
+		}
+
+		my_vector(std::initializer_list<T> ini) :alloc(std::allocator<T>()),
+			val(alloc.allocate(ini.size())), vsize(ini.size()), vcap(vsize)
+		{
+			auto p = ini.begin();
+			for (std::size_t i = 0; i < vsize; ++i, ++p)
 			{
-				i = val;
+				std::allocator_traits<Alloc>::construct(alloc, val + i, std::move(*p));
 			}
 		}
-		my_vector(std::initializer_list<T> ini)
+		my_vector(const my_vector& other) :alloc(other.alloc), val(alloc.allocate(other.capacity()))
+			, vsize(other.size()), vcap(other.capacity())
 		{
-
+			//uninitialized_copy(other.begin(), other.end(), val);
+			for (std::size_t i = 0; i < size(); ++i)
+				std::allocator_traits<Alloc>::construct(alloc, val + i, other[i]);
+		}
+		my_vector(my_vector&& other) :alloc(std::move(other.alloc)),
+			val(other.val), vsize(other.size()), vcap(other.capacity())
+		{
+			other.val = nullptr;
+			other.vsize = 0;
+			other.vcap = 0;
+			other.~my_vector();
+		}
+		my_vector& operator=(const my_vector& other)
+		{
+			this->~my_vector();
+			alloc = other.alloc;
+			val = alloc.allocate(other.capacity());
+			vsize = other.size();
+			vcap = other.capacity();
+			for (std::size_t i = 0; i < size(); ++i)
+			{
+				std::allocator_traits<Alloc>::construct(alloc, val + i, other[i]);
+			}
+			return *this;
+		}
+		my_vector& operator=(my_vector&& other)
+		{
+			this->~my_vector();
+			alloc = std::move(other.alloc);
+			val = other.val;
+			vsize = other.size();
+			vcap = other.capacity();
+			other.val = nullptr;
+			other.vsize = 0;
+			other.vcap = 0;
+			other.~my_vector();
+			return *this;
+		}
+		~my_vector()
+		{
+			clear();
+			alloc.deallocate(val, capacity());
 		}
 
 		//iterator
 		class iterator
 		{
 		public:
+			friend class my_vector;
 			iterator(T* begin, T* now, T* end) :_begin(begin), _now(now), _end(end)
 			{
 
@@ -65,15 +118,28 @@ namespace my_container
 			}
 			bool operator==(const iterator& other)const
 			{
-				if (_now != _other._now)return 0;
-				if (_begin != _other._begin)return 0;
-				if (_end != _other._end)return 0;
+				if (_now != other._now)return 0;
+				if (_begin != other._begin)return 0;
+				if (_end != other._end)return 0;
 				return 1;
 			}
 			bool operator!=(const iterator& other)const
 			{
 				//maybe should check something on _DEBUG
 				return _now != other._now;
+			}
+			iterator operator+(int os)
+			{
+				return iterator(_begin, _now + os, _end);
+			}
+			iterator operator-(int os)
+			{
+				return iterator(_begin, _now - os, _end);
+			}
+			int operator-(const iterator& other)
+			{
+				//TODO check debug
+				return _now - other._now;
 			}
 			T& operator*()
 			{
@@ -84,6 +150,10 @@ namespace my_container
 				}
 #endif // _DEBUG
 				return *_now;
+			}
+			T* operator->()
+			{
+				return _now;
 			}
 		private:
 			T * _begin, *_now, *_end;
@@ -97,6 +167,10 @@ namespace my_container
 
 			}
 			const_iterator(const const_iterator&t) :_begin(t._begin), _now(t._now), _end(t._end)
+			{
+
+			}
+			const_iterator(const iterator&t) :_begin(t.begin), _now(t._now), _end(t._end)
 			{
 
 			}
@@ -209,6 +283,14 @@ namespace my_container
 		{
 			return iterator(val, val + vsize, val + vsize);
 		}
+		const_iterator cbegin()
+		{
+			return iterator(val, val, val + vsize);
+		}
+		const_iterator cend()
+		{
+			return iterator(val, val + vsize, val + vsize);
+		}
 		reverse_iterator rbegin()
 		{
 			return reverse_iterator(val + vsize - 1, val + vsize - 1, val - 1);
@@ -219,13 +301,110 @@ namespace my_container
 		}
 
 		//revise
-		void push_back(const T& val)
+		void push_back(const T& value)
 		{
-
+			if (size() >= capacity())
+			{
+				this->reserve((size() + 1) * 2);
+			}
+			std::allocator_traits<Alloc>::construct(alloc, val + vsize, value);
+			++vsize;
 		}
-		void insert(iterator i, const T& val)
+		void pop_back()
 		{
+#ifdef _DEBUG
+			if (empty())
+			{
+				throw std::invalid_argument("my_vector empty before pop");
+			}
+#endif // _DEBUG
+			--vsize;
+			(val + vsize)->~T();
+		}
+		iterator insert(iterator i, const T& value)
+		{
+#ifdef _DEBUG
+			if (i._begin != val || i._end != val + vsize)
+			{
+				throw invalid_argument("iterator failure,its begin or end is expired");
+			}
+			if (i._now < val || i._now >= val + vsize)
+			{
+				throw out_of_range("iterator out of range");
+			}
+#endif // _DEBUG
+			std::size_t os = i._now - i._begin;
+			reserve(size() + 1);
+			i._now = val + os;
+			std::allocator_traits<Alloc>::construct(alloc, val + vsize, *(val + vsize - 1));
+			for (auto j = val + vsize; j != val + os; --j)
+			{
+				*j = std::move(*(j - 1));
+			}
+			++vsize;
+			*i._now = value;
+		}
+		iterator erase(iterator i)
+		{
+#ifdef _DEBUG
+			if (i._begin != val || i._end != val + vsize)
+			{
+				throw invalid_argument("iterator failure,its begin or end is expired");
+			}
+			if (i._now < val || i._now >= val + vsize)
+			{
+				throw out_of_range("iterator out of range");
+			}
+#endif // _DEBUG
+			for (auto* j = i._now; j != i._end - 1; ++j)
+			{
+				j->~T();
+				std::allocator_traits<Alloc>::construct(alloc, j, std::move(*(j + 1)));
+			}
+			(i._end - 1)->~T();
+			--vsize;
+			return iterator(val, i._now, val + vsize);
+		}
+		iterator erase(iterator l, iterator r)
+		{
+#ifdef _DEBUG
+			if (l._begin != val || l._end != val + vsize || r._begin != val || r._end != val + vsize)
+			{
+				throw invalid_argument("iterator failure,its begin or end is expired");
+			}
+			if (l._now < val || l._now >= val + vsize || r._now < val || r._now > val + vsize)
+			{
+				throw out_of_range("iterator out of range");
+			}
+#endif // _DEBUG
+			if (l + 1 == r)
+			{
+				erase(l);
+			}
+			else
+			{
+				for (auto p = l; p != r - 1; ++p)
+				{
+					*p = std::move(*(p + 1));
+				}
 
+			}
+			vsize -= r._now - l._now;
+			return iterator(val, l._now, val + vsize);
+		}
+		void clear()noexcept
+		{
+			for (size_t i = 0; i < vsize; ++i)
+			{
+				(val + i)->~T();
+			}
+			vsize = 0;
+		}
+		void swap(my_vector&other)noexcept
+		{
+			auto v = std::move(*this);
+			*this = std::move(other);
+			other = std::move(v);
 		}
 
 		//access
@@ -237,11 +416,62 @@ namespace my_container
 #endif // _DEBUG
 			return *(val + pos);
 		}
+		const T& operator[](std::size_t pos)const
+		{
+#ifdef _DEBUG
+			if (pos < 0 || pos >= vsize)
+				throw out_of_range("my_vector out of range");
+#endif // _DEBUG
+			return *(val + pos);
+		}
+		T& at(std::size_t pos)
+		{
+			if (pos < 0 || pos >= size())
+			{
+				throw out_of_range("my_vector out of range");
+			}
+			return *(val + pos);
+		}
+		T& front()
+		{
+			return *val;
+		}
+		T& back()
+		{
+			return *(val + vsize - 1);
+		}
+		T* data()
+		{
+			return val;
+		}
 
 		//capacity
 		std::size_t size()const
 		{
 			return vsize;
+		}
+		std::size_t capacity()const
+		{
+			return vcap;
+		}
+		bool empty()const noexcept
+		{
+			return !static_cast<bool>(vsize);
+		}
+		void reserve(std::size_t new_cap)
+		{
+			if (new_cap > this->capacity())
+			{
+				auto*p = alloc.allocate(new_cap);
+				for (std::size_t i = 0; i < this->size(); ++i)
+				{
+					//*(p + i) = std::move(*(val + i));
+					std::allocator_traits<Alloc>::construct(alloc, p + i, std::move(*(val + i)));
+				}
+				alloc.deallocate(val, this->capacity());
+				val = p;
+				vcap = new_cap;
+			}
 		}
 	};
 }

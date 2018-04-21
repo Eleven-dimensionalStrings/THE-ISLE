@@ -182,6 +182,7 @@ enemy::~enemy()
 	//TODO
 }
 
+
 void enemy::initiate(my_container::my_vector<card>& card_pool, my_container::my_vector<artifact>& artifact_list)
 {
 }

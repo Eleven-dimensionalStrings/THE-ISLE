@@ -53,6 +53,7 @@ class enemy : public game_entity
 public:
 	enemy(data_sys&, std::size_t);
 	virtual ~enemy();
+	enemy& operator=(const enemy&) = delete;
 	void initiate(my_container::my_vector<card>&card_pool, my_container::my_vector<artifact>&artifact_list)override;
 	info_to_battle_sys kill()override;
 	info_to_battle_sys on_turn_begin()override;

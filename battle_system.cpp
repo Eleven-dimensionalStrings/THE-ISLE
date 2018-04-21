@@ -419,6 +419,10 @@ my_container::my_vector<card> my_random_engine::shuffle(my_container::my_vector<
 		vv.push_back(*(v.begin() + ind));
 		v.erase(v.begin() + ind);
 	}
+	for (auto&i : vv)
+	{
+		cout << i.card_name << endl;
+	}
 	return vv;
 }
 
