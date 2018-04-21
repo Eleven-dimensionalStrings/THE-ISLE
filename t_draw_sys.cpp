@@ -1,6 +1,6 @@
 #include "t_draw_sys.h"
 #include <string>
-using namespace std;
+using namespace std;using namespace my_container;
 inline pair<int, int> enemy_pos(size_t pos)
 {
 	return pair<int, int>(gra_size::enemy_x + pos * (gra_size::enemy_width + gra_size::enemy_closure), gra_size::enemy_y);

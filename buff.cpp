@@ -1,7 +1,7 @@
 #include "buff.h"
 #include "game_entity.h"
 #include "data_sys.h"
-using namespace std;
+using namespace std;using namespace my_container;
 
 void buff::operator--()
 {
