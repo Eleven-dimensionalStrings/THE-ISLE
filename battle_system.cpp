@@ -45,7 +45,26 @@ void battle_system::initiate_battle()
 		}
 	}
 
-
+	for (auto& i : data.artifacts)
+	{
+		auto t = data.artifact_on_start_battle(i.id);
+		decltype(t) result;
+		for (auto& j : t.action_set)
+		{
+			if (j.listener == &data.all_enemies)
+			{
+				for (auto& e : data.enemies_data)
+				{
+					auto temp = j;
+					temp.listener = reinterpret_cast<game_entity*>(&e);
+					result.append(temp);
+				}
+			}
+			else
+				result.append(j);
+		}
+		send_message(result);
+	}
 	send_message(data.player_data.on_turn_begin());
 	data.player_data.current_ap = temp_ap;
 }

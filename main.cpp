@@ -48,6 +48,11 @@ int main()
 	{
 		d.cards_pool.push_back(i);
 	}
+	d.artifacts.push_back(11);
+	d.artifacts.push_back(12);
+	d.artifacts.push_back(13);
+	d.artifacts.push_back(14);
+	d.artifacts.push_back(15);
 
 	e.create_map();
 
