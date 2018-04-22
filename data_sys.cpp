@@ -2,7 +2,7 @@
 #include <random>
 #include <ctime>
 #include "battle_system.h"
-using namespace std;using namespace my_container;
+using namespace std; using namespace my_container;
 
 //TODO 6, 8，9, 12
 
@@ -2174,12 +2174,52 @@ IMAGE & data_sys::get_mask_pic(int id, int det)
 
 info_to_explore_sys data_sys::artifact_on_create(std::size_t atf_id)
 {
-	return info_to_explore_sys();
+	switch (atf_id)
+	{
+	case 1:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_STRENGTH, 1));
+		break;
+	case 2:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_DEXTERITY, 1));
+		break;
+	case 3:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_VITALITY, 1));
+		break;
+	case 4:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_LUCK, 1));
+		break;
+	case 5:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_MAX_HIT_POINTS, 8));
+		break;
+	default:
+		return info_to_explore_sys();
+		break;
+	}
 }
 
 info_to_explore_sys data_sys::artifact_on_remove(std::size_t atf_id)
 {
-	return info_to_explore_sys();
+	switch (atf_id)
+	{
+	case 1:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_STRENGTH, 1));
+		break;
+	case 2:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_DEXTERITY, 1));
+		break;
+	case 3:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_VITALITY, 1));
+		break;
+	case 4:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_LUCK, 1));
+		break;
+	case 5:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_MAX_HIT_POINTS, 8));
+		break;
+	default:
+		return info_to_explore_sys();
+		break;
+	}
 }
 
 info_to_explore_sys data_sys::artifact_on_encounter_event(std::size_t atf_id)
@@ -2194,12 +2234,67 @@ info_to_explore_sys data_sys::artifact_on_event_body(std::size_t atf_id)
 
 info_to_battle_sys data_sys::artifact_on_start_battle(std::size_t atf_id)
 {
-	return info_to_battle_sys();
+	switch (atf_id)
+	{
+	case 6:
+		return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &player_data, &player_data, buff_type::STRENGTH, 1));
+		break;
+	case 7:
+		return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &player_data, &player_data, buff_type::DEXTERITY, 1));
+		break;
+	case 8:
+		return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &player_data, &player_data, buff_type::VITALITY, 1));
+		break;
+	case 9:
+		return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &player_data, &player_data, buff_type::ARMOR, 10));
+		break;
+	case 10:
+		return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &player_data, &player_data, type_type::ADD_HP, 3));
+		break;
+	case 11:
+		return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &player_data, &all_enemies, buff_type::VULNERABLE, 1));
+		break;
+	case 12:
+		return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &player_data, &all_enemies, buff_type::WEAK, 1));
+		break;
+	case 13:
+		return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &player_data, &player_data, buff_type::INCREASE_DRAW, 2));
+		break;
+	case 14:
+		return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &player_data, &player_data, type_type::ADD_AP, 1));
+		break;
+	case 15:
+		return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &player_data, &all_enemies, type_type::INDEPENDENT, 5));
+		break;
+	default:
+		return info_to_battle_sys();
+		break;
+	}
 }
 
 info_to_explore_sys data_sys::artifact_on_end_event(std::size_t atf_id)
 {
-	return info_to_explore_sys();
+	switch (atf_id)
+	{
+	case 16:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_GOLD, 25));
+		break;
+	case 17:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_FOOD, 1));
+		break;
+	case 18:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_MAX_HIT_POINTS, 1));
+		break;
+	case 19:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_CARD_FROM_SELECTION, 3));
+		break;
+	case 20:
+		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_HIT_POINTS, 3));
+		break;
+	default:
+		return info_to_explore_sys();
+		break;
+	}
 }
 
 random_engine::random_engine(data_sys * d)
