@@ -170,6 +170,7 @@ void battle_system::deal_an_action()
 		auto it = temp.listener->buff_pool.end();
 		if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
 		{
+
 			*it += buff(temp.type, temp.value);
 			break;
 		}

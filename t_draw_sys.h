@@ -1,16 +1,16 @@
 #pragma once
 #include <iostream>
 #include <graphics.h>
-#include <queue>
 #include "data_sys.h"
 #include "message.h"
+#include "container.h"
 class t_draw_sys
 {
 	data_sys& data;
 	IMAGE buffer;
 
 	//the caller and listener which means the first is attacking the second
-	std::queue<std::pair<std::size_t, std::size_t>> draw_queue;
+	my_container::my_queue<std::pair<std::size_t, std::size_t>> draw_queue;
 	std::size_t timer;
 	bool is_drawing;
 

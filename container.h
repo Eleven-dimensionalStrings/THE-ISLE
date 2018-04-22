@@ -514,7 +514,7 @@ namespace my_container
 		}
 	};
 
-	template<class T, class Container = deque<T>>
+	template<class T, class Container = std::deque<T>>
 	class my_queue
 	{
 	protected:
@@ -649,6 +649,5 @@ namespace my_container
 			other = std::move(*this);
 			*this = std::move(t);
 		}
-
 	};
 }

@@ -1,9 +1,9 @@
 #pragma once
 #include <ctime>
+#include <string>
 #include "game_entity.h"
 #include "message.h"
-#include <stack>
-#include <string>
+#include "container.h"
 class data_sys;
 class battle_system
 {
@@ -15,7 +15,7 @@ public:
 	void enemies_action();
 private:
 	data_sys & data;
-	std::stack<action> process_stack;
+	my_container::my_stack<action> process_stack;
 	void deal_an_action();
 	void process();
 	bool battle_succ();

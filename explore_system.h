@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <stack>
 #include "container.h"
 #include <random>
 #include <time.h>
@@ -17,7 +16,7 @@ public:
 	void end_battle();
 	void create_map(std::size_t map_type = 0);
 private:
-	std::stack<e_action> process_stack;
+	my_container::my_stack<e_action> process_stack;
 	std::size_t max_selection;
 	void process();
 	data_sys& data;

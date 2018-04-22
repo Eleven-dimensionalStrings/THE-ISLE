@@ -1,7 +1,5 @@
 #include <random>
 #include <ctime>
-#include <stack>
-#include <queue>
 #include <iostream>
 #include "explore_system.h"
 #include "message.h"
