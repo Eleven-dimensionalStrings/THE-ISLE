@@ -72,6 +72,7 @@ void battle_system::deal_an_action()
 			data.b_to_e_pipe.append(i.on_battle_end(&data.player_data));
 		}
 		data.enemies_data.clear();
+		return;
 	}
 	action temp = process_stack.top();
 	process_stack.pop();
@@ -418,10 +419,6 @@ my_container::my_vector<card> my_random_engine::shuffle(my_container::my_vector<
 		int ind = ran(e);
 		vv.push_back(*(v.begin() + ind));
 		v.erase(v.begin() + ind);
-	}
-	for (auto&i : vv)
-	{
-		cout << i.card_name << endl;
 	}
 	return vv;
 }
