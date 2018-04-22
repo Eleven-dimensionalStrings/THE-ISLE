@@ -1,7 +1,7 @@
 #include <iostream>
 #include "message.h"
 #include "data_sys.h"
-using namespace std;
+using namespace std;using namespace my_container;
 
 bool default_res(data_sys*)
 {
@@ -18,7 +18,7 @@ info_to_battle_sys::info_to_battle_sys(action ichange)
 	action_set.push_back(ichange);
 }
 
-info_to_battle_sys::info_to_battle_sys(vector<action> ichange) : action_set(std::move(ichange))
+info_to_battle_sys::info_to_battle_sys(my_vector<action> ichange) : action_set(std::move(ichange))
 {
 }
 
@@ -111,7 +111,7 @@ info_to_explore_sys::info_to_explore_sys(e_action ichange)
 	action_set.push_back(ichange);
 }
 
-info_to_explore_sys::info_to_explore_sys(vector<e_action> ichange) : action_set(std::move(ichange))
+info_to_explore_sys::info_to_explore_sys(my_vector<e_action> ichange) : action_set(std::move(ichange))
 {
 }
 

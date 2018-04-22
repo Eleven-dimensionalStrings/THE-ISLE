@@ -24,6 +24,6 @@ private:
 class my_random_engine
 {
 public:
-	static std::vector<card> shuffle(std::vector<card>);
+	static my_container::my_vector<card> shuffle(my_container::my_vector<card>);
 	static int get_num(int);
 };

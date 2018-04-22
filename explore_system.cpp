@@ -7,7 +7,7 @@
 #include "message.h"
 #include "data_sys.h"
 
-using namespace std;
+using namespace std;using namespace my_container;
 using namespace explore_action_type;
 using namespace event_type;
 

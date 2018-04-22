@@ -4,7 +4,7 @@
 #include <graphics.h>
 #include <Windows.h>
 #include "battle_system.h"
-using namespace std;
+using namespace std;using namespace my_container;
 using std::size_t;
 //写easyx的不知道哪个弱智把这宏放出来了,为什么要用这种垃圾
 #undef max
@@ -172,7 +172,6 @@ void explore_context::read_input()
 		{
 			if (get_data().is_vaccant)
 			{
-				auto d = get_data();
 				//检测点击地图
 				if (hit.x > gra_size::map_start_x && hit.x < gra_size::map_end_x
 					&& hit.y > gra_size::map_start_y && hit.y < gra_size::map_end_y)

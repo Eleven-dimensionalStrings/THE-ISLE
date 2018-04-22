@@ -4,12 +4,11 @@
 #include "battle_system.h"
 #include "t_draw_sys.h"
 #include "explore_system.h"
-#include "data_sys.h"
-using namespace std;
+using namespace std;using namespace my_container;
 template<class T = int, class Comp = decltype(comp)>
 auto get_p_q(Comp comp)
 {
-	return priority_queue<T, vector<T>, Comp>(comp);
+	return priority_queue<T, my_vector<T>, Comp>(comp);
 }
 template<class T = int>
 auto get_p_q()
@@ -40,23 +39,15 @@ int main()
 	d.is_battle = 1;
 
 	//d.enemies_data.push_back(enemy(d, 35));
-	d.enemies_data.push_back(enemy(d, 1));
-	d.enemies_data.push_back(enemy(d, 1));
-	d.enemies_data.push_back(enemy(d, 1));
+	//d.enemies_data.push_back(enemy(d, 1));
+	//d.enemies_data.push_back(enemy(d, 1));
+	//d.enemies_data.push_back(enemy(d, 1));
 	d.enemies_data.push_back(enemy(d, 1));
 
-	d.cards_pool.push_back(1);
-	d.cards_pool.push_back(1);
-	d.cards_pool.push_back(1);
-	d.cards_pool.push_back(1);
-	d.cards_pool.push_back(30);
-	d.cards_pool.push_back(30);
-	d.cards_pool.push_back(30);
-	d.cards_pool.push_back(30);
-	d.cards_pool.push_back(2);
-	for (int i = 1; i < 60; ++i)
+	for (int i = 61; i < 121; ++i)
+	{
 		d.cards_pool.push_back(i);
-	d.artifacts.push_back(1);
+	}
 
 	e.create_map();
 
@@ -64,6 +55,8 @@ int main()
 	goto battle;
 
 explore:
+	d.is_vaccant = 1;
+	d.is_battle = 0;
 	//explore loop
 	e.end_battle();
 	dr.end_battle();

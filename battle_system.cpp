@@ -6,7 +6,7 @@
 #include "battle_system.h"
 #include "data_sys.h"
 #include "message.h"
-using namespace std;
+using namespace std;using namespace my_container;
 using std::size_t;
 using namespace battle_action_type;
 default_random_engine e(static_cast<int>(time(0)));
@@ -31,7 +31,7 @@ void battle_system::initiate_battle()
 	}
 	data.e_to_b_pipe.action_set.clear();
 	this->process();
-	vector<card>&deck = data.cards_deck;
+	my_vector<card>&deck = data.cards_deck;
 	deck = my_random_engine::shuffle(data.cards_pool);
 	std::size_t temp_ap = data.player_data.current_ap;//to set the ap on the first round properly
 	data.passed_turns = 0;
@@ -72,6 +72,7 @@ void battle_system::deal_an_action()
 			data.b_to_e_pipe.append(i.on_battle_end(&data.player_data));
 		}
 		data.enemies_data.clear();
+		return;
 	}
 	action temp = process_stack.top();
 	process_stack.pop();
@@ -120,9 +121,9 @@ void battle_system::deal_an_action()
 		{
 			t = i.on_calling(t);
 		}
-		vector<card>& c_in_hand = data.cards_in_hand;
-		vector<card>& c_deck = data.cards_deck;
-		vector<card>& c_grave = data.cards_grave;
+		my_vector<card>& c_in_hand = data.cards_in_hand;
+		my_vector<card>& c_deck = data.cards_deck;
+		my_vector<card>& c_grave = data.cards_grave;
 		for (size_t i = 0; i < t.action_set.begin()->value; ++i)
 		{
 			if (c_deck.empty())
@@ -211,8 +212,8 @@ void battle_system::deal_an_action()
 	}
 	case P_REMOVE_A_CARD:
 	{
-		vector<card>& c_in_hand = data.cards_in_hand;
-		vector<card>& c_removed = data.cards_removed;
+		my_vector<card>& c_in_hand = data.cards_in_hand;
+		my_vector<card>& c_removed = data.cards_removed;
 		send_message(c_in_hand[temp.value].remove(data));
 		c_removed.push_back(c_in_hand[temp.value]);
 		c_in_hand.erase(c_in_hand.begin() + temp.value);
@@ -221,8 +222,8 @@ void battle_system::deal_an_action()
 	}
 	case P_DISCARD_A_CARD:
 	{
-		vector<card>& c_in_hand = data.cards_in_hand;
-		vector<card>& c_grave = data.cards_grave;
+		my_vector<card>& c_in_hand = data.cards_in_hand;
+		my_vector<card>& c_grave = data.cards_grave;
 		send_message(c_in_hand[temp.value].discard(data));
 		deal_an_action();
 		c_grave.push_back(c_in_hand[temp.value]);
@@ -278,10 +279,10 @@ void battle_system::deal_an_action()
 	}
 	case battle_action_type::USE_A_CARD:
 	{
-		vector<card>& c_in_hand = data.cards_in_hand;
-		vector<card>& c_grave = data.cards_grave;
-		vector<card>& c_removed = data.cards_removed;
-		vector<card>& c_equiped = data.cards_equiped;
+		my_vector<card>& c_in_hand = data.cards_in_hand;
+		my_vector<card>& c_grave = data.cards_grave;
+		my_vector<card>& c_removed = data.cards_removed;
+		my_vector<card>& c_equiped = data.cards_equiped;
 		if (data.cards_in_hand[temp.value].exhaust)
 		{
 			process_stack.push(action(battle_action_type::P_REMOVE_A_CARD, &data.player_data, &data.player_data, MEANINGLESS_VALUE, temp.value));
@@ -325,9 +326,9 @@ void battle_system::deal_an_action()
 	}
 	case ADD_CARD_TO_HAND:
 	{
-		vector<card>& c_in_hand = data.cards_in_hand;
-		vector<card>& c_deck = data.cards_deck;
-		vector<card>& c_grave = data.cards_grave;
+		my_vector<card>& c_in_hand = data.cards_in_hand;
+		my_vector<card>& c_deck = data.cards_deck;
+		my_vector<card>& c_grave = data.cards_grave;
 		if (c_in_hand.size() < MAX_CARDS_IN_HAND)
 		{
 			c_in_hand.push_back(card(temp.value));
@@ -341,7 +342,7 @@ void battle_system::deal_an_action()
 	}
 	case ADD_CARD_TO_DECK:
 	{
-		vector<card>& c_deck = data.cards_deck;
+		my_vector<card>& c_deck = data.cards_deck;
 		c_deck.insert(c_deck.begin() + my_random_engine().get_num(c_deck.size() - 1), card(temp.value));
 		send_message(data.player_data.performing_action(temp));
 		break;
@@ -353,8 +354,8 @@ void battle_system::deal_an_action()
 	}
 	case P_ADD_CARD_TO_DECK_TOP:
 	{
-		vector<card>& c_in_hand = data.cards_in_hand;
-		vector<card>& c_deck = data.cards_deck;
+		my_vector<card>& c_in_hand = data.cards_in_hand;
+		my_vector<card>& c_deck = data.cards_deck;
 		c_deck.push_back(c_in_hand[temp.value]);
 		c_in_hand.erase(c_in_hand.begin() + temp.value);
 		send_message(data.player_data.performing_action(temp));
@@ -362,8 +363,8 @@ void battle_system::deal_an_action()
 	}
 	case PURIFIED_MOVE_A_CARD_TO_GRAVE:
 	{
-		vector<card>& c_in_hand = data.cards_in_hand;
-		vector<card>& c_grave = data.cards_grave;
+		my_vector<card>& c_in_hand = data.cards_in_hand;
+		my_vector<card>& c_grave = data.cards_grave;
 		c_grave.push_back(c_in_hand[temp.value]);
 		c_in_hand.erase(c_in_hand.begin() + temp.value);
 		break;
@@ -408,9 +409,9 @@ void battle_system::enemies_action()
 	}
 }
 
-std::vector<card> my_random_engine::shuffle(std::vector<card> v)
+my_container::my_vector<card> my_random_engine::shuffle(my_container::my_vector<card> v)
 {
-	vector<card>vv;
+	my_vector<card>vv;
 	default_random_engine e(static_cast<unsigned>(time(0)));
 	while (!v.empty())
 	{
