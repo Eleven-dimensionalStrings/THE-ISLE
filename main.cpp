@@ -34,32 +34,28 @@ int main()
 	d.gold = 100;
 	d.food = 5;
 	d.player_s_class = player_class::WAR;
-	d.is_vaccant = 1;
-	d.is_battle = 0;
+	d.is_vaccant = 0;
+	d.is_battle = 1;
 
 	//d.enemies_data.push_back(enemy(d, 35));
-	d.enemies_data.push_back(enemy(d, 1));
-	d.enemies_data.push_back(enemy(d, 1));
-	d.enemies_data.push_back(enemy(d, 1));
+	//d.enemies_data.push_back(enemy(d, 1));
+	//d.enemies_data.push_back(enemy(d, 1));
+	//d.enemies_data.push_back(enemy(d, 1));
 	d.enemies_data.push_back(enemy(d, 1));
 
-	d.cards_pool.push_back(1);
-	d.cards_pool.push_back(1);
-	d.cards_pool.push_back(1);
-	d.cards_pool.push_back(1);
-	d.cards_pool.push_back(30);
-	d.cards_pool.push_back(30);
-	d.cards_pool.push_back(30);
-	d.cards_pool.push_back(30);
-	d.cards_pool.push_back(2);
-	d.cards_pool.push_back(3);
+	for (int i = 61; i < 121; ++i)
+	{
+		d.cards_pool.push_back(i);
+	}
 
 	e.create_map();
 
 	//e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
-	//goto battle;
+	goto battle;
 
 explore:
+	d.is_vaccant = 1;
+	d.is_battle = 0;
 	//explore loop
 	e.end_battle();
 	dr.end_battle();

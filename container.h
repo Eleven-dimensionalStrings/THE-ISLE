@@ -119,8 +119,8 @@ namespace my_container
 			bool operator==(const iterator& other)const
 			{
 				if (_now != other._now)return 0;
-				if (_begin != other._begin)return 0;
-				if (_end != other._end)return 0;
+				//if (_begin != other._begin)return 0;
+				//if (_end != other._end)return 0;
 				return 1;
 			}
 			bool operator!=(const iterator& other)const
@@ -328,7 +328,7 @@ namespace my_container
 			{
 				throw invalid_argument("iterator failure,its begin or end is expired");
 			}
-			if (i._now < val || i._now >= val + vsize)
+			if (i._now < val || i._now > val + vsize)
 			{
 				throw out_of_range("iterator out of range");
 			}
@@ -336,13 +336,14 @@ namespace my_container
 			std::size_t os = i._now - i._begin;
 			reserve(size() + 1);
 			i._now = val + os;
-			std::allocator_traits<Alloc>::construct(alloc, val + vsize, *(val + vsize - 1));
 			for (auto j = val + vsize; j != val + os; --j)
 			{
-				*j = std::move(*(j - 1));
+				std::allocator_traits<Alloc>::construct(alloc, j, std::move(*(j - 1)));
+				(j - 1)->~T();
 			}
+			std::allocator_traits<Alloc>::construct(alloc, val + os, std::move(value));
 			++vsize;
-			*i._now = value;
+			return iterator(val, val + os, val + size());
 		}
 		iterator erase(iterator i)
 		{
@@ -385,9 +386,13 @@ namespace my_container
 			{
 				for (auto p = l; p != r - 1; ++p)
 				{
-					*p = std::move(*(p + 1));
+					p._now->~T();
 				}
-
+				int os = r - l;
+				for (auto p = r; p != end(); ++p)
+				{
+					std::allocator_traits<Alloc>::construct(alloc, p._now - os, std::move(*(p._now)));
+				}
 			}
 			vsize -= r._now - l._now;
 			return iterator(val, l._now, val + vsize);

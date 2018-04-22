@@ -599,6 +599,7 @@ void t_draw_sys::draw_battle()
 	cleardevice();
 	settextcolor(BLACK);
 	setfillcolor(LIGHTBLUE);
+	settextstyle(20, 0, "Arial");
 	putimage(0, 0, &data.back_grounds[0]);
 	putimage(0, 470, &data.components[0]);
 
