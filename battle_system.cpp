@@ -45,7 +45,26 @@ void battle_system::initiate_battle()
 		}
 	}
 
-
+	for (auto& i : data.artifacts)
+	{
+		auto t = data.artifact_on_start_battle(i.id);
+		decltype(t) result;
+		for (auto& j : t.action_set)
+		{
+			if (j.listener == &data.all_enemies)
+			{
+				for (auto& e : data.enemies_data)
+				{
+					auto temp = j;
+					temp.listener = reinterpret_cast<game_entity*>(&e);
+					result.append(temp);
+				}
+			}
+			else
+				result.append(j);
+		}
+		send_message(result);
+	}
 	send_message(data.player_data.on_turn_begin());
 	data.player_data.current_ap = temp_ap;
 }
@@ -151,6 +170,7 @@ void battle_system::deal_an_action()
 		auto it = temp.listener->buff_pool.end();
 		if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
 		{
+
 			*it += buff(temp.type, temp.value);
 			break;
 		}
@@ -158,7 +178,7 @@ void battle_system::deal_an_action()
 		{
 			pair<string, size_t> t = data.get_buff(temp.type); // pair<buff_name, priority>
 			buff tbuff(temp.type, t.first, t.second, temp.value);
-			temp.listener->buff_pool.push_back(tbuff);
+			temp.listener->buff_pool.push(tbuff);
 			send_message(tbuff.on_create(temp.caller, temp.listener));
 		}
 		break;
@@ -198,7 +218,7 @@ void battle_system::deal_an_action()
 		{
 			pair<string, size_t> t = data.get_buff(temp.type); // pair<buff_name, priority>
 			buff tbuff(temp.type, t.first, t.second, -static_cast<int>(temp.value));
-			temp.listener->buff_pool.push_back(tbuff);
+			temp.listener->buff_pool.push(tbuff);
 			send_message(tbuff.on_create(temp.caller, temp.listener));
 		}
 		send_message(temp.listener->performing_action(temp));

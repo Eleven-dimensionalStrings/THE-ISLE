@@ -1,7 +1,6 @@
 #pragma once
 #include <cstdlib>
 #include "container.h"
-#include <queue>
 #include <cstddef>
 #include <string>
 #define MAX_ENEMIES 5

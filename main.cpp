@@ -5,16 +5,6 @@
 #include "t_draw_sys.h"
 #include "explore_system.h"
 using namespace std;using namespace my_container;
-template<class T = int, class Comp = decltype(comp)>
-auto get_p_q(Comp comp)
-{
-	return priority_queue<T, my_vector<T>, Comp>(comp);
-}
-template<class T = int>
-auto get_p_q()
-{
-	return priority_queue<T>();
-}
 int main()
 {
 	data_sys d;
@@ -48,6 +38,11 @@ int main()
 	{
 		d.cards_pool.push_back(i);
 	}
+	d.artifacts.push_back(11);
+	d.artifacts.push_back(12);
+	d.artifacts.push_back(13);
+	d.artifacts.push_back(14);
+	d.artifacts.push_back(15);
 
 	e.create_map();
 

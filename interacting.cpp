@@ -396,7 +396,8 @@ void b_confirm_state::click_a_card(size_t card_pos)
 		get_data().render_select_card[selected_card] = 0;
 		ctx->set_state(new b_vaccant_state(ctx));
 	}
-	else if (get_data().player_data.current_ap >= get_data().cards_in_hand[card_pos].cost)
+	else if (get_data().cards_in_hand.size()>card_pos && 
+		get_data().player_data.current_ap >= get_data().cards_in_hand[card_pos].cost)
 	{
 		get_data().render_select_card[card_pos] = 1;
 		get_data().render_select_card[selected_card] = 0;

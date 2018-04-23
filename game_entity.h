@@ -25,7 +25,7 @@ public:
 	int current_hp;
 	int max_ap;
 	int current_ap;
-	my_container::my_vector<buff> buff_pool;
+	my_container::insert_sort_vector<buff> buff_pool;
 
 };
 

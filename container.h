@@ -1,4 +1,5 @@
 #pragma once
+#include <deque>
 #include <initializer_list>
 #include <memory>
 namespace my_container
@@ -310,6 +311,15 @@ namespace my_container
 			std::allocator_traits<Alloc>::construct(alloc, val + vsize, value);
 			++vsize;
 		}
+		void push_back(T&& value)
+		{
+			if (size() >= capacity())
+			{
+				this->reserve((size() + 1) * 2);
+			}
+			std::allocator_traits<Alloc>::construct(alloc, val + vsize, std::move(value));
+			++vsize;
+		}
 		void pop_back()
 		{
 #ifdef _DEBUG
@@ -341,7 +351,31 @@ namespace my_container
 				std::allocator_traits<Alloc>::construct(alloc, j, std::move(*(j - 1)));
 				(j - 1)->~T();
 			}
-			std::allocator_traits<Alloc>::construct(alloc, val + os, std::move(value));
+			std::allocator_traits<Alloc>::construct(alloc, val + os, value);
+			++vsize;
+			return iterator(val, val + os, val + size());
+		}
+		iterator insert(iterator i, T&& value)
+		{
+#ifdef _DEBUG
+			if (i._begin != val || i._end != val + vsize)
+			{
+				throw invalid_argument("iterator failure,its begin or end is expired");
+			}
+			if (i._now < val || i._now > val + vsize)
+			{
+				throw out_of_range("iterator out of range");
+			}
+#endif // _DEBUG
+			std::size_t os = i._now - i._begin;
+			reserve(size() + 1);
+			i._now = val + os;
+			for (auto j = val + vsize; j != val + os; --j)
+			{
+				std::allocator_traits<Alloc>::construct(alloc, j, std::move(*(j - 1)));
+				(j - 1)->~T();
+			}
+			std::allocator_traits<Alloc>::construct(alloc, val + os, value);
 			++vsize;
 			return iterator(val, val + os, val + size());
 		}
@@ -477,6 +511,230 @@ namespace my_container
 				val = p;
 				vcap = new_cap;
 			}
+		}
+	};
+
+	template<class T, class Container = std::deque<T>>
+	class my_queue
+	{
+	protected:
+		Container deq;
+	public:
+		my_queue() :deq()
+		{
+
+		}
+		my_queue(const my_queue&other) :deq(other.deq)
+		{
+
+		}
+		my_queue(my_queue&& other) :deq(std::move(other.deq))
+		{
+
+		}
+		my_queue& operator=(const my_queue&other)
+		{
+			deq = other.deq;
+			return *this;
+		}
+		my_queue& operator=(my_queue&&other)
+		{
+			deq = std::move(other.deq);
+			return *this;
+		}
+		//access
+		T& front()
+		{
+#ifdef _DEBUG
+
+#endif // _DEBUG
+
+			return deq.front();
+		}
+		T& back()
+		{
+			return deq.back();
+		}
+		//capacity
+		bool empty()const
+		{
+			return deq.empty();
+		}
+		std::size_t size()const
+		{
+			return deq.size();
+		}
+		//revise
+		void push(const T& value)
+		{
+			deq.push_back(value);
+		}
+		void push(T&& value)
+		{
+			deq.push_back(std::move(value));
+		}
+		void pop()
+		{
+			deq.pop_front();
+		}
+		void swap(my_queue& other)noexcept
+		{
+			auto t = std::move(other);
+			other = std::move(*this);
+			*this = std::move(t);
+		}
+	};
+	//Container should be queue, unnecesary too
+	template<class T, class Container = my_vector<T>>
+	class my_stack
+	{
+	private:
+		Container deq;
+	public:
+		my_stack() :deq()
+		{
+
+		}
+		my_stack(const my_stack&other) :deq(other.deq)
+		{
+
+		}
+		my_stack(my_stack&&other) :deq(std::move(other.deq))
+		{
+
+		}
+		my_stack& operator=(const my_stack&other)
+		{
+			deq = other.deq;
+			return *this;
+		}
+		my_stack& operator=(my_stack&&other)
+		{
+			deq = std::move(other.deq);
+			return *this;
+		}
+		//access
+		T& top()
+		{
+#ifdef _DEBUG
+
+#endif // _DEBUG
+			return deq.back();
+		}
+		//capacity
+		bool empty()const
+		{
+			return deq.empty();
+		}
+		std::size_t size()const
+		{
+			return deq.size();
+		}
+		//revise
+		void push(const T& value)
+		{
+			deq.push_back(value);
+		}
+		void push(T&& value)
+		{
+			deq.push_back(std::move(value));
+		}
+		void pop()
+		{
+			deq.pop_back();
+		}
+		void swap(my_stack& other)noexcept
+		{
+			auto t = std::move(other);
+			other = std::move(*this);
+			*this = std::move(t);
+		}
+	};
+	template<class T, class Container = my_vector<T>>
+	class insert_sort_vector
+	{
+	private:
+		Container vec;
+	public:
+		insert_sort_vector() :vec()
+		{
+
+		}
+		insert_sort_vector(const insert_sort_vector& other):vec(other.vec)
+		{
+
+		}
+		insert_sort_vector(insert_sort_vector&& other):vec(std::move(other.vec))
+		{
+
+		}
+		insert_sort_vector& operator=(const insert_sort_vector& other)
+		{
+			vec = other.vec;
+			return *this;
+		}
+		insert_sort_vector& operator=(insert_sort_vector&& other)
+		{
+			vec = std::move(other);
+			return *this;
+		}
+		void push(const T& value)
+		{
+			auto i = vec.begin();
+			for (; i != vec.end(); ++i)
+			{
+				if (value.compare_value() == i->compare_value())break;
+			}
+			vec.insert(i, value);
+		}
+		void push(T&& value)
+		{
+			auto i = vec.begin();
+			for (; i != vec.end(); ++i)
+			{
+				if (value.compare_value() == i->compare_value())break;
+			}
+			vec.insert(i, std::move(value));
+		}
+		typename Container::iterator insert(typename Container::iterator i, const T& value)
+		{
+			return vec.insert(i, value);
+		}
+		typename Container::iterator insert(typename Container::iterator i, T&& value)
+		{
+			return vec.insert(i, std::move(value));
+		}
+		typename Container::iterator erase(typename Container::iterator i)
+		{
+			return vec.erase(i);
+		}
+		std::size_t size()const
+		{
+			return vec.size();
+		}
+		std::size_t capacity()const
+		{
+			return vec.capacity();
+		}
+		void reserve(std::size_t new_cap)
+		{
+			vec.reserve(new_cap);
+		}
+		typename Container::iterator begin()
+		{
+			return vec.begin();
+		}
+		typename Container::iterator end()
+		{
+			return vec.end();
+		}
+		T& operator[](std::size_t pos)
+		{
+			return vec[pos];
+		}
+		void clear()
+		{
+			vec.clear();
 		}
 	};
 }
