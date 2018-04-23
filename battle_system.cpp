@@ -65,6 +65,18 @@ void battle_system::initiate_battle()
 		}
 		send_message(result);
 	}
+	if (data.strength)
+	{
+		send_message(action(battle_action_type::ADD_BUFF, &data.player_data, &data.player_data, buff_type::STRENGTH, data.strength));
+	}
+	if (data.dexterity)
+	{
+		send_message(action(battle_action_type::ADD_BUFF, &data.player_data, &data.player_data, buff_type::DEXTERITY, data.dexterity));
+	}
+	if (data.vitality)
+	{
+		send_message(action(battle_action_type::ADD_BUFF, &data.player_data, &data.player_data, buff_type::VITALITY, data.vitality));
+	}
 	send_message(data.player_data.on_turn_begin());
 	data.player_data.current_ap = temp_ap;
 }

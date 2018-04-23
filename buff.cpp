@@ -373,7 +373,7 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 				}
 				else
 				{
-					temp.action_set[i].value += buff_level;
+					temp.action_set[i].value -= buff_level;
 				}
 			}
 		}

@@ -309,7 +309,7 @@ void t_draw_sys::__draw_player_in_map()
 void t_draw_sys::__draw_ending_text()
 {
 	//TODO
-	if (data.map_text != -1)
+	if (data.map_text != MEANINGLESS_VALUE)
 		putimage(gra_size::player_x, gra_size::player_y + 255, &data.end[data.map_text]);
 }
 
@@ -538,7 +538,7 @@ void t_draw_sys::load_all()
 		loadimage(&t, &(".\\resource\\explore\\body\\" + to_string(i) + ".bmp" + '\0')[0]);
 		data.body.push_back(std::move(t));
 	}
-	for (int i = 1; i <= 14; ++i)
+	for (int i = 0; i <= 14; ++i)
 	{
 		IMAGE t;
 		loadimage(&t, &(".\\resource\\explore\\end\\" + to_string(i) + ".bmp" + '\0')[0]);

@@ -3,7 +3,7 @@
 #include <string>
 #include "container.h" 
 #include <map>
-#include <functional>
+#include <random>
 #include "game_entity.h"
 #include <graphics.h>
 #undef PURE
@@ -18,7 +18,8 @@ public:
 	size_t get_other_enemy(int pos);
 	bool chance(std::size_t c);
 	bool chance_luck_increase(std::size_t c);
-	bool chance_luck_decrease(std::size_t c);
+	bool chance_luck_decrease(std::size_t c); 
+	std::default_random_engine e;
 	data_sys* data;
 };
 

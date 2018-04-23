@@ -10,6 +10,7 @@ data_sys::data_sys() :b(nullptr), player_data(*this), all_enemies(*this, MEANING
 , select_one_enemy(*this, MEANINGLESS_VALUE), re(this), view_cards(0), cards_thumbnail(420), cards_original(420), cards_mask(10), back_grounds(20)
 , components(30), entities(21)
 {
+	map_text = 0;
 	for (auto&i : render_select_card)i = 0;
 }
 
@@ -1029,7 +1030,8 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 75),
 			e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_CARD_FROM_DECK, 1, 7),
-			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 6)});
+			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, static_cast<int>(MEANINGLESS_VALUE), 6)});
+
 		break;
 	}
 	case 4://升级神龛
@@ -2300,13 +2302,12 @@ info_to_explore_sys data_sys::artifact_on_end_event(std::size_t atf_id)
 }
 
 random_engine::random_engine(data_sys * d)
-	:data(d)
+	:data(d), e(static_cast<int>(time(0)))
 {
 }
 
 size_t random_engine::get_num(int lb, int ub)
 {
-	default_random_engine e(static_cast<unsigned>(time(0)));
 	uniform_int_distribution<int> ran(lb, ub);
 	int result = ran(e);
 	return result;
@@ -2314,7 +2315,6 @@ size_t random_engine::get_num(int lb, int ub)
 
 size_t random_engine::get_enemy()
 {
-	default_random_engine e(static_cast<unsigned>(time(0)));
 	uniform_int_distribution<int> ran(0, data->enemies_data.size());
 	while (true)
 	{
@@ -2328,7 +2328,6 @@ size_t random_engine::get_enemy()
 
 size_t random_engine::get_other_enemy(int pos)
 {
-	default_random_engine e(static_cast<unsigned>(time(0)));
 	uniform_int_distribution<int> ran(0, data->enemies_data.size() - 1);//<-are you fucking kidding me?
 	//fuck!!!
 	while (true)
@@ -2343,7 +2342,6 @@ size_t random_engine::get_other_enemy(int pos)
 
 bool random_engine::chance(std::size_t target)
 {
-	default_random_engine e(static_cast<unsigned>(time(0)));
 	uniform_int_distribution<int> ran(0, 100);
 	int result = ran(e);
 	if (target > result)
@@ -2355,7 +2353,6 @@ bool random_engine::chance(std::size_t target)
 
 bool random_engine::chance_luck_increase(std::size_t target)
 {
-	default_random_engine e(static_cast<unsigned>(time(0)));
 	uniform_int_distribution<int> ran(0, 100);
 	int result = ran(e);
 	if (target + (10 * data->luck) > result)
@@ -2367,7 +2364,6 @@ bool random_engine::chance_luck_increase(std::size_t target)
 
 bool random_engine::chance_luck_decrease(std::size_t target)
 {
-	default_random_engine e(static_cast<unsigned>(time(0)));
 	uniform_int_distribution<int> ran(0, 100);
 	int result = ran(e);
 	if (target - (10 * data->luck) > result)

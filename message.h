@@ -10,7 +10,7 @@
 #define MEANINGLESS_VALUE static_cast<std::size_t>(31415926)
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
 #define MAX_ARTIFACT_NO 20 //TODO
-#define END 9999
+#define END static_cast<std::size_t>(9999)
 
 #undef PURE
 //a fucking sb define PURE without namespace or other protect

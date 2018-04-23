@@ -16,23 +16,26 @@ int main()
 	d.b = &b;
 	dr.load_all();
 
+	//TODO Òª¸Ä»Ø0
+	d.vitality = 100;
+	d.dexterity = 1;
 	//easyx
 	initgraph(gra_size::window_width, gra_size::window_height, SHOWCONSOLE);
 	setbkcolor(WHITE);
 	settextstyle(20, 0, "Airial");
 	cleardevice();
 
-	d.gold = 100;
+	d.gold = 1000000;
 	d.food = 5;
 	d.player_s_class = player_class::WAR;
-	d.is_vaccant = 1;
-	d.is_battle = 0;
+	d.is_vaccant = 0;
+	d.is_battle = 1;
 
 	//d.enemies_data.push_back(enemy(d, 35));
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
-	//d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
 
 	/*for (int i = 61; i < 121; ++i)
 	{
@@ -58,7 +61,7 @@ int main()
 	e.create_map();
 
 	//e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
-	//goto battle;
+	goto battle;
 
 explore:
 	d.is_vaccant = 1;

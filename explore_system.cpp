@@ -524,11 +524,11 @@ size_t e_random_engine::get_event(size_t map_type)
 	switch (map_type)
 	{
 	case 1:
-		lb = 1;
+		lb = 2;
 		ub = 12;
 		break;
 	default:
-		lb = 1;
+		lb = 2;
 		ub = 9;
 		break;
 	}
