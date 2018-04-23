@@ -232,7 +232,7 @@ namespace gra_size
 	const std::size_t gold_pic_y = 20;
 	const std::size_t food_pic_x = 220;
 	const std::size_t food_pic_y = 20;
-	const std::size_t ability_num_x = 400;
+	const std::size_t ability_num_x = 370;
 	const std::size_t ability_num_y = 25;
 
 	const std::size_t deck_pic_x = 1320;

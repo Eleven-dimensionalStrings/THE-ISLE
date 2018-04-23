@@ -310,7 +310,7 @@ void t_draw_sys::__draw_player_in_map()
 
 void t_draw_sys::__draw_ending_text()
 {
-	solidrectangle(gra_size::player_x, gra_size::player_y + 255, gra_size::player_x + 160, gra_size::player_y + 400);
+	solidrectangle(gra_size::player_x - 10, gra_size::player_y + 240, gra_size::player_x + 160, gra_size::player_y + 400);
 }
 
 void t_draw_sys::__draw_explore_info()
@@ -373,10 +373,19 @@ void t_draw_sys::__draw_player_info()
 	putimage(gra_size::food_pic_x, gra_size::food_pic_y, &data.components[10], SRCINVERT);
 	outtextxy(gra_size::food_x, gra_size::food_y, &to_string(data.food)[0]);
 
+	settextcolor(LIGHTRED);
 	outtextxy(gra_size::ability_num_x, gra_size::ability_num_y, &("strength:  " + to_string(data.strength))[0]);
+	putimage(gra_size::ability_num_x - 25, gra_size::ability_num_y - 1, &data.components[11]);
+	settextcolor(GREEN);
 	outtextxy(gra_size::ability_num_x, gra_size::ability_num_y + 30, &("dexterity:  " + to_string(data.dexterity))[0]);
-	outtextxy(gra_size::ability_num_x, gra_size::ability_num_y + 60, &("luck:  " + to_string(data.luck))[0]);
-	outtextxy(gra_size::ability_num_x, gra_size::ability_num_y + 90, &("vitality:  " + to_string(data.vitality))[0]);
+	putimage(gra_size::ability_num_x - 25, gra_size::ability_num_y + 29, &data.components[12]);
+	settextcolor(LIGHTBLUE);
+	outtextxy(gra_size::ability_num_x, gra_size::ability_num_y + 60, &("vitality:  " + to_string(data.vitality))[0]);
+	putimage(gra_size::ability_num_x - 25, gra_size::ability_num_y + 59, &data.components[13]);
+	settextcolor(MAGENTA);
+	outtextxy(gra_size::ability_num_x, gra_size::ability_num_y + 90, &("luck:  " + to_string(data.luck))[0]);
+	putimage(gra_size::ability_num_x - 25, gra_size::ability_num_y + 89, &data.components[14]);
+	settextcolor(BLACK);
 }
 
 void t_draw_sys::__draw_background()
