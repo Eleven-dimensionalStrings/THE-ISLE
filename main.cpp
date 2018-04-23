@@ -34,15 +34,26 @@ int main()
 	//d.enemies_data.push_back(enemy(d, 1));
 	d.enemies_data.push_back(enemy(d, 1));
 
-	for (int i = 61; i < 121; ++i)
+	/*for (int i = 61; i < 121; ++i)
 	{
 		d.cards_pool.push_back(i);
-	}
-	d.artifacts.push_back(11);
+	}*/
+	d.cards_pool.push_back(1);
+	d.cards_pool.push_back(1);
+	d.cards_pool.push_back(1);
+	d.cards_pool.push_back(1);
+	d.cards_pool.push_back(2);
+	d.cards_pool.push_back(3);
+	d.cards_pool.push_back(30);
+	d.cards_pool.push_back(30);
+	d.cards_pool.push_back(30);
+	d.cards_pool.push_back(30);
+
+	/*d.artifacts.push_back(11);
 	d.artifacts.push_back(12);
 	d.artifacts.push_back(13);
 	d.artifacts.push_back(14);
-	d.artifacts.push_back(15);
+	d.artifacts.push_back(15);*/
 
 	e.create_map();
 
