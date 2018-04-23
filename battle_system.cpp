@@ -271,6 +271,7 @@ void battle_system::deal_an_action()
 		//deal_an_action();
 		process();
 		enemies_action();
+		process();
 		send_message(data.player_data.on_turn_begin());
 		data.b_to_i_pipe = info_battle_to_interacting(interact_action_type::BATTLE_TO_VACCANT, MEANINGLESS_VALUE, MEANINGLESS_VALUE);
 		break;

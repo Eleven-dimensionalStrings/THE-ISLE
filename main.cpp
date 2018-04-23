@@ -18,7 +18,7 @@ int main()
 
 	//TODO Òª¸Ä»Ø0
 	d.vitality = 100;
-	d.dexterity = 1;
+	d.dexterity = 100;
 	//easyx
 	initgraph(gra_size::window_width, gra_size::window_height, SHOWCONSOLE);
 	setbkcolor(WHITE);
