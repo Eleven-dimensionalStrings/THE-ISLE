@@ -965,7 +965,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	case 1://TODO bonfire   --?????
 	{
 		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY
-			, event_type::AQUIRE_GOLD, 100, 0), e_action(explore_action_type::SELECTION, event_type::PROCEED, END, -1)});//proceed...
+			, event_type::AQUIRE_GOLD, 100, 0), e_action(explore_action_type::SELECTION, event_type::PROCEED, END, static_cast<int>(MEANINGLESS_VALUE))});//proceed...
 		break;
 	}
 	case 2://苹果树
@@ -999,9 +999,9 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 		{
 			return info_to_explore_sys(my_vector<e_action>{
 				e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 4),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1005, 5, -1, [](data_sys* d)->bool {if (d->gold >= 25)return 1; return 0; }),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1006, 6, -1, [](data_sys* d)->bool {if (d->gold >= 50)return 1; return 0; }),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1007, 7, -1, [](data_sys* d)->bool {if (d->gold >= 75 && d->cards_pool.size() > 0)return 1; return 0; }),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1005, 5, MEANINGLESS_VALUE, [](data_sys* d)->bool {if (d->gold >= 25)return 1; return 0; }),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1006, 6, MEANINGLESS_VALUE, [](data_sys* d)->bool {if (d->gold >= 50)return 1; return 0; }),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1007, 7, MEANINGLESS_VALUE, [](data_sys* d)->bool {if (d->gold >= 75 && d->cards_pool.size() > 0)return 1; return 0; }),
 					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 5)});
 		}
 		break;
@@ -1036,7 +1036,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(my_vector<e_action>{
 			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 8),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1008, 8, -1,
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1008, 8, MEANINGLESS_VALUE,
 					[](data_sys* t)->bool
 			{
 				for (auto i : t->cards_pool)
@@ -1055,13 +1055,13 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(my_vector<e_action>{
 			e_action(explore_action_type::EVENT_BODY, event_type::UPGRADE_CARD_FROM_DECK, 1, 9),
-				e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, -1, 8)});
+				e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, static_cast<int>(MEANINGLESS_VALUE), 8)});
 	}
 	case 5://遗忘神龛
 	{
 		return info_to_explore_sys(my_vector<e_action>{
 			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 10),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1009, 8, -1,
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1009, 8, MEANINGLESS_VALUE,
 					[](data_sys* t)->bool {if (t->cards_pool.size() >= 0) return true; return false; }),
 				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 7)});
 		break;
@@ -1070,13 +1070,13 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(my_vector<e_action>{
 			e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_CARD_FROM_DECK, 1, 11),
-				e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, -1, 8)});
+				e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, static_cast<int>(MEANINGLESS_VALUE), 8)});
 	}
 	case 6://变化神龛
 	{
 		return info_to_explore_sys(my_vector<e_action>{
 			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 12),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1010, 8, -1,
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1010, 8, MEANINGLESS_VALUE,
 					[](data_sys* t)->bool {if (t->cards_pool.size() >= 0) return true; return false; }),
 				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 7)});
 		break;
@@ -1085,13 +1085,13 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(my_vector<e_action>{
 			e_action(explore_action_type::EVENT_BODY, event_type::CHANGE_CARD_FROM_DECK, 1, 13),
-				e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, -1, 8)});
+				e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, static_cast<int>(MEANINGLESS_VALUE), 8)});
 	}
 	case 7://战士雕像
 	{
 		return info_to_explore_sys(my_vector<e_action>{
 			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 14),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1011, 9, -1, [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1011, 9, MEANINGLESS_VALUE, [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
 				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 9), });
 		break;
 	}
@@ -1105,7 +1105,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(my_vector<e_action>{
 			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 16),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1012, 9, -1, [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1012, 9, MEANINGLESS_VALUE, [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
 				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 9), });
 		break;
 	}
@@ -1119,7 +1119,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(my_vector<e_action>{
 			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 18),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1011, 9, -1, [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1013, 9, MEANINGLESS_VALUE, [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
 				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 9), });
 		break;
 	}
@@ -1133,7 +1133,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(my_vector<e_action>{
 			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 20),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1011, 9, -1, [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1014, 9, MEANINGLESS_VALUE, [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
 				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 9), });
 		break;
 	}
@@ -1147,7 +1147,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(my_vector<e_action>{
 			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 22),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1015, 10, -1, [](data_sys* d)->bool { if (d->gold >= 25)return 1; return 0; }),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1015, 10, MEANINGLESS_VALUE, [](data_sys* d)->bool { if (d->gold >= 25)return 1; return 0; }),
 				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 11), });
 		break;
 	}
@@ -1159,14 +1159,14 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 			return info_to_explore_sys(my_vector<e_action>{
 				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 25, 23),
 					e_action(explore_action_type::SELECTION, event_type::AQUIRE_ARTIFACT,
-						artifact(re.get_num(1, MAX_ARTIFACT_NO)), -1, 12),
+						artifact(re.get_num(1, MAX_ARTIFACT_NO)), MEANINGLESS_VALUE, 12),
 					e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END)});
 		}
 		else
 		{
 			return info_to_explore_sys(my_vector<e_action>{
 				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 25, 24),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1016, 11, -1, [](data_sys* d)->bool { if (d->gold >= 25)return 1; return 0; }),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1016, 11, MEANINGLESS_VALUE, [](data_sys* d)->bool { if (d->gold >= 25)return 1; return 0; }),
 					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 13), });
 		}
 		break;
@@ -1179,14 +1179,14 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 			return info_to_explore_sys(my_vector<e_action>{
 				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 25, 23),
 					e_action(explore_action_type::SELECTION, event_type::AQUIRE_ARTIFACT,
-						artifact(re.get_num(1, MAX_ARTIFACT_NO)), -1, 12),
+						artifact(re.get_num(1, MAX_ARTIFACT_NO)), MEANINGLESS_VALUE, 12),
 					e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END)});
 		}
 		else
 		{
 			return info_to_explore_sys(my_vector<e_action>{
 				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 25, 25),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1016, 11, -1, [](data_sys* d)->bool { if (d->gold >= 25)return 1; return 0; }),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1016, 11, MEANINGLESS_VALUE, [](data_sys* d)->bool { if (d->gold >= 25)return 1; return 0; }),
 					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 14), });
 		}
 		break;
@@ -1233,9 +1233,6 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 		return info_to_explore_sys(e_action(explore_action_type::END_EVENT));
 	}
 	default:
-#ifdef _DEBUG
-		throw invalid_argument{ "event id is wrong" };
-#endif // _DEBUG
 		return info_to_explore_sys();
 	}
 }

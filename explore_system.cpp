@@ -5,7 +5,7 @@
 #include "message.h"
 #include "data_sys.h"
 
-using namespace std;using namespace my_container;
+using namespace std; using namespace my_container;
 using namespace explore_action_type;
 using namespace event_type;
 
@@ -124,7 +124,7 @@ void explore_system::create_map(std::size_t map_type)
 				}
 			}
 		}
-		next:
+	next:
 		dfs(begin_x, begin_y, result, visited, count);
 		generate_succ = 1;
 		for (int i = 0; i < 5; i++)
@@ -192,8 +192,10 @@ void explore_system::process()
 		}
 		case EVENT_BODY:
 		{
-			data.text_to_be_displayed = temp.text;
-			data.map_text = temp.end_text;
+			if (temp.text != -1)
+				data.text_to_be_displayed = temp.text;
+			if (temp.end_text != -1)
+				data.map_text = temp.end_text;
 			for (int i = 0; i < data.artifacts.size(); ++i)
 			{
 				send_message(data.artifact_on_event_body(data.artifacts[i].id));
@@ -326,7 +328,7 @@ void explore_system::process()
 			case REMOVE_CARD:
 			{
 				//remove the card according to its position
-				data.cards_pool.erase(data.cards_pool.begin() + temp.value, data.cards_pool.begin() + temp.value + 1);
+				data.cards_pool.erase(data.cards_pool.begin() + temp.value);
 				break;
 			}
 			case REMOVE_CARD_FROM_DECK:
@@ -334,7 +336,7 @@ void explore_system::process()
 				info_to_explore_sys message;
 				for (int i = 0; i < data.cards_pool.size(); ++i)
 				{
-					message.action_set.push_back(e_action(SELECTION, REMOVE_CARD, data.cards_pool[i], i));
+					message.action_set.push_back(e_action(SELECTION, REMOVE_CARD, data.cards_pool[i], static_cast<size_t>(i)));
 				}
 				send_message(message);
 				break;
@@ -351,7 +353,7 @@ void explore_system::process()
 				for (int i = 0; i < data.cards_pool.size(); ++i)
 				{
 					if (data.cards_pool[i].upgrade_version_id != 0)
-						message.action_set.push_back(e_action(SELECTION, UPGRADE_CARD, data.cards_pool[i], i));
+						message.action_set.push_back(e_action(SELECTION, UPGRADE_CARD, data.cards_pool[i], static_cast<size_t>(i)));
 				}
 				send_message(message);
 				break;
@@ -368,7 +370,7 @@ void explore_system::process()
 				info_to_explore_sys message;
 				for (int i = 0; i < data.cards_pool.size(); ++i)
 				{
-					message.action_set.push_back(e_action(SELECTION, CHANGE_CARD, data.cards_pool[i], i));
+					message.action_set.push_back(e_action(SELECTION, CHANGE_CARD, data.cards_pool[i], static_cast<size_t>(i)));
 				}
 				send_message(message);
 				break;
@@ -447,7 +449,8 @@ void explore_system::process()
 			{
 				data.choice_list.push_back(temp.to_event_body());
 				//TODO
-				data.choice_name_list.push_back(temp.text);
+				if (temp.text != -1)
+					data.choice_name_list.push_back(temp.text);
 			}
 			break;
 		}

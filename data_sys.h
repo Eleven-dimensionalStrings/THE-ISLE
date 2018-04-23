@@ -77,8 +77,8 @@ public:
 	std::pair<int, int> player_location;
 	my_container::my_vector<e_action> choice_list;
 	my_container::my_vector<int> choice_name_list;
-	std::string text_to_be_displayed;
-	std::string map_text;
+	int text_to_be_displayed;
+	int map_text;
 	//to determine explore context
 	std::size_t current_select_page;//indicates the position of the first selection in choice_list. 
 	std::size_t next_event_id;//for "SKIP" button

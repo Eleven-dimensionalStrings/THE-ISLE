@@ -292,7 +292,7 @@ void t_draw_sys::__draw_event_card()
 {
 	//event card pic
 	//TODO
-	putimage(gra_size::event_card_x, gra_size::event_card_y, &data.body[0]);
+	putimage(gra_size::event_card_x, gra_size::event_card_y, &data.body[data.text_to_be_displayed]);
 
 	//next button
 	if (data.event_is_not_mandetory)
@@ -309,7 +309,8 @@ void t_draw_sys::__draw_player_in_map()
 void t_draw_sys::__draw_ending_text()
 {
 	//TODO
-	putimage(gra_size::player_x, gra_size::player_y + 255, &data.end[5]);
+	if (data.map_text != -1)
+		putimage(gra_size::player_x, gra_size::player_y + 255, &data.end[data.map_text]);
 }
 
 void t_draw_sys::__draw_explore_info()
@@ -648,7 +649,7 @@ void t_draw_sys::t_draw_e()
 			if (i + 3 * data.current_select_page < data.choice_list.size())
 			{
 				//TODO
-				cout << "press \"" << i << "\"  [" << data.choice_name_list[i + 3 * data.current_select_page] << "]" << "\n";
+//				cout << "press \"" << i << "\"  [" << data.choice_name_list[i + 3 * data.current_select_page] << "]" << "\n";
 			}
 		}
 		if (data.next_event_id > 0)
