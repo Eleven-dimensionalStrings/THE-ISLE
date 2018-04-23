@@ -291,10 +291,8 @@ void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 void t_draw_sys::__draw_event_card()
 {
 	//event card pic
-	solidrectangle(gra_size::event_card_x, gra_size::event_card_y, gra_size::event_card_x + 240, gra_size::event_card_y + 300);
-
-	//event card text
-	solidrectangle(gra_size::event_text_x, gra_size::event_text_y, gra_size::event_text_x + 240, gra_size::event_text_y + 300);
+	//TODO
+	putimage(gra_size::event_card_x, gra_size::event_card_y, &data.body[0]);
 
 	//next button
 	if (data.event_is_not_mandetory)
@@ -310,7 +308,8 @@ void t_draw_sys::__draw_player_in_map()
 
 void t_draw_sys::__draw_ending_text()
 {
-	solidrectangle(gra_size::player_x, gra_size::player_y + 255, gra_size::player_x + 160, gra_size::player_y + 400);
+	//TODO
+	putimage(gra_size::player_x, gra_size::player_y + 255, &data.end[5]);
 }
 
 void t_draw_sys::__draw_explore_info()
@@ -350,7 +349,9 @@ void t_draw_sys::__draw_an_explore_card(std::size_t pos, int x, int y)
 	{
 		putimage(x, y, &data.cards_mask[3], NOTSRCERASE);
 		putimage(x, y, &data.cards_thumbnail[400], SRCINVERT);
-		this->__format_wl(x + 22, y + 117, data.choice_name_list[data.current_select_page * MAX_CARDS_IN_HAND + pos]);
+		//TODO
+		putimage(x, y, &data.select[data.choice_name_list[data.current_select_page * MAX_CARDS_IN_HAND + pos]]);
+		//this->__format_wl(x + 22, y + 117, data.choice_name_list[data.current_select_page * MAX_CARDS_IN_HAND + pos]);
 	}
 }
 
@@ -521,6 +522,24 @@ void t_draw_sys::load_all()
 		loadimage(&data.entities[i], &(".\\resource\\entities\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
 	}
+	for (int i = 0; i <= 30; ++i)
+	{
+		IMAGE t;
+		loadimage(&t, &(".\\resource\\explore\\body\\" + to_string(i) + ".bmp" + '\0')[0]);
+		data.body.push_back(std::move(t));
+	}
+	for (int i = 1; i <= 14; ++i)
+	{
+		IMAGE t;
+		loadimage(&t, &(".\\resource\\explore\\end\\" + to_string(i) + ".bmp" + '\0')[0]);
+		data.end.push_back(std::move(t));
+	}
+	for (int i = 0; i <= 14; ++i)
+	{
+		IMAGE t;
+		loadimage(&t, &(".\\resource\\explore\\select\\" + to_string(i) + ".bmp" + '\0')[0]);
+		data.select.push_back(std::move(t));
+	}
 }
 
 void t_draw_sys::t_draw_b()
@@ -619,6 +638,7 @@ void t_draw_sys::t_draw_e()
 		{
 			if (i + 3 * data.current_select_page < data.choice_list.size())
 			{
+				//TODO
 				cout << "press \"" << i << "\"  [" << data.choice_name_list[i + 3 * data.current_select_page] << "]" << "\n";
 			}
 		}

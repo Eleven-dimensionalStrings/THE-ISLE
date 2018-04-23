@@ -60,12 +60,9 @@ public:
 	my_container::my_vector<IMAGE> back_grounds;
 	my_container::my_vector<IMAGE> components;
 	my_container::my_vector<IMAGE> entities;
-	my_container::my_vector<IMAGE> entities1;
-	my_container::my_vector<IMAGE> entities2;
-	my_container::my_vector<IMAGE> entities3;
-	my_container::my_vector<IMAGE> entities4;
-	my_container::my_vector<IMAGE> entities5;
-	my_container::my_vector<IMAGE> entities6;
+	my_container::my_vector<IMAGE> body;
+	my_container::my_vector<IMAGE> end;
+	my_container::my_vector<IMAGE> select;
 	std::array<bool, MAX_CARDS_IN_HAND>render_select_card;
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
@@ -79,7 +76,7 @@ public:
 	std::size_t map_event_type[MAP_LENGTH][MAP_WIDTH];
 	std::pair<int, int> player_location;
 	my_container::my_vector<e_action> choice_list;
-	my_container::my_vector<std::string> choice_name_list;
+	my_container::my_vector<int> choice_name_list;
 	std::string text_to_be_displayed;
 	std::string map_text;
 	//to determine explore context

@@ -207,7 +207,7 @@ void explore_system::process()
 			}
 			case PROCEED:
 			{
-				process_stack.push(e_action(ENCOUNTER_EVENT, MEANINGLESS_VALUE, temp.value, ""));
+				process_stack.push(e_action(ENCOUNTER_EVENT, MEANINGLESS_VALUE, temp.value, -1));
 				break;
 			}
 			case START_BATTLE:
@@ -316,8 +316,9 @@ void explore_system::process()
 				info_to_explore_sys message;
 				for (int i = 0; i < temp.value; ++i)
 				{
+					//TODO
 					message.action_set.push_back(e_action(SELECTION, AQUIRE_CARD,
-						e_random_engine().get_card_by_class(data.player_s_class), MEANINGLESS_VALUE));
+						e_random_engine().get_card_by_class(data.player_s_class), static_cast<int>(MEANINGLESS_VALUE)));
 				}
 				send_message(message);
 				break;
@@ -445,6 +446,7 @@ void explore_system::process()
 			if (temp.restriction(&data))
 			{
 				data.choice_list.push_back(temp.to_event_body());
+				//TODO
 				data.choice_name_list.push_back(temp.text);
 			}
 			break;

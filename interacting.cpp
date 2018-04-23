@@ -668,7 +668,7 @@ void e_vaccant_state::click_map_location(std::size_t x, std::size_t y)
 		default://no matter the place is known or not
 			ctx->i_s->move_player(x, y);
 			get_data().i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT
-				, MEANINGLESS_VALUE, get_data().explore_map[x][y], ""));
+				, MEANINGLESS_VALUE, get_data().explore_map[x][y], -1));
 			break;
 		}
 	}
@@ -696,14 +696,14 @@ void e_select_state::click_an_option(std::size_t pos)
 	if (current == max_selection && get_data().next_event_id != 0)
 	{
 		temp.action_set.push_back(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE,
-			MEANINGLESS_VALUE, get_data().next_event_id));
+			MEANINGLESS_VALUE, static_cast<int>(get_data().next_event_id)));
 	}
 	get_data().i_to_e_pipe = temp;
 }
 
 void e_select_state::click_next()
 {
-	get_data().i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, get_data().next_event_id, ""));
+	get_data().i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, get_data().next_event_id, -1));
 }
 
 void e_select_state::click_left_arrow()

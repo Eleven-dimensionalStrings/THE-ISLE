@@ -962,28 +962,28 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 {
 	switch (id)
 	{
-	case 1://TODO bonfire
+	case 1://TODO bonfire   --?????
 	{
 		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY
-			, event_type::AQUIRE_GOLD, 100, string("天上掉下了金币.")), e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "proceed...")});
+			, event_type::AQUIRE_GOLD, 100, 0), e_action(explore_action_type::SELECTION, event_type::PROCEED, END, -1)});//proceed...
 		break;
 	}
 	case 2://苹果树
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "你来到一颗苹果树前，树上结满了青色的苹果."),
-				e_action(explore_action_type::SELECTION, event_type::AQUIRE_HIT_POINTS, 20, "吃掉.", "苹果很美味，你感觉到你恢复了一些体力."),
-				e_action(explore_action_type::SELECTION, event_type::AQUIRE_FOOD, 3, "收集.", "你收集了一些苹果，然后迅速的离开了."),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "\"路边的果子一定不会是甜的\"，你喃喃道."),
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 1),
+				e_action(explore_action_type::SELECTION, event_type::AQUIRE_HIT_POINTS, 20, 1, 1),
+				e_action(explore_action_type::SELECTION, event_type::AQUIRE_FOOD, 3, 2, 2),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 3),
 				e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END)});
 		break;
 	}
 	case 3://酒馆
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "天色渐暗，一间亮着灯的酒馆引起了你的注意."),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1003, "推开门."),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开", "你很快打消了休息的想法，快步走向黑暗中."), });
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 2),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1003, 3),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 4), });
 		break;
 	}
 	case 1003://酒馆part2 //TODO ENEMY
@@ -991,18 +991,18 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 		if (re.chance_luck_decrease(25))
 		{
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "酒馆里空无一人，你却能感受到视线从阴影中看向你。你熟练地拔出武器."),
+				e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 3),
 					//TODO
-					e_action(explore_action_type::SELECTION, event_type::START_BATTLE, 1004, "战斗!")});
+					e_action(explore_action_type::SELECTION, event_type::START_BATTLE, 1004, 4)});
 		}
 		else
 		{
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "酒馆里充满了快乐的氛围，你在一个火堆边找了个位置坐下."),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1005, "25金币  要一份茴香豆.", "", [](data_sys* d)->bool {if (d->gold >= 25)return 1; return 0; }),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1006, "50金币  要一只烤鸡.", "", [](data_sys* d)->bool {if (d->gold >= 50)return 1; return 0; }),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1007, "75金币  要一桶好酒.", "", [](data_sys* d)->bool {if (d->gold >= 75 && d->cards_pool.size() > 0)return 1; return 0; }),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "身体暖和之后，你重新踏上了旅途.")});
+				e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 4),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1005, 5, -1, [](data_sys* d)->bool {if (d->gold >= 25)return 1; return 0; }),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1006, 6, -1, [](data_sys* d)->bool {if (d->gold >= 50)return 1; return 0; }),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1007, 7, -1, [](data_sys* d)->bool {if (d->gold >= 75 && d->cards_pool.size() > 0)return 1; return 0; }),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 5)});
 		}
 		break;
 	}
@@ -1014,29 +1014,29 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	case 1005://酒馆part3
 	{
 		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 25),
-			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_HIT_POINTS, 15, "酒馆里的诗人一直在哼哼些奇怪的调子，不过茴香豆很好吃，你的体力恢复了."),
-			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "身体暖和之后，你重新踏上了旅途.")});
+			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_HIT_POINTS, 15, 5),
+			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 5)});
 		break;
 	}
 	case 1006://酒馆part3
 	{
 		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 50),
-			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_MAX_HIT_POINTS, 8, "你抓起一只鸡腿，大口地吃了起来，你的生命值上限增加了."),
-			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "身体暖和之后，你重新踏上了旅途.")});
+			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_MAX_HIT_POINTS, 8, 6),
+			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 5)});
 		break;
 	}
 	case 1007://酒馆part3
 	{
 		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 75),
-			e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_CARD_FROM_DECK, 1, "清晨的第一缕日光唤醒了你，你却怎么也想不起来昨天发生了什么."),
-			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "你的头还是有些晕，不过你很快就收拾好装备继续上路.")});
+			e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_CARD_FROM_DECK, 1, 7),
+			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 6)});
 		break;
 	}
 	case 4://升级神龛
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "你来到一座红色的神龛前，你感觉到能量不断从神龛中涌出."),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1008, "触摸.", "",
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 8),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1008, 8, -1,
 					[](data_sys* t)->bool
 			{
 				for (auto i : t->cards_pool)
@@ -1048,107 +1048,107 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 				}
 				return false;
 			}),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "你对这类祭祀器具没有兴趣.")});
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 7)});
 		break;
 	}
 	case 1008://升级神龛part2
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::UPGRADE_CARD_FROM_DECK, 1, "红光环绕你的身体，你感到力量从体内不断涌出."),
-				e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, "", "神龛的光渐渐熄灭，你继续踏上旅程.")});
+			e_action(explore_action_type::EVENT_BODY, event_type::UPGRADE_CARD_FROM_DECK, 1, 9),
+				e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, -1, 8)});
 	}
 	case 5://遗忘神龛
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "你来到一座绿色的神龛前，你感觉到能量不断从向神龛中灌注."),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1009, "触摸.", "",
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 10),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1009, 8, -1,
 					[](data_sys* t)->bool {if (t->cards_pool.size() >= 0) return true; return false; }),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "你对这类祭祀器具没有兴趣.")});
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 7)});
 		break;
 	}
 	case 1009://遗忘神龛part2
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_CARD_FROM_DECK, 1, "绿光环绕你的身体，你感到一些思绪从你的身体中被抽出，吸入神龛中."),
-				e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, "", "神龛的光渐渐熄灭，你继续踏上旅程.")});
+			e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_CARD_FROM_DECK, 1, 11),
+				e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, -1, 8)});
 	}
 	case 6://变化神龛
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "你来到一座蓝色的神龛前，你感觉到能量在神龛周围流动."),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1010, "触摸.", "",
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 12),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1010, 8, -1,
 					[](data_sys* t)->bool {if (t->cards_pool.size() >= 0) return true; return false; }),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "你对这类祭祀器具没有兴趣.")});
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 7)});
 		break;
 	}
 	case 1010://变化神龛part2
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::CHANGE_CARD_FROM_DECK, 1, "蓝光环绕你的身体，天花板和地板在你的眼前交换了位置."),
-				e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, "", "神龛的光渐渐熄灭，你继续踏上旅程.")});
+			e_action(explore_action_type::EVENT_BODY, event_type::CHANGE_CARD_FROM_DECK, 1, 13),
+				e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, -1, 8)});
 	}
 	case 7://战士雕像
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "在前路中央有一座巍峨的战士雕像，雕像手持巨斧怒视前方"),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1011, "献上85金币.", "", [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开", "你对艺术没有兴趣."), });
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 14),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1011, 9, -1, [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 9), });
 		break;
 	}
 	case 1011://战士雕像part2
 	{
 		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 85),
-			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_STRENGTH, 1, "你站在雕像前，仰望雕像手中的巨斧。你的脑海中浮现出一位名叫鲍德温的国王的传奇故事。当你回过神来，你发现你的力量增加了."),
-			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "雕像静静的伫在那里，等待着下一个渴望成为传奇的人.")});
+			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_STRENGTH, 1, 15),
+			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 10)});
 	}
 	case 8://骑士雕像
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "在路边的破庙中有一座华美的骑士雕像，雕像手持长剑好似在为人加冕."),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1012, "献上85金币.", "", [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开", "你对艺术没有兴趣."), });
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 16),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1012, 9, -1, [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 9), });
 		break;
 	}
 	case 1012://骑士雕像part2
 	{
 		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 85),
-			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_VITALITY, 1, "你跪在雕像前，让长剑贴在你的肩上。你的脑海中浮现出一位名叫雷诺德的十字军的传奇故事。当你回过神来，你发现你的体质增加了."),
-			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "雕像静静的伫在那里，等待着下一个渴望成为传奇的人.")});
+			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_VITALITY, 1, 17),
+			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 10)});
 	}
 	case 9://盗贼雕像
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "在路旁的树丛中有一座破旧的盗贼雕像，雕像上隐约还刻着些小字."),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1011, "献上85金币.", "", [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开", "你对艺术没有兴趣."), });
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 18),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1011, 9, -1, [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 9), });
 		break;
 	}
 	case 1013://盗贼雕像part2
 	{
 		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 85),
-			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_DEXTERITY, 1, "你拨开缠绕着雕像的杂草，尝试解读雕像上的文字。你的脑海中浮现出一位名叫迪斯玛的盗贼的传奇故事。当你回过神来，你发现你的敏捷增加了."),
-			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "雕像静静的伫在那里，等待着下一个渴望成为传奇的人.")});
+			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_DEXTERITY, 1, 19),
+			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 10)});
 	}
 	case 10://吟游诗人雕像
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "一座喷泉的中央伫立着一座吟游诗人的雕像，潺潺的水声好似诗人的吟唱."),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1011, "献上85金币.", "", [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开", "你对艺术没有兴趣."), });
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 20),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1011, 9, -1, [](data_sys* d)->bool { if (d->gold >= 85)return 1; return 0; }),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 9), });
 		break;
 	}
 	case 1014://吟游诗人雕像part2
 	{
 		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 85),
-			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_LUCK, 1, "你向喷泉中丢了几枚银币，霎时间，一道彩虹划过了天空。你的脑海中浮现出一位名叫法兰恩的神明的传奇故事， 当你回过神来，你发现你的幸运增加了."),
-			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开.", "雕像静静的伫在那里，等待着下一个渴望成为传奇的人.")});
+			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_LUCK, 1, 21),
+			e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 10)});
 	}
 	case 11://许愿井
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "你来到一口井的边上，井上雕刻着歌唱的天使。看起来这像是一个许愿井."),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1015, "投入25金币.", "", [](data_sys* d)->bool { if (d->gold >= 25)return 1; return 0; }),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开", "只有傻子才会把金币丢进水里."), });
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 22),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1015, 10, -1, [](data_sys* d)->bool { if (d->gold >= 25)return 1; return 0; }),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 11), });
 		break;
 	}
 	case 1015://许愿井part2
@@ -1157,16 +1157,17 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 		{
 			event_is_not_mandetory = true;
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 25, "随着金币沉入水中，一个精致的小物件浮出水面."),
-					e_action(explore_action_type::SELECTION, event_type::AQUIRE_ARTIFACT, artifact(re.get_num(1, MAX_ARTIFACT_NO)), "", "你将宝物装进了包里，继续向前进发."),
+				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 25, 23),
+					e_action(explore_action_type::SELECTION, event_type::AQUIRE_ARTIFACT,
+						artifact(re.get_num(1, MAX_ARTIFACT_NO)), -1, 12),
 					e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END)});
 		}
 		else
 		{
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 25, "金币很快沉入水中，然而并没有什么特殊的事情发生."),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1016, "再投入25金币.", "", [](data_sys* d)->bool { if (d->gold >= 25)return 1; return 0; }),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开", "你觉得一口普通的井不值得你浪费时间和金钱."), });
+				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 25, 24),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1016, 11, -1, [](data_sys* d)->bool { if (d->gold >= 25)return 1; return 0; }),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 13), });
 		}
 		break;
 	}
@@ -1176,25 +1177,26 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 		{
 			event_is_not_mandetory = true;
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 25, "随着金币沉入水中，一个精致的小物件浮出水面."),
-					e_action(explore_action_type::SELECTION, event_type::AQUIRE_ARTIFACT, artifact(re.get_num(1, MAX_ARTIFACT_NO)), "", "你将宝物装进了包里，继续向前进发."),
+				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 25, 23),
+					e_action(explore_action_type::SELECTION, event_type::AQUIRE_ARTIFACT,
+						artifact(re.get_num(1, MAX_ARTIFACT_NO)), -1, 12),
 					e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END)});
 		}
 		else
 		{
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 25, "你静静地看着金币沉入水中，这是你第一次意识到金币沉入水中的速度竟然如此之快."),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1016, "再投入25金币.", "", [](data_sys* d)->bool { if (d->gold >= 25)return 1; return 0; }),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, "离开", "你决定在浪费更多金币之前离开这口可恶的井."), });
+				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 25, 25),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, 1016, 11, -1, [](data_sys* d)->bool { if (d->gold >= 25)return 1; return 0; }),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 14), });
 		}
 		break;
 	}
 	case 12://拥挤的人群
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, "前方的关卡排起了长队，拥挤的人群堵住了你的去路."),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1017, "强行穿过."),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1018, "绕路.")});
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 26),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1017, 12),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1018, 13)});
 		break;
 	}
 	case 1017://拥挤的人群part2
@@ -1202,28 +1204,28 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 		if (dexterity >= 1)
 		{
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::REVEAL_MAP, 3, "你迅捷的爬上屋顶，避开了人流。同时，你看清了前方的道路."),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, MEANINGLESS_VALUE, "继续前进")});
+				e_action(explore_action_type::EVENT_BODY, event_type::REVEAL_MAP, 3, 27),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, MEANINGLESS_VALUE, 14)});
 		}
 		else if (re.chance(25))
 		{
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::REVEAL_MAP, 3, "你很快穿过了人流，同时从一些商人的耳语中了解了附近的情况."),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, MEANINGLESS_VALUE, "继续前进")});
+				e_action(explore_action_type::EVENT_BODY, event_type::REVEAL_MAP, 3, 28),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, MEANINGLESS_VALUE, 14)});
 		}
 		else
 		{
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 50, "你在人群中艰难的前进，当你最终走出关卡时，你发现你的一部分金币被偷了."),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, MEANINGLESS_VALUE, "继续前进")});
+				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 50, 29),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, MEANINGLESS_VALUE, 14)});
 		}
 		break;
 	}
 	case 1018://
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_FOOD, 2, "你穿过了一片人迹罕至的森林，这消耗了你的许多物资."),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, MEANINGLESS_VALUE, "继续前进")});
+			e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_FOOD, 2, 30),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, MEANINGLESS_VALUE, 14)});
 	}
 
 	case END:
@@ -1231,7 +1233,10 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 		return info_to_explore_sys(e_action(explore_action_type::END_EVENT));
 	}
 	default:
-		break;
+#ifdef _DEBUG
+		throw invalid_argument{ "event id is wrong" };
+#endif // _DEBUG
+		return info_to_explore_sys();
 	}
 }
 

@@ -69,27 +69,27 @@ info_battle_to_interacting::info_battle_to_interacting()
 }
 
 e_action::e_action(std::size_t id)
-	:action_id(id), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE), text("ERROR"), end_text("ERROR"), restriction(default_res), selected_card(card(0)), atf(0)
+	:action_id(id), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE), text(-1), end_text(-1), restriction(default_res), selected_card(card(0)), atf(0)
 {
 }
 
-e_action::e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, std::string ttext, std::string etext, bool(*func)(data_sys*))
+e_action::e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, int ttext, int etext, bool(*func)(data_sys*))
 	: action_id(id), type(ttype), value(tvalue), text(ttext), end_text(etext), restriction(func), selected_card(card(0)), atf(0)
 {
 }
 
-e_action::e_action(std::size_t id, std::size_t ttype, artifact tatf, std::string ttext, std::string etext, bool(*func)(data_sys*))
+e_action::e_action(std::size_t id, std::size_t ttype, artifact tatf, int ttext, int etext, bool(*func)(data_sys*))
 	: action_id(id), type(ttype), atf(tatf), text(ttext), end_text(etext), restriction(func), selected_card(card(0))
 {
 }
 
-e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::string ttext, std::string etext, bool(*func)(data_sys*))
+e_action::e_action(std::size_t id, std::size_t ttype, card tcard, int ttext, int etext, bool(*func)(data_sys*))
 	: action_id(id), type(ttype), selected_card(tcard), text(ttext), end_text(etext), restriction(func), atf(0)
 {
 }
 
-e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue, std::string etext, bool(*func)(data_sys*))
-	: action_id(id), type(ttype), selected_card(tcard), text(""), value(tvalue), end_text(etext), restriction(func), atf(0)
+e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue, int etext, bool(*func)(data_sys*))
+	: action_id(id), type(ttype), selected_card(tcard), text(-1), value(tvalue), end_text(etext), restriction(func), atf(0)
 {
 }
 

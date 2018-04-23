@@ -338,17 +338,17 @@ class e_action
 {
 public:
 	e_action(std::size_t id);
-	e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, std::string ttext = "", std::string etext = "", bool(*func)(data_sys*) = default_res);
-	e_action(std::size_t id, std::size_t ttype, artifact tatf, std::string ttext = "", std::string etext = "", bool(*func)(data_sys*) = default_res);
-	e_action(std::size_t id, std::size_t ttype, card tcard, std::string ttext = "", std::string etext = "", bool(*func)(data_sys*) = default_res);
-	e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue, std::string etext = "", bool(*func)(data_sys*) = default_res);
+	e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, int ttext = -1, int etext = -1, bool(*func)(data_sys*) = default_res);
+	e_action(std::size_t id, std::size_t ttype, artifact tatf, int ttext = -1, int etext = -1, bool(*func)(data_sys*) = default_res);
+	e_action(std::size_t id, std::size_t ttype, card tcard, int ttext = -1, int etext = -1, bool(*func)(data_sys*) = default_res);
+	e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue, int etext = -1, bool(*func)(data_sys*) = default_res);
 	std::size_t action_id;
 	std::size_t type;
 	std::size_t value;
 	artifact atf;
 	card selected_card;
-	std::string text;
-	std::string end_text;
+	int text;
+	int end_text;
 	bool(*restriction)(data_sys*); //TODO lambda表达式
 
 	e_action to_event_body();
