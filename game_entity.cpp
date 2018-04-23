@@ -3,7 +3,7 @@
 #include "battle_system.h"
 #include "game_entity.h"
 #include "data_sys.h"
-using namespace std;using namespace my_container;
+using namespace std; using namespace my_container;
 using std::size_t;
 
 player::player(data_sys &d) :game_entity(d)
@@ -175,6 +175,10 @@ std::size_t game_entity::has_buff(std::size_t id)
 enemy::enemy(data_sys&d, std::size_t id)
 	:game_entity(d), enemy_id(id)
 {
+	max_hp = 45;
+	current_hp = 45;
+	max_ap = 0;
+	current_ap = 0;
 }
 
 enemy::~enemy()

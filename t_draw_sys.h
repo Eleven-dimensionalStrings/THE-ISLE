@@ -48,7 +48,5 @@ public:
 	template<class Container>
 	void view_cards(Container&v, int is_art = 0);//按键后查看卡组等
 	void end_battle();
-
-
-
+	int background_pic;
 };

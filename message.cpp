@@ -1,7 +1,7 @@
 #include <iostream>
 #include "message.h"
 #include "data_sys.h"
-using namespace std;using namespace my_container;
+using namespace std; using namespace my_container;
 
 bool default_res(data_sys*)
 {
@@ -69,27 +69,27 @@ info_battle_to_interacting::info_battle_to_interacting()
 }
 
 e_action::e_action(std::size_t id)
-	:action_id(id), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE), text("ERROR"), end_text("ERROR"), restriction(default_res)
+	:action_id(id), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE), text("ERROR"), end_text("ERROR"), restriction(default_res), selected_card(card(0)), atf(0)
 {
 }
 
 e_action::e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, std::string ttext, std::string etext, bool(*func)(data_sys*))
-	: action_id(id), type(ttype), value(tvalue), text(ttext), end_text(etext), restriction(func)
+	: action_id(id), type(ttype), value(tvalue), text(ttext), end_text(etext), restriction(func), selected_card(card(0)), atf(0)
 {
 }
 
 e_action::e_action(std::size_t id, std::size_t ttype, artifact tatf, std::string ttext, std::string etext, bool(*func)(data_sys*))
-	: action_id(id), type(ttype), atf(tatf), text(ttext), end_text(etext), restriction(func)
+	: action_id(id), type(ttype), atf(tatf), text(ttext), end_text(etext), restriction(func), selected_card(card(0))
 {
 }
 
 e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::string ttext, std::string etext, bool(*func)(data_sys*))
-	: action_id(id), type(ttype), selected_card(tcard), text(ttext), end_text(etext), restriction(func)
+	: action_id(id), type(ttype), selected_card(tcard), text(ttext), end_text(etext), restriction(func), atf(0)
 {
 }
 
 e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue, std::string etext, bool(*func)(data_sys*))
-	: action_id(id), type(ttype), selected_card(tcard), text(""), value(tvalue), end_text(etext), restriction(func)
+	: action_id(id), type(ttype), selected_card(tcard), text(""), value(tvalue), end_text(etext), restriction(func), atf(0)
 {
 }
 
@@ -994,7 +994,7 @@ card::card(size_t id)
 		card_type = card_type::SKILL;
 		cost = 1;
 		require_target = false;
-		exhaust = true;	
+		exhaust = true;
 		break;
 	}
 	case 103:
