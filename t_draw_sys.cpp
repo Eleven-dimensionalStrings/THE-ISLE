@@ -486,36 +486,36 @@ void t_draw_sys::load_all()
 	}
 	for (int i = 0; i < 4; ++i)
 	{
-		loadimage(&data.cards_mask[i + 4], &(".\\resource\\cards_original\\mask"
-			+ to_string(i) + ".bmp" + '\0')[0]);
+		/*loadimage(&data.cards_mask[i + 4], &(".\\resource\\cards_original\\mask"
+			+ to_string(i) + ".bmp" + '\0')[0]);*/
 	}
 	for (int i = 1; i < 10; ++i)
 	{
 		loadimage(&data.cards_thumbnail[i], &(".\\resource\\cards_thumbnail\\00"
 			+ to_string(i) + ".bmp" + '\0')[0]);
-		loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\00"
-			+ to_string(i) + ".bmp" + '\0')[0]);
+		/*loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\00"
+			+ to_string(i) + ".bmp" + '\0')[0]);*/
 	}
 	for (int i = 10; i < 100; ++i)
 	{
 		loadimage(&data.cards_thumbnail[i], &(".\\resource\\cards_thumbnail\\0"
 			+ to_string(i) + ".bmp" + '\0')[0]);
-		loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\0"
-			+ to_string(i) + ".bmp" + '\0')[0]);
+		/*loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\0"
+			+ to_string(i) + ".bmp" + '\0')[0]);*/
 	}
 	for (int i = 100; i < 121; ++i)
 	{
 		loadimage(&data.cards_thumbnail[i], &(".\\resource\\cards_thumbnail\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
-		loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\"
-			+ to_string(i) + ".bmp" + '\0')[0]);
+		/*loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\"
+			+ to_string(i) + ".bmp" + '\0')[0]);*/
 	}
 	for (int i = 400; i < 407; ++i)
 	{
 		loadimage(&data.cards_thumbnail[i], &(".\\resource\\cards_thumbnail\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
-		loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\"
-			+ to_string(i) + ".bmp" + '\0')[0]);
+		/*loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\"
+			+ to_string(i) + ".bmp" + '\0')[0]);*/
 	}
 	for (int i = 0; i < 7; ++i)//TODO, change 7 when new backgrounds are added;
 	{

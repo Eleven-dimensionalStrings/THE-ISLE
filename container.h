@@ -4,7 +4,6 @@
 #include <memory>
 namespace my_container
 {
-
 	template<class T, class Alloc = std::allocator<T>>
 	class my_vector
 	{

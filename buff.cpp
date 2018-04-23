@@ -369,11 +369,21 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 			{
 				if (buff_level < 0)
 				{
-					temp.action_set[i].value -= static_cast<std::size_t>((-1) * buff_level);
+					//TODO
+					t.value -= static_cast<std::size_t>((-1) * buff_level);
 				}
 				else
 				{
-					temp.action_set[i].value -= buff_level;
+					if (buff_level >= t.value)
+					{
+						t.value = 0;
+						temp.append(action(battle_action_type::REMOVE_BUFF, t.caller, t.listener, 0, t.value));
+					}
+					else
+					{
+						t.value -= buff_level;
+						temp.append(action(battle_action_type::REMOVE_BUFF, t.caller, t.listener, 0, t.value));
+					}
 				}
 			}
 		}
@@ -383,7 +393,7 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 	{
 		for (int i = 0; i < temp.action_set.size(); ++i)
 		{
-			action &t = (temp.action_set[i]);
+			action &t = temp.action_set[i];
 			if (t.action_id == battle_action_type::PERFORMING_ACTION
 				&& (t.type == type_type::NORMAL ||
 					t.type == type_type::FLAME ||
@@ -393,11 +403,11 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 				{
 					temp.action_set.push_back(action(battle_action_type::REMOVE_BUFF,
 						t.caller, t.listener, buff_id, t.value));
-					temp.action_set[i].value = 0;
+					t.value = 0;
 				}
 				else
 				{
-					temp.action_set[i].value -= buff_level;
+					t.value -= buff_level;
 					temp.action_set.push_back(action(battle_action_type::REMOVE_BUFF,
 						t.caller, temp.action_set[i].listener, buff_id, buff_level));
 				}
