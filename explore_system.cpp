@@ -43,6 +43,9 @@ void explore_system::end_battle()
 		data.is_battle = 0;
 		data.player_data.current_ap = data.player_data.max_ap;
 		data.cards_in_hand.clear();
+		data.cards_deck.clear();
+		data.cards_grave.clear();
+		data.cards_removed.clear();
 		if (data.player_data.current_hp < data.player_data.max_hp)
 		{
 			if (data.food > 0)
@@ -55,31 +58,31 @@ void explore_system::end_battle()
 	}
 }
 
-void bfs(size_t x, size_t y, int result[][5], int visited[][5], size_t& count)
+void dfs(size_t x, size_t y, int result[][5], int visited[][5], size_t& count)
 {
 	if (x >= 1 && result[x - 1][y] == 0 && visited[x - 1][y] == 0)
 	{
 		visited[x - 1][y] = 1;
 		count++;
-		bfs(x - 1, y, result, visited, count);
+		dfs(x - 1, y, result, visited, count);
 	}
 	if (y >= 1 && result[x][y - 1] == 0 && visited[x][y - 1] == 0)
 	{
 		visited[x][y - 1] = 1;
 		count++;
-		bfs(x, y - 1, result, visited, count);
+		dfs(x, y - 1, result, visited, count);
 	}
 	if (x <= 11 && result[x + 1][y] == 0 && visited[x + 1][y] == 0)
 	{
 		visited[x + 1][y] = 1;
 		count++;
-		bfs(x + 1, y, result, visited, count);
+		dfs(x + 1, y, result, visited, count);
 	}
 	if (y <= 3 && result[x][y + 1] == 0 && visited[x][y + 1] == 0)
 	{
 		visited[x][y + 1] = 1;
 		count++;
-		bfs(x, y + 1, result, visited, count);
+		dfs(x, y + 1, result, visited, count);
 	}
 }
 
@@ -117,12 +120,12 @@ void explore_system::create_map(std::size_t map_type)
 				{
 					begin_x = j;
 					begin_y = i;
-					goto fuck;
+					goto next;
 				}
 			}
 		}
-		fuck:
-		bfs(begin_x, begin_y, result, visited, count);
+		next:
+		dfs(begin_x, begin_y, result, visited, count);
 		generate_succ = 1;
 		for (int i = 0; i < 5; i++)
 		{
@@ -153,8 +156,8 @@ void explore_system::create_map(std::size_t map_type)
 			else
 			{
 				data.map_marks[j][i] = map_mark_type::UNKNOWN;
-				//data.explore_map[j][i] = t.get_event(map_type);
-				data.explore_map[j][i] = 5;//TODO test
+				data.explore_map[j][i] = t.get_event(map_type);
+				//data.explore_map[j][i] = 5;//TODO test
 			}
 		}
 	}

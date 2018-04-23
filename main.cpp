@@ -4,7 +4,7 @@
 #include "battle_system.h"
 #include "t_draw_sys.h"
 #include "explore_system.h"
-using namespace std;using namespace my_container;
+using namespace std; using namespace my_container;
 int main()
 {
 	data_sys d;
@@ -31,7 +31,7 @@ int main()
 	//d.enemies_data.push_back(enemy(d, 35));
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
-	//d.enemies_data.push_back(enemy(d, 1));
+	d.enemies_data.push_back(enemy(d, 1));
 	d.enemies_data.push_back(enemy(d, 1));
 
 	for (int i = 61; i < 121; ++i)
@@ -53,8 +53,7 @@ explore:
 	d.is_vaccant = 1;
 	d.is_battle = 0;
 	//explore loop
-	e.end_battle();
-	dr.end_battle();
+	dr.background_pic = random_engine(&d).get_num(0, 6);
 	while (1)
 	{
 		e.update();
@@ -72,6 +71,7 @@ battle:
 	//explore sys sends message to battle sys through e_to_b_pipe
 	//the message is processed in the initiate_battle function
 	b.initiate_battle();
+	dr.background_pic = random_engine(&d).get_num(0, 6);
 	while (1)
 	{
 		settextstyle(20, 0, "Airial");
@@ -83,6 +83,9 @@ battle:
 		Sleep(30);
 		if (d.enemies_data.empty())
 		{
+			e.end_battle();
+			dr.end_battle();
+			b.update();
 			goto explore;
 		}
 	}

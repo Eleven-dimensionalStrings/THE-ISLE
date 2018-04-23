@@ -112,7 +112,7 @@ void battle_system::deal_an_action()
 				temp.listener = &data.enemies_data[ran(e)];
 			} while (!temp.listener->is_alive());
 		}
-		if (temp.action_id == battle_action_type::PERFORMING_ACTION && temp.type <= 7)
+		if (temp.action_id == battle_action_type::PERFORMING_ACTION && temp.type <= 200)
 			send_message(action(battle_action_type::ENTITY_BE_ATK, temp.caller, temp.listener, 0, 0));
 
 		send_message(temp.listener->performing_action(temp));

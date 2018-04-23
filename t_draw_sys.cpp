@@ -25,7 +25,7 @@ void t_draw_sys::__draw_entities()
 		this->__draw_an_enemy(i);
 	}
 	this->__draw_player();
-	if (timer >= 3) { timer = 0; is_drawing = 0; if (!draw_queue.empty())draw_queue.pop(); }//TODO
+	if (timer >= 7) { timer = 0; is_drawing = 0; if (!draw_queue.empty())draw_queue.pop(); }//TODO
 }
 void t_draw_sys::__draw_battle_info()
 {
@@ -199,27 +199,20 @@ void t_draw_sys::__draw_player()
 {
 	pair<size_t, size_t> drawing;
 	if (!draw_queue.empty())drawing = this->draw_queue.front();
-	solidrectangle(gra_size::player_x, gra_size::player_y,
-		gra_size::player_x + 160, gra_size::player_y + 200);
 	if (drawing.first == 666)
 	{
-		setfillcolor(BLUE);
-		solidrectangle(gra_size::player_x, gra_size::player_y,
-			gra_size::player_x + 160, gra_size::player_y + 200);
-		setfillcolor(LIGHTBLUE);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[11], NOTSRCERASE);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[2], SRCINVERT);
 	}
 	else if (drawing.second == 666)
 	{
-
-		setfillcolor(BLACK);
-		solidrectangle(gra_size::player_x, gra_size::player_y,
-			gra_size::player_x + 160, gra_size::player_y + 200);
-		setfillcolor(LIGHTBLUE);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[12], NOTSRCERASE);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[3], SRCINVERT);
 	}
 	else
 	{
-		solidrectangle(gra_size::player_x, gra_size::player_y,
-			gra_size::player_x + 160, gra_size::player_y + 200);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[10], NOTSRCERASE);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[1], SRCINVERT);
 	}
 }
 
@@ -235,32 +228,47 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 
 		if (p - b == drawing.second)
 		{
-			setfillcolor(BLACK);
-			solidrectangle(enemy_pos(pos).first, enemy_pos(pos).second,
-				enemy_pos(pos).first + gra_size::enemy_width, enemy_pos(pos).second + 200);
-			setfillcolor(LIGHTBLUE);
+			if (p->enemy_id <= 20)
+			{
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[15], NOTSRCERASE);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[6], SRCINVERT);
+			}
+			else
+			{
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[18], NOTSRCERASE);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[9], SRCINVERT);
+			}
 		}
 		else if (p - b == drawing.first)
 		{
-			setfillcolor(BLUE);
-			solidrectangle(enemy_pos(pos).first, enemy_pos(pos).second,
-				enemy_pos(pos).first + gra_size::enemy_width, enemy_pos(pos).second + 200);
-			setfillcolor(LIGHTBLUE);
+			if (p->enemy_id <= 20)
+			{
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[14], NOTSRCERASE);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[5], SRCINVERT);
+			}
+			else
+			{
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[17], NOTSRCERASE);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[8], SRCINVERT);
+			}
 		}
 		else
 		{
-			solidrectangle(enemy_pos(pos).first, enemy_pos(pos).second,
-				enemy_pos(pos).first + gra_size::enemy_width, enemy_pos(pos).second + 200);
+			if (p->enemy_id <= 20)
+			{
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[13], NOTSRCERASE);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[4], SRCINVERT);
+			}
+			else
+			{
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[16], NOTSRCERASE);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[7], SRCINVERT);
+			}
 
 		}
 		outtextxy(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos, gra_size::enemy_y - 30,
 			&to_string(data.enemies_data[pos].current_hp)[0]);
 
-	}
-	else
-	{
-		solidrectangle(enemy_pos(pos).first, enemy_pos(pos).second + 100,
-			enemy_pos(pos).first + gra_size::enemy_width, enemy_pos(pos).second + 200);
 	}
 }
 
@@ -296,9 +304,12 @@ void t_draw_sys::__draw_event_card()
 void t_draw_sys::__draw_player_in_map()
 {
 	//player pic
-	solidrectangle(gra_size::player_x, gra_size::player_y, gra_size::player_x + 160, gra_size::player_y + 200);
+	putimage(gra_size::player_x, gra_size::player_y, &data.entities[20], NOTSRCERASE);
+	putimage(gra_size::player_x, gra_size::player_y, &data.entities[19], SRCINVERT);
+}
 
-	//text
+void t_draw_sys::__draw_ending_text()
+{
 	solidrectangle(gra_size::player_x, gra_size::player_y + 255, gra_size::player_x + 160, gra_size::player_y + 400);
 }
 
@@ -339,33 +350,55 @@ void t_draw_sys::__draw_an_explore_card(std::size_t pos, int x, int y)
 	{
 		putimage(x, y, &data.cards_mask[3], NOTSRCERASE);
 		putimage(x, y, &data.cards_thumbnail[400], SRCINVERT);
+		this->__format_wl(x + 22, y + 117, data.choice_name_list[data.current_select_page * MAX_CARDS_IN_HAND + pos]);
 	}
 }
 
 void t_draw_sys::__draw_player_info()
 {
 	//hp_pic
-	solidrectangle(gra_size::hp_pic_x, gra_size::hp_pic_y,
-		gra_size::hp_pic_x + 90, gra_size::hp_pic_y + 120);
+	putimage(gra_size::hp_pic_x, gra_size::hp_pic_y, &data.components[15], NOTSRCERASE);
+	putimage(gra_size::hp_pic_x, gra_size::hp_pic_y, &data.components[8], SRCINVERT);
 	outtextxy(gra_size::hp_x, gra_size::hp_y, &to_string(data.player_data.current_hp)[0]);
 	outtextxy(gra_size::hp_x + 25, gra_size::hp_y, '/');
 	outtextxy(gra_size::hp_x + 33, gra_size::hp_y, &to_string(data.player_data.max_hp)[0]);
 
 	//gold pic
-	solidrectangle(gra_size::gold_pic_x, gra_size::gold_pic_y,
-		gra_size::gold_pic_x + 90, gra_size::gold_pic_y + 120);
+	putimage(gra_size::gold_pic_x, gra_size::gold_pic_y, &data.components[15], NOTSRCERASE);
+	putimage(gra_size::gold_pic_x, gra_size::gold_pic_y, &data.components[9], SRCINVERT);
 	outtextxy(gra_size::gold_x, gra_size::gold_y, &to_string(data.gold)[0]);
 
 	//food pic
-	solidrectangle(gra_size::food_pic_x, gra_size::food_pic_y,
-		gra_size::food_pic_x + 90, gra_size::food_pic_y + 120);
+	putimage(gra_size::food_pic_x, gra_size::food_pic_y, &data.components[15], NOTSRCERASE);
+	putimage(gra_size::food_pic_x, gra_size::food_pic_y, &data.components[10], SRCINVERT);
 	outtextxy(gra_size::food_x, gra_size::food_y, &to_string(data.food)[0]);
-
 
 	outtextxy(gra_size::ability_num_x, gra_size::ability_num_y, &("strength:  " + to_string(data.strength))[0]);
 	outtextxy(gra_size::ability_num_x, gra_size::ability_num_y + 30, &("dexterity:  " + to_string(data.dexterity))[0]);
 	outtextxy(gra_size::ability_num_x, gra_size::ability_num_y + 60, &("luck:  " + to_string(data.luck))[0]);
 	outtextxy(gra_size::ability_num_x, gra_size::ability_num_y + 90, &("vitality:  " + to_string(data.vitality))[0]);
+}
+
+void t_draw_sys::__draw_background()
+{
+	putimage(0, 0, &data.back_grounds[background_pic]);
+	putimage(0, 470, &data.components[0]);
+}
+
+void t_draw_sys::__format_wl(int x, int y, string ss)
+{
+	int i = 0;
+	settextstyle(20, 0, "Arial");
+	string s("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	while (s.size() > i * 10)
+	{
+		string str;
+		for (int j = i * 10; j < ((1 + i) * 10 < s.size() ? (1 + i) * 10 : s.size() - 1); ++j)
+			str += s[j];
+		str += '\0';
+		outtextxy(x, y + i * 22, &str[0]);
+		++i;
+	}
 }
 
 template<class T>
@@ -481,6 +514,11 @@ void t_draw_sys::load_all()
 	for (int i = 0; i < 24; ++i)//TODO to replace 8
 	{
 		loadimage(&data.components[i], &(".\\resource\\components\\"
+			+ to_string(i) + ".bmp" + '\0')[0]);
+	}
+	for (int i = 0; i < 21; ++i)
+	{
+		loadimage(&data.entities[i], &(".\\resource\\entities\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
 	}
 }
@@ -601,9 +639,7 @@ void t_draw_sys::draw_battle()
 	settextstyle(20, 0, "Airial");
 	setfillcolor(LIGHTBLUE);
 	settextstyle(20, 0, "Arial");
-	putimage(0, 0, &data.back_grounds[random_engine(&data).get_num(0, 6)]);
-	putimage(0, 470, &data.components[0]);
-
+	this->__draw_background();
 	this->check_view();
 	this->__draw_player_info();
 	this->__draw_card_in_hand();
@@ -623,8 +659,7 @@ void t_draw_sys::draw_explore()
 	cleardevice();
 	settextcolor(BLACK);
 	setfillcolor(LIGHTBLUE);
-	putimage(0, 0, &data.back_grounds[random_engine(&data).get_num(0, 6)]);
-	putimage(0, 470, &data.components[0]);
+	this->__draw_background();
 	this->check_view();
 	this->__draw_player_info();
 	this->__draw_guiding_pics();
@@ -632,11 +667,12 @@ void t_draw_sys::draw_explore()
 	{
 		this->__draw_player_in_map();
 		this->__draw_explore_map();
+		this->__draw_ending_text();
 	}
 	else
 	{
 		this->__draw_event_card();
-		this->__draw_player();
+		this->__draw_player_in_map();
 		this->__draw_explore_info();
 	}
 	SetWorkingImage(0);

@@ -4,7 +4,7 @@
 #include <graphics.h>
 #include <Windows.h>
 #include "battle_system.h"
-using namespace std;using namespace my_container;
+using namespace std; using namespace my_container;
 using std::size_t;
 //写easyx的不知道哪个弱智把这宏放出来了,为什么要用这种垃圾
 #undef max
@@ -199,7 +199,8 @@ void explore_context::read_input()
 						size_t y = (hit.y - gra_size::map_start_y) / (gra_size::map_block_size + gra_size::map_closure);
 						cur_state->click_map_location(x, y);
 					}
-				}//点击card_deck等
+				}
+				//点击card_deck等
 				else if (hit.x > gra_size::deck_pic_x && hit.y > gra_size::deck_pic_y
 					&& hit.x < gra_size::deck_pic_x + gra_size::deck_width && hit.y < gra_size::deck_pic_y + gra_size::deck_height)
 				{
@@ -225,6 +226,31 @@ void explore_context::read_input()
 				{
 					get_data().view_cards = 5;
 				}
+			}//点击card_deck等
+			else if (hit.x > gra_size::deck_pic_x && hit.y > gra_size::deck_pic_y
+				&& hit.x < gra_size::deck_pic_x + gra_size::deck_width && hit.y < gra_size::deck_pic_y + gra_size::deck_height)
+			{
+				get_data().view_cards = 1;
+			}
+			else if (hit.x > gra_size::r_deck_pic_x && hit.y > gra_size::r_deck_pic_y
+				&& hit.x < gra_size::r_deck_pic_x + gra_size::deck_width && hit.y < gra_size::r_deck_pic_y + gra_size::deck_height)
+			{
+				get_data().view_cards = 2;
+			}
+			else if (hit.x > gra_size::grave_pic_x && hit.y > gra_size::grave_pic_y
+				&& hit.x < gra_size::grave_pic_x + gra_size::deck_width && hit.y < gra_size::grave_pic_y + gra_size::deck_height)
+			{
+				get_data().view_cards = 3;
+			}
+			else if (hit.x > gra_size::remove_pic_x && hit.y > gra_size::remove_pic_y
+				&& hit.x < gra_size::remove_pic_x + gra_size::deck_width && hit.y < gra_size::remove_pic_y + gra_size::deck_height)
+			{
+				get_data().view_cards = 4;
+			}
+			else if (hit.x > gra_size::view_artifact_x && hit.y > gra_size::view_artifact_y
+				&& hit.x < gra_size::view_artifact_x + gra_size::deck_width && hit.y < gra_size::view_artifact_y + gra_size::deck_height)
+			{
+				get_data().view_cards = 5;
 			}
 			else
 			{
@@ -233,7 +259,7 @@ void explore_context::read_input()
 					&& hit.y > gra_size::card_y && hit.y < gra_size::card_dy)
 				{
 					size_t pos = (hit.x - gra_size::card_closure - gra_size::card_starting_pos) / (gra_size::card_width + gra_size::card_closure);
-					if (pos <= get_data().choice_list.size())
+					if (pos + get_data().current_select_page * MAX_CARDS_IN_HAND < get_data().choice_list.size())
 					{
 						cur_state->click_an_option(pos);
 					}
@@ -396,7 +422,7 @@ void b_confirm_state::click_a_card(size_t card_pos)
 		get_data().render_select_card[selected_card] = 0;
 		ctx->set_state(new b_vaccant_state(ctx));
 	}
-	else if (get_data().cards_in_hand.size()>card_pos && 
+	else if (get_data().cards_in_hand.size() > card_pos &&
 		get_data().player_data.current_ap >= get_data().cards_in_hand[card_pos].cost)
 	{
 		get_data().render_select_card[card_pos] = 1;
@@ -660,9 +686,9 @@ e_select_state::e_select_state(explore_context * e_c, std::size_t tmax)
 
 void e_select_state::click_an_option(std::size_t pos)
 {
-	info_to_explore_sys temp(e_action(get_data().choice_list[pos + 8 * get_data().current_select_page]));
-	get_data().choice_list.erase(get_data().choice_list.begin() + pos + 8 * get_data().current_select_page);
-	if (get_data().choice_list.size() == 8 * get_data().current_select_page)
+	info_to_explore_sys temp(e_action(get_data().choice_list[pos + MAX_CARDS_IN_HAND * get_data().current_select_page]));
+	get_data().choice_list.erase(get_data().choice_list.begin() + pos + MAX_CARDS_IN_HAND * get_data().current_select_page);
+	if (get_data().choice_list.size() == MAX_CARDS_IN_HAND * get_data().current_select_page)
 	{
 		get_data().current_select_page -= 1;
 	}
@@ -690,7 +716,7 @@ void e_select_state::click_left_arrow()
 
 void e_select_state::click_right_arrow()
 {
-	if (get_data().current_select_page < get_data().choice_list.size() / 3)
+	if (get_data().current_select_page < get_data().choice_list.size() / MAX_CARDS_IN_HAND)
 	{
 		get_data().current_select_page += 1;
 	}

@@ -216,7 +216,7 @@ namespace gra_size
 	const std::size_t turn_end_button_x = 1315;
 	const std::size_t enemy_x = 400;
 	const std::size_t enemy_y = 200;
-	const std::size_t enemy_width = 160;
+	const std::size_t enemy_width = 180;
 	const std::size_t enemy_closure = 10;
 	const std::size_t player_x = 50;
 	const std::size_t player_y = 200;
@@ -233,7 +233,7 @@ namespace gra_size
 	const std::size_t food_pic_x = 220;
 	const std::size_t food_pic_y = 20;
 	const std::size_t ability_num_x = 400;
-	const std::size_t ability_num_y = 20;
+	const std::size_t ability_num_y = 25;
 
 	const std::size_t deck_pic_x = 1320;
 	const std::size_t deck_pic_y = 20;

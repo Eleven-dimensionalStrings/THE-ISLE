@@ -30,9 +30,12 @@ class t_draw_sys
 
 	void __draw_event_card();
 	void __draw_player_in_map();
+	void __draw_ending_text();
 	void __draw_explore_info();
 	void __draw_an_explore_card(std::size_t pos, int x, int y);
 	void __draw_player_info();
+	void __draw_background();
+	void __format_wl(int x, int y, std::string s);
 
 	template<class T>
 	void __flash_view(T&v, int page, int is_art = 0);

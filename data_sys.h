@@ -59,6 +59,13 @@ public:
 	my_container::my_vector<IMAGE> cards_mask;//both thumbnails and originals are stored here
 	my_container::my_vector<IMAGE> back_grounds;
 	my_container::my_vector<IMAGE> components;
+	my_container::my_vector<IMAGE> entities;
+	my_container::my_vector<IMAGE> entities1;
+	my_container::my_vector<IMAGE> entities2;
+	my_container::my_vector<IMAGE> entities3;
+	my_container::my_vector<IMAGE> entities4;
+	my_container::my_vector<IMAGE> entities5;
+	my_container::my_vector<IMAGE> entities6;
 	std::array<bool, MAX_CARDS_IN_HAND>render_select_card;
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;

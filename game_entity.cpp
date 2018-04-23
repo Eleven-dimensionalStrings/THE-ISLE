@@ -33,7 +33,7 @@ info_to_battle_sys player::on_turn_begin()
 		i.is_reserve = 0;
 	}
 	info_to_battle_sys t;
-	t.append(action(battle_action_type::DRAW_CARDS, MEANINGLESS_VALUE, 7));
+	t.append(action(battle_action_type::DRAW_CARDS, MEANINGLESS_VALUE, 4));
 	for (auto& i : buff_pool)
 	{
 		t.append(i.on_turn_begin(this));
@@ -75,7 +75,7 @@ info_to_battle_sys player::on_turn_end()
 
 
 game_entity::game_entity(data_sys& d) :data(d),
-max_hp(100), current_hp(100), max_ap(10), current_ap(10)
+max_hp(80), current_hp(80), max_ap(3), current_ap(3)
 {
 }
 
@@ -118,7 +118,7 @@ info_to_battle_sys game_entity::performing_action(action iaction)
 	using namespace type_type;
 	if (iaction.action_id == battle_action_type::PERFORMING_ACTION)
 	{
-		if (present_act.type <= 7)
+		if (present_act.type <= 200)
 		{
 			current_hp -= static_cast<int>(present_act.value);
 			if (current_hp <= 0)

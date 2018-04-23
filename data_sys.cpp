@@ -8,7 +8,7 @@ using namespace std; using namespace my_container;
 
 data_sys::data_sys() :b(nullptr), player_data(*this), all_enemies(*this, MEANINGLESS_VALUE), random_enemy(*this, MEANINGLESS_VALUE)
 , select_one_enemy(*this, MEANINGLESS_VALUE), re(this), view_cards(0), cards_thumbnail(420), cards_original(420), cards_mask(10), back_grounds(20)
-, components(30)
+, components(30), entities(21)
 {
 	for (auto&i : render_select_card)i = 0;
 }
@@ -2258,7 +2258,7 @@ info_to_battle_sys data_sys::artifact_on_start_battle(std::size_t atf_id)
 		return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &player_data, &all_enemies, buff_type::WEAK, 1));
 		break;
 	case 13:
-		return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &player_data, &player_data, buff_type::INCREASE_DRAW, 2));
+		return info_to_battle_sys(action(battle_action_type::DRAW_CARDS, &player_data, &player_data, MEANINGLESS_VALUE, 2));
 		break;
 	case 14:
 		return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &player_data, &player_data, type_type::ADD_AP, 1));
