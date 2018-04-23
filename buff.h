@@ -34,6 +34,7 @@ public:
 	info_to_battle_sys on_performing(info_to_battle_sys);
 	info_to_explore_sys on_battle_end(game_entity*);
 	void on_manipulate_buff(action &temp);
+	std::size_t compare_value()const;
 	void operator--();
 	void operator--(int);
 	void operator+=(buff t);

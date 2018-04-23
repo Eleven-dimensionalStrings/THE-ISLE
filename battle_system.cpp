@@ -178,7 +178,7 @@ void battle_system::deal_an_action()
 		{
 			pair<string, size_t> t = data.get_buff(temp.type); // pair<buff_name, priority>
 			buff tbuff(temp.type, t.first, t.second, temp.value);
-			temp.listener->buff_pool.push_back(tbuff);
+			temp.listener->buff_pool.push(tbuff);
 			send_message(tbuff.on_create(temp.caller, temp.listener));
 		}
 		break;
@@ -218,7 +218,7 @@ void battle_system::deal_an_action()
 		{
 			pair<string, size_t> t = data.get_buff(temp.type); // pair<buff_name, priority>
 			buff tbuff(temp.type, t.first, t.second, -static_cast<int>(temp.value));
-			temp.listener->buff_pool.push_back(tbuff);
+			temp.listener->buff_pool.push(tbuff);
 			send_message(tbuff.on_create(temp.caller, temp.listener));
 		}
 		send_message(temp.listener->performing_action(temp));

@@ -518,7 +518,7 @@ namespace my_container
 	class my_queue
 	{
 	protected:
-		std::deque<T>deq;
+		Container deq;
 	public:
 		my_queue() :deq()
 		{
@@ -589,7 +589,7 @@ namespace my_container
 	class my_stack
 	{
 	private:
-		std::deque<T>deq;
+		Container deq;
 	public:
 		my_stack() :deq()
 		{
@@ -648,6 +648,93 @@ namespace my_container
 			auto t = std::move(other);
 			other = std::move(*this);
 			*this = std::move(t);
+		}
+	};
+	template<class T, class Container = my_vector<T>>
+	class insert_sort_vector
+	{
+	private:
+		Container vec;
+	public:
+		insert_sort_vector() :vec()
+		{
+
+		}
+		insert_sort_vector(const insert_sort_vector& other):vec(other.vec)
+		{
+
+		}
+		insert_sort_vector(insert_sort_vector&& other):vec(std::move(other.vec))
+		{
+
+		}
+		insert_sort_vector& operator=(const insert_sort_vector& other)
+		{
+			vec = other.vec;
+			return *this;
+		}
+		insert_sort_vector& operator=(insert_sort_vector&& other)
+		{
+			vec = std::move(other);
+			return *this;
+		}
+		void push(const T& value)
+		{
+			auto i = vec.begin();
+			for (; i != vec.end(); ++i)
+			{
+				if (value.compare_value() == i->compare_value())break;
+			}
+			vec.insert(i, value);
+		}
+		void push(T&& value)
+		{
+			auto i = vec.begin();
+			for (; i != vec.end(); ++i)
+			{
+				if (value.compare_value() == i->compare_value())break;
+			}
+			vec.insert(i, std::move(value));
+		}
+		typename Container::iterator insert(typename Container::iterator i, const T& value)
+		{
+			return vec.insert(i, value);
+		}
+		typename Container::iterator insert(typename Container::iterator i, T&& value)
+		{
+			return vec.insert(i, std::move(value));
+		}
+		typename Container::iterator erase(typename Container::iterator i)
+		{
+			return vec.erase(i);
+		}
+		std::size_t size()const
+		{
+			return vec.size();
+		}
+		std::size_t capacity()const
+		{
+			return vec.capacity();
+		}
+		void reserve(std::size_t new_cap)
+		{
+			vec.reserve(new_cap);
+		}
+		typename Container::iterator begin()
+		{
+			return vec.begin();
+		}
+		typename Container::iterator end()
+		{
+			return vec.end();
+		}
+		T& operator[](std::size_t pos)
+		{
+			return vec[pos];
+		}
+		void clear()
+		{
+			vec.clear();
 		}
 	};
 }

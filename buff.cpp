@@ -1,7 +1,7 @@
 #include "buff.h"
 #include "game_entity.h"
 #include "data_sys.h"
-using namespace std;using namespace my_container;
+using namespace std; using namespace my_container;
 
 void buff::operator--()
 {
@@ -520,4 +520,9 @@ void buff::on_manipulate_buff(action & temp)
 	default:
 		break;
 	}
+}
+
+std::size_t buff::compare_value() const
+{
+	return buff_priority;
 }
