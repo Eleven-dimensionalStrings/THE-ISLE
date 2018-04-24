@@ -64,7 +64,7 @@ explore:
 	d.is_vaccant = 1;
 	d.is_battle = 0;
 	//explore loop
-	dr.background_pic = random_engine(&d).get_num(0, 6);
+	d.background_pic = random_engine(&d).get_num(1, 13);
 	while (1)
 	{
 		e.update();
@@ -82,7 +82,7 @@ battle:
 	//explore sys sends message to battle sys through e_to_b_pipe
 	//the message is processed in the initiate_battle function
 	b.initiate_battle();
-	dr.background_pic = random_engine(&d).get_num(0, 6);
+	d.background_pic = random_engine(&d).get_num(1, 13);
 	while (1)
 	{
 		settextstyle(20, 0, "Airial");

@@ -5,7 +5,7 @@
 #include "message.h"
 #include "data_sys.h"
 
-using namespace std;using namespace my_container;
+using namespace std; using namespace my_container;
 using namespace explore_action_type;
 using namespace event_type;
 
@@ -124,7 +124,7 @@ void explore_system::create_map(std::size_t map_type)
 				}
 			}
 		}
-		next:
+	next:
 		dfs(begin_x, begin_y, result, visited, count);
 		generate_succ = 1;
 		for (int i = 0; i < 5; i++)
@@ -476,6 +476,7 @@ void explore_system::process()
 			data.choice_list.clear();
 			data.choice_name_list.clear();
 			data.e_to_i_pipe = info_explore_to_interacting(interact_action_type::EXPLORE_TO_VACCANT);
+			data.background_pic = random_engine(&data).get_num(1, 13);
 			break;
 		}
 		default:

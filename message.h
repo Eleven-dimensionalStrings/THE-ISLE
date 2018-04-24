@@ -196,9 +196,9 @@ namespace gra_size
 	const std::size_t card_y = 510;
 	const std::size_t card_dy = 710;
 	const std::size_t viewcard_firrow_x = 150;
-	const std::size_t viewcard_firrow_y = 80;
+	const std::size_t viewcard_firrow_y = 150;
 	const std::size_t viewcard_secrow_x = 150;
-	const std::size_t viewcard_secrow_y = 320;
+	const std::size_t viewcard_secrow_y = 390;
 
 	const std::size_t hp_y = 110;
 	const std::size_t hp_x = 35;
@@ -246,7 +246,7 @@ namespace gra_size
 	const std::size_t deck_width = 45;
 	const std::size_t deck_height = 50;
 	const std::size_t view_artifact_x = 1250;
-	const std::size_t view_artifact_y = 60;
+	const std::size_t view_artifact_y = 20;
 
 	const std::size_t left_arrow_x = 50;
 	const std::size_t left_arrow_y = 550;

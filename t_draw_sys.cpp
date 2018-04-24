@@ -176,23 +176,24 @@ void t_draw_sys::__get_atk_entities()
 void t_draw_sys::__draw_guiding_pics()
 {
 	//deck_pic
-	solidrectangle(gra_size::deck_pic_x, gra_size::deck_pic_y,
-		gra_size::deck_pic_x + 45, gra_size::deck_pic_y + 50);
+	putimage(gra_size::deck_pic_x, gra_size::deck_pic_y, &data.components[29], NOTSRCERASE);
+	putimage(gra_size::deck_pic_x, gra_size::deck_pic_y, &data.components[28], SRCINVERT);
 
 	//remaining_deck_pic
-	solidrectangle(gra_size::r_deck_pic_x, gra_size::r_deck_pic_y,
-		gra_size::r_deck_pic_x + 45, gra_size::r_deck_pic_y + 50);
+	putimage(gra_size::r_deck_pic_x, gra_size::r_deck_pic_y, &data.components[27], NOTSRCERASE);
+	putimage(gra_size::r_deck_pic_x, gra_size::r_deck_pic_y, &data.components[24], SRCINVERT);
 
 	//grave_pic
-	solidrectangle(gra_size::grave_pic_x, gra_size::grave_pic_y,
-		gra_size::grave_pic_x + 45, gra_size::grave_pic_y + 50);
+	putimage(gra_size::grave_pic_x, gra_size::grave_pic_y, &data.components[27], NOTSRCERASE);
+	putimage(gra_size::grave_pic_x, gra_size::grave_pic_y, &data.components[25], SRCINVERT);
 
 	//remove_area_pic
-	solidrectangle(gra_size::remove_pic_x, gra_size::remove_pic_y,
-		gra_size::remove_pic_x + 45, gra_size::remove_pic_y + 50);
+	putimage(gra_size::remove_pic_x, gra_size::remove_pic_y, &data.components[27], NOTSRCERASE);
+	putimage(gra_size::remove_pic_x, gra_size::remove_pic_y, &data.components[26], SRCINVERT);
 
-	solidrectangle(gra_size::view_artifact_x, gra_size::view_artifact_y
-		, gra_size::view_artifact_x + gra_size::deck_width, gra_size::view_artifact_y + gra_size::deck_height);
+	//artifact_pic
+	putimage(gra_size::view_artifact_x, gra_size::view_artifact_y, &data.components[31], NOTSRCERASE);
+	putimage(gra_size::view_artifact_x, gra_size::view_artifact_y, &data.components[30], SRCINVERT);
 }
 
 void t_draw_sys::__draw_player()
@@ -268,7 +269,19 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 		}
 		outtextxy(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos, gra_size::enemy_y - 30,
 			&to_string(data.enemies_data[pos].current_hp)[0]);
-
+		outtextxy(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 25, gra_size::enemy_y - 30,
+			"/");
+		outtextxy(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 35, gra_size::enemy_y - 30,
+			&to_string(data.enemies_data[pos].max_hp)[0]);
+		setfillcolor(RED);
+		solidrectangle(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 60, gra_size::enemy_y - 25,
+			gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 210, gra_size::enemy_y - 15);
+		setfillcolor(LIGHTGREEN);
+		solidrectangle(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 60, gra_size::enemy_y - 25,
+			gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 60 +
+			((static_cast<double>(data.enemies_data[pos].current_hp) / static_cast<double>(data.enemies_data[pos].max_hp)) * 150)
+			, gra_size::enemy_y - 15);
+		setfillcolor(LIGHTBLUE);
 	}
 }
 
@@ -350,7 +363,6 @@ void t_draw_sys::__draw_an_explore_card(std::size_t pos, int x, int y)
 	{
 		putimage(x, y, &data.cards_mask[3], NOTSRCERASE);
 		putimage(x, y, &data.cards_thumbnail[400], SRCINVERT);
-		this->__format_wl(x + 22, y + 117, data.choice_name_list[data.current_select_page * MAX_CARDS_IN_HAND + pos]);
 	}
 }
 
@@ -390,24 +402,11 @@ void t_draw_sys::__draw_player_info()
 
 void t_draw_sys::__draw_background()
 {
-	putimage(0, 0, &data.back_grounds[background_pic]);
+	setfillcolor(BLACK);
+	solidrectangle(0, 400, 1450, 500);
+	setfillcolor(LIGHTBLUE);
+	putimage(0, -90, &data.backgrounds[data.background_pic]);
 	putimage(0, 470, &data.components[0]);
-}
-
-void t_draw_sys::__format_wl(int x, int y, string ss)
-{
-	int i = 0;
-	settextstyle(20, 0, "Arial");
-	string s("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-	while (s.size() > i * 10)
-	{
-		string str;
-		for (int j = i * 10; j < ((1 + i) * 10 < s.size() ? (1 + i) * 10 : s.size() - 1); ++j)
-			str += s[j];
-		str += '\0';
-		outtextxy(x, y + i * 22, &str[0]);
-		++i;
-	}
 }
 
 template<class T>
@@ -415,13 +414,14 @@ void t_draw_sys::__flash_view(T& v, int page, int is_artifact)
 {
 	SetWorkingImage(&this->buffer);
 	cleardevice();
-	solidrectangle(gra_size::left_arrow_x, gra_size::left_arrow_y,
-		gra_size::left_arrow_x + 100, gra_size::left_arrow_y + 100);
-	solidrectangle(gra_size::right_arrow_x, gra_size::right_arrow_y,
-		gra_size::right_arrow_x + 100, gra_size::right_arrow_y + 100);
+	putimage(0, 0, &data.backgrounds[0]);
+	putimage(gra_size::left_arrow_x, gra_size::left_arrow_y - 230, &data.components[5], NOTSRCERASE);
+	putimage(gra_size::left_arrow_x, gra_size::left_arrow_y - 230, &data.components[4], SRCINVERT);
+
+	putimage(gra_size::right_arrow_x, gra_size::right_arrow_y - 230, &data.components[7], NOTSRCERASE);
+	putimage(gra_size::right_arrow_x, gra_size::right_arrow_y - 230, &data.components[6], SRCINVERT);
 	for (int i = page * 16; i < (((page * 16 + 8) < v.size()) ? (page * 16 + 8) : v.size()); ++i)
 	{
-		//TODO putimage()
 		putimage(gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
 			, gra_size::viewcard_firrow_y, &data.get_mask_pic(v[i].id, is_artifact), NOTSRCERASE);
 		putimage(gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
@@ -468,7 +468,7 @@ void t_draw_sys::check_view()
 }
 
 t_draw_sys::t_draw_sys(data_sys &d) :data(d),
-buffer(gra_size::window_width, gra_size::window_height), timer(0), is_drawing(0), background_pic(0)
+buffer(gra_size::window_width, gra_size::window_height), timer(0), is_drawing(0)
 {
 	// settextstyle(20, 0, _T("Arial"));
 }
@@ -515,12 +515,12 @@ void t_draw_sys::load_all()
 		loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
 	}
-	for (int i = 0; i < 7; ++i)//TODO, change 7 when new backgrounds are added;
+	for (int i = 0; i < 14; ++i)
 	{
-		loadimage(&data.back_grounds[i], &(".\\resource\\backgrounds\\"
+		loadimage(&data.backgrounds[i], &(".\\resource\\backgrounds\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
 	}
-	for (int i = 0; i < 24; ++i)//TODO to replace 8
+	for (int i = 0; i < 32; ++i)
 	{
 		loadimage(&data.components[i], &(".\\resource\\components\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);

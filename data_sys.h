@@ -57,7 +57,7 @@ public:
 	my_container::my_vector<IMAGE> cards_thumbnail;
 	my_container::my_vector<IMAGE> cards_original;
 	my_container::my_vector<IMAGE> cards_mask;//both thumbnails and originals are stored here
-	my_container::my_vector<IMAGE> back_grounds;
+	my_container::my_vector<IMAGE> backgrounds;
 	my_container::my_vector<IMAGE> components;
 	my_container::my_vector<IMAGE> entities;
 	my_container::my_vector<IMAGE> entities1;
@@ -96,6 +96,7 @@ public:
 	int get_enemy(std::size_t enemy_id);
 	IMAGE& get_pic(int id, int det = 0);
 	IMAGE& get_mask_pic(int id, int det = 0);
+	int background_pic;
 
 	//TODO for artifacts
 	info_to_explore_sys artifact_on_create(std::size_t atf_id);

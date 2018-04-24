@@ -35,7 +35,6 @@ class t_draw_sys
 	void __draw_an_explore_card(std::size_t pos, int x, int y);
 	void __draw_player_info();
 	void __draw_background();
-	void __format_wl(int x, int y, std::string s);
 
 	template<class T>
 	void __flash_view(T&v, int page, int is_art = 0);
@@ -51,5 +50,5 @@ public:
 	template<class Container>
 	void view_cards(Container&v, int is_art = 0);//按键后查看卡组等
 	void end_battle();
-	int background_pic;
+	
 };

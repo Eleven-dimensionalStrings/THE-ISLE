@@ -7,9 +7,10 @@ using namespace std; using namespace my_container;
 //TODO 6, 8，9, 12
 
 data_sys::data_sys() :b(nullptr), player_data(*this), all_enemies(*this, MEANINGLESS_VALUE), random_enemy(*this, MEANINGLESS_VALUE)
-, select_one_enemy(*this, MEANINGLESS_VALUE), re(this), view_cards(0), cards_thumbnail(420), cards_original(420), cards_mask(10), back_grounds(20)
-, components(30), entities(21)
+, select_one_enemy(*this, MEANINGLESS_VALUE), re(this), view_cards(0), cards_thumbnail(420), cards_original(420), cards_mask(10), backgrounds(15)
+, components(35), entities(21)
 {
+	background_pic - 0;
 	for (auto&i : render_select_card)i = 0;
 }
 
