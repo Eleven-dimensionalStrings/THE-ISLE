@@ -965,10 +965,31 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(my_vector<e_action>{
 			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 0),
-				e_action(explore_action_type::SELECTION, event_type::AQUIRE_HIT_POINTS, player_data.max_hp * 0.25, 20, 15),
-				e_action(explore_action_type::SELECTION, event_type::UPGRADE_CARD_FROM_DECK, 1, 21, 16),
-				e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END)});
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 999, 20, 15),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1000, 21, 16, [](data_sys* t)->bool
+			{
+				for (auto i : t->cards_pool)
+				{
+					if (i.upgrade_version_id)
+					{
+						return true;
+					}
+				}
+				return false;
+			})});
 		break;
+	}
+	case 999://篝火part2
+	{
+		return info_to_explore_sys(my_vector<e_action>{
+			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_HIT_POINTS, player_data.max_hp * 0.25, 20, 15),
+				e_action(explore_action_type::EVENT_BODY, event_type::PROCEED, END, static_cast<int>(MEANINGLESS_VALUE), 15)});
+	}
+	case 1000://篝火part2
+	{
+		return info_to_explore_sys(my_vector<e_action>{
+			e_action(explore_action_type::EVENT_BODY, event_type::UPGRADE_CARD_FROM_DECK, 1, 9),
+				e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, END, static_cast<int>(MEANINGLESS_VALUE), 16)});
 	}
 	case 2://苹果树
 	{

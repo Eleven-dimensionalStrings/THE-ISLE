@@ -151,6 +151,7 @@ void explore_system::create_map(std::size_t map_type)
 	for (int i = 0; i < 5; ++i)vv.push_back(t.get_event(3));
 	for (int i = 0; i < 12; ++i)vv.push_back(t.get_event(4));
 	bool no_player = true;
+	uniform_int_distribution<int>ran_pos(0, static_cast<int>(vv.size() - 1));
 	for (int i = 0; i < MAP_WIDTH; ++i)
 	{
 		for (int j = 0; j < MAP_LENGTH; ++j)
@@ -167,9 +168,12 @@ void explore_system::create_map(std::size_t map_type)
 			{
 				data.map_marks[j][i] = map_mark_type::UNKNOWN;
 				assert(vv.size() > 0);
-				uniform_int_distribution<int>ran_pos(0, static_cast<int>(vv.size() - 1));
-				int pos = ran_pos(ee);
-				data.explore_map[j][i] = vv[ran_pos(ee)];
+				int pos;
+				do
+				{
+					pos = ran_pos(ee);
+				} while (pos >= vv.size());
+				data.explore_map[j][i] = vv[pos];
 				vv.erase(vv.begin() + pos);
 			}
 		}

@@ -25,6 +25,9 @@ int main()
 	d.gold = 200;
 	d.food = 5;
 	d.player_s_class = player_class::WAR;
+	/*d.strength = 20;
+	d.vitality = 20;
+	d.dexterity = 20;*/
 
 	//d.enemies_data.push_back(enemy(d, 35));
 	//d.enemies_data.push_back(enemy(d, 1));
@@ -32,13 +35,13 @@ int main()
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
 
-	d.cards_pool.push_back(card(61));
-	d.cards_pool.push_back(card(61));
-	d.cards_pool.push_back(card(61));
-	d.cards_pool.push_back(card(61));
-	d.cards_pool.push_back(card(62));
-	d.cards_pool.push_back(card(63));
-	d.cards_pool.push_back(card(90));
+	d.cards_pool.push_back(card(7));
+	d.cards_pool.push_back(card(7));
+	d.cards_pool.push_back(card(7));
+	d.cards_pool.push_back(card(7));
+	d.cards_pool.push_back(card(7));
+	d.cards_pool.push_back(card(7));
+	d.cards_pool.push_back(card(7));
 	d.cards_pool.push_back(card(90));
 	d.cards_pool.push_back(card(90));
 	d.cards_pool.push_back(card(90));
