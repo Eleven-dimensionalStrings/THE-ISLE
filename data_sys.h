@@ -3,7 +3,7 @@
 #include <string>
 #include "container.h" 
 #include <map>
-#include <functional>
+#include <random>
 #include "game_entity.h"
 #include <graphics.h>
 #undef PURE
@@ -18,7 +18,8 @@ public:
 	size_t get_other_enemy(int pos);
 	bool chance(std::size_t c);
 	bool chance_luck_increase(std::size_t c);
-	bool chance_luck_decrease(std::size_t c);
+	bool chance_luck_decrease(std::size_t c); 
+	std::default_random_engine e;
 	data_sys* data;
 };
 
@@ -60,12 +61,9 @@ public:
 	my_container::my_vector<IMAGE> backgrounds;
 	my_container::my_vector<IMAGE> components;
 	my_container::my_vector<IMAGE> entities;
-	my_container::my_vector<IMAGE> entities1;
-	my_container::my_vector<IMAGE> entities2;
-	my_container::my_vector<IMAGE> entities3;
-	my_container::my_vector<IMAGE> entities4;
-	my_container::my_vector<IMAGE> entities5;
-	my_container::my_vector<IMAGE> entities6;
+	my_container::my_vector<IMAGE> body;
+	my_container::my_vector<IMAGE> end;
+	my_container::my_vector<IMAGE> select;
 	std::array<bool, MAX_CARDS_IN_HAND>render_select_card;
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
@@ -79,9 +77,9 @@ public:
 	std::size_t map_event_type[MAP_LENGTH][MAP_WIDTH];
 	std::pair<int, int> player_location;
 	my_container::my_vector<e_action> choice_list;
-	my_container::my_vector<std::string> choice_name_list;
-	std::string text_to_be_displayed;
-	std::string map_text;
+	my_container::my_vector<int> choice_name_list;
+	int text_to_be_displayed;
+	int map_text;
 	//to determine explore context
 	std::size_t current_select_page;//indicates the position of the first selection in choice_list. 
 	std::size_t next_event_id;//for "SKIP" button

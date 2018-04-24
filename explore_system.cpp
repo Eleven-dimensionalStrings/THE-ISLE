@@ -192,8 +192,10 @@ void explore_system::process()
 		}
 		case EVENT_BODY:
 		{
-			data.text_to_be_displayed = temp.text;
-			data.map_text = temp.end_text;
+			if (temp.text != -1)
+				data.text_to_be_displayed = temp.text;
+			if (temp.end_text != -1)
+				data.map_text = temp.end_text;
 			for (int i = 0; i < data.artifacts.size(); ++i)
 			{
 				send_message(data.artifact_on_event_body(data.artifacts[i].id));
@@ -207,7 +209,7 @@ void explore_system::process()
 			}
 			case PROCEED:
 			{
-				process_stack.push(e_action(ENCOUNTER_EVENT, MEANINGLESS_VALUE, temp.value, ""));
+				process_stack.push(e_action(ENCOUNTER_EVENT, MEANINGLESS_VALUE, temp.value, -1));
 				break;
 			}
 			case START_BATTLE:
@@ -316,8 +318,9 @@ void explore_system::process()
 				info_to_explore_sys message;
 				for (int i = 0; i < temp.value; ++i)
 				{
+					//TODO
 					message.action_set.push_back(e_action(SELECTION, AQUIRE_CARD,
-						e_random_engine().get_card_by_class(data.player_s_class), MEANINGLESS_VALUE));
+						e_random_engine().get_card_by_class(data.player_s_class), static_cast<int>(MEANINGLESS_VALUE)));
 				}
 				send_message(message);
 				break;
@@ -325,7 +328,7 @@ void explore_system::process()
 			case REMOVE_CARD:
 			{
 				//remove the card according to its position
-				data.cards_pool.erase(data.cards_pool.begin() + temp.value, data.cards_pool.begin() + temp.value + 1);
+				data.cards_pool.erase(data.cards_pool.begin() + temp.value);
 				break;
 			}
 			case REMOVE_CARD_FROM_DECK:
@@ -333,7 +336,7 @@ void explore_system::process()
 				info_to_explore_sys message;
 				for (int i = 0; i < data.cards_pool.size(); ++i)
 				{
-					message.action_set.push_back(e_action(SELECTION, REMOVE_CARD, data.cards_pool[i], i));
+					message.action_set.push_back(e_action(SELECTION, REMOVE_CARD, data.cards_pool[i], static_cast<size_t>(i)));
 				}
 				send_message(message);
 				break;
@@ -350,7 +353,7 @@ void explore_system::process()
 				for (int i = 0; i < data.cards_pool.size(); ++i)
 				{
 					if (data.cards_pool[i].upgrade_version_id != 0)
-						message.action_set.push_back(e_action(SELECTION, UPGRADE_CARD, data.cards_pool[i], i));
+						message.action_set.push_back(e_action(SELECTION, UPGRADE_CARD, data.cards_pool[i], static_cast<size_t>(i)));
 				}
 				send_message(message);
 				break;
@@ -367,7 +370,7 @@ void explore_system::process()
 				info_to_explore_sys message;
 				for (int i = 0; i < data.cards_pool.size(); ++i)
 				{
-					message.action_set.push_back(e_action(SELECTION, CHANGE_CARD, data.cards_pool[i], i));
+					message.action_set.push_back(e_action(SELECTION, CHANGE_CARD, data.cards_pool[i], static_cast<size_t>(i)));
 				}
 				send_message(message);
 				break;
@@ -445,7 +448,9 @@ void explore_system::process()
 			if (temp.restriction(&data))
 			{
 				data.choice_list.push_back(temp.to_event_body());
-				data.choice_name_list.push_back(temp.text);
+				//TODO
+				if (temp.text != -1)
+					data.choice_name_list.push_back(temp.text);
 			}
 			break;
 		}
@@ -520,11 +525,11 @@ size_t e_random_engine::get_event(size_t map_type)
 	switch (map_type)
 	{
 	case 1:
-		lb = 1;
+		lb = 2;
 		ub = 12;
 		break;
 	default:
-		lb = 1;
+		lb = 2;
 		ub = 9;
 		break;
 	}

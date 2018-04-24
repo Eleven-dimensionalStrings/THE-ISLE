@@ -170,7 +170,32 @@ void explore_context::read_input()
 		auto hit = GetMouseMsg();
 		if (hit.mkLButton)
 		{
-			if (get_data().is_vaccant)
+			if (hit.x > gra_size::deck_pic_x && hit.y > gra_size::deck_pic_y
+				&& hit.x < gra_size::deck_pic_x + gra_size::deck_width && hit.y < gra_size::deck_pic_y + gra_size::deck_height)
+			{
+				get_data().view_cards = 1;
+			}
+			else if (hit.x > gra_size::r_deck_pic_x && hit.y > gra_size::r_deck_pic_y
+				&& hit.x < gra_size::r_deck_pic_x + gra_size::deck_width && hit.y < gra_size::r_deck_pic_y + gra_size::deck_height)
+			{
+				get_data().view_cards = 2;
+			}
+			else if (hit.x > gra_size::grave_pic_x && hit.y > gra_size::grave_pic_y
+				&& hit.x < gra_size::grave_pic_x + gra_size::deck_width && hit.y < gra_size::grave_pic_y + gra_size::deck_height)
+			{
+				get_data().view_cards = 3;
+			}
+			else if (hit.x > gra_size::remove_pic_x && hit.y > gra_size::remove_pic_y
+				&& hit.x < gra_size::remove_pic_x + gra_size::deck_width && hit.y < gra_size::remove_pic_y + gra_size::deck_height)
+			{
+				get_data().view_cards = 4;
+			}
+			else if (hit.x > gra_size::view_artifact_x && hit.y > gra_size::view_artifact_y
+				&& hit.x < gra_size::view_artifact_x + gra_size::deck_width && hit.y < gra_size::view_artifact_y + gra_size::deck_height)
+			{
+				get_data().view_cards = 5;
+			}
+			else if (get_data().is_vaccant)
 			{
 				//检测点击地图
 				if (hit.x > gra_size::map_start_x && hit.x < gra_size::map_end_x
@@ -200,58 +225,7 @@ void explore_context::read_input()
 						cur_state->click_map_location(x, y);
 					}
 				}
-				//点击card_deck等
-				else if (hit.x > gra_size::deck_pic_x && hit.y > gra_size::deck_pic_y
-					&& hit.x < gra_size::deck_pic_x + gra_size::deck_width && hit.y < gra_size::deck_pic_y + gra_size::deck_height)
-				{
-					get_data().view_cards = 1;
-				}
-				else if (hit.x > gra_size::r_deck_pic_x && hit.y > gra_size::r_deck_pic_y
-					&& hit.x < gra_size::r_deck_pic_x + gra_size::deck_width && hit.y < gra_size::r_deck_pic_y + gra_size::deck_height)
-				{
-					get_data().view_cards = 2;
-				}
-				else if (hit.x > gra_size::grave_pic_x && hit.y > gra_size::grave_pic_y
-					&& hit.x < gra_size::grave_pic_x + gra_size::deck_width && hit.y < gra_size::grave_pic_y + gra_size::deck_height)
-				{
-					get_data().view_cards = 3;
-				}
-				else if (hit.x > gra_size::remove_pic_x && hit.y > gra_size::remove_pic_y
-					&& hit.x < gra_size::remove_pic_x + gra_size::deck_width && hit.y < gra_size::remove_pic_y + gra_size::deck_height)
-				{
-					get_data().view_cards = 4;
-				}
-				else if (hit.x > gra_size::view_artifact_x && hit.y > gra_size::view_artifact_y
-					&& hit.x < gra_size::view_artifact_x + gra_size::deck_width && hit.y < gra_size::view_artifact_y + gra_size::deck_height)
-				{
-					get_data().view_cards = 5;
-				}
 			}//点击card_deck等
-			else if (hit.x > gra_size::deck_pic_x && hit.y > gra_size::deck_pic_y
-				&& hit.x < gra_size::deck_pic_x + gra_size::deck_width && hit.y < gra_size::deck_pic_y + gra_size::deck_height)
-			{
-				get_data().view_cards = 1;
-			}
-			else if (hit.x > gra_size::r_deck_pic_x && hit.y > gra_size::r_deck_pic_y
-				&& hit.x < gra_size::r_deck_pic_x + gra_size::deck_width && hit.y < gra_size::r_deck_pic_y + gra_size::deck_height)
-			{
-				get_data().view_cards = 2;
-			}
-			else if (hit.x > gra_size::grave_pic_x && hit.y > gra_size::grave_pic_y
-				&& hit.x < gra_size::grave_pic_x + gra_size::deck_width && hit.y < gra_size::grave_pic_y + gra_size::deck_height)
-			{
-				get_data().view_cards = 3;
-			}
-			else if (hit.x > gra_size::remove_pic_x && hit.y > gra_size::remove_pic_y
-				&& hit.x < gra_size::remove_pic_x + gra_size::deck_width && hit.y < gra_size::remove_pic_y + gra_size::deck_height)
-			{
-				get_data().view_cards = 4;
-			}
-			else if (hit.x > gra_size::view_artifact_x && hit.y > gra_size::view_artifact_y
-				&& hit.x < gra_size::view_artifact_x + gra_size::deck_width && hit.y < gra_size::view_artifact_y + gra_size::deck_height)
-			{
-				get_data().view_cards = 5;
-			}
 			else
 			{
 				//检测点击选项
@@ -668,7 +642,7 @@ void e_vaccant_state::click_map_location(std::size_t x, std::size_t y)
 		default://no matter the place is known or not
 			ctx->i_s->move_player(x, y);
 			get_data().i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT
-				, MEANINGLESS_VALUE, get_data().explore_map[x][y], ""));
+				, MEANINGLESS_VALUE, get_data().explore_map[x][y], -1));
 			break;
 		}
 	}
@@ -686,7 +660,7 @@ e_select_state::e_select_state(explore_context * e_c, std::size_t tmax)
 
 void e_select_state::click_an_option(std::size_t pos)
 {
-	info_to_explore_sys temp(e_action(get_data().choice_list[pos + MAX_CARDS_IN_HAND * get_data().current_select_page]));
+	info_to_explore_sys temp(get_data().choice_list[pos + MAX_CARDS_IN_HAND * get_data().current_select_page]);
 	get_data().choice_list.erase(get_data().choice_list.begin() + pos + MAX_CARDS_IN_HAND * get_data().current_select_page);
 	if (get_data().choice_list.size() == MAX_CARDS_IN_HAND * get_data().current_select_page)
 	{
@@ -696,14 +670,14 @@ void e_select_state::click_an_option(std::size_t pos)
 	if (current == max_selection && get_data().next_event_id != 0)
 	{
 		temp.action_set.push_back(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE,
-			MEANINGLESS_VALUE, get_data().next_event_id));
+			card(0), static_cast<size_t>(get_data().next_event_id), get_data().map_text));
 	}
 	get_data().i_to_e_pipe = temp;
 }
 
 void e_select_state::click_next()
 {
-	get_data().i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, get_data().next_event_id, ""));
+	get_data().i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, get_data().next_event_id, -1));
 }
 
 void e_select_state::click_left_arrow()

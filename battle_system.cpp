@@ -65,6 +65,18 @@ void battle_system::initiate_battle()
 		}
 		send_message(result);
 	}
+	if (data.strength)
+	{
+		send_message(action(battle_action_type::ADD_BUFF, &data.player_data, &data.player_data, buff_type::STRENGTH, data.strength));
+	}
+	if (data.dexterity)
+	{
+		send_message(action(battle_action_type::ADD_BUFF, &data.player_data, &data.player_data, buff_type::DEXTERITY, data.dexterity));
+	}
+	if (data.vitality)
+	{
+		send_message(action(battle_action_type::ADD_BUFF, &data.player_data, &data.player_data, buff_type::VITALITY, data.vitality));
+	}
 	send_message(data.player_data.on_turn_begin());
 	data.player_data.current_ap = temp_ap;
 }
@@ -259,6 +271,7 @@ void battle_system::deal_an_action()
 		//deal_an_action();
 		process();
 		enemies_action();
+		process();
 		send_message(data.player_data.on_turn_begin());
 		data.b_to_i_pipe = info_battle_to_interacting(interact_action_type::BATTLE_TO_VACCANT, MEANINGLESS_VALUE, MEANINGLESS_VALUE);
 		break;

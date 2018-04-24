@@ -16,13 +16,16 @@ int main()
 	d.b = &b;
 	dr.load_all();
 
+	//TODO Òª¸Ä»Ø0
+	d.vitality = 100;
+	d.dexterity = 100;
 	//easyx
 	initgraph(gra_size::window_width, gra_size::window_height, SHOWCONSOLE);
 	setbkcolor(WHITE);
 	settextstyle(20, 0, "Airial");
 	cleardevice();
 
-	d.gold = 100;
+	d.gold = 1000000;
 	d.food = 5;
 	d.player_s_class = player_class::WAR;
 	d.is_vaccant = 0;
