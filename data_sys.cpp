@@ -968,8 +968,8 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	{
 		return info_to_explore_sys(my_vector<e_action>{
 			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 0),
-				e_action(explore_action_type::SELECTION, event_type::AQUIRE_HIT_POINTS, player_data.max_hp * 0.25, 15, 1234/* 一觉过后，你感觉神清气爽 */),
-				e_action(explore_action_type::SELECTION, event_type::UPGRADE_CARD_FROM_DECK, 1, 16, 1234/* 勤练带来力量 */),
+				e_action(explore_action_type::SELECTION, event_type::AQUIRE_HIT_POINTS, player_data.max_hp * 0.25, 15, 15 ),
+				e_action(explore_action_type::SELECTION, event_type::UPGRADE_CARD_FROM_DECK, 1, 16, 16 ),
 				e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END)});
 		break;
 	}
@@ -1238,9 +1238,9 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	case 13://扳手腕
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 1234/* 小镇的中心正在举办决斗比赛。“观众都要付50金币！”，你听见有人大声的吆喝 */),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1019, 1234/* 参加比赛 */),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1020, 1234/* 等待比赛结束 */)});
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  31 ),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1019,  15 ),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1020,  16 )});
 		break;
 	}
 	case 1019://扳手腕part2
@@ -1248,45 +1248,45 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 		if (strength >= 1)
 		{
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_GOLD, 100, 1234/* 你轻易的将对手撂倒在地，引得观众们阵阵喝彩 */),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 1234/* 领奖 */, 1234/* 你清点了你的优胜奖金，然后将它装进背包 */)});
+				e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_GOLD, 100,  32 ),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, END,  17 ,  17 )});
 		}
 		else if (re.chance(25))
 		{
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_GOLD, 100, 1234/* 你轻易的将对手撂倒在地，引得观众们阵阵喝彩 */),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 1234/* 领奖 */, 1234/* 你清点了你的优胜奖金，然后将它装进背包 */)});
+				e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_GOLD, 100,  32 ),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, END,  17 ,  17 )});
 		}
 		else
 		{
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_HIT_POINTS, 10, 1234/* 一个魁梧的食人魔走入赛场，将你重重地丢出擂台，你听到台下地笑声此起彼伏。更糟糕的是，一阵灼烧般地疼痛感向你袭来。 */),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 1234/* 离开 */, 1234/* 在一片哄笑声中，你快步离开了小镇 */)});
+				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_HIT_POINTS, 10,  33 ),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, END,  0 ,  18 )});
 		}
 		break;
 	}
 	case 1020://扳手腕part2
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 50, 1234/* 你敏锐地注意到参赛者中有一些身材魁梧，面目狰狞的非人生物，于是你乖乖上交了“保险金” */),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 1234/*离开*/)});
+			e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 50,  34 ),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0)});
 	}
 	case 14://瞭望塔
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 1234/* 你翻上一个山头，在你的面前出现了一座巨大的瞭望塔 */),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1021, 1234/*攀登*/),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 1234/*离开*/)});
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  35 ),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1021, 18),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0)});
 	}
 	case 1021://瞭望塔part2
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::REVEAL_MAP, 5, 1234/* 你站在塔顶瞭望四周，并将附近的地形标注在地图上” */),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 1234/*离开*/)});
+			e_action(explore_action_type::EVENT_BODY, event_type::REVEAL_MAP, 5,  36 ),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0)});
 	}
 	case 15://山贼
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 1234/* 你在森林中穿行时，一队身着斗篷，手持匕首的山贼出现在了你的面前。你熟练地拔出武器。 */),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  37 ),
 			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
 			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
 			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
@@ -1296,7 +1296,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 16://哨所
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 1234/* 日薄西山，一个皇家哨所拦住了你的去路。你熟练地拔出武器。 */),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  38 ),
 			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
 			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
 			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS),
@@ -1305,7 +1305,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 17://珊瑚洞窟
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 1234/* 你走进一个珊瑚洞窟，在其中等待着你的不是宝物，而是一群手持利刃的海洋生物。你熟练地拔出武器 */),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  39 ),
 			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
 			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
 			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS),
@@ -1314,7 +1314,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 18://地窖
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 1234/* 你走进一座破旧的图书馆，书架上的书已经腐烂，只剩一些不死生物定居在此。你熟练地拔出武器 */),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  40 ),
 			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
 			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
 			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS),
@@ -1323,7 +1323,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 19://珍珠贝
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 1234/* 你发现了一个附满藤壶的珍珠贝，将它敲开后，你找到了一些亮闪闪的好东西。 */),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  41 ),
 			e_action(explore_action_type::SELECTION, event_type::AQUIRE_GOLD, card(309), re.get_num(35, 85)),
 			e_action(explore_action_type::SELECTION, event_type::AQUIRE_ARTIFACT, artifact(re.get_num(1, 15))),
 			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END),
@@ -1333,7 +1333,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 20://马车
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 1234/* 穿越峡谷时，你看见了一些商队大篷车的残骸，搜索一番后，你找到了一些食物和一些宝物 */),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  42 ),
 			e_action(explore_action_type::SELECTION, event_type::AQUIRE_FOOD, card(308), re.get_num(2, 5)),
 			e_action(explore_action_type::SELECTION, event_type::AQUIRE_ARTIFACT, artifact(re.get_num(1, 15))),
 			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END),
@@ -1343,14 +1343,14 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 21://皇家图书馆
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 1234/* 你走进城市中心的皇家图书馆，找到了几本有意思的书 */),
-			e_action(explore_action_type::SELECTION, event_type::PROCEED, 1022, 1234/* 阅读 */),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  43 ),
+			e_action(explore_action_type::SELECTION, event_type::PROCEED, 1022,  19 ),
 			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, 1022)});
 		break;
 	}
 	case 1022://皇家图书馆part2
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 1234/* 第一本书讲述的是一场腥风血雨的革命，它唤起了你对公平正义的思考。 */),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  44 ),
 			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_CARD_FROM_SELECTION, 5, 31),
 			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, 1023),
 			e_action(explore_action_type::EVENT_BODY, event_type::SET_MANDETORY, MEANINGLESS_VALUE)});
@@ -1358,7 +1358,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 1023://皇家图书馆part3
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 1234/* 第二本书上画着一些奇怪的符号，你感到一股神秘的力量涌入你的身体。 */),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  45 ),
 			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_CARD_FROM_SELECTION, 5, 31),
 			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, 1024),
 			e_action(explore_action_type::EVENT_BODY, event_type::SET_MANDETORY, MEANINGLESS_VALUE)});
@@ -1366,9 +1366,9 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 1024://皇家图书馆part3
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 1234/* 第三本书是一本精致的诗歌集，它使你的情绪逐渐平静下来。 */),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  46 ),
 			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_CARD_FROM_SELECTION, 5, 31),
-			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END, 1234/* 你离开了图书馆，心中五味杂陈 */),
+			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END,  19 ),
 			e_action(explore_action_type::EVENT_BODY, event_type::SET_MANDETORY, MEANINGLESS_VALUE)});
 		break;
 	}

@@ -285,7 +285,7 @@ class card
 {
 public:
 	card();
-	card(std::size_t id);
+	explicit card(std::size_t id);
 	card(const card& copy_card);
 	card& operator=(const card& copy_card);
 
@@ -311,7 +311,7 @@ class artifact
 {
 public:
 	artifact();
-	artifact(std::size_t id);
+	explicit artifact(std::size_t id);
 	std::size_t id;
 };
 

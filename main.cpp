@@ -32,23 +32,23 @@ int main()
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
 
-	d.cards_pool.push_back(61);
-	d.cards_pool.push_back(61);
-	d.cards_pool.push_back(61);
-	d.cards_pool.push_back(61);
-	d.cards_pool.push_back(62);
-	d.cards_pool.push_back(63);
-	d.cards_pool.push_back(90);
-	d.cards_pool.push_back(90);
-	d.cards_pool.push_back(90);
-	d.cards_pool.push_back(90);
-	d.cards_pool.push_back(71);
+	d.cards_pool.push_back(card(61));
+	d.cards_pool.push_back(card(61));
+	d.cards_pool.push_back(card(61));
+	d.cards_pool.push_back(card(61));
+	d.cards_pool.push_back(card(62));
+	d.cards_pool.push_back(card(63));
+	d.cards_pool.push_back(card(90));
+	d.cards_pool.push_back(card(90));
+	d.cards_pool.push_back(card(90));
+	d.cards_pool.push_back(card(90));
+	d.cards_pool.push_back(card(71));
 
-	d.artifacts.push_back(11);
-	d.artifacts.push_back(12);
-	d.artifacts.push_back(13);
-	d.artifacts.push_back(14);
-	d.artifacts.push_back(15);
+	d.artifacts.push_back(artifact(11));
+	d.artifacts.push_back(artifact(12));
+	d.artifacts.push_back(artifact(13));
+	d.artifacts.push_back(artifact(14));
+	d.artifacts.push_back(artifact(15));
 
 	e.create_map();
 

@@ -555,19 +555,19 @@ void t_draw_sys::load_all()
 		loadimage(&data.entities[i], &(".\\resource\\entities\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
 	}
-	for (int i = 0; i < 33; ++i)
+	for (int i = 0; i < 47; ++i)
 	{
 		IMAGE t;
 		loadimage(&t, &(".\\resource\\explore\\body\\" + to_string(i) + ".bmp" + '\0')[0]);
 		data.body.push_back(std::move(t));
 	}
-	for (int i = 0; i < 15; ++i)
+	for (int i = 0; i < 20; ++i)
 	{
 		IMAGE t;
 		loadimage(&t, &(".\\resource\\explore\\end\\" + to_string(i) + ".bmp" + '\0')[0]);
 		data.end.push_back(std::move(t));
 	}
-	for (int i = 0; i < 15; ++i)
+	for (int i = 0; i < 20; ++i)
 	{
 		IMAGE t;
 		loadimage(&t, &(".\\resource\\explore\\select\\" + to_string(i) + ".bmp" + '\0')[0]);
