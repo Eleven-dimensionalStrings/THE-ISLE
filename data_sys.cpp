@@ -1580,7 +1580,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	case 19:
 	{
 		return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
-			action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 402)});
+			action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 402)});
 		break;
 	}
 	case 20:
@@ -1606,7 +1606,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		else
 		{
 			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 12),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 402)});
+				action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 402)});
 			break;
 		}
 		break;
@@ -1657,8 +1657,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		{
 			return info_to_battle_sys(my_vector<action>{action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 402),
 				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 402),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 402),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 402)});
+				action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 402),
+				action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 402)});
 		}
 		else
 		{
@@ -1732,14 +1732,14 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 3),
 				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 3),
 				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 3),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 404),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 404),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 404)});
+				action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 404),
+				action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 404),
+				action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 404)});
 		}
 		else
 		{
 			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 404)});
+				action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 404)});
 		}
 		break;
 	}
@@ -1820,7 +1820,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 405));
+			return info_to_battle_sys(action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 405));
 		}
 		break;
 	}
@@ -1867,8 +1867,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		{
 			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
 				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 6),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 405),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 405)});
+				action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 405),
+				action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 405)});
 		}
 		break;
 	}
@@ -1894,7 +1894,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		else
 		{
 			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 8),
-				action(battle_action_type::PURIFIED_MOVE_A_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 405)});
+				action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 405)});
 		}
 		break;
 	}
@@ -2038,8 +2038,6 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5),
 				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5)});
 		}
-		break;
-		break;
 	}
 	case 52: //TODO REGENERATE
 	{
@@ -2068,12 +2066,11 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 403)});
 		}
 		break;
-		break;
 	}
 	default:
-		return info_to_battle_sys();
 		break;
 	}
+	return info_to_battle_sys();
 }
 
 pair<std::string, std::size_t> data_sys::get_buff(std::size_t id)
