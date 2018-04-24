@@ -16,58 +16,47 @@ int main()
 	d.b = &b;
 	dr.load_all();
 
-	//TODO Òª¸Ä»Ø0
-	d.vitality = 100;
-	d.dexterity = 100;
 	//easyx
 	initgraph(gra_size::window_width, gra_size::window_height, SHOWCONSOLE);
 	setbkcolor(WHITE);
 	settextstyle(20, 0, "Airial");
 	cleardevice();
 
-	d.gold = 1000000;
+	d.gold = 200;
 	d.food = 5;
 	d.player_s_class = player_class::WAR;
-	d.is_vaccant = 0;
-	d.is_battle = 1;
 
 	//d.enemies_data.push_back(enemy(d, 35));
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
-	d.enemies_data.push_back(enemy(d, 1));
+	//d.enemies_data.push_back(enemy(d, 1));
 
-	/*for (int i = 61; i < 121; ++i)
-	{
-		d.cards_pool.push_back(i);
-	}*/
-	d.cards_pool.push_back(1);
-	d.cards_pool.push_back(1);
-	d.cards_pool.push_back(1);
-	d.cards_pool.push_back(1);
-	d.cards_pool.push_back(2);
-	d.cards_pool.push_back(3);
-	d.cards_pool.push_back(30);
-	d.cards_pool.push_back(30);
-	d.cards_pool.push_back(30);
-	d.cards_pool.push_back(30);
+	d.cards_pool.push_back(61);
+	d.cards_pool.push_back(61);
+	d.cards_pool.push_back(61);
+	d.cards_pool.push_back(61);
+	d.cards_pool.push_back(62);
+	d.cards_pool.push_back(63);
+	d.cards_pool.push_back(90);
+	d.cards_pool.push_back(90);
+	d.cards_pool.push_back(90);
+	d.cards_pool.push_back(90);
+	d.cards_pool.push_back(71);
 
-	/*d.artifacts.push_back(11);
+	d.artifacts.push_back(11);
 	d.artifacts.push_back(12);
 	d.artifacts.push_back(13);
 	d.artifacts.push_back(14);
-	d.artifacts.push_back(15);*/
+	d.artifacts.push_back(15);
 
 	e.create_map();
 
-	//e.send_message(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, d.explore_map[0][0], ""));
-	goto battle;
-
 explore:
+	//explore loop
 	d.is_vaccant = 1;
 	d.is_battle = 0;
-	//explore loop
-	dr.background_pic = random_engine(&d).get_num(0, 6);
+	d.background_pic = random_engine(&d).get_num(1, 13);
 	while (1)
 	{
 		e.update();
@@ -84,8 +73,11 @@ battle:
 	//battle loop
 	//explore sys sends message to battle sys through e_to_b_pipe
 	//the message is processed in the initiate_battle function
+	d.is_vaccant = 0;
+	d.is_battle = 1;
+	i.present_battle_context->set_state(new b_vaccant_state(i.present_battle_context));
 	b.initiate_battle();
-	dr.background_pic = random_engine(&d).get_num(0, 6);
+	d.background_pic = random_engine(&d).get_num(1, 13);
 	while (1)
 	{
 		settextstyle(20, 0, "Airial");

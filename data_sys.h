@@ -18,7 +18,7 @@ public:
 	size_t get_other_enemy(int pos);
 	bool chance(std::size_t c);
 	bool chance_luck_increase(std::size_t c);
-	bool chance_luck_decrease(std::size_t c); 
+	bool chance_luck_decrease(std::size_t c);
 	std::default_random_engine e;
 	data_sys* data;
 };
@@ -58,12 +58,13 @@ public:
 	my_container::my_vector<IMAGE> cards_thumbnail;
 	my_container::my_vector<IMAGE> cards_original;
 	my_container::my_vector<IMAGE> cards_mask;//both thumbnails and originals are stored here
-	my_container::my_vector<IMAGE> back_grounds;
+	my_container::my_vector<IMAGE> backgrounds;
 	my_container::my_vector<IMAGE> components;
 	my_container::my_vector<IMAGE> entities;
 	my_container::my_vector<IMAGE> body;
 	my_container::my_vector<IMAGE> end;
 	my_container::my_vector<IMAGE> select;
+	my_container::my_vector<IMAGE> artifact_pics;
 	std::array<bool, MAX_CARDS_IN_HAND>render_select_card;
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
@@ -94,6 +95,7 @@ public:
 	int get_enemy(std::size_t enemy_id);
 	IMAGE& get_pic(int id, int det = 0);
 	IMAGE& get_mask_pic(int id, int det = 0);
+	int background_pic;
 
 	//TODO for artifacts
 	info_to_explore_sys artifact_on_create(std::size_t atf_id);

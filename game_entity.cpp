@@ -70,7 +70,6 @@ info_to_battle_sys player::on_turn_end()
 		temp.append(i.on_turn_end(this));
 	}
 	return temp;
-
 }
 
 

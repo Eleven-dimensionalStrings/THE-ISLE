@@ -6,7 +6,7 @@
 #include "battle_system.h"
 #include "data_sys.h"
 #include "message.h"
-using namespace std;using namespace my_container;
+using namespace std; using namespace my_container;
 using std::size_t;
 using namespace battle_action_type;
 default_random_engine e(static_cast<int>(time(0)));
@@ -111,7 +111,13 @@ void battle_system::deal_an_action()
 	{
 	case battle_action_type::CALLING_ACTION:
 	{
-		send_message(temp.caller->calling_action(temp));
+		if (temp.caller)
+			send_message(temp.caller->calling_action(temp));
+		else
+		{
+			temp.action_id = battle_action_type::PERFORMING_ACTION;
+			send_message(temp);
+		}
 		break;
 	}
 	case battle_action_type::PERFORMING_ACTION:
@@ -214,16 +220,10 @@ void battle_system::deal_an_action()
 				temp.listener->buff_pool.erase(it);
 				send_message(ti.on_delete(temp.caller, temp.listener));
 			}
-			/*auto it = temp.listener->buff_pool.end();
-			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
-			{
-				*it += buff(temp.type, temp.value);
-				break;
-			}
 			else
 			{
 				*it -= buff(temp.type, temp.value);
-			}*/
+			}
 			break;
 		}
 		else if (temp.type == buff_type::STRENGTH || temp.type == buff_type::DEXTERITY || temp.type == buff_type::VITALITY)
@@ -400,6 +400,13 @@ void battle_system::deal_an_action()
 		my_vector<card>& c_grave = data.cards_grave;
 		c_grave.push_back(c_in_hand[temp.value]);
 		c_in_hand.erase(c_in_hand.begin() + temp.value);
+		break;
+	}
+	case ADD_CARD_TO_GRAVE:
+	{
+		my_vector<card>& c_grave = data.cards_grave;
+		c_grave.push_back(card(temp.value));
+		send_message(data.player_data.performing_action(temp));
 		break;
 	}
 	default:

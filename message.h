@@ -11,6 +11,8 @@
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
 #define MAX_ARTIFACT_NO 20 //TODO
 #define END static_cast<std::size_t>(9999)
+#define BONUS static_cast<std::size_t>(8888)
+#define BONUS_PART2 static_cast<std::size_t>(7777)
 
 #undef PURE
 //a fucking sb define PURE without namespace or other protect
@@ -60,6 +62,7 @@ namespace battle_action_type
 	const std::size_t ADD_CARD_TO_DECK_TOP = 10510;
 	const std::size_t P_ADD_CARD_TO_DECK_TOP = 10610;
 	const std::size_t PURIFIED_MOVE_A_CARD_TO_GRAVE = 10700;
+	const std::size_t ADD_CARD_TO_GRAVE = 10800;
 }
 
 namespace interact_action_type
@@ -77,6 +80,7 @@ namespace event_type
 	const std::size_t PROCEED = 3;
 	const std::size_t PURE_TEXT = 4;
 	const std::size_t START_BATTLE = 5;
+	const std::size_t SET_MANDETORY = 6;
 	const std::size_t AQUIRE_HIT_POINTS = 10;
 	const std::size_t AQUIRE_MAX_HIT_POINTS = 11;
 	const std::size_t REMOVE_HIT_POINTS = 12;
@@ -196,9 +200,9 @@ namespace gra_size
 	const std::size_t card_y = 510;
 	const std::size_t card_dy = 710;
 	const std::size_t viewcard_firrow_x = 150;
-	const std::size_t viewcard_firrow_y = 80;
+	const std::size_t viewcard_firrow_y = 150;
 	const std::size_t viewcard_secrow_x = 150;
-	const std::size_t viewcard_secrow_y = 320;
+	const std::size_t viewcard_secrow_y = 390;
 
 	const std::size_t hp_y = 110;
 	const std::size_t hp_x = 35;
@@ -222,8 +226,8 @@ namespace gra_size
 	const std::size_t player_y = 200;
 
 	//TODO replace the ap_pic (a circle) to a pic(square), should change the following values
-	const std::size_t ap_pic_x = 80;
-	const std::size_t ap_pic_y = 600;
+	const std::size_t ap_pic_x = 25;
+	const std::size_t ap_pic_y = 540;
 	const std::size_t ap_pic_radius = 60;
 
 	const std::size_t hp_pic_x = 20;
@@ -246,7 +250,7 @@ namespace gra_size
 	const std::size_t deck_width = 45;
 	const std::size_t deck_height = 50;
 	const std::size_t view_artifact_x = 1250;
-	const std::size_t view_artifact_y = 60;
+	const std::size_t view_artifact_y = 20;
 
 	const std::size_t left_arrow_x = 50;
 	const std::size_t left_arrow_y = 550;

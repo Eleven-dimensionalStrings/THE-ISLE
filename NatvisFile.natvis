@@ -9,6 +9,9 @@
       <Item Name="[capacity]">
         vcap
       </Item>
+      <Item Name="[val address]">
+        val
+      </Item>
       <IndexListItems>
         <Size>vsize</Size>
         <ValueNode>val[$i]</ValueNode>

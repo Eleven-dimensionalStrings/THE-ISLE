@@ -36,10 +36,10 @@ void t_draw_sys::__draw_battle_info()
 	putimage(gra_size::turn_end_button_x, gra_size::turn_end_button_y, &data.components[3]);
 
 	//ap_pic
-	solidcircle(gra_size::ap_pic_x, gra_size::ap_pic_y, gra_size::ap_pic_radius);
+	putimage(gra_size::ap_pic_x, gra_size::ap_pic_y, &data.components[33]);
 	outtextxy(gra_size::ap_x, gra_size::ap_y, &to_string(data.player_data.current_ap)[0]);
 	outtextxy(gra_size::ap_x + 20, gra_size::ap_y, '/');
-	outtextxy(gra_size::ap_x + 28, gra_size::ap_y, &to_string(data.player_data.max_ap)[0]); //TODO to be replaced by a compact pic
+	outtextxy(gra_size::ap_x + 38, gra_size::ap_y, &to_string(data.player_data.max_ap)[0]);
 }
 
 void t_draw_sys::__draw_explore_map()
@@ -176,23 +176,24 @@ void t_draw_sys::__get_atk_entities()
 void t_draw_sys::__draw_guiding_pics()
 {
 	//deck_pic
-	solidrectangle(gra_size::deck_pic_x, gra_size::deck_pic_y,
-		gra_size::deck_pic_x + 45, gra_size::deck_pic_y + 50);
+	putimage(gra_size::deck_pic_x, gra_size::deck_pic_y, &data.components[29], SRCPAINT);
+	putimage(gra_size::deck_pic_x, gra_size::deck_pic_y, &data.components[28], SRCAND);
 
 	//remaining_deck_pic
-	solidrectangle(gra_size::r_deck_pic_x, gra_size::r_deck_pic_y,
-		gra_size::r_deck_pic_x + 45, gra_size::r_deck_pic_y + 50);
+	putimage(gra_size::r_deck_pic_x, gra_size::r_deck_pic_y, &data.components[27], SRCPAINT);
+	putimage(gra_size::r_deck_pic_x, gra_size::r_deck_pic_y, &data.components[24], SRCAND);
 
 	//grave_pic
-	solidrectangle(gra_size::grave_pic_x, gra_size::grave_pic_y,
-		gra_size::grave_pic_x + 45, gra_size::grave_pic_y + 50);
+	putimage(gra_size::grave_pic_x, gra_size::grave_pic_y, &data.components[27], SRCPAINT);
+	putimage(gra_size::grave_pic_x, gra_size::grave_pic_y, &data.components[25], SRCAND);
 
 	//remove_area_pic
-	solidrectangle(gra_size::remove_pic_x, gra_size::remove_pic_y,
-		gra_size::remove_pic_x + 45, gra_size::remove_pic_y + 50);
+	putimage(gra_size::remove_pic_x, gra_size::remove_pic_y, &data.components[27], SRCPAINT);
+	putimage(gra_size::remove_pic_x, gra_size::remove_pic_y, &data.components[26], SRCAND);
 
-	solidrectangle(gra_size::view_artifact_x, gra_size::view_artifact_y
-		, gra_size::view_artifact_x + gra_size::deck_width, gra_size::view_artifact_y + gra_size::deck_height);
+	//artifact_pic
+	putimage(gra_size::view_artifact_x, gra_size::view_artifact_y, &data.components[31], SRCPAINT);
+	putimage(gra_size::view_artifact_x, gra_size::view_artifact_y, &data.components[30], SRCAND);
 }
 
 void t_draw_sys::__draw_player()
@@ -201,18 +202,18 @@ void t_draw_sys::__draw_player()
 	if (!draw_queue.empty())drawing = this->draw_queue.front();
 	if (drawing.first == 666)
 	{
-		putimage(gra_size::player_x, gra_size::player_y, &data.entities[11], NOTSRCERASE);
-		putimage(gra_size::player_x, gra_size::player_y, &data.entities[2], SRCINVERT);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[11], SRCPAINT);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[2], SRCAND);
 	}
 	else if (drawing.second == 666)
 	{
-		putimage(gra_size::player_x, gra_size::player_y, &data.entities[12], NOTSRCERASE);
-		putimage(gra_size::player_x, gra_size::player_y, &data.entities[3], SRCINVERT);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[12], SRCPAINT);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[3], SRCAND);
 	}
 	else
 	{
-		putimage(gra_size::player_x, gra_size::player_y, &data.entities[10], NOTSRCERASE);
-		putimage(gra_size::player_x, gra_size::player_y, &data.entities[1], SRCINVERT);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[10], SRCPAINT);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[1], SRCAND);
 	}
 }
 
@@ -230,45 +231,57 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 		{
 			if (p->enemy_id <= 20)
 			{
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[15], NOTSRCERASE);
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[6], SRCINVERT);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[15], SRCPAINT);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[6], SRCAND);
 			}
 			else
 			{
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[18], NOTSRCERASE);
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[9], SRCINVERT);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[18], SRCPAINT);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[9], SRCAND);
 			}
 		}
 		else if (p - b == drawing.first)
 		{
 			if (p->enemy_id <= 20)
 			{
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[14], NOTSRCERASE);
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[5], SRCINVERT);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[14], SRCPAINT);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[5], SRCAND);
 			}
 			else
 			{
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[17], NOTSRCERASE);
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[8], SRCINVERT);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[17], SRCPAINT);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[8], SRCAND);
 			}
 		}
 		else
 		{
 			if (p->enemy_id <= 20)
 			{
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[13], NOTSRCERASE);
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[4], SRCINVERT);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[13], SRCPAINT);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[4], SRCAND);
 			}
 			else
 			{
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[16], NOTSRCERASE);
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[7], SRCINVERT);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[16], SRCPAINT);
+				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[7], SRCAND);
 			}
 
 		}
 		outtextxy(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos, gra_size::enemy_y - 30,
 			&to_string(data.enemies_data[pos].current_hp)[0]);
-
+		outtextxy(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 25, gra_size::enemy_y - 30,
+			"/");
+		outtextxy(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 35, gra_size::enemy_y - 30,
+			&to_string(data.enemies_data[pos].max_hp)[0]);
+		setfillcolor(RED);
+		solidrectangle(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 60, gra_size::enemy_y - 25,
+			gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 210, gra_size::enemy_y - 15);
+		setfillcolor(LIGHTGREEN);
+		solidrectangle(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 60, gra_size::enemy_y - 25,
+			gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 60 +
+			((static_cast<double>(data.enemies_data[pos].current_hp) / static_cast<double>(data.enemies_data[pos].max_hp)) * 150)
+			, gra_size::enemy_y - 15);
+		setfillcolor(LIGHTBLUE);
 	}
 }
 
@@ -277,24 +290,24 @@ void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 	x += gra_size::card_starting_pos;
 	if (data.render_select_card[pos])
 	{
-		putimage(x, y - 15, &data.get_pic(data.cards_in_hand[pos].id), NOTSRCERASE);
-		putimage(x, y - 15, &data.get_mask_pic(data.cards_in_hand[pos].id), SRCINVERT);
+		putimage(x, y - 15, &data.get_pic(data.cards_in_hand[pos].id), SRCPAINT);
+		putimage(x, y - 15, &data.get_mask_pic(data.cards_in_hand[pos].id), SRCAND);
 	}
 	else
 	{
-		putimage(x, y, &data.get_pic(data.cards_in_hand[pos].id), NOTSRCERASE);
-		putimage(x, y, &data.get_mask_pic(data.cards_in_hand[pos].id), SRCINVERT);
+		putimage(x, y, &data.get_pic(data.cards_in_hand[pos].id), SRCPAINT);
+		putimage(x, y, &data.get_mask_pic(data.cards_in_hand[pos].id), SRCAND);
 
 	}
 }
 
 void t_draw_sys::__draw_event_card()
 {
-	//event card pic
-	//TODO
-	putimage(gra_size::event_card_x, gra_size::event_card_y, &data.body[data.text_to_be_displayed]);
+	putimage(gra_size::event_card_x, gra_size::event_card_y, &data.components[32], SRCPAINT);
+	putimage(gra_size::event_card_x, gra_size::event_card_y, &data.body[data.text_to_be_displayed], SRCAND);
 
 	//next button
+	//TODO
 	if (data.event_is_not_mandetory)
 		solidrectangle(gra_size::next_x, gra_size::next_y, gra_size::next_x + 200, gra_size::next_y + 100);
 }
@@ -302,15 +315,17 @@ void t_draw_sys::__draw_event_card()
 void t_draw_sys::__draw_player_in_map()
 {
 	//player pic
-	putimage(gra_size::player_x, gra_size::player_y, &data.entities[20], NOTSRCERASE);
-	putimage(gra_size::player_x, gra_size::player_y, &data.entities[19], SRCINVERT);
+	putimage(gra_size::player_x, gra_size::player_y, &data.entities[20], SRCPAINT);
+	putimage(gra_size::player_x, gra_size::player_y, &data.entities[19], SRCAND);
 }
 
 void t_draw_sys::__draw_ending_text()
 {
 	//TODO
 	if (data.map_text != MEANINGLESS_VALUE)
+	{
 		putimage(gra_size::player_x, gra_size::player_y + 255, &data.end[data.map_text]);
+	}
 }
 
 void t_draw_sys::__draw_explore_info()
@@ -326,11 +341,11 @@ void t_draw_sys::__draw_explore_info()
 			+ gra_size::card_width * i + gra_size::card_x;
 		__draw_an_explore_card(i, x, y);
 	}
-	putimage(gra_size::left_arrow_x, gra_size::left_arrow_y, &data.components[5], NOTSRCERASE);
-	putimage(gra_size::left_arrow_x, gra_size::left_arrow_y, &data.components[4], SRCINVERT);
+	putimage(gra_size::left_arrow_x, gra_size::left_arrow_y, &data.components[5], SRCPAINT);
+	putimage(gra_size::left_arrow_x, gra_size::left_arrow_y, &data.components[4], SRCAND);
 
-	putimage(gra_size::right_arrow_x, gra_size::right_arrow_y, &data.components[7], NOTSRCERASE);
-	putimage(gra_size::right_arrow_x, gra_size::right_arrow_y, &data.components[6], SRCINVERT);
+	putimage(gra_size::right_arrow_x, gra_size::right_arrow_y, &data.components[7], SRCPAINT);
+	putimage(gra_size::right_arrow_x, gra_size::right_arrow_y, &data.components[6], SRCAND);
 }
 
 void t_draw_sys::__draw_an_explore_card(std::size_t pos, int x, int y)
@@ -338,41 +353,38 @@ void t_draw_sys::__draw_an_explore_card(std::size_t pos, int x, int y)
 	x += gra_size::card_starting_pos;
 	if (data.choice_list[data.current_select_page * MAX_CARDS_IN_HAND + pos].selected_card.id != 0)
 	{
-		putimage(x, y, &data.get_mask_pic(data.choice_list[data.current_select_page * MAX_CARDS_IN_HAND + pos].selected_card.id, 0), NOTSRCERASE);
-		putimage(x, y, &data.get_pic(data.choice_list[data.current_select_page * MAX_CARDS_IN_HAND + pos].selected_card.id, 0), SRCINVERT);
+		putimage(x, y, &data.get_mask_pic(data.choice_list[data.current_select_page * MAX_CARDS_IN_HAND + pos].selected_card.id, 0), SRCPAINT);
+		putimage(x, y, &data.get_pic(data.choice_list[data.current_select_page * MAX_CARDS_IN_HAND + pos].selected_card.id, 0), SRCAND);
 	}
 	else if (data.choice_list[data.current_select_page * MAX_CARDS_IN_HAND + pos].atf.id != 0)
 	{
-		putimage(x, y, &data.get_mask_pic(data.choice_list[data.current_select_page * MAX_CARDS_IN_HAND + pos].atf.id, 1), NOTSRCERASE);
-		putimage(x, y, &data.get_pic(data.choice_list[data.current_select_page * MAX_CARDS_IN_HAND + pos].atf.id, 1), SRCINVERT);
+		putimage(x, y, &data.get_mask_pic(data.choice_list[data.current_select_page * MAX_CARDS_IN_HAND + pos].atf.id, 1), SRCPAINT);
+		putimage(x, y, &data.get_pic(data.choice_list[data.current_select_page * MAX_CARDS_IN_HAND + pos].atf.id, 1), SRCAND);
 	}
 	else
 	{
-		putimage(x, y, &data.cards_mask[3], NOTSRCERASE);
-		putimage(x, y, &data.cards_thumbnail[400], SRCINVERT);
-		//TODO
-		putimage(x, y, &data.select[data.choice_name_list[data.current_select_page * MAX_CARDS_IN_HAND + pos]]);
-		//this->__format_wl(x + 22, y + 117, data.choice_name_list[data.current_select_page * MAX_CARDS_IN_HAND + pos]);
+		putimage(x, y, &data.cards_mask[3], SRCPAINT);
+		putimage(x, y, &data.select[data.choice_name_list[data.current_select_page * MAX_CARDS_IN_HAND + pos]], SRCAND);
 	}
 }
 
 void t_draw_sys::__draw_player_info()
 {
 	//hp_pic
-	putimage(gra_size::hp_pic_x, gra_size::hp_pic_y, &data.components[15], NOTSRCERASE);
-	putimage(gra_size::hp_pic_x, gra_size::hp_pic_y, &data.components[8], SRCINVERT);
+	putimage(gra_size::hp_pic_x, gra_size::hp_pic_y, &data.components[15], SRCPAINT);
+	putimage(gra_size::hp_pic_x, gra_size::hp_pic_y, &data.components[8], SRCAND);
 	outtextxy(gra_size::hp_x, gra_size::hp_y, &to_string(data.player_data.current_hp)[0]);
 	outtextxy(gra_size::hp_x + 25, gra_size::hp_y, '/');
 	outtextxy(gra_size::hp_x + 33, gra_size::hp_y, &to_string(data.player_data.max_hp)[0]);
 
 	//gold pic
-	putimage(gra_size::gold_pic_x, gra_size::gold_pic_y, &data.components[15], NOTSRCERASE);
-	putimage(gra_size::gold_pic_x, gra_size::gold_pic_y, &data.components[9], SRCINVERT);
+	putimage(gra_size::gold_pic_x, gra_size::gold_pic_y, &data.components[15], SRCPAINT);
+	putimage(gra_size::gold_pic_x, gra_size::gold_pic_y, &data.components[9], SRCAND);
 	outtextxy(gra_size::gold_x, gra_size::gold_y, &to_string(data.gold)[0]);
 
 	//food pic
-	putimage(gra_size::food_pic_x, gra_size::food_pic_y, &data.components[15], NOTSRCERASE);
-	putimage(gra_size::food_pic_x, gra_size::food_pic_y, &data.components[10], SRCINVERT);
+	putimage(gra_size::food_pic_x, gra_size::food_pic_y, &data.components[15], SRCPAINT);
+	putimage(gra_size::food_pic_x, gra_size::food_pic_y, &data.components[10], SRCAND);
 	outtextxy(gra_size::food_x, gra_size::food_y, &to_string(data.food)[0]);
 
 	settextcolor(LIGHTRED);
@@ -392,24 +404,11 @@ void t_draw_sys::__draw_player_info()
 
 void t_draw_sys::__draw_background()
 {
-	putimage(0, 0, &data.back_grounds[background_pic]);
+	setfillcolor(BLACK);
+	solidrectangle(0, 400, 1450, 500);
+	setfillcolor(LIGHTBLUE);
+	putimage(0, -90, &data.backgrounds[data.background_pic]);
 	putimage(0, 470, &data.components[0]);
-}
-
-void t_draw_sys::__format_wl(int x, int y, string ss)
-{
-	int i = 0;
-	settextstyle(20, 0, "Arial");
-	string s("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-	while (s.size() > i * 10)
-	{
-		string str;
-		for (int j = i * 10; j < ((1 + i) * 10 < s.size() ? (1 + i) * 10 : s.size() - 1); ++j)
-			str += s[j];
-		str += '\0';
-		outtextxy(x, y + i * 22, &str[0]);
-		++i;
-	}
 }
 
 template<class T>
@@ -417,25 +416,26 @@ void t_draw_sys::__flash_view(T& v, int page, int is_artifact)
 {
 	SetWorkingImage(&this->buffer);
 	cleardevice();
-	solidrectangle(gra_size::left_arrow_x, gra_size::left_arrow_y,
-		gra_size::left_arrow_x + 100, gra_size::left_arrow_y + 100);
-	solidrectangle(gra_size::right_arrow_x, gra_size::right_arrow_y,
-		gra_size::right_arrow_x + 100, gra_size::right_arrow_y + 100);
+	putimage(0, 0, &data.backgrounds[0]);
+	putimage(gra_size::left_arrow_x, gra_size::left_arrow_y - 230, &data.components[5], SRCPAINT);
+	putimage(gra_size::left_arrow_x, gra_size::left_arrow_y - 230, &data.components[4], SRCAND);
+
+	putimage(gra_size::right_arrow_x, gra_size::right_arrow_y - 230, &data.components[7], SRCPAINT);
+	putimage(gra_size::right_arrow_x, gra_size::right_arrow_y - 230, &data.components[6], SRCAND);
 	for (int i = page * 16; i < (((page * 16 + 8) < v.size()) ? (page * 16 + 8) : v.size()); ++i)
 	{
-		//TODO putimage()
 		putimage(gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
-			, gra_size::viewcard_firrow_y, &data.get_mask_pic(v[i].id, is_artifact), NOTSRCERASE);
+			, gra_size::viewcard_firrow_y, &data.get_mask_pic(v[i].id, is_artifact), SRCPAINT);
 		putimage(gra_size::viewcard_firrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
-			, gra_size::viewcard_firrow_y, &data.get_pic(v[i].id, is_artifact), SRCINVERT);
+			, gra_size::viewcard_firrow_y, &data.get_pic(v[i].id, is_artifact), SRCAND);
 
 	}
 	for (int i = page * 16 + 8; i < (((page * 16 + 16) < v.size()) ? (page * 16 + 16) : v.size()); ++i)
 	{
 		putimage(gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
-			, gra_size::viewcard_secrow_y, &data.get_mask_pic(v[i].id, is_artifact), NOTSRCERASE);
+			, gra_size::viewcard_secrow_y, &data.get_mask_pic(v[i].id, is_artifact), SRCPAINT);
 		putimage(gra_size::viewcard_secrow_x + (gra_size::card_closure + gra_size::card_width)*(i % 8)
-			, gra_size::viewcard_secrow_y, &data.get_pic(v[i].id, is_artifact), SRCINVERT);
+			, gra_size::viewcard_secrow_y, &data.get_pic(v[i].id, is_artifact), SRCAND);
 	}
 	SetWorkingImage();
 	putimage(0, 0, &buffer);
@@ -460,7 +460,7 @@ void t_draw_sys::check_view()
 			this->view_cards(data.cards_removed);
 			break;
 		case 5:
-			this->view_cards(data.artifacts, 2);
+			this->view_cards(data.artifacts, 1);
 			break;
 		default:
 			break;
@@ -470,7 +470,7 @@ void t_draw_sys::check_view()
 }
 
 t_draw_sys::t_draw_sys(data_sys &d) :data(d),
-buffer(gra_size::window_width, gra_size::window_height), timer(0), is_drawing(0), background_pic(0)
+buffer(gra_size::window_width, gra_size::window_height), timer(0), is_drawing(0)
 {
 	// settextstyle(20, 0, _T("Arial"));
 }
@@ -517,12 +517,12 @@ void t_draw_sys::load_all()
 		/*loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);*/
 	}
-	for (int i = 0; i < 7; ++i)//TODO, change 7 when new backgrounds are added;
+	for (int i = 0; i < 14; ++i)
 	{
-		loadimage(&data.back_grounds[i], &(".\\resource\\backgrounds\\"
+		loadimage(&data.backgrounds[i], &(".\\resource\\backgrounds\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
 	}
-	for (int i = 0; i < 24; ++i)//TODO to replace 8
+	for (int i = 0; i < 34; ++i)
 	{
 		loadimage(&data.components[i], &(".\\resource\\components\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
@@ -549,6 +549,11 @@ void t_draw_sys::load_all()
 		IMAGE t;
 		loadimage(&t, &(".\\resource\\explore\\select\\" + to_string(i) + ".bmp" + '\0')[0]);
 		data.select.push_back(std::move(t));
+	}
+	for (int i = 0; i < 21; ++i)
+	{
+		loadimage(&data.artifact_pics[i], &(".\\resource\\artifacts\\"
+			+ to_string(i) + ".bmp" + '\0')[0]);
 	}
 }
 
