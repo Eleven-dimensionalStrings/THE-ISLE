@@ -54,8 +54,11 @@ int main()
 
 explore:
 	//explore loop
-	d.is_vaccant = 1;
-	d.is_battle = 0;
+	if (!(d.next_event_id && d.next_event_id != MEANINGLESS_VALUE))
+	{
+		d.is_vaccant = 1;
+		d.is_battle = 0;
+	}
 	d.background_pic = random_engine(&d).get_num(1, 13);
 	while (1)
 	{

@@ -297,7 +297,6 @@ void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 	{
 		putimage(x, y, &data.get_pic(data.cards_in_hand[pos].id), SRCPAINT);
 		putimage(x, y, &data.get_mask_pic(data.cards_in_hand[pos].id), SRCAND);
-
 	}
 }
 
@@ -309,7 +308,18 @@ void t_draw_sys::__draw_event_card()
 	//next button
 	//TODO
 	if (data.event_is_not_mandetory)
-		solidrectangle(gra_size::next_x, gra_size::next_y, gra_size::next_x + 200, gra_size::next_y + 100);
+	{
+		if (data.choice_list.empty())
+		{
+			putimage(gra_size::next_x, gra_size::next_y, &data.components[40], SRCPAINT);
+			putimage(gra_size::next_x, gra_size::next_y, &data.components[39], SRCAND);
+		}
+		else
+		{
+			putimage(gra_size::next_x, gra_size::next_y, &data.components[38], SRCPAINT);
+			putimage(gra_size::next_x, gra_size::next_y, &data.components[37], SRCAND);
+		}
+	}
 }
 
 void t_draw_sys::__draw_player_in_map()
@@ -371,19 +381,19 @@ void t_draw_sys::__draw_an_explore_card(std::size_t pos, int x, int y)
 void t_draw_sys::__draw_player_info()
 {
 	//hp_pic
-	putimage(gra_size::hp_pic_x, gra_size::hp_pic_y, &data.components[15], SRCPAINT);
+	putimage(gra_size::hp_pic_x, gra_size::hp_pic_y, &data.components[34], SRCPAINT);
 	putimage(gra_size::hp_pic_x, gra_size::hp_pic_y, &data.components[8], SRCAND);
 	outtextxy(gra_size::hp_x, gra_size::hp_y, &to_string(data.player_data.current_hp)[0]);
 	outtextxy(gra_size::hp_x + 25, gra_size::hp_y, '/');
 	outtextxy(gra_size::hp_x + 33, gra_size::hp_y, &to_string(data.player_data.max_hp)[0]);
 
 	//gold pic
-	putimage(gra_size::gold_pic_x, gra_size::gold_pic_y, &data.components[15], SRCPAINT);
+	putimage(gra_size::gold_pic_x, gra_size::gold_pic_y, &data.components[35], SRCPAINT);
 	putimage(gra_size::gold_pic_x, gra_size::gold_pic_y, &data.components[9], SRCAND);
 	outtextxy(gra_size::gold_x, gra_size::gold_y, &to_string(data.gold)[0]);
 
 	//food pic
-	putimage(gra_size::food_pic_x, gra_size::food_pic_y, &data.components[15], SRCPAINT);
+	putimage(gra_size::food_pic_x, gra_size::food_pic_y, &data.components[36], SRCPAINT);
 	putimage(gra_size::food_pic_x, gra_size::food_pic_y, &data.components[10], SRCAND);
 	outtextxy(gra_size::food_x, gra_size::food_y, &to_string(data.food)[0]);
 
@@ -477,7 +487,7 @@ buffer(gra_size::window_width, gra_size::window_height), timer(0), is_drawing(0)
 
 void t_draw_sys::load_all()
 {
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		auto s = (".\\resource\\cards_thumbnail\\mask"
 			+ to_string(i) + ".bmp" + '\0');
@@ -510,7 +520,7 @@ void t_draw_sys::load_all()
 		/*loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);*/
 	}
-	for (int i = 400; i < 407; ++i)
+	for (int i = 308; i < 407; ++i)
 	{
 		loadimage(&data.cards_thumbnail[i], &(".\\resource\\cards_thumbnail\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
@@ -522,7 +532,7 @@ void t_draw_sys::load_all()
 		loadimage(&data.backgrounds[i], &(".\\resource\\backgrounds\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
 	}
-	for (int i = 0; i < 34; ++i)
+	for (int i = 0; i < 41; ++i)
 	{
 		loadimage(&data.components[i], &(".\\resource\\components\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
@@ -532,19 +542,19 @@ void t_draw_sys::load_all()
 		loadimage(&data.entities[i], &(".\\resource\\entities\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
 	}
-	for (int i = 0; i <= 30; ++i)
+	for (int i = 0; i < 33; ++i)
 	{
 		IMAGE t;
 		loadimage(&t, &(".\\resource\\explore\\body\\" + to_string(i) + ".bmp" + '\0')[0]);
 		data.body.push_back(std::move(t));
 	}
-	for (int i = 0; i <= 14; ++i)
+	for (int i = 0; i < 15; ++i)
 	{
 		IMAGE t;
 		loadimage(&t, &(".\\resource\\explore\\end\\" + to_string(i) + ".bmp" + '\0')[0]);
 		data.end.push_back(std::move(t));
 	}
-	for (int i = 0; i <= 14; ++i)
+	for (int i = 0; i < 15; ++i)
 	{
 		IMAGE t;
 		loadimage(&t, &(".\\resource\\explore\\select\\" + to_string(i) + ".bmp" + '\0')[0]);

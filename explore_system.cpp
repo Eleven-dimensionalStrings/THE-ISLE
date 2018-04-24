@@ -161,7 +161,7 @@ void explore_system::create_map(std::size_t map_type)
 			{
 				data.map_marks[j][i] = map_mark_type::UNKNOWN;
 				//data.explore_map[j][i] = t.get_event(map_type);
-				data.explore_map[j][i] = 3;//TODO test
+				data.explore_map[j][i] = 12;//TODO test
 			}
 		}
 	}
@@ -326,11 +326,11 @@ void explore_system::process()
 			case AQUIRE_CARD_FROM_SELECTION:
 			{
 				info_to_explore_sys message;
+				e_random_engine tengine;
 				for (int i = 0; i < temp.value; ++i)
 				{
-					//TODO
 					message.action_set.push_back(e_action(SELECTION, AQUIRE_CARD,
-						e_random_engine().get_card_by_class(data.player_s_class), static_cast<int>(MEANINGLESS_VALUE)));
+						card(tengine.get_card_by_class(data.player_s_class)), static_cast<int>(MEANINGLESS_VALUE)));
 				}
 				send_message(message);
 				break;
@@ -434,21 +434,17 @@ void explore_system::process()
 			case REVEAL_MAP:
 			{
 				int max = temp.value;
-				for (int i = 0; i < MAP_LENGTH; ++i)
+				for (int i = 0; i < max;)
 				{
-					for (int j = 0; j < MAP_WIDTH; ++j)
+					int x = data.re.get_num(0, 13);
+					int y = data.re.get_num(0, 4);
+					if (data.map_marks[x][y] == map_mark_type::UNKNOWN)
 					{
-						if (data.map_marks[i][j] == map_mark_type::UNKNOWN)
-						{
-							data.map_marks[i][j] = map_mark_type::KNOWN;
-							max--;
-							if (!max)
-								break;
-						}
-						if (!max)
-							break;
+						data.map_marks[x][y] = map_mark_type::KNOWN;
+						max--;
 					}
 				}
+				break;
 			}
 			}
 			break;

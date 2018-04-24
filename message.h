@@ -136,50 +136,50 @@ namespace card_type
 
 namespace buff_type
 {
-	const std::size_t STRENGTH = 1;
-	const std::size_t DEXTERITY = 2;
-	const std::size_t VITALITY = 3;
-	const std::size_t ARMOR = 4;
-	const std::size_t WEAK = 5;
-	const std::size_t VULNERABLE = 6;
-	const std::size_t FRAGILE = 7;
-	const std::size_t BURN = 8;
+	const std::size_t STRENGTH = 1;//1
+	const std::size_t DEXTERITY = 2;//2
+	const std::size_t VITALITY = 3;//1
+	const std::size_t ARMOR = 4;//2
+	const std::size_t WEAK = 5;//1
+	const std::size_t VULNERABLE = 6;//2
+	const std::size_t FRAGILE = 7;//2
+	const std::size_t BURN = 8;//1
 	const std::size_t POISON = 9;
 	const std::size_t BLEED = 10;
-	const std::size_t USED_ATTACK_CARDS = 11;
-	const std::size_t USED_SKILL_CARDS = 12;
-	const std::size_t USED_ABILITY_CARDS = 13;
+	const std::size_t USED_ATTACK_CARDS = 11;//1 //u
+	const std::size_t USED_SKILL_CARDS = 12;//1 //u
+	const std::size_t USED_ABILITY_CARDS = 13;//1 //u
 	const std::size_t EXHAUST = 14;
 	const std::size_t CHAIN = 15;
 	const std::size_t MOVE_MUSSLE = 16;
 	const std::size_t STUN = 17;
 	const std::size_t STUN_RESIST = 18;
 	const std::size_t EXPLODE = 19;
-	const std::size_t PASSED_TURNS = 20;
+	const std::size_t PASSED_TURNS = 20;//1 //u
 	const std::size_t INCREASE_DRAW = 22;
 	const std::size_t REDUCE_AP = 23;
 	const std::size_t INCREASE_AP = 24;
 
 	//buff from ability cards
-	const std::size_t ETERNAL_FURY = 41;
-	const std::size_t INVULNARABLE = 42;
-	const std::size_t FIGHTING_SPIRIT = 43;
-	const std::size_t FRENZY = 44;
-	const std::size_t RITE = 45;
-	const std::size_t RESUSCITATE = 46;
-	const std::size_t ABILITY_BURN = 47;
-	const std::size_t SCORCHED_EARTH = 48;
-	const std::size_t SHELL = 49;
+	const std::size_t ETERNAL_FURY = 25;
+	const std::size_t INVULNARABLE = 26;
+	const std::size_t FIGHTING_SPIRIT = 27;
+	const std::size_t FRENZY = 28;
+	const std::size_t RITE = 29;
+	const std::size_t RESUSCITATE = 30;
+	const std::size_t ABILITY_BURN = 31;
+	const std::size_t SCORCHED_EARTH = 32;
+	const std::size_t SHELL = 33;
 
 	//enemies' buffs
-	const std::size_t LOADED = 71;
-	const std::size_t PAIN = 72;
-	const std::size_t CULTIST_RITE = 73;
-	const std::size_t PAIN_CURSE = 74;
-	const std::size_t CORRUPT = 75;
-	const std::size_t FEAST = 76; //TODO not done yet	
-	const std::size_t MARK = 77;
-	const std::size_t ANGER = 78;
+	const std::size_t LOADED = 34;
+	const std::size_t PAIN = 35;
+	const std::size_t CULTIST_RITE = 36;
+	const std::size_t PAIN_CURSE = 37;
+	const std::size_t CORRUPT = 38;
+	const std::size_t FEAST = 39;
+	const std::size_t MARK = 40;
+	const std::size_t ANGER = 41;
 
 }
 
@@ -260,8 +260,8 @@ namespace gra_size
 	const std::size_t event_card_y = 150;
 	const std::size_t event_text_x = 800;
 	const std::size_t event_text_y = 150;
-	const std::size_t next_x = 1100;
-	const std::size_t next_y = 250;
+	const std::size_t next_x = 1150;
+	const std::size_t next_y = 300;
 
 	const std::size_t map_start_x = 230;
 	const std::size_t map_start_y = 200;

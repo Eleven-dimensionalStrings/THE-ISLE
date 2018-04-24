@@ -250,6 +250,14 @@ void explore_context::read_input()
 				{
 					cur_state->click_right_arrow();
 				}
+				else if (hit.x > gra_size::next_x && hit.x < gra_size::next_x + 200
+					&& hit.y > gra_size::next_y && hit.y < gra_size::next_y + 100)
+				{
+					if (get_data().event_is_not_mandetory)
+					{
+						cur_state->click_next();
+					}
+				}
 			}
 			Sleep(100);
 			FlushMouseMsgBuffer();
@@ -662,7 +670,7 @@ void e_select_state::click_an_option(std::size_t pos)
 {
 	info_to_explore_sys temp(get_data().choice_list[pos + MAX_CARDS_IN_HAND * get_data().current_select_page]);
 	get_data().choice_list.erase(get_data().choice_list.begin() + pos + MAX_CARDS_IN_HAND * get_data().current_select_page);
-	if (get_data().choice_list.size() == MAX_CARDS_IN_HAND * get_data().current_select_page)
+	if (get_data().choice_list.size() == MAX_CARDS_IN_HAND * get_data().current_select_page && get_data().current_select_page != 0)
 	{
 		get_data().current_select_page -= 1;
 	}
@@ -670,14 +678,14 @@ void e_select_state::click_an_option(std::size_t pos)
 	if (current == max_selection && get_data().next_event_id != 0)
 	{
 		temp.action_set.push_back(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE,
-			card(0), static_cast<size_t>(get_data().next_event_id), get_data().map_text));
+			static_cast<size_t>(get_data().next_event_id), get_data().text_to_be_displayed, get_data().map_text));
 	}
 	get_data().i_to_e_pipe = temp;
 }
 
 void e_select_state::click_next()
 {
-	get_data().i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, get_data().next_event_id, -1));
+	get_data().i_to_e_pipe = info_to_explore_sys(e_action(explore_action_type::ENCOUNTER_EVENT, MEANINGLESS_VALUE, get_data().next_event_id));
 }
 
 void e_select_state::click_left_arrow()
