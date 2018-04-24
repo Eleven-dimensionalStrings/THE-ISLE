@@ -4,11 +4,9 @@
 #include "battle_system.h"
 using namespace std; using namespace my_container;
 
-//TODO 6, 8，9, 12
-
 data_sys::data_sys() :b(nullptr), player_data(*this), all_enemies(*this, MEANINGLESS_VALUE), random_enemy(*this, MEANINGLESS_VALUE)
 , select_one_enemy(*this, MEANINGLESS_VALUE), re(this), view_cards(0), cards_thumbnail(420), cards_original(420), cards_mask(10), backgrounds(15)
-, components(45), entities(21), artifact_pics(21)
+, components(45), entities(60), artifact_pics(21), buff_pics(22)
 {
 	background_pic = 0;
 	map_text = 0;
@@ -959,17 +957,16 @@ info_to_battle_sys data_sys::card_on_turn_end(std::size_t id)
 	}
 }
 
-//TODO
 info_to_explore_sys data_sys::event_effect(std::size_t id)
 {
 	switch (id)
 	{
-	case 1://TODO bonfire   --?????
+	case 1://篝火
 	{
 		return info_to_explore_sys(my_vector<e_action>{
 			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 0),
-				e_action(explore_action_type::SELECTION, event_type::AQUIRE_HIT_POINTS, player_data.max_hp * 0.25, 15, 15 ),
-				e_action(explore_action_type::SELECTION, event_type::UPGRADE_CARD_FROM_DECK, 1, 16, 16 ),
+				e_action(explore_action_type::SELECTION, event_type::AQUIRE_HIT_POINTS, player_data.max_hp * 0.25, 20, 15),
+				e_action(explore_action_type::SELECTION, event_type::UPGRADE_CARD_FROM_DECK, 1, 21, 16),
 				e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END)});
 		break;
 	}
@@ -991,7 +988,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 4), });
 		break;
 	}
-	case 1003://酒馆part2 //TODO ENEMY
+	case 1003://酒馆part2 
 	{
 		if (re.chance_luck_decrease(30))
 		{
@@ -1012,10 +1009,23 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 1004://酒馆part3
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
-			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS),
-			e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4)});
+		info_to_explore_sys result(my_vector<e_action>{e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(20, 22)),
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(20, 22))});
+		if (re.chance(50))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(23, 24)));
+		}
+		if (re.chance(50))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 1)));
+		}
+		if (re.chance(25))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(23, 24)));
+		}
+		result.append(e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS));
+		result.append(e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
+		return result;
 		break;
 	}
 	case 1005://酒馆part3
@@ -1286,39 +1296,79 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 15://山贼
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  37 ),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
-			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS),
-			e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4)});
+		info_to_explore_sys result(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,37),
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 2)),
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 2)),
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 2))});
+		if (re.chance(75))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 2)));
+		}
+		if (re.chance(50))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(3, 3)));
+		}
+		result.append(e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS));
+		result.append(e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
+		return result;
 		break;
 	}
 	case 16://哨所
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  38 ),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
-			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS),
-			e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4)});
+		info_to_explore_sys result(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 38),
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(4, 10)),
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(11, 12))});
+		if (re.chance(20))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(4, 10)));
+		}
+		if (re.chance(20))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(11, 12)));
+		}
+		result.append(e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS));
+		result.append(e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
+		return result;
 		break;
 	}
 	case 17://珊瑚洞窟
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  39 ),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
-			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS),
-			e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4)});
+		info_to_explore_sys result(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 39),
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(25, 31)),
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(29, 30))});
+		if (re.chance(40))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(25, 31)));
+		}
+		if (re.chance(25))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(29, 30)));
+		}
+		result.append(e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS));
+		result.append(e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
+		return result;
 		break;
 	}
 	case 18://地窖
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  40 ),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 49)),
-			e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS),
-			e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4)});
+		info_to_explore_sys result(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 40),
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(13, 17)),
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(13, 17))});
+		if (re.chance(80))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(18, 19)));
+		}
+		if (re.chance(40))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(13, 17)));
+		}
+		if (re.chance(20))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(18, 19)));
+		}
+		result.append(e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS));
+		result.append(e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
+		return result;
 		break;
 	}
 	case 19://珍珠贝
@@ -1375,14 +1425,14 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	case BONUS:
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_CARD_FROM_SELECTION, 3, 31),
+			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_CARD_FROM_SELECTION, 3, 47),
 				e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, BONUS_PART2),
 				e_action(explore_action_type::EVENT_BODY, event_type::SET_MANDETORY, MEANINGLESS_VALUE)});
 	}
 	case BONUS_PART2:
 	{
 		info_to_explore_sys result(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 32),
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 48),
 				e_action(explore_action_type::SELECTION, event_type::AQUIRE_GOLD, card(309), re.get_num(35, 85)),
 				e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END),
 				e_action(explore_action_type::MAX_SELECTION, MEANINGLESS_VALUE, 999),
@@ -1411,7 +1461,6 @@ info_to_battle_sys data_sys::enemy_battle_start(std::size_t enemy_id)
 	return info_to_battle_sys();
 }
 
-//TODO
 info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 {
 	switch (enemies_data[pos].enemy_id)
@@ -2177,7 +2226,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 				action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 5)});
 		}
 	}
-	case 52: //TODO REGENERATE
+	case 52:
 	{
 		if (passed_turns % 2 == 1)
 		{
@@ -2191,7 +2240,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		break;
 	}
-	case 53: //TODO REGENERATE
+	case 53:
 	{
 		if (passed_turns % 2 == 0)
 		{
@@ -2213,7 +2262,6 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 
 pair<std::string, std::size_t> data_sys::get_buff(std::size_t id)
 {
-	//TODO set buff priority
 	switch (id)
 	{
 	case buff_type::STRENGTH:
@@ -2315,7 +2363,6 @@ bool data_sys::has_other_enemy(std::size_t pos)
 	return false;
 }
 
-//TODO
 int data_sys::get_enemy(std::size_t enemy_id)
 {
 	switch (enemy_id)
@@ -2373,6 +2420,118 @@ IMAGE & data_sys::get_mask_pic(int id, int det)
 		return artifact_pics[0];
 	default:
 		return cards_mask[3];
+	}
+}
+
+IMAGE & data_sys::get_entity_pic(int id, int status)
+{
+	switch (id)
+	{
+	case 0:
+		return entities[status];
+		break;
+	case 1: case 2: case 20: case 21: case 22:
+		return entities[10 + status];
+		break;
+	case 3: case 23: case 24:
+		return entities[13 + status];
+		break;
+	case 4: case 5: case 6: case 7: case 8: case 9: case 10:
+		return entities[4 + status];
+		break;
+	case 11: case 12:
+		return entities[7 + status];
+		break;
+	case 13: case 14: case 15: case 16: case 17:
+		return entities[25 + status];
+		break;
+	case 18: case 19:
+		return entities[22 + status];
+		break;
+	case 25: case 26: case 27: case 28: case 31:
+		return entities[16 + status];
+		break;
+	case 29: case 30:
+		return entities[19 + status];
+		break;
+	default:
+		return entities[10 + status];
+		break;
+	}
+}
+
+IMAGE & data_sys::get_entity_mask_pic(int id, int status)
+{
+	switch (id)
+	{
+	case 0:
+		return entities[28 + status];
+		break;
+	case 1: case 2: case 20: case 21: case 22:
+		return entities[37 + status];
+		break;
+	case 3: case 23: case 24:
+		return entities[40 + status];
+		break;
+	case 4: case 5: case 6: case 7: case 8: case 9: case 10:
+		return entities[31 + status];
+		break;
+	case 11: case 12:
+		return entities[34 + status];
+		break;
+	case 13: case 14: case 15: case 16: case 17:
+		return entities[52 + status];
+		break;
+	case 18: case 19:
+		return entities[49 + status];
+		break;
+	case 25: case 26: case 27: case 28: case 31:
+		return entities[43 + status];
+		break;
+	case 29: case 30:
+		return entities[46 + status];
+		break;
+	default:
+		return entities[38 + status];
+		break;
+	}
+}
+
+IMAGE & data_sys::get_buff_pic(int id)
+{
+	switch (id)
+	{
+	case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8:
+		return buff_pics[id - 1];
+		break;
+	case 14: case 15:case 16: case 17:case 19: case 22: case 34: case 36: case 37: case 39:
+		return buff_pics[8];
+		break;
+	case 18: case 21: case 23:case 33: case 35:case 38: case 40:
+		return buff_pics[10];
+		break;
+	default:
+		return buff_pics[9];
+		break;
+	}
+}
+
+IMAGE & data_sys::get_buff_mask_pic(int id)
+{
+	switch (id)
+	{
+	case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8:
+		return buff_pics[id + 10];
+		break;
+	case 14: case 15:case 16: case 17:case 19: case 22: case 34: case 36: case 37: case 39:
+		return buff_pics[19];
+		break;
+	case 18: case 21: case 23:case 33: case 35:case 38: case 40:
+		return buff_pics[21];
+		break;
+	default:
+		return buff_pics[20];
+		break;
 	}
 }
 

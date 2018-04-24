@@ -138,7 +138,6 @@ namespace my_container
 			}
 			int operator-(const iterator& other)
 			{
-				//TODO check debug
 				return _now - other._now;
 			}
 			T& operator*()

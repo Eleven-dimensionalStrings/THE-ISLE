@@ -290,12 +290,6 @@ void interacting_sys::move_player(int x, int y)
 void interacting_sys::set_map_location(int x, int y, int mark_type)
 {
 	data.map_marks[x][y] = mark_type;
-	//TODO tell the renderer to reveal the map
-}
-
-void interacting_sys::reveal_map_location(int x, int y)
-{
-	//TODO call the renderer to reveal the map
 }
 
 void interacting_sys::update()
@@ -311,7 +305,6 @@ void interacting_sys::update()
 			present_battle_context->change_to_select_state(data.b_to_i_pipe);
 		}
 		data.b_to_i_pipe.clear();
-		//return; //TODO not sure whether it is useful
 	}
 	else if (data.e_to_i_pipe)
 	{
@@ -324,7 +317,6 @@ void interacting_sys::update()
 			present_explore_context->change_to_vaccant_state();
 		}
 		data.e_to_i_pipe.clear();
-		//return; //TODO blocks input in e_select_state
 	}
 	if (data.is_battle)
 	{

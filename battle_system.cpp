@@ -96,7 +96,6 @@ void battle_system::deal_an_action()
 	if (battle_succ())
 	{
 		while (!process_stack.empty())process_stack.pop();
-		//TODO
 		info_to_battle_sys temp;
 		for (auto&i : data.player_data.buff_pool)
 		{

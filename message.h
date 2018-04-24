@@ -9,7 +9,7 @@
 #define MAX_CARDS_IN_HAND 7
 #define MEANINGLESS_VALUE static_cast<std::size_t>(31415926)
 #define TYPE_TO_P_TYPE static_cast<std::size_t>(100)
-#define MAX_ARTIFACT_NO 20 //TODO
+#define MAX_ARTIFACT_NO 20 
 #define END static_cast<std::size_t>(9999)
 #define BONUS static_cast<std::size_t>(8888)
 #define BONUS_PART2 static_cast<std::size_t>(7777)
@@ -140,8 +140,8 @@ namespace buff_type
 	const std::size_t DEXTERITY = 2;//2
 	const std::size_t VITALITY = 3;//1
 	const std::size_t ARMOR = 4;//2
-	const std::size_t WEAK = 5;//1
-	const std::size_t VULNERABLE = 6;//2
+	const std::size_t VULNERABLE = 5;//2
+	const std::size_t WEAK = 6;//1
 	const std::size_t FRAGILE = 7;//2
 	const std::size_t BURN = 8;//1
 	const std::size_t POISON = 9;
@@ -177,7 +177,7 @@ namespace buff_type
 	const std::size_t CULTIST_RITE = 35;
 	const std::size_t PAIN_CURSE = 36;
 	const std::size_t CORRUPT = 37;
-	const std::size_t FEAST = 38; //TODO not done yet	
+	const std::size_t FEAST = 38; 
 	const std::size_t MARK = 39;
 	const std::size_t ANGER = 40;
 }
@@ -189,8 +189,8 @@ namespace gra_size
 	const std::size_t max_enemies = 5;
 	const std::size_t max_cards = 7;
 
-	const std::size_t buff_side_len = 15;
-	const std::size_t buff_closure = 5;
+	const std::size_t buff_side_len = 30;
+	const std::size_t buff_closure = 10	;
 	const std::size_t card_starting_pos = 200;
 	const std::size_t card_width = 135;
 	const std::size_t card_closure = 10;
@@ -224,7 +224,6 @@ namespace gra_size
 	const std::size_t player_x = 50;
 	const std::size_t player_y = 200;
 
-	//TODO replace the ap_pic (a circle) to a pic(square), should change the following values
 	const std::size_t ap_pic_x = 25;
 	const std::size_t ap_pic_y = 540;
 	const std::size_t ap_pic_radius = 60;
@@ -352,7 +351,7 @@ public:
 	card selected_card;
 	int text;
 	int end_text;
-	bool(*restriction)(data_sys*); //TODO lambda表达式
+	bool(*restriction)(data_sys*); 
 
 	e_action to_event_body();
 };

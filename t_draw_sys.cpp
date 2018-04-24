@@ -25,7 +25,7 @@ void t_draw_sys::__draw_entities()
 		this->__draw_an_enemy(i);
 	}
 	this->__draw_player();
-	if (timer >= 7) { timer = 0; is_drawing = 0; if (!draw_queue.empty())draw_queue.pop(); }//TODO
+	if (timer >= 7) { timer = 0; is_drawing = 0; if (!draw_queue.empty())draw_queue.pop(); }
 }
 void t_draw_sys::__draw_battle_info()
 {
@@ -76,14 +76,14 @@ void t_draw_sys::__draw_explore_map()
 						&data.components[22]);
 					break;
 				}
-				else if (data.explore_map[i][j] == 2)
+				else if (data.explore_map[i][j] >= 15 && data.explore_map[i][j] <= 18)
 				{
 					putimage(gra_size::map_start_x + (gra_size::map_block_size + gra_size::map_closure) * i,
 						gra_size::map_start_y + (gra_size::map_block_size + gra_size::map_closure) * j,
 						&data.components[19]);
 					break;
 				}
-				else if (data.explore_map[i][j] == 3)
+				else if (data.explore_map[i][j] >= 19 && data.explore_map[i][j] <= 21)
 				{
 					putimage(gra_size::map_start_x + (gra_size::map_block_size + gra_size::map_closure) * i,
 						gra_size::map_start_y + (gra_size::map_block_size + gra_size::map_closure) * j,
@@ -110,7 +110,6 @@ void t_draw_sys::__draw_buff()
 {
 	//player
 	int unv = 0;
-	//TODO visible
 	my_vector<buff> pool;
 	for (auto& i : data.player_data.buff_pool)
 	{
@@ -119,19 +118,26 @@ void t_draw_sys::__draw_buff()
 			pool.push_back(i);
 		}
 	}
-	for (int i = 0; i <= (static_cast<int>(pool.size()) - 1) / 8; ++i)
+	for (int i = 0; i <= (static_cast<int>(pool.size()) - 1) / 4; ++i)
 	{
-		for (int j = 0; j < ((pool.size() >= (i + 1) * 8)
-			? 8 : pool.size() % 8); ++j)
+		for (int j = 0; j < ((pool.size() >= (i + 1) * 4)
+			? 4 : pool.size() % 4); ++j)
 		{
-			solidrectangle(gra_size::player_x + (gra_size::buff_side_len + gra_size::buff_closure)*j,
+			/*solidrectangle(gra_size::player_x + (gra_size::buff_side_len + gra_size::buff_closure)*j,
 				gra_size::player_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
 				gra_size::player_x + gra_size::buff_side_len*(j + 1) + gra_size::buff_closure*j,
-				gra_size::player_y + 205 + gra_size::buff_side_len*(i + 1) + gra_size::buff_closure*i);
+				gra_size::player_y + 205 + gra_size::buff_side_len*(i + 1) + gra_size::buff_closure*i);*/
+			putimage(gra_size::player_x + (gra_size::buff_side_len + gra_size::buff_closure)*j,
+				gra_size::player_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
+				&data.get_buff_mask_pic(pool[i * 4 + j].buff_id), SRCPAINT);
+			putimage(gra_size::player_x + (gra_size::buff_side_len + gra_size::buff_closure)*j,
+				gra_size::player_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
+				&data.get_buff_mask_pic(pool[i * 4 + j].buff_id), SRCAND);
+
 			settextstyle(12, 0, _T("Arial"));
-			outtextxy(gra_size::player_x + (gra_size::buff_side_len + gra_size::buff_closure)*j + 10,
-				gra_size::player_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i + 8,
-				&to_string(pool[i * 8 + j].buff_level)[0]);
+			outtextxy(gra_size::player_x + (gra_size::buff_side_len + gra_size::buff_closure)*j + 25,
+				gra_size::player_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i + 23,
+				&to_string(pool[i * 4 + j].buff_level)[0]);
 			settextstyle(20, 0, _T("Arial"));
 		}
 	}
@@ -139,7 +145,6 @@ void t_draw_sys::__draw_buff()
 	//enemy
 	for (int pos = 0; pos < data.enemies_data.size(); ++pos)
 	{
-		//TODO visible
 		pool.clear();
 		for (auto& i : data.enemies_data[pos].buff_pool)
 		{
@@ -166,14 +171,6 @@ void t_draw_sys::__draw_buff()
 				settextstyle(20, 0, _T("Arial"));
 			}
 		}
-	}
-}
-
-void t_draw_sys::__draw_artifacts()
-{
-	for (auto&i : data.artifacts)
-	{
-		//TODO
 	}
 }
 
@@ -242,43 +239,18 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 
 		if (p - b == drawing.second)
 		{
-			if (p->enemy_id <= 20)
-			{
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[15], SRCPAINT);
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[6], SRCAND);
-			}
-			else
-			{
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[18], SRCPAINT);
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[9], SRCAND);
-			}
+			putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.get_entity_mask_pic(p->enemy_id, 2), SRCPAINT);
+			putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.get_entity_pic(p->enemy_id, 2), SRCAND);
 		}
 		else if (p - b == drawing.first)
 		{
-			if (p->enemy_id <= 20)
-			{
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[14], SRCPAINT);
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[5], SRCAND);
-			}
-			else
-			{
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[17], SRCPAINT);
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[8], SRCAND);
-			}
+			putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.get_entity_mask_pic(p->enemy_id, 1), SRCPAINT);
+			putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.get_entity_pic(p->enemy_id, 1), SRCAND);
 		}
 		else
 		{
-			if (p->enemy_id <= 20)
-			{
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[13], SRCPAINT);
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[4], SRCAND);
-			}
-			else
-			{
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[16], SRCPAINT);
-				putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.entities[7], SRCAND);
-			}
-
+			putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.get_entity_mask_pic(p->enemy_id, 0), SRCPAINT);
+			putimage(enemy_pos(pos).first, enemy_pos(pos).second, &data.get_entity_pic(p->enemy_id, 0), SRCAND);
 		}
 		outtextxy(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos, gra_size::enemy_y - 30,
 			&to_string(data.enemies_data[pos].current_hp)[0]);
@@ -318,8 +290,6 @@ void t_draw_sys::__draw_event_card()
 	putimage(gra_size::event_card_x, gra_size::event_card_y, &data.components[32], SRCPAINT);
 	putimage(gra_size::event_card_x, gra_size::event_card_y, &data.body[data.text_to_be_displayed], SRCAND);
 
-	//next button
-	//TODO
 	if (data.event_is_not_mandetory)
 	{
 		if (data.choice_list.empty())
@@ -338,13 +308,12 @@ void t_draw_sys::__draw_event_card()
 void t_draw_sys::__draw_player_in_map()
 {
 	//player pic
-	putimage(gra_size::player_x, gra_size::player_y, &data.entities[20], SRCPAINT);
-	putimage(gra_size::player_x, gra_size::player_y, &data.entities[19], SRCAND);
+	putimage(gra_size::player_x, gra_size::player_y, &data.entities[56], SRCPAINT);
+	putimage(gra_size::player_x, gra_size::player_y, &data.entities[55], SRCAND);
 }
 
 void t_draw_sys::__draw_ending_text()
 {
-	//TODO
 	if (data.map_text != MEANINGLESS_VALUE)
 	{
 		putimage(gra_size::player_x, gra_size::player_y + 255, &data.end[data.map_text]);
@@ -507,38 +476,25 @@ void t_draw_sys::load_all()
 		loadimage(&data.cards_mask[i], &(".\\resource\\cards_thumbnail\\mask"
 			+ to_string(i) + ".bmp" + '\0')[0]);
 	}
-	for (int i = 0; i < 4; ++i)
-	{
-		/*loadimage(&data.cards_mask[i + 4], &(".\\resource\\cards_original\\mask"
-			+ to_string(i) + ".bmp" + '\0')[0]);*/
-	}
 	for (int i = 1; i < 10; ++i)
 	{
 		loadimage(&data.cards_thumbnail[i], &(".\\resource\\cards_thumbnail\\00"
 			+ to_string(i) + ".bmp" + '\0')[0]);
-		/*loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\00"
-			+ to_string(i) + ".bmp" + '\0')[0]);*/
 	}
 	for (int i = 10; i < 100; ++i)
 	{
 		loadimage(&data.cards_thumbnail[i], &(".\\resource\\cards_thumbnail\\0"
 			+ to_string(i) + ".bmp" + '\0')[0]);
-		/*loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\0"
-			+ to_string(i) + ".bmp" + '\0')[0]);*/
 	}
 	for (int i = 100; i < 121; ++i)
 	{
 		loadimage(&data.cards_thumbnail[i], &(".\\resource\\cards_thumbnail\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
-		/*loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\"
-			+ to_string(i) + ".bmp" + '\0')[0]);*/
 	}
 	for (int i = 308; i < 407; ++i)
 	{
 		loadimage(&data.cards_thumbnail[i], &(".\\resource\\cards_thumbnail\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
-		/*loadimage(&data.cards_original[i], &(".\\resource\\cards_original\\"
-			+ to_string(i) + ".bmp" + '\0')[0]);*/
 	}
 	for (int i = 0; i < 14; ++i)
 	{
@@ -550,7 +506,7 @@ void t_draw_sys::load_all()
 		loadimage(&data.components[i], &(".\\resource\\components\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
 	}
-	for (int i = 0; i < 21; ++i)
+	for (int i = 0; i < 57; ++i)
 	{
 		loadimage(&data.entities[i], &(".\\resource\\entities\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
@@ -576,6 +532,11 @@ void t_draw_sys::load_all()
 	for (int i = 0; i < 21; ++i)
 	{
 		loadimage(&data.artifact_pics[i], &(".\\resource\\artifacts\\"
+			+ to_string(i) + ".bmp" + '\0')[0]);
+	}
+	for (int i = 0; i < 22; ++i)
+	{
+		loadimage(&data.buff_pics[i], &(".\\resource\\buff\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
 	}
 }
@@ -669,22 +630,6 @@ void t_draw_sys::t_draw_e()
 		cout << "click the map to move" << "\n";
 		cout << data.player_location.first << " " << data.player_location.second << endl;
 	}
-	else
-	{
-		cout << data.text_to_be_displayed << "\n";
-		for (int i = 0; i < 3; i++)
-		{
-			if (i + 3 * data.current_select_page < data.choice_list.size())
-			{
-				//TODO
-//				cout << "press \"" << i << "\"  [" << data.choice_name_list[i + 3 * data.current_select_page] << "]" << "\n";
-			}
-		}
-		if (data.next_event_id > 0)
-		{
-			cout << "press \"n\"  [����ѡ��]" << "\n";
-		}
-	}
 }
 
 void t_draw_sys::draw_battle()
@@ -705,7 +650,6 @@ void t_draw_sys::draw_battle()
 	this->__draw_battle_info();
 	this->__draw_guiding_pics();
 	this->__draw_buff();
-	this->__draw_artifacts();
 	SetWorkingImage(0);
 	putimage(0, 0, &buffer);
 }

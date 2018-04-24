@@ -32,7 +32,7 @@ public:
 	info_to_battle_sys card_discard(std::size_t id);
 	info_to_battle_sys card_on_turn_end(std::size_t id);
 	info_to_explore_sys event_effect(std::size_t event_id);
-	info_to_battle_sys enemy_battle_start(std::size_t enemy_id);//TODO
+	info_to_battle_sys enemy_battle_start(std::size_t enemy_id);
 	info_to_battle_sys enemy_act(std::size_t enemy_id);
 	my_container::my_vector<card> cards_pool;
 	my_container::my_vector<artifact> artifacts;
@@ -65,6 +65,7 @@ public:
 	my_container::my_vector<IMAGE> end;
 	my_container::my_vector<IMAGE> select;
 	my_container::my_vector<IMAGE> artifact_pics;
+	my_container::my_vector<IMAGE> buff_pics;
 	std::array<bool, MAX_CARDS_IN_HAND>render_select_card;
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
@@ -95,9 +96,12 @@ public:
 	int get_enemy(std::size_t enemy_id);
 	IMAGE& get_pic(int id, int det = 0);
 	IMAGE& get_mask_pic(int id, int det = 0);
+	IMAGE& get_entity_pic(int id, int status);
+	IMAGE& get_entity_mask_pic(int id, int status);
+	IMAGE& get_buff_pic(int id);
+	IMAGE& get_buff_mask_pic(int id);
 	int background_pic;
 
-	//TODO for artifacts
 	info_to_explore_sys artifact_on_create(std::size_t atf_id);
 	info_to_explore_sys artifact_on_remove(std::size_t atf_id);
 	info_to_explore_sys artifact_on_encounter_event(std::size_t atf_id);
