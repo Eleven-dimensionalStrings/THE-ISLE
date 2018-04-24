@@ -111,7 +111,14 @@ void t_draw_sys::__draw_buff()
 	//player
 	int unv = 0;
 	//TODO visible
-	auto pool = data.player_data.buff_pool;
+	my_vector<buff> pool;
+	for (auto& i : data.player_data.buff_pool)
+	{
+		if (i.visible)
+		{
+			pool.push_back(i);
+		}
+	}
 	for (int i = 0; i <= (static_cast<int>(pool.size()) - 1) / 8; ++i)
 	{
 		for (int j = 0; j < ((pool.size() >= (i + 1) * 8)
@@ -134,7 +141,13 @@ void t_draw_sys::__draw_buff()
 	{
 		//TODO visible
 		pool.clear();
-		pool = data.enemies_data[pos].buff_pool;
+		for (auto& i : data.enemies_data[pos].buff_pool)
+		{
+			if (i.visible)
+			{
+				pool.push_back(i);
+			}
+		}
 		for (int i = 0; i <= (static_cast<int>(pool.size()) - 1) / 8; ++i)
 		{
 			for (int j = 0; j < (pool.size() - i * 8) % 8; ++j)

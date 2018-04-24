@@ -155,32 +155,31 @@ namespace buff_type
 	const std::size_t STUN = 17;
 	const std::size_t STUN_RESIST = 18;
 	const std::size_t EXPLODE = 19;
-	const std::size_t PASSED_TURNS = 20;//1 //u
-	const std::size_t INCREASE_DRAW = 22;
-	const std::size_t REDUCE_AP = 23;
-	const std::size_t INCREASE_AP = 24;
+	const std::size_t PASSED_TURNS = 20;
+	const std::size_t INCREASE_DRAW = 21;
+	const std::size_t REDUCE_AP = 22;
+	const std::size_t INCREASE_AP = 23;
 
 	//buff from ability cards
-	const std::size_t ETERNAL_FURY = 25;
-	const std::size_t INVULNARABLE = 26;
-	const std::size_t FIGHTING_SPIRIT = 27;
-	const std::size_t FRENZY = 28;
-	const std::size_t RITE = 29;
-	const std::size_t RESUSCITATE = 30;
-	const std::size_t ABILITY_BURN = 31;
-	const std::size_t SCORCHED_EARTH = 32;
-	const std::size_t SHELL = 33;
+	const std::size_t ETERNAL_FURY = 24;
+	const std::size_t INVULNARABLE = 25;
+	const std::size_t FIGHTING_SPIRIT = 26;
+	const std::size_t FRENZY = 27;
+	const std::size_t RITE = 28;
+	const std::size_t RESUSCITATE = 29;
+	const std::size_t ABILITY_BURN = 30;
+	const std::size_t SCORCHED_EARTH = 31;
+	const std::size_t SHELL = 32;
 
 	//enemies' buffs
-	const std::size_t LOADED = 34;
-	const std::size_t PAIN = 35;
-	const std::size_t CULTIST_RITE = 36;
-	const std::size_t PAIN_CURSE = 37;
-	const std::size_t CORRUPT = 38;
-	const std::size_t FEAST = 39;
-	const std::size_t MARK = 40;
-	const std::size_t ANGER = 41;
-
+	const std::size_t LOADED = 33;
+	const std::size_t PAIN = 34;
+	const std::size_t CULTIST_RITE = 35;
+	const std::size_t PAIN_CURSE = 36;
+	const std::size_t CORRUPT = 37;
+	const std::size_t FEAST = 38; //TODO not done yet	
+	const std::size_t MARK = 39;
+	const std::size_t ANGER = 40;
 }
 
 namespace gra_size

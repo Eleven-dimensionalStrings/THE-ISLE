@@ -21,7 +21,7 @@ public:
 	std::string buff_name;
 	std::size_t buff_priority;
 	int buff_level;
-	//bool visible;
+	bool visible;
 
 	//将change传给buff之后,返回该change修改后的结果,和额外造成的操作
 	//修改后的结果将被传给下一个buff,所有info被打包后返回给battle_sys
