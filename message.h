@@ -156,31 +156,30 @@ namespace buff_type
 	const std::size_t STUN_RESIST = 18;
 	const std::size_t EXPLODE = 19;
 	const std::size_t PASSED_TURNS = 20;
-	const std::size_t INCREASE_DRAW = 22;
-	const std::size_t REDUCE_AP = 23;
-	const std::size_t INCREASE_AP = 24;
+	const std::size_t INCREASE_DRAW = 21;
+	const std::size_t REDUCE_AP = 22;
+	const std::size_t INCREASE_AP = 23;
 
 	//buff from ability cards
-	const std::size_t ETERNAL_FURY = 41;
-	const std::size_t INVULNARABLE = 42;
-	const std::size_t FIGHTING_SPIRIT = 43;
-	const std::size_t FRENZY = 44;
-	const std::size_t RITE = 45;
-	const std::size_t RESUSCITATE = 46;
-	const std::size_t ABILITY_BURN = 47;
-	const std::size_t SCORCHED_EARTH = 48;
-	const std::size_t SHELL = 49;
+	const std::size_t ETERNAL_FURY = 24;
+	const std::size_t INVULNARABLE = 25;
+	const std::size_t FIGHTING_SPIRIT = 26;
+	const std::size_t FRENZY = 27;
+	const std::size_t RITE = 28;
+	const std::size_t RESUSCITATE = 29;
+	const std::size_t ABILITY_BURN = 30;
+	const std::size_t SCORCHED_EARTH = 31;
+	const std::size_t SHELL = 32;
 
 	//enemies' buffs
-	const std::size_t LOADED = 71;
-	const std::size_t PAIN = 72;
-	const std::size_t CULTIST_RITE = 73;
-	const std::size_t PAIN_CURSE = 74;
-	const std::size_t CORRUPT = 75;
-	const std::size_t FEAST = 76; //TODO not done yet	
-	const std::size_t MARK = 77;
-	const std::size_t ANGER = 78;
-
+	const std::size_t LOADED = 33;
+	const std::size_t PAIN = 34;
+	const std::size_t CULTIST_RITE = 35;
+	const std::size_t PAIN_CURSE = 36;
+	const std::size_t CORRUPT = 37;
+	const std::size_t FEAST = 38; //TODO not done yet	
+	const std::size_t MARK = 39;
+	const std::size_t ANGER = 40;
 }
 
 namespace gra_size

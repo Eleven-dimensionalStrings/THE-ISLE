@@ -45,13 +45,17 @@ bool buff::operator-(buff t)
 }
 
 buff::buff(std::size_t id, int level)
-	:buff_id(id), buff_name(""), buff_priority(0), buff_level(level)
+	:buff_id(id), buff_name(""), buff_priority(0), buff_level(level), visible(1)
 {
+	if (buff_id == buff_type::USED_ABILITY_CARDS || buff_id == buff_type::USED_ATTACK_CARDS
+		|| buff_id == buff_type::USED_SKILL_CARDS)visible = 0;
 }
 
 buff::buff(std::size_t id, std::string name, std::size_t priority, int level)
-	: buff_id(id), buff_name(name), buff_priority(priority), buff_level(level)
+	: buff_id(id), buff_name(name), buff_priority(priority), buff_level(level), visible(1)
 {
+	if (buff_id == buff_type::USED_ABILITY_CARDS || buff_id == buff_type::USED_ATTACK_CARDS
+		|| buff_id == buff_type::USED_SKILL_CARDS)visible = 0;
 }
 
 info_to_battle_sys buff::on_create(game_entity* c, game_entity* p)

@@ -2081,23 +2081,23 @@ pair<std::string, std::size_t> data_sys::get_buff(std::size_t id)
 	case buff_type::STRENGTH:
 		return pair<string, size_t>(string("strength"), 1);
 	case buff_type::DEXTERITY:
-		return pair<string, size_t>(string("agility"), 1);
+		return pair<string, size_t>(string("agility"), 2);
 	case buff_type::VITALITY:
 		return pair<string, size_t>(string("vitality"), 1);
 	case buff_type::ARMOR:
-		return pair<string, size_t>(string("armor"), 1);
+		return pair<string, size_t>(string("armor"), 2);
 	case buff_type::WEAK:
 		return pair<string, size_t>(string("weak"), 1);
 	case buff_type::VULNERABLE:
-		return pair<string, size_t>(string("vulnerable"), 1);
+		return pair<string, size_t>(string("vulnerable"), 2);
 	case buff_type::FRAGILE:
-		return pair<string, size_t>(string("fragile"), 1);
+		return pair<string, size_t>(string("fragile"), 2);
 	case buff_type::BURN:
 		return pair<string, size_t>(string("burn"), 1);
 	case buff_type::POISON:
-		return pair<string, size_t>(string("poison"), 1);
+		return pair<string, size_t>(string("poison"), 3);
 	case buff_type::BLEED:
-		return pair<string, size_t>(string("bleed"), 1);
+		return pair<string, size_t>(string("bleed"), 4);
 	case buff_type::USED_ATTACK_CARDS:
 		return pair<string, size_t>(string("use_atk_c"), 1);
 	case buff_type::USED_SKILL_CARDS:
@@ -2105,34 +2105,65 @@ pair<std::string, std::size_t> data_sys::get_buff(std::size_t id)
 	case buff_type::USED_ABILITY_CARDS:
 		return pair<string, size_t>(string("use_abi_c"), 1);
 	case buff_type::EXHAUST:
-		return pair<string, size_t>(string("exhaust"), 1);
+		return pair<string, size_t>(string("exhaust"), 3);
 	case buff_type::CHAIN:
-		return pair<string, size_t>(string("chain"), 1);
+		return pair<string, size_t>(string("chain"), 3);
 	case buff_type::MOVE_MUSSLE:
-		return pair<string, size_t>(string("move_mussle"), 1);
+		return pair<string, size_t>(string("move_mussle"), 3);
 	case buff_type::STUN:
-		return pair<string, size_t>(string("stun"), 1);
+		return pair<string, size_t>(string("stun"), 4);
 	case buff_type::STUN_RESIST:
-		return pair<string, size_t>(string("stun_resist"), 1);
+		return pair<string, size_t>(string("stun_resist"), 4);
+	case buff_type::EXPLODE:
+		return pair<string, size_t>(string("EXPLODE"), 5);
+	case buff_type::PASSED_TURNS:
+		return pair<string, size_t>(string("PASSED_TURNS"), 4);
+	case buff_type::INCREASE_DRAW:
+		return pair<string, size_t>(string("INCREASE_DRAW"), 3);
+	case buff_type::REDUCE_AP:
+		return pair<string, size_t>(string("REDUCE_AP"), 4);
+	case buff_type::INCREASE_AP:
+		return pair<string, size_t>(string("INCREASE_AP"), 5);
 	case buff_type::ETERNAL_FURY:
-		return pair<string, size_t>(string("eternal_fury"), 1);
+		return pair<string, size_t>(string("ETERNAL_FURY"), 3);
 	case buff_type::INVULNARABLE:
-		return pair<string, size_t>(string("invulnarable"), 1);
+		return pair<string, size_t>(string("invulnarable"), 3);
 	case buff_type::FIGHTING_SPIRIT:
-		return pair<string, size_t>(string("fighting_spirit"), 1);
+		return pair<string, size_t>(string("fighting_spirit"), 3);
 	case buff_type::FRENZY:
-		return pair<string, size_t>(string("frenzy"), 1);
+		return pair<string, size_t>(string("frenzy"), 4);
 	case buff_type::RITE:
-		return pair<string, size_t>(string("rite"), 1);
+		return pair<string, size_t>(string("rite"), 4);
 	case buff_type::RESUSCITATE:
-		return pair<string, size_t>(string("resuscitate"), 1);
+		return pair<string, size_t>(string("resuscitate"), 5);
 	case buff_type::ABILITY_BURN:
-		return pair<string, size_t>(string("ability_burn"), 1);
+		return pair<string, size_t>(string("ability_burn"), 3);
 	case buff_type::SCORCHED_EARTH:
-		return pair<string, size_t>(string("scorched_earth"), 1);
+		return pair<string, size_t>(string("scorched_earth"), 3);
+	case buff_type::SHELL:
+		return pair<string, size_t>(string("SHELL"), 5);
+	case buff_type::LOADED:
+		return pair<string, size_t>(string("LOADED"), 4);
+	case buff_type::PAIN:
+		return pair<string, size_t>(string("PAIN"), 3);
+	case buff_type::CULTIST_RITE:
+		return pair<string, size_t>(string("CULTIST_RITE"), 4);
+	case buff_type::PAIN_CURSE:
+		return pair<string, size_t>(string("PAIN_CURSE"), 5);
+	case buff_type::CORRUPT:
+		return pair<string, size_t>(string("CORRUPT"), 3);
+	case buff_type::FEAST:
+		return pair<string, size_t>(string("FEAST"), 3);
+	case buff_type::MARK:
+		return pair<string, size_t>(string("MARK"), 3);
+	case buff_type::ANGER:
+		return pair<string, size_t>(string("sANGER"), 3);
 	default:
-		return pair<string, size_t>(string("fuck"), 2);
+		return pair<string, size_t>(string("id can not found"), 6);
+#ifdef _DEBUG
 		//throw exception("failed to find buff id");
+#endif // _DEBUG
+
 	}
 }
 
