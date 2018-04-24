@@ -170,10 +170,111 @@ std::size_t game_entity::has_buff(std::size_t id)
 enemy::enemy(data_sys&d, std::size_t id)
 	:game_entity(d), enemy_id(id)
 {
-	max_hp = 45;
-	current_hp = 45;
 	max_ap = 0;
 	current_ap = 0;
+	switch (enemy_id)
+	{
+	case 1:
+		max_hp = current_hp = 20;
+	case 2:
+		max_hp = current_hp = 15;
+	case 3:
+		max_hp = current_hp = 18;
+	case 4:
+		max_hp = current_hp = 30;
+	case 5:
+		max_hp = current_hp = 60;
+	case 6:
+		max_hp = current_hp = 18;
+	case 7:
+		max_hp = current_hp = 25;
+	case 8:
+		max_hp = current_hp = 20;
+	case 9:
+		max_hp = current_hp = 20;
+	case 10:
+		max_hp = current_hp = 25;
+	case 11:
+		max_hp = current_hp = 80;
+	case 12:
+		max_hp = current_hp = 22;
+	case 13:
+		max_hp = current_hp = 24;
+	case 14:
+		max_hp = current_hp = 16;
+	case 15:
+		max_hp = current_hp = 20;
+	case 16:
+		max_hp = current_hp = 50;
+	case 17:
+		max_hp = current_hp = 48;
+	case 18:
+		max_hp = current_hp = 15;
+	case 19:
+		max_hp = current_hp = 18;
+	case 20:
+		max_hp = current_hp = 18;
+	case 21:
+		max_hp = current_hp = 15;
+	case 22:
+		max_hp = current_hp = 20;
+	case 23:
+		max_hp = current_hp = 35;
+	case 24:
+		max_hp = current_hp = 14;
+	case 25:
+		max_hp = current_hp = 77;
+	case 26:
+		max_hp = current_hp = 33;
+	case 27:
+		max_hp = current_hp = 23;
+	case 28:
+		max_hp = current_hp = 30;
+	case 29:
+		max_hp = current_hp = 20;
+	case 30:
+		max_hp = current_hp = 48;
+	case 31:
+		max_hp = current_hp = 10;
+	case 32:
+		max_hp = current_hp = 40;
+	case 33:
+		max_hp = current_hp = 12;
+	case 34:
+		max_hp = current_hp = 12;
+	case 35:
+		max_hp = current_hp = 50;
+	case 36:
+		max_hp = current_hp = 12;
+	case 37:
+		max_hp = current_hp = 22;
+	case 38:
+		max_hp = current_hp = 25;
+	case 39:
+		max_hp = current_hp = 8;
+	case 40:
+		max_hp = current_hp = 70;
+	case 41:
+		max_hp = current_hp = 14;
+	case 42:
+		max_hp = current_hp = 25;
+	case 43:
+		max_hp = current_hp = 15;
+	case 44:
+		max_hp = current_hp = 40;
+	case 45:
+		max_hp = current_hp = 80;
+	case 46:
+		max_hp = current_hp = 8;
+	case 47:
+		max_hp = current_hp = 30;
+	case 48:
+		max_hp = current_hp = 60;
+	case 49:
+		max_hp = current_hp = 13;
+	default:
+		max_hp = current_hp = 45;
+	}
 }
 
 enemy::~enemy()

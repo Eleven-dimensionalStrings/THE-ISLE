@@ -1009,19 +1009,19 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 1004://酒馆part3
 	{
-		info_to_explore_sys result(my_vector<e_action>{e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(20, 22)),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(20, 22))});
+		info_to_explore_sys result(my_vector<e_action>{e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 4)),
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(12, 15))});
 		if (re.chance(50))
 		{
-			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(23, 24)));
-		}
-		if (re.chance(50))
-		{
-			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 1)));
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 4)));
 		}
 		if (re.chance(25))
 		{
-			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(23, 24)));
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(5, 5)));
+		}
+		if (re.chance(25))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(16, 17)));
 		}
 		result.append(e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS));
 		result.append(e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
@@ -1303,16 +1303,16 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	case 1022://山贼part2
 	{
 		info_to_explore_sys result(my_vector<e_action>{
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 2)),
-				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 2)),
-				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 2))});
-		if (re.chance(75))
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 1)),
+				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 1)),
+				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(12, 15))});
+		if (re.chance(25))
 		{
-			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 2)));
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(5, 5)));
 		}
-		if (re.chance(50))
+		if (re.chance(25))
 		{
-			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(3, 3)));
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(16, 17)));
 		}
 		result.append(e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS));
 		result.append(e_action(explore_action_type::EVENT_BODY, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
@@ -1328,15 +1328,19 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	case 1023://哨所part2
 	{
 		info_to_explore_sys result(my_vector<e_action>{
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(4, 10)),
-				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(11, 12))});
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(6, 9)),
+				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(46, 47))});
 		if (re.chance(20))
 		{
-			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(4, 10)));
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(48, 48)));
 		}
 		if (re.chance(20))
 		{
-			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(11, 12)));
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(10, 11)));
+		}
+		if (re.chance(10))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(33, 34)));
 		}
 		result.append(e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS));
 		result.append(e_action(explore_action_type::EVENT_BODY, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
@@ -1352,15 +1356,19 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	case 1024://珊瑚洞窟part2
 	{
 		info_to_explore_sys result(my_vector<e_action>{
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(25, 31)),
-				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(29, 30))});
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(36, 39)),
+				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(41, 44))});
 		if (re.chance(40))
 		{
-			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(25, 31)));
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(40, 45)));
 		}
 		if (re.chance(25))
 		{
-			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(29, 30)));
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(31, 32)));
+		}
+		if (re.chance(25))
+		{
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(35, 35)));
 		}
 		result.append(e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
 		result.append(e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS));
@@ -1376,19 +1384,19 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	case 1025://地窖洞窟part2
 	{
 		info_to_explore_sys result(my_vector<e_action>{
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(13, 17)),
-				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(13, 17))});
+			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(18, 24)),
+				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(18, 24))});
 		if (re.chance(80))
 		{
-			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(18, 19)));
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(18, 24)));
 		}
-		if (re.chance(40))
+		if (re.chance(30))
 		{
-			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(13, 17)));
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(25, 30)));
 		}
 		if (re.chance(20))
 		{
-			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(18, 19)));
+			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(25, 30)));
 		}
 		result.append(e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS));
 		result.append(e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
@@ -1502,7 +1510,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 2));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 2)});
 		}
 		break;
 	}
@@ -1510,7 +1519,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (passed_turns % 2 == 1)
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::LOADED, 1));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::LOADED, 1)});
 		}
 		else
 		{
@@ -1530,12 +1540,13 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		{
 			if (re.chance(75))
 			{
-				return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos],
-					&enemies_data[re.get_other_enemy(pos)], buff_type::ARMOR, 10));
+				return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+					action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[re.get_other_enemy(pos)], buff_type::ARMOR, 10)});
 			}
 			else
 			{
-				return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 2));
+				return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+					action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 2)});
 			}
 		}
 		else
@@ -1554,7 +1565,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			info_to_battle_sys result;
+			info_to_battle_sys result(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0));
 			for (int i = 0; i < enemies_data.size(); ++i)
 			{
 				if (i != pos)
@@ -1575,11 +1586,13 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else if (re.chance(50))
 		{
-			return action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 2);
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 2)});
 		}
 		else
 		{
-			return action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::FRAGILE, 2);
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::FRAGILE, 2)});
 		}
 		break;
 	}
@@ -1603,9 +1616,9 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		if (has_other_enemy(pos))
 		{
 			int target = re.get_other_enemy(pos);
-			return info_to_battle_sys(my_vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[pos],
-				&enemies_data[target], buff_type::ARMOR, 15), action(battle_action_type::ADD_BUFF, &enemies_data[pos],
-					&enemies_data[target], buff_type::STRENGTH, 2)});
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[target], buff_type::ARMOR, 15),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[target], buff_type::STRENGTH, 2)});
 		}
 		else
 		{
@@ -1619,12 +1632,13 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		{
 			if (re.chance(50))
 			{
-				return info_to_battle_sys(action(battle_action_type::CALLING_ACTION, &enemies_data[pos],
-					&enemies_data[re.get_other_enemy(pos)], type_type::ADD_HP, 16));
+				return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+					action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &enemies_data[re.get_other_enemy(pos)], type_type::ADD_HP, 16)});
 			}
 			else
 			{
-				return info_to_battle_sys(my_vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 2),
+				return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+					action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 2),
 					action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::FRAGILE, 1)});
 			}
 		}
@@ -1638,7 +1652,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (passed_turns == 0)
 		{
-			info_to_battle_sys result;
+			info_to_battle_sys result(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0));
 			for (int i = 0; i < enemies_data.size(); ++i)
 			{
 				result.append(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[i], buff_type::STRENGTH, 2));
@@ -1649,7 +1663,7 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		{
 			if (re.chance(50))
 			{
-				info_to_battle_sys result;
+				info_to_battle_sys result(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0));
 				for (int i = 0; i < enemies_data.size(); ++i)
 				{
 					result.append(action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &enemies_data[i], type_type::ADD_HP, 10));
@@ -1671,7 +1685,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 			{
 				for (int i = 0; i < enemies_data.size(); ++i)
 				{
-					return info_to_battle_sys(my_vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[i], &enemies_data[i], buff_type::ARMOR, 10),
+					return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+						action(battle_action_type::ADD_BUFF, &enemies_data[i], &enemies_data[i], buff_type::ARMOR, 10),
 						action(battle_action_type::ADD_BUFF, &enemies_data[i], &enemies_data[i], buff_type::STRENGTH, 2)});
 				}
 			}
@@ -1710,7 +1725,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(my_vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 2),
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 2),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 2)});
 		}
 		break;
@@ -1719,12 +1735,14 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (re.chance(50))
 		{
-			return info_to_battle_sys(my_vector<action>{action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 2),
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 2),
 				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 2)});
 		}
 		else if (re.chance(50))
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 2));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 2)});
 		}
 		else
 		{
@@ -1741,7 +1759,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(my_vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 3),
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 3),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::PAIN, 3)});
 		}
 		break;
@@ -1812,7 +1831,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (passed_turns % 2 == 1)
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::LOADED, 1));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::LOADED, 1)});
 		}
 		else
 		{
@@ -1826,8 +1846,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (has_other_enemy(pos))
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos],
-				&enemies_data[re.get_other_enemy(pos)], buff_type::STRENGTH, 2));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[re.get_other_enemy(pos)], buff_type::STRENGTH, 2)});
 		}
 		else
 		{
@@ -1841,8 +1861,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		{
 			if (re.chance(50))
 			{
-				return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos],
-					&enemies_data[re.get_other_enemy(pos)], buff_type::ARMOR, 10));
+				return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+					action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[re.get_other_enemy(pos)], buff_type::ARMOR, 10)});
 			}
 			else
 			{
@@ -1866,7 +1886,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (passed_turns == 0)
 		{
-			return info_to_battle_sys(my_vector<action>{action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 402),
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 402),
 				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 402),
 				action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 402),
 				action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 402)});
@@ -1881,7 +1902,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (passed_turns == 0)
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::CULTIST_RITE, 3));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::CULTIST_RITE, 3)});
 		}
 		else
 		{
@@ -1893,7 +1915,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (passed_turns == 0)
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::PAIN_CURSE, 3));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::PAIN_CURSE, 3)});
 		}
 		else if (re.chance(40))
 		{
@@ -1901,7 +1924,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(my_vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 2),
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 2),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::FRAGILE, 2)});
 		}
 		break;
@@ -1910,7 +1934,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (passed_turns == 0)
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::CULTIST_RITE, 3));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::CULTIST_RITE, 3)});
 		}
 		else
 		{
@@ -1924,11 +1949,13 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (passed_turns == 0)
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::PAIN_CURSE, 3));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::PAIN_CURSE, 3)});
 		}
 		else if (passed_turns == 1)
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::FRAGILE, 99));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::FRAGILE, 99)});
 		}
 		else
 		{
@@ -1963,7 +1990,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 2));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 2)});
 		}
 		break;
 	}
@@ -1971,11 +1999,13 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (passed_turns == 0)
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::FEAST, 5));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::FEAST, 5)});
 		}
 		else if (passed_turns % 3 == 1)
 		{
-			return info_to_battle_sys(my_vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::STRENGTH, 2),
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::STRENGTH, 2),
 				action(battle_action_type::REMOVE_BUFF, &enemies_data[pos], &player_data, buff_type::DEXTERITY, 2)});
 		}
 		else
@@ -2007,7 +2037,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else if (passed_turns % 3 == 1)
 		{
-			return info_to_battle_sys(my_vector<action>{action(battle_action_type::REMOVE_BUFF, &enemies_data[pos], &player_data, buff_type::STRENGTH, 1),
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::REMOVE_BUFF, &enemies_data[pos], &player_data, buff_type::STRENGTH, 1),
 				action(battle_action_type::REMOVE_BUFF, &enemies_data[pos], &player_data, buff_type::DEXTERITY, 1),
 				action(battle_action_type::REMOVE_BUFF, &enemies_data[pos], &player_data, buff_type::VITALITY, 1)});
 		}
@@ -2031,7 +2062,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 405));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_CARD_TO_GRAVE, &enemies_data[pos], &player_data, card_type::STAT, 405)});
 		}
 		break;
 	}
@@ -2043,7 +2075,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 406));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_CARD_TO_DECK, &enemies_data[pos], &player_data, card_type::STAT, 406)});
 		}
 		break;
 	}
@@ -2056,7 +2089,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(my_vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::STRENGTH, 2),
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::STRENGTH, 2),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::ARMOR, 10)});
 		}
 		break;
@@ -2065,7 +2099,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (passed_turns % 4 == 0)
 		{
-			return info_to_battle_sys(my_vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 2),
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 2),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 2),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::FRAGILE, 2)});
 		}
@@ -2092,7 +2127,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::CHAIN, 3));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::CHAIN, 3)});
 		}
 		break;
 	}
@@ -2128,7 +2164,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (re.chance(60))
 		{
-			return info_to_battle_sys(my_vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::ARMOR, 20),
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::ARMOR, 20),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::WEAK, 2)});
 		}
 		else
@@ -2141,7 +2178,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (passed_turns == 0)
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::SHELL, 8));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::SHELL, 8)});
 		}
 		else if (re.chance(60))
 		{
@@ -2158,7 +2196,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (passed_turns % 2 == 0)
 		{
-			return info_to_battle_sys(my_vector<action>{action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::MARK, 1),
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::MARK, 1),
 				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &player_data, buff_type::VULNERABLE, 1)});
 		}
 		else
@@ -2184,7 +2223,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 	{
 		if (passed_turns == 0)
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::ANGER, 1));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::ANGER, 1)});
 		}
 		else
 		{
@@ -2210,7 +2250,8 @@ info_to_battle_sys data_sys::enemy_act(std::size_t pos)
 		}
 		else
 		{
-			return info_to_battle_sys(action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::STRENGTH, 1));
+			return info_to_battle_sys(my_vector<action>{action(battle_action_type::CALLING_ACTION, &enemies_data[pos], &player_data, type_type::NORMAL, 0),
+				action(battle_action_type::ADD_BUFF, &enemies_data[pos], &enemies_data[pos], buff_type::STRENGTH, 1)});
 		}
 		break;
 	}
@@ -2454,28 +2495,28 @@ IMAGE & data_sys::get_entity_pic(int id, int status)
 	case 0:
 		return entities[status];
 		break;
-	case 1: case 2: case 20: case 21: case 22:
+	case 1: case 2: case 3:case 4: case 12: case 13: case 14: case 15:
 		return entities[10 + status];
 		break;
-	case 3: case 23: case 24:
+	case 5: case 16: case 17:
 		return entities[13 + status];
 		break;
-	case 4: case 5: case 6: case 7: case 8: case 9: case 10:
+	case 6: case 7: case 8: case 9: case 46: case 47: case 33: case 34:
 		return entities[4 + status];
 		break;
-	case 11: case 12:
+	case 10: case 11: case 48:
 		return entities[7 + status];
 		break;
-	case 13: case 14: case 15: case 16: case 17:
+	case 18: case 19: case 20: case 21: case 22: case 23: case 24:
 		return entities[25 + status];
 		break;
-	case 18: case 19:
+	case 25: case 26: case 27: case 28: case 29: case 30:
 		return entities[22 + status];
 		break;
-	case 25: case 26: case 27: case 28: case 31:
+	case 36: case 37: case 38: case 39: case 41: case 42: case 43: case 44:
 		return entities[16 + status];
 		break;
-	case 29: case 30:
+	case 40: case 45: case 31: case 32: case 35:
 		return entities[19 + status];
 		break;
 	default:
@@ -2491,28 +2532,28 @@ IMAGE & data_sys::get_entity_mask_pic(int id, int status)
 	case 0:
 		return entities[28 + status];
 		break;
-	case 1: case 2: case 20: case 21: case 22:
+	case 1: case 2: case 3:case 4: case 12: case 13: case 14: case 15:
 		return entities[37 + status];
 		break;
-	case 3: case 23: case 24:
+	case 5: case 16: case 17:
 		return entities[40 + status];
 		break;
-	case 4: case 5: case 6: case 7: case 8: case 9: case 10:
+	case 6: case 7: case 8: case 9: case 46: case 47: case 33: case 34:
 		return entities[31 + status];
 		break;
-	case 11: case 12:
+	case 10: case 11: case 48:
 		return entities[34 + status];
 		break;
-	case 13: case 14: case 15: case 16: case 17:
+	case 18: case 19: case 20: case 21: case 22: case 23: case 24:
 		return entities[52 + status];
 		break;
-	case 18: case 19:
+	case 25: case 26: case 27: case 28: case 29: case 30:
 		return entities[49 + status];
 		break;
-	case 25: case 26: case 27: case 28: case 31:
+	case 36: case 37: case 38: case 39: case 41: case 42: case 43: case 44:
 		return entities[43 + status];
 		break;
-	case 29: case 30:
+	case 40: case 45: case 31: case 32: case 35:
 		return entities[46 + status];
 		break;
 	default:
