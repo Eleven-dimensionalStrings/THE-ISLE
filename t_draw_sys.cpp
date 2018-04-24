@@ -147,46 +147,35 @@ void t_draw_sys::__draw_buff()
 	for (int pos = 0; pos < data.enemies_data.size(); ++pos)
 	{
 		pool.clear();
-		for (auto& i : data.enemies_data[pos].buff_pool)
+		if (data.enemies_data[pos].is_alive())
 		{
-			if (i.visible)
+			for (auto& i : data.enemies_data[pos].buff_pool)
 			{
-				pool.push_back(i);
+				if (i.visible)
+				{
+					pool.push_back(i);
+				}
 			}
-		}
-		for (int i = 0; i <= (static_cast<int>(pool.size()) - 1) / 4; ++i)
-		{
-			for (int j = 0; j < (pool.size() - i * 4) % 4; ++j)
+			for (int i = 0; i <= (static_cast<int>(pool.size()) - 1) / 4; ++i)
 			{
-				putimage(pos*(gra_size::enemy_width + gra_size::enemy_closure) + gra_size::enemy_x +
-					(gra_size::buff_side_len + gra_size::buff_closure)*j,
-					gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
-					&data.get_buff_mask_pic(pool[i * 4 + j].buff_id), SRCPAINT);
-				putimage(pos*(gra_size::enemy_width + gra_size::enemy_closure) + gra_size::enemy_x +
-					(gra_size::buff_side_len + gra_size::buff_closure)*j,
-					gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
-					&data.get_buff_pic(pool[i * 4 + j].buff_id), SRCAND);
+				for (int j = 0; j < (pool.size() - i * 4) % 4; ++j)
+				{
+					putimage(pos*(gra_size::enemy_width + gra_size::enemy_closure) + gra_size::enemy_x +
+						(gra_size::buff_side_len + gra_size::buff_closure)*j,
+						gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
+						&data.get_buff_mask_pic(pool[i * 4 + j].buff_id), SRCPAINT);
+					putimage(pos*(gra_size::enemy_width + gra_size::enemy_closure) + gra_size::enemy_x +
+						(gra_size::buff_side_len + gra_size::buff_closure)*j,
+						gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
+						&data.get_buff_pic(pool[i * 4 + j].buff_id), SRCAND);
 
-				settextstyle(12, 0, _T("Arial"));
-				outtextxy(pos*(gra_size::enemy_width + gra_size::enemy_closure) +
-					gra_size::enemy_x + (gra_size::buff_side_len + gra_size::buff_closure)*j + 25,
-					gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i + 23,
-					&to_string(pool[i * 4 + j].buff_level)[0]);
-				settextstyle(20, 0, _T("Arial"));
-
-
-				/*solidrectangle(pos*(gra_size::enemy_width + gra_size::enemy_closure) + gra_size::enemy_x +
-					(gra_size::buff_side_len + gra_size::buff_closure)*j,
-					gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
-					pos*(gra_size::enemy_width + gra_size::enemy_closure) +
-					gra_size::enemy_x + gra_size::buff_side_len*(j + 1) + gra_size::buff_closure*j,
-					gra_size::enemy_y + 205 + gra_size::buff_side_len*(i + 1) + gra_size::buff_closure*i);
-				settextstyle(12, 0, _T("Arial"));
-				outtextxy(pos*(gra_size::enemy_width + gra_size::enemy_closure) +
-					gra_size::enemy_x + (gra_size::buff_side_len + gra_size::buff_closure)*j + 10,
-					gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i + 8,
-					&to_string(pool[i * 8 + j].buff_level)[0]);
-				settextstyle(20, 0, _T("Arial"));*/
+					settextstyle(12, 0, _T("Arial"));
+					outtextxy(pos*(gra_size::enemy_width + gra_size::enemy_closure) +
+						gra_size::enemy_x + (gra_size::buff_side_len + gra_size::buff_closure)*j + 25,
+						gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i + 23,
+						&to_string(pool[i * 4 + j].buff_level)[0]);
+					settextstyle(20, 0, _T("Arial"));
+				}
 			}
 		}
 	}
