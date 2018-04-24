@@ -12,7 +12,6 @@ player::player(data_sys &d) :game_entity(d)
 
 player::~player()
 {
-	//TODO
 }
 
 void player::initiate(my_container::my_vector<card>&card_pool, my_container::my_vector<artifact>&artifact_list)
@@ -99,9 +98,6 @@ info_to_battle_sys game_entity::calling_action(action iaction)
 
 info_to_battle_sys game_entity::performing_action(action iaction)
 {
-	//TODO
-
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if (!is_alive())
 		return info_to_battle_sys();
 	info_to_battle_sys result(iaction);
@@ -182,7 +178,6 @@ enemy::enemy(data_sys&d, std::size_t id)
 
 enemy::~enemy()
 {
-	//TODO
 }
 
 

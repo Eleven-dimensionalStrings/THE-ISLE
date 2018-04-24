@@ -386,7 +386,6 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 			{
 				if (buff_level < 0)
 				{
-					//TODO
 					t.value -= static_cast<std::size_t>((-1) * buff_level);
 				}
 				else
@@ -501,7 +500,6 @@ info_to_battle_sys buff::on_performing(info_to_battle_sys temp)
 
 info_to_explore_sys buff::on_battle_end(game_entity *)
 {
-	//TODO
 	return info_to_explore_sys();
 }
 

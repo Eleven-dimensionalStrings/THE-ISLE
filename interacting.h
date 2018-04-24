@@ -27,7 +27,7 @@ public:
 	void change_to_vaccant_state();
 	data_sys& get_data();
 private:
-	b_state *cur_state;
+	b_state * cur_state;
 };
 
 class e_state;
@@ -43,7 +43,7 @@ public:
 	void read_input()override;
 	data_sys& get_data();
 private:
-	e_state *cur_state;
+	e_state * cur_state;
 };
 
 class b_state
@@ -165,7 +165,5 @@ public:
 	explore_context* present_explore_context;
 	void move_player(int x, int y);
 	void set_map_location(int x, int y, int mark_type);
-	void reveal_map_location(int x, int y);
-	//void encounter_event(std::size_t event_id);
 	void update();
 };

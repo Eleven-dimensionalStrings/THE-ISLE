@@ -160,8 +160,7 @@ void explore_system::create_map(std::size_t map_type)
 			else
 			{
 				data.map_marks[j][i] = map_mark_type::UNKNOWN;
-				//data.explore_map[j][i] = t.get_event(map_type);
-				data.explore_map[j][i] = 12;//TODO test
+				data.explore_map[j][i] = t.get_event(map_type);
 			}
 		}
 	}
@@ -454,7 +453,6 @@ void explore_system::process()
 			if (temp.restriction(&data))
 			{
 				data.choice_list.push_back(temp.to_event_body());
-				//TODO
 				if (temp.text != -1)
 					data.choice_name_list.push_back(temp.text);
 			}
@@ -531,12 +529,12 @@ size_t e_random_engine::get_event(size_t map_type)
 	switch (map_type)
 	{
 	case 1:
-		lb = 2;
-		ub = 12;
+		lb = 1;
+		ub = 21;
 		break;
 	default:
-		lb = 2;
-		ub = 9;
+		lb = 1;
+		ub = 21;
 		break;
 	}
 	uniform_int_distribution<int> ran(lb, ub);

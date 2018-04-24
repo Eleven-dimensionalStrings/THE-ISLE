@@ -20,7 +20,6 @@ class t_draw_sys
 	void __draw_battle_info();//three buttons on the right and ap on the left
 	void __draw_explore_map();
 	void __draw_buff(); // on below every game_entity, has two rows
-	void __draw_artifacts();//on top of window, has two rows
 	void __get_atk_entities();//get pair of caller and listener from pipe on data_sys
 	void __draw_guiding_pics();//static pics used to remind the player of the hotkeys
 
