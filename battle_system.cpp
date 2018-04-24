@@ -214,16 +214,10 @@ void battle_system::deal_an_action()
 				temp.listener->buff_pool.erase(it);
 				send_message(ti.on_delete(temp.caller, temp.listener));
 			}
-			/*auto it = temp.listener->buff_pool.end();
-			if ((it = temp.listener->find_buff(temp.type)) != temp.listener->buff_pool.end())
-			{
-				*it += buff(temp.type, temp.value);
-				break;
-			}
 			else
 			{
 				*it -= buff(temp.type, temp.value);
-			}*/
+			}
 			break;
 		}
 		else if (temp.type == buff_type::STRENGTH || temp.type == buff_type::DEXTERITY || temp.type == buff_type::VITALITY)

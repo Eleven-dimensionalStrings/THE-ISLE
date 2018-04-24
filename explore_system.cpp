@@ -54,6 +54,10 @@ void explore_system::end_battle()
 				process_stack.push(e_action(EVENT_BODY, AQUIRE_HIT_POINTS, 5));
 			}
 		}
+		if (data.next_event_id != 0 && data.next_event_id != MEANINGLESS_VALUE)
+		{
+			this->send_message(e_action(ENCOUNTER_EVENT, MEANINGLESS_VALUE, data.next_event_id));
+		}
 		this->process();
 	}
 }
@@ -202,6 +206,11 @@ void explore_system::process()
 			}
 			switch (temp.type)
 			{
+			case SET_MANDETORY:
+			{
+				data.event_is_not_mandetory = true;
+				break;
+			}
 			case PURE_TEXT:
 			{
 				//nothing happens but display the text
@@ -224,6 +233,7 @@ void explore_system::process()
 					initiate_info.append(data.enemy_battle_start(data.enemies_data[i].enemy_id));
 				}
 				data.e_to_b_pipe = initiate_info;
+				data.is_vaccant = 0;
 				data.is_battle = 1;
 				break;
 			}

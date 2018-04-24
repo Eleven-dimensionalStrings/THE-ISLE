@@ -239,7 +239,7 @@ info_to_battle_sys buff::on_turn_end(game_entity* p)
 	}
 	case buff_type::FRAGILE:
 	{
-		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, 1));;
+		result.append(action(battle_action_type::REMOVE_BUFF, p, p, buff_id, 1));
 		break;
 	}
 	case buff_type::BLEED:
@@ -346,6 +346,19 @@ info_to_battle_sys buff::on_calling(info_to_battle_sys temp)
 			if (t.action_id == battle_action_type::CALLING_ACTION && (t.type == type_type::NORMAL
 				|| t.type == type_type::FLAME || (t.type > 100 && t.type < 500)))
 				temp.action_set.push_back(action(battle_action_type::ADD_BUFF, t.caller, t.listener, buff_type::BURN, buff_level));
+		}
+		break;
+	}
+	case buff_type::WEAK:
+	{
+		for (int i = 0; i < temp.action_set.size(); ++i)
+		{
+			action &t = (temp.action_set[i]);
+			if (t.action_id == battle_action_type::CALLING_ACTION && (t.type == type_type::NORMAL
+				|| t.type == type_type::FLAME || (t.type > 100 && t.type < 500)))
+			{
+				t.value *= 0.75;
+			}
 		}
 		break;
 	}

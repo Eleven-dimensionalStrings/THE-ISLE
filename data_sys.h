@@ -18,7 +18,7 @@ public:
 	size_t get_other_enemy(int pos);
 	bool chance(std::size_t c);
 	bool chance_luck_increase(std::size_t c);
-	bool chance_luck_decrease(std::size_t c); 
+	bool chance_luck_decrease(std::size_t c);
 	std::default_random_engine e;
 	data_sys* data;
 };
@@ -64,6 +64,7 @@ public:
 	my_container::my_vector<IMAGE> body;
 	my_container::my_vector<IMAGE> end;
 	my_container::my_vector<IMAGE> select;
+	my_container::my_vector<IMAGE> artifact_pics;
 	std::array<bool, MAX_CARDS_IN_HAND>render_select_card;
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
