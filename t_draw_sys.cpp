@@ -1,5 +1,6 @@
 #include "t_draw_sys.h"
 #include <string>
+#include <iomanip>
 using namespace std; using namespace my_container;
 inline pair<int, int> enemy_pos(size_t pos)
 {
@@ -132,7 +133,7 @@ void t_draw_sys::__draw_buff()
 				&data.get_buff_mask_pic(pool[i * 4 + j].buff_id), SRCPAINT);
 			putimage(gra_size::player_x + (gra_size::buff_side_len + gra_size::buff_closure)*j,
 				gra_size::player_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
-				&data.get_buff_mask_pic(pool[i * 4 + j].buff_id), SRCAND);
+				&data.get_buff_pic(pool[i * 4 + j].buff_id), SRCAND);
 
 			settextstyle(12, 0, _T("Arial"));
 			outtextxy(gra_size::player_x + (gra_size::buff_side_len + gra_size::buff_closure)*j + 25,
@@ -153,11 +154,28 @@ void t_draw_sys::__draw_buff()
 				pool.push_back(i);
 			}
 		}
-		for (int i = 0; i <= (static_cast<int>(pool.size()) - 1) / 8; ++i)
+		for (int i = 0; i <= (static_cast<int>(pool.size()) - 1) / 4; ++i)
 		{
-			for (int j = 0; j < (pool.size() - i * 8) % 8; ++j)
+			for (int j = 0; j < (pool.size() - i * 4) % 4; ++j)
 			{
-				solidrectangle(pos*(gra_size::enemy_width + gra_size::enemy_closure) + gra_size::enemy_x +
+				putimage(pos*(gra_size::enemy_width + gra_size::enemy_closure) + gra_size::enemy_x +
+					(gra_size::buff_side_len + gra_size::buff_closure)*j,
+					gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
+					&data.get_buff_mask_pic(pool[i * 4 + j].buff_id), SRCPAINT);
+				putimage(pos*(gra_size::enemy_width + gra_size::enemy_closure) + gra_size::enemy_x +
+					(gra_size::buff_side_len + gra_size::buff_closure)*j,
+					gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
+					&data.get_buff_pic(pool[i * 4 + j].buff_id), SRCAND);
+
+				settextstyle(12, 0, _T("Arial"));
+				outtextxy(pos*(gra_size::enemy_width + gra_size::enemy_closure) +
+					gra_size::enemy_x + (gra_size::buff_side_len + gra_size::buff_closure)*j + 25,
+					gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i + 23,
+					&to_string(pool[i * 4 + j].buff_level)[0]);
+				settextstyle(20, 0, _T("Arial"));
+
+
+				/*solidrectangle(pos*(gra_size::enemy_width + gra_size::enemy_closure) + gra_size::enemy_x +
 					(gra_size::buff_side_len + gra_size::buff_closure)*j,
 					gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i,
 					pos*(gra_size::enemy_width + gra_size::enemy_closure) +
@@ -168,7 +186,7 @@ void t_draw_sys::__draw_buff()
 					gra_size::enemy_x + (gra_size::buff_side_len + gra_size::buff_closure)*j + 10,
 					gra_size::enemy_y + 205 + (gra_size::buff_side_len + gra_size::buff_closure)*i + 8,
 					&to_string(pool[i * 8 + j].buff_level)[0]);
-				settextstyle(20, 0, _T("Arial"));
+				settextstyle(20, 0, _T("Arial"));*/
 			}
 		}
 	}
@@ -212,17 +230,17 @@ void t_draw_sys::__draw_player()
 	if (!draw_queue.empty())drawing = this->draw_queue.front();
 	if (drawing.first == 666)
 	{
-		putimage(gra_size::player_x, gra_size::player_y, &data.entities[11], SRCPAINT);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[29], SRCPAINT);
 		putimage(gra_size::player_x, gra_size::player_y, &data.entities[2], SRCAND);
 	}
 	else if (drawing.second == 666)
 	{
-		putimage(gra_size::player_x, gra_size::player_y, &data.entities[12], SRCPAINT);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[30], SRCPAINT);
 		putimage(gra_size::player_x, gra_size::player_y, &data.entities[3], SRCAND);
 	}
 	else
 	{
-		putimage(gra_size::player_x, gra_size::player_y, &data.entities[10], SRCPAINT);
+		putimage(gra_size::player_x, gra_size::player_y, &data.entities[28], SRCPAINT);
 		putimage(gra_size::player_x, gra_size::player_y, &data.entities[1], SRCAND);
 	}
 }
@@ -260,11 +278,11 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 			&to_string(data.enemies_data[pos].max_hp)[0]);
 		setfillcolor(RED);
 		solidrectangle(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 60, gra_size::enemy_y - 25,
-			gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 210, gra_size::enemy_y - 15);
+			gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 180, gra_size::enemy_y - 15);
 		setfillcolor(LIGHTGREEN);
 		solidrectangle(gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 60, gra_size::enemy_y - 25,
 			gra_size::enemy_x + (gra_size::enemy_width + gra_size::enemy_closure) * pos + 60 +
-			((static_cast<double>(data.enemies_data[pos].current_hp) / static_cast<double>(data.enemies_data[pos].max_hp)) * 150)
+			((static_cast<double>(data.enemies_data[pos].current_hp) / static_cast<double>(data.enemies_data[pos].max_hp)) * 120)
 			, gra_size::enemy_y - 15);
 		setfillcolor(LIGHTBLUE);
 	}
@@ -511,7 +529,7 @@ void t_draw_sys::load_all()
 		loadimage(&data.entities[i], &(".\\resource\\entities\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
 	}
-	for (int i = 0; i < 47; ++i)
+	for (int i = 0; i < 49; ++i)
 	{
 		IMAGE t;
 		loadimage(&t, &(".\\resource\\explore\\body\\" + to_string(i) + ".bmp" + '\0')[0]);
@@ -523,7 +541,7 @@ void t_draw_sys::load_all()
 		loadimage(&t, &(".\\resource\\explore\\end\\" + to_string(i) + ".bmp" + '\0')[0]);
 		data.end.push_back(std::move(t));
 	}
-	for (int i = 0; i < 20; ++i)
+	for (int i = 0; i < 22; ++i)
 	{
 		IMAGE t;
 		loadimage(&t, &(".\\resource\\explore\\select\\" + to_string(i) + ".bmp" + '\0')[0]);
@@ -600,27 +618,27 @@ void t_draw_sys::t_draw_e()
 				{
 				case map_mark_type::EMPTY:
 				{
-					cout << " ";
+					cout << setw(3) << " ";
 					break;
 				}
 				case map_mark_type::KNOWN:
 				{
-					cout << "K";
+					cout << setw(3) << "K";
 					break;
 				}
 				case map_mark_type::PLAYER:
 				{
-					cout << "P";
+					cout << setw(3) << "P";
 					break;
 				}
 				case map_mark_type::UNKNOWN:
 				{
-					cout << data.explore_map[j][i];
+					cout << setw(3) << data.explore_map[j][i];
 					break;
 				}
 				case map_mark_type::VISITED:
 				{
-					cout << "V";
+					cout << setw(3) << "V";
 					break;
 				}
 				}

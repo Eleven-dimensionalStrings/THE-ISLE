@@ -1248,9 +1248,9 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	case 13://扳手腕
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  31 ),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1019,  15 ),
-				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1020,  16 )});
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 31),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1019, 15),
+				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1020, 16)});
 		break;
 	}
 	case 1019://扳手腕part2
@@ -1258,48 +1258,54 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 		if (strength >= 1)
 		{
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_GOLD, 100,  32 ),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, END,  17 ,  17 )});
+				e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_GOLD, 100, 32),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 17, 17)});
 		}
 		else if (re.chance(25))
 		{
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_GOLD, 100,  32 ),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, END,  17 ,  17 )});
+				e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_GOLD, 100, 32),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 17, 17)});
 		}
 		else
 		{
 			return info_to_explore_sys(my_vector<e_action>{
-				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_HIT_POINTS, 10,  33 ),
-					e_action(explore_action_type::SELECTION, event_type::PROCEED, END,  0 ,  18 )});
+				e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_HIT_POINTS, 10, 33),
+					e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0, 18)});
 		}
 		break;
 	}
 	case 1020://扳手腕part2
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 50,  34 ),
+			e_action(explore_action_type::EVENT_BODY, event_type::REMOVE_GOLD, 50, 34),
 				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0)});
 	}
 	case 14://瞭望塔
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  35 ),
+			e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 35),
 				e_action(explore_action_type::SELECTION, event_type::PROCEED, 1021, 18),
 				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0)});
 	}
 	case 1021://瞭望塔part2
 	{
 		return info_to_explore_sys(my_vector<e_action>{
-			e_action(explore_action_type::EVENT_BODY, event_type::REVEAL_MAP, 5,  36 ),
+			e_action(explore_action_type::EVENT_BODY, event_type::REVEAL_MAP, 5, 36),
 				e_action(explore_action_type::SELECTION, event_type::PROCEED, END, 0)});
 	}
 	case 15://山贼
 	{
-		info_to_explore_sys result(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,37),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 37),
+			e_action(explore_action_type::SELECTION, event_type::PROCEED, 1022, 4)});
+		break;
+	}
+	case 1022://山贼part2
+	{
+		info_to_explore_sys result(my_vector<e_action>{
 			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 2)),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 2)),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 2))});
+				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 2)),
+				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 2))});
 		if (re.chance(75))
 		{
 			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(1, 2)));
@@ -1309,15 +1315,21 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(3, 3)));
 		}
 		result.append(e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS));
-		result.append(e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
+		result.append(e_action(explore_action_type::EVENT_BODY, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
 		return result;
 		break;
 	}
 	case 16://哨所
 	{
-		info_to_explore_sys result(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 38),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 38),
+			e_action(explore_action_type::SELECTION, event_type::PROCEED, 1023, 4)});
+		break;
+	}
+	case 1023://哨所part2
+	{
+		info_to_explore_sys result(my_vector<e_action>{
 			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(4, 10)),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(11, 12))});
+				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(11, 12))});
 		if (re.chance(20))
 		{
 			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(4, 10)));
@@ -1327,15 +1339,21 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(11, 12)));
 		}
 		result.append(e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS));
-		result.append(e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
+		result.append(e_action(explore_action_type::EVENT_BODY, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
 		return result;
 		break;
 	}
 	case 17://珊瑚洞窟
 	{
-		info_to_explore_sys result(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 39),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 39),
+			e_action(explore_action_type::SELECTION, event_type::PROCEED, 1024, 4)});
+		break;
+	}
+	case 1024://珊瑚洞窟part2
+	{
+		info_to_explore_sys result(my_vector<e_action>{
 			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(25, 31)),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(29, 30))});
+				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(29, 30))});
 		if (re.chance(40))
 		{
 			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(25, 31)));
@@ -1344,16 +1362,22 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 		{
 			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(29, 30)));
 		}
-		result.append(e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS));
 		result.append(e_action(explore_action_type::SELECTION, event_type::START_BATTLE, MEANINGLESS_VALUE, 4));
+		result.append(e_action(explore_action_type::NEXT_PHASE, MEANINGLESS_VALUE, BONUS));
 		return result;
 		break;
 	}
 	case 18://地窖
 	{
-		info_to_explore_sys result(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 40),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 40),
+			e_action(explore_action_type::SELECTION, event_type::PROCEED, 1024, 4)});
+		break;
+	}
+	case 1025://地窖洞窟part2
+	{
+		info_to_explore_sys result(my_vector<e_action>{
 			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(13, 17)),
-			e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(13, 17))});
+				e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(13, 17))});
 		if (re.chance(80))
 		{
 			result.append(e_action(explore_action_type::ENEMY, MEANINGLESS_VALUE, re.get_num(18, 19)));
@@ -1373,7 +1397,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 19://珍珠贝
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  41 ),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 41),
 			e_action(explore_action_type::SELECTION, event_type::AQUIRE_GOLD, card(309), re.get_num(35, 85)),
 			e_action(explore_action_type::SELECTION, event_type::AQUIRE_ARTIFACT, artifact(re.get_num(1, 15))),
 			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END),
@@ -1383,7 +1407,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 20://马车
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  42 ),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 42),
 			e_action(explore_action_type::SELECTION, event_type::AQUIRE_FOOD, card(308), re.get_num(2, 5)),
 			e_action(explore_action_type::SELECTION, event_type::AQUIRE_ARTIFACT, artifact(re.get_num(1, 15))),
 			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END),
@@ -1393,32 +1417,32 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 21://皇家图书馆
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  43 ),
-			e_action(explore_action_type::SELECTION, event_type::PROCEED, 1022,  19 ),
-			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, 1022)});
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 43),
+			e_action(explore_action_type::SELECTION, event_type::PROCEED, 1026, 19),
+			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, 1026)});
 		break;
 	}
-	case 1022://皇家图书馆part2
+	case 1026://皇家图书馆part2
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  44 ),
-			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_CARD_FROM_SELECTION, 5, 31),
-			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, 1023),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 44),
+			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_CARD_FROM_SELECTION, 5),
+			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, 1027),
 			e_action(explore_action_type::EVENT_BODY, event_type::SET_MANDETORY, MEANINGLESS_VALUE)});
 		break;
 	}
-	case 1023://皇家图书馆part3
+	case 1027://皇家图书馆part3
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  45 ),
-			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_CARD_FROM_SELECTION, 5, 31),
-			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, 1024),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 45),
+			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_CARD_FROM_SELECTION, 5),
+			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, 1028),
 			e_action(explore_action_type::EVENT_BODY, event_type::SET_MANDETORY, MEANINGLESS_VALUE)});
 		break;
 	}
-	case 1024://皇家图书馆part3
+	case 1028://皇家图书馆part3
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE,  46 ),
-			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_CARD_FROM_SELECTION, 5, 31),
-			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END,  19 ),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 46),
+			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_CARD_FROM_SELECTION, 5),
+			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END, 19),
 			e_action(explore_action_type::EVENT_BODY, event_type::SET_MANDETORY, MEANINGLESS_VALUE)});
 		break;
 	}
