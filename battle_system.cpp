@@ -102,6 +102,7 @@ void battle_system::deal_an_action()
 		{
 			data.b_to_e_pipe.append(i.on_battle_end(&data.player_data));
 		}
+		data.player_data.buff_pool.clear();
 		data.enemies_data.clear();
 		return;
 	}
