@@ -1,6 +1,7 @@
 #include <random>
 #include <ctime>
 #include <iostream>
+#include <cassert>
 #include "explore_system.h"
 #include "message.h"
 #include "data_sys.h"
@@ -142,9 +143,15 @@ void explore_system::create_map(std::size_t map_type)
 			}
 		}
 	}
-
-	bool no_player = true;
 	e_random_engine t;
+	default_random_engine ee(static_cast<int>(time(0)));
+	vector<size_t>vv;
+	for (int i = 0; i < 7; ++i)vv.push_back(1);
+	for (int i = 0; i < 11; ++i)vv.push_back(t.get_event(2));
+	for (int i = 0; i < 5; ++i)vv.push_back(t.get_event(3));
+	for (int i = 0; i < 12; ++i)vv.push_back(t.get_event(4));
+	bool no_player = true;
+	uniform_int_distribution<int>ran_pos(0, static_cast<int>(vv.size() - 1));
 	for (int i = 0; i < MAP_WIDTH; ++i)
 	{
 		for (int j = 0; j < MAP_LENGTH; ++j)
@@ -160,8 +167,14 @@ void explore_system::create_map(std::size_t map_type)
 			else
 			{
 				data.map_marks[j][i] = map_mark_type::UNKNOWN;
-				//data.explore_map[j][i] = t.get_event(map_type);
-				data.explore_map[j][i] = 16;//TODO
+				assert(vv.size() > 0);
+				int pos;
+				do
+				{
+					pos = ran_pos(ee);
+				} while (pos >= vv.size());
+				data.explore_map[j][i] = vv[pos];
+				vv.erase(vv.begin() + pos);
 			}
 		}
 	}
@@ -532,6 +545,18 @@ size_t e_random_engine::get_event(size_t map_type)
 	case 1:
 		lb = 1;
 		ub = 21;
+		break;
+	case 2:
+		lb = 15;
+		ub = 18;
+		break;
+	case 3:
+		lb = 19;
+		ub = 21;
+		break;
+	case 4:
+		lb = 2;
+		ub = 14;
 		break;
 	default:
 		lb = 1;
