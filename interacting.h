@@ -24,10 +24,10 @@ public:
 	void set_state(b_state*);
 	void read_input()override;
 	void change_to_select_state(info_battle_to_interacting);
+	void change_to_vaccant_state();
 	data_sys& get_data();
-	void test_read();
 private:
-	b_state *cur_state;
+	b_state * cur_state;
 };
 
 class e_state;
@@ -36,11 +36,14 @@ class explore_context : public context
 public:
 	explore_context(interacting_sys*);
 	explore_context(interacting_sys*, e_state*);
-	~explore_context();
+	virtual ~explore_context();
+	void change_to_select_state(std::size_t tmax);
+	void change_to_vaccant_state();
 	void set_state(e_state*);
-	void read_input();
+	void read_input()override;
+	data_sys& get_data();
 private:
-	e_state *cur_state;
+	e_state * cur_state;
 };
 
 class b_state
@@ -71,7 +74,7 @@ public:
 class b_confirm_state : public b_state
 {
 public:
-	b_confirm_state(battle_context*, std::size_t);
+	b_confirm_state(battle_context*, std::size_t, std::size_t);
 	void click_a_card(std::size_t);
 	void click_an_enemy(std::size_t);
 	void click_confirm();
@@ -79,14 +82,15 @@ public:
 	void click_turn_end();
 private:
 	std::size_t selected_card;
+	std::size_t cost;
 	bool require_target;
 };
 
-class t_draw_sys;
+class render_sys;
 class b_select_state : public b_state
 {
 public:
-	friend class t_draw_sys;
+	friend class render_sys;
 	b_select_state(battle_context*, std::size_t tmax, std::size_t, bool);
 	void click_a_card(std::size_t);
 	void click_an_enemy(std::size_t);
@@ -95,7 +99,7 @@ public:
 	void click_turn_end();
 private:
 	std::size_t type;
-	std::vector<std::size_t> selected_cards;
+	my_container::my_vector<std::size_t> selected_cards;
 	std::size_t max; //indicates the max amount of cards to select
 	bool is_mandatory; //indicates if the player is forced to select the max amount of cards
 };
@@ -119,10 +123,9 @@ public:
 	e_state(explore_context*);
 	virtual void click_an_option(std::size_t) = 0;
 	virtual void click_next() = 0;
-	virtual void click_up_arrow() = 0;
-	virtual void click_down_arrow() = 0;
 	virtual void click_left_arrow() = 0;
 	virtual void click_right_arrow() = 0;
+	virtual void click_map_location(std::size_t, std::size_t) = 0;
 	data_sys& get_data();
 	void send_to_explore_sys(info_to_explore_sys);
 	explore_context* ctx;
@@ -134,26 +137,23 @@ public:
 	e_vaccant_state(explore_context*);
 	void click_an_option(std::size_t);
 	void click_next();
-	void click_up_arrow();
-	void click_down_arrow();
 	void click_left_arrow();
 	void click_right_arrow();
+	void click_map_location(std::size_t x, std::size_t y);
 };
 
 class e_select_state : public e_state
 {
 public:
-	e_select_state(explore_context*, event_e);
+	e_select_state(explore_context*, std::size_t tmax);
 	void click_an_option(std::size_t);
 	void click_next();
-	void click_up_arrow();
-	void click_down_arrow();
 	void click_left_arrow();
 	void click_right_arrow();
+	void click_map_location(std::size_t x, std::size_t y);
 private:
-	event_e current_phase;
-	bool is_mandatory;
-	std::size_t max_amount;
+	std::size_t max_selection;
+	std::size_t current;
 };
 
 class interacting_sys
@@ -163,10 +163,7 @@ public:
 	data_sys& data;
 	battle_context* present_battle_context;
 	explore_context* present_explore_context;
-	info_to_battle_sys play_a_card(std::size_t card_pos, game_entity* target);
 	void move_player(int x, int y);
 	void set_map_location(int x, int y, int mark_type);
-	void reveal_map_location(int x, int y);
-	//void encounter_event(std::size_t event_id);
 	void update();
 };

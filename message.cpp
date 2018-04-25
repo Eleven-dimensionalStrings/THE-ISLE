@@ -1,8 +1,12 @@
 #include <iostream>
 #include "message.h"
 #include "data_sys.h"
-using namespace std;
+using namespace std; using namespace my_container;
 
+bool default_res(data_sys*)
+{
+	return 1;
+}
 info_to_battle_sys::info_to_battle_sys()
 	:info(), action_set()
 {
@@ -14,7 +18,7 @@ info_to_battle_sys::info_to_battle_sys(action ichange)
 	action_set.push_back(ichange);
 }
 
-info_to_battle_sys::info_to_battle_sys(vector<action> ichange) : action_set(std::move(ichange))
+info_to_battle_sys::info_to_battle_sys(my_vector<action> ichange) : action_set(std::move(ichange))
 {
 }
 
@@ -64,31 +68,40 @@ info_battle_to_interacting::info_battle_to_interacting()
 
 }
 
-e_action::e_action(std::size_t id, std::size_t tvalue)
-	:action_id(id), value(tvalue)
+e_action::e_action(std::size_t id)
+	:action_id(id), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE), text(-1), end_text(-1), restriction(default_res), selected_card(card(0)), atf(0)
 {
 }
 
-e_action::e_action(std::size_t id, artifact tatf)
-	: action_id(id), atf(tatf)
+e_action::e_action(std::size_t id, std::size_t ttype, std::size_t tvalue, int ttext, int etext, bool(*func)(data_sys*))
+	: action_id(id), type(ttype), value(tvalue), text(ttext), end_text(etext), restriction(func), selected_card(card(0)), atf(0)
 {
 }
 
-e_action::e_action(std::size_t id, card tcard)
-	: action_id(id), selected_card(tcard)
+e_action::e_action(std::size_t id, std::size_t ttype, artifact tatf, int ttext, int etext, bool(*func)(data_sys*))
+	: action_id(id), type(ttype), atf(tatf), text(ttext), end_text(etext), restriction(func), selected_card(card(0))
 {
 }
 
-e_action::e_action(explore_selection exp_s)
-	: selected_card(exp_s.selected_card)
+e_action::e_action(std::size_t id, std::size_t ttype, card tcard, int ttext, int etext, bool(*func)(data_sys*))
+	: action_id(id), type(ttype), selected_card(tcard), text(ttext), end_text(etext), restriction(func), atf(0)
 {
-	action_id = exp_s.type;
-	value = exp_s.value;
-	atf = exp_s.atf;
+}
+
+e_action::e_action(std::size_t id, std::size_t ttype, card tcard, std::size_t tvalue, int etext, bool(*func)(data_sys*))
+	: action_id(id), type(ttype), selected_card(tcard), text(-1), value(tvalue), end_text(etext), restriction(func), atf(0)
+{
+}
+
+
+e_action e_action::to_event_body()
+{
+	action_id = explore_action_type::EVENT_BODY;
+	return *this;
 }
 
 info_to_explore_sys::info_to_explore_sys()
-	:info(), action_set()
+	: info(), action_set()
 {
 }
 
@@ -96,6 +109,10 @@ info_to_explore_sys::info_to_explore_sys(e_action ichange)
 	: info()
 {
 	action_set.push_back(ichange);
+}
+
+info_to_explore_sys::info_to_explore_sys(my_vector<e_action> ichange) : action_set(std::move(ichange))
+{
 }
 
 void info_to_explore_sys::append(info_to_explore_sys t)
@@ -110,53 +127,24 @@ info_explore_to_interacting::info_explore_to_interacting()
 {
 }
 
-info_explore_to_interacting::info_explore_to_interacting(std::size_t ttype, std::size_t tnum)
-	: type(ttype), num(tnum)
+info_explore_to_interacting::info_explore_to_interacting(std::size_t ttype)
+	: type(ttype)
+{
+}
+
+info_explore_to_interacting::info_explore_to_interacting(std::size_t ttype, std::size_t tvalue)
+	: type(ttype), value(tvalue)
 {
 }
 
 info_explore_to_interacting::operator bool()
 {
-	return (type || num);
+	return (type);
 }
 
 void info_explore_to_interacting::clear()
 {
-	type = num = 0;
-}
-
-explore_selection::explore_selection()
-{
-}
-
-explore_selection::explore_selection(std::size_t ttype, std::size_t tvalue)
-	:type(ttype), value(tvalue)
-{
-}
-
-explore_selection::explore_selection(std::size_t ttype, card tcard)
-	: type(ttype), selected_card(tcard)
-{
-}
-
-explore_selection::explore_selection(std::size_t ttype, artifact tatf)
-	: type(ttype), atf(tatf)
-{
-}
-
-explore_selection::explore_selection(std::size_t ttype, event_e tevent)
-	: type(ttype), next_event(tevent)
-{
-}
-
-explore_selection::explore_selection(std::size_t ttype, std::size_t tvalue, card tcard)
-	: type(ttype), value(tvalue), selected_card(tcard)
-{
-}
-
-explore_selection::explore_selection(std::size_t ttype, std::size_t tvalue, artifact tatf)
-	: type(ttype), value(tvalue), atf(tatf)
-{
+	type = 0;
 }
 
 card::card()
@@ -164,9 +152,9 @@ card::card()
 }
 
 card::card(size_t id)
-	:card_id(id), is_reserve(0), exhaust(false), inherent(false), vanity(false)
+	:id(id), is_reserve(0), exhaust(false), inherent(false), vanity(false)
 {
-	card_id = id;
+	id = id;
 	if ((id >= 1 && id <= 60) || (id >= 121 && id <= 180) || (id >= 241 && id <= 300))
 	{
 		upgrade_version_id = id + 60;
@@ -384,6 +372,7 @@ card::card(size_t id)
 		card_type = card_type::ATTACK;
 		cost = 1;
 		require_target = true;
+		exhaust = true;
 		break;
 	}
 	case 27:
@@ -505,7 +494,7 @@ card::card(size_t id)
 	{
 		card_name = "怒吼";
 		card_type = card_type::SKILL;
-		cost = 1;
+		cost = 2;
 		require_target = false;
 		break;
 	}
@@ -515,6 +504,7 @@ card::card(size_t id)
 		card_type = card_type::SKILL;
 		cost = 1;
 		require_target = false;
+		exhaust = true;
 		break;
 	}
 	case 43:
@@ -645,7 +635,7 @@ card::card(size_t id)
 	{
 		card_name = "活力再生";
 		card_type = card_type::ABILITY;
-		cost = 3;
+		cost = 2;
 		require_target = false;
 		break;
 	}
@@ -872,6 +862,7 @@ card::card(size_t id)
 		card_type = card_type::ATTACK;
 		cost = 0;
 		require_target = true;
+		exhaust = true;
 		break;
 	}
 	case 87:
@@ -993,7 +984,7 @@ card::card(size_t id)
 	{
 		card_name = "怒吼+";
 		card_type = card_type::SKILL;
-		cost = 1;
+		cost = 2;
 		require_target = false;
 		break;
 	}
@@ -1003,6 +994,7 @@ card::card(size_t id)
 		card_type = card_type::SKILL;
 		cost = 1;
 		require_target = false;
+		exhaust = true;
 		break;
 	}
 	case 103:
@@ -1133,7 +1125,7 @@ card::card(size_t id)
 	{
 		card_name = "活力再生+";
 		card_type = card_type::ABILITY;
-		cost = 2;
+		cost = 1;
 		require_target = false;
 		break;
 	}
@@ -1153,7 +1145,7 @@ card::card(size_t id)
 		require_target = false;
 		break;
 	}
-	case 1001:
+	case 401:
 	{
 		card_name = "疲惫";
 		card_type = card_type::STAT;
@@ -1162,12 +1154,57 @@ card::card(size_t id)
 		vanity = true;
 		break;
 	}
+	case 402:
+	{
+		card_name = "伤口";
+		card_type = card_type::STAT;
+		cost = 100;
+		require_target = false;
+		vanity = false;
+		break;
+	}
+	case 403:
+	{
+		card_name = "眩晕";
+		card_type = card_type::STAT;
+		cost = 100;
+		require_target = false;
+		vanity = true;
+		break;
+	}
+	case 404:
+	{
+		card_name = "裂伤";
+		card_type = card_type::STAT;
+		cost = 100;
+		require_target = false;
+		vanity = false;
+		break;
+	}
+	case 405:
+	{
+		card_name = "缺氧";
+		card_type = card_type::STAT;
+		cost = 100;
+		require_target = false;
+		vanity = true;
+		break;
+	}
+	case 406:
+	{
+		card_name = "无力";
+		card_type = card_type::STAT;
+		cost = 100;
+		require_target = false;
+		vanity = false;
+		break;
+	}
 	default:
 		break;
 	}
 }
 
-card::card(const card& copy_card) : card_id(copy_card.card_id),
+card::card(const card& copy_card) : id(copy_card.id),
 card_name(copy_card.card_name), card_type(copy_card.card_type), upgrade_version_id(copy_card.upgrade_version_id),
 cost(copy_card.cost), is_reserve(copy_card.is_reserve), require_target(copy_card.require_target),
 exhaust(copy_card.exhaust), inherent(copy_card.inherent), vanity(copy_card.vanity)
@@ -1178,7 +1215,7 @@ exhaust(copy_card.exhaust), inherent(copy_card.inherent), vanity(copy_card.vanit
 card & card::operator=(const card & c)
 {
 	this->is_reserve = c.is_reserve;
-	this->card_id = c.card_id;
+	this->id = c.id;
 	this->card_name = c.card_name;
 	this->card_type = c.card_type;
 	this->upgrade_version_id = c.upgrade_version_id;
@@ -1190,24 +1227,63 @@ card & card::operator=(const card & c)
 	return *this;
 }
 
-
 info_to_battle_sys card::use_card(data_sys&d)
 {
-	return d.card_effect(card_id);
+	return d.card_effect(id);
 }
 
-info_to_battle_sys card::discard(data_sys&)
+info_to_battle_sys card::discard(data_sys&d)
 {
-	return info_to_battle_sys();
+	return d.card_discard(id);
 }
 
-info_to_battle_sys card::remove(data_sys&)
+info_to_battle_sys card::remove(data_sys&d)
 {
-	return info_to_battle_sys();
+	return d.card_remove(id);
 }
 
-info_to_battle_sys card::on_turn_end(data_sys&)
+info_to_battle_sys card::on_turn_end(data_sys&d)
 {
-	return info_to_battle_sys();
+	return d.card_on_turn_end(id);
 }
 
+artifact::artifact()
+	:id(0)
+{
+}
+
+artifact::artifact(std::size_t id)
+	: id(id)
+{
+}
+
+void info_to_render_sys::append(info_to_render_sys t)
+
+{
+	{
+		for (auto &i : t.action_set)
+		{
+			action_set.push_back(i);
+		}
+	}
+}
+
+info_to_render_sys::info_to_render_sys()
+	:info(), action_set() {}
+
+info_to_render_sys::info_to_render_sys(r_action ichange)
+	: info()
+{
+	action_set.push_back(ichange);
+}
+
+info_to_render_sys::info_to_render_sys(my_container::my_vector<r_action> ichange) : action_set(std::move(ichange)) {}
+
+r_action::r_action(int id)
+	: action_id(id), caller(nullptr), listener(nullptr), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE) {}
+
+r_action::r_action(int id, int ttype, int tvalue)
+	: action_id(id), caller(nullptr), listener(nullptr), type(ttype), value(tvalue) {}
+
+r_action::r_action(int id, game_entity * tcaller, game_entity * tlistener, std::size_t ttype, std::size_t tvalue)
+	: action_id(id), caller(tcaller), listener(tlistener), type(ttype), value(tvalue) {}

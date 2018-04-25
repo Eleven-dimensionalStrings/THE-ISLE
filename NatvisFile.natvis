@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+  <Type Name="my_container::my_vector&lt;*&gt;">
+    <DisplayString>size={vsize}</DisplayString>
+    <Expand>
+      <Item Name="[allocator]">
+        alloc
+      </Item>
+      <Item Name="[capacity]">
+        vcap
+      </Item>
+      <Item Name="[val address]">
+        val
+      </Item>
+      <IndexListItems>
+        <Size>vsize</Size>
+        <ValueNode>val[$i]</ValueNode>
+      </IndexListItems>
+    </Expand>
+  </Type>
+  <Type Name="my_container::my_queue&lt;*&gt;">
+    <DisplayString>size={deq._Mypair._Myval2._Mysize}</DisplayString>
+    <Expand>
+      <Item Name="deque">
+        deq
+      </Item>
+    </Expand>
+  </Type>
+  <Type Name="my_container::my_stack&lt;*&gt;">
+    <DisplayString>size={deq._Mypair._Myval2._Mysize}</DisplayString>
+    <Expand>
+      <Item Name="vector">
+        deq
+      </Item>
+    </Expand>
+  </Type>
+</AutoVisualizer>

@@ -20,7 +20,7 @@ public:
 	std::size_t buff_id;
 	std::string buff_name;
 	std::size_t buff_priority;
-	int buff_level; 
+	int buff_level;
 	bool visible;
 
 	//将change传给buff之后,返回该change修改后的结果,和额外造成的操作
@@ -32,6 +32,9 @@ public:
 	info_to_battle_sys on_turn_end(game_entity*);
 	info_to_battle_sys on_calling(info_to_battle_sys);
 	info_to_battle_sys on_performing(info_to_battle_sys);
+	info_to_explore_sys on_battle_end(game_entity*);
+	void on_manipulate_buff(action &temp);
+	std::size_t compare_value()const;
 	void operator--();
 	void operator--(int);
 	void operator+=(buff t);

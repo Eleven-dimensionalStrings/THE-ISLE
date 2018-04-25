@@ -81,7 +81,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
@@ -104,7 +104,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -125,7 +125,7 @@
     <ClCompile Include="interacting.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="message.cpp" />
-    <ClCompile Include="t_draw_sys.cpp" />
+    <ClCompile Include="render_sys.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="battle_system.h" />
@@ -136,7 +136,10 @@
     <ClInclude Include="game_entity.h" />
     <ClInclude Include="interacting.h" />
     <ClInclude Include="message.h" />
-    <ClInclude Include="t_draw_sys.h" />
+    <ClInclude Include="render_sys.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="NatvisFile.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
