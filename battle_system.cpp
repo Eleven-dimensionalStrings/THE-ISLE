@@ -450,16 +450,21 @@ void battle_system::enemies_action()
 {
 	for (auto& i : data.enemies_data)
 	{
-		send_message(i.on_turn_begin());
+		if (i.is_alive())
+			send_message(i.on_turn_begin());
 	}
 	for (auto& i : data.enemies_data)
 	{
-		send_message(i.next_act);
-		i.next_act.action_set.clear();
+		if (i.is_alive())
+		{
+			send_message(i.next_act);
+			i.next_act.action_set.clear();
+		}
 	}
 	for (auto& i : data.enemies_data)
 	{
-		send_message(i.on_turn_end());
+		if (i.is_alive())
+			send_message(i.on_turn_end());
 	}
 }
 

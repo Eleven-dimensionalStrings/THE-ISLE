@@ -146,10 +146,10 @@ void explore_system::create_map(std::size_t map_type)
 	e_random_engine t;
 	default_random_engine ee(static_cast<int>(time(0)));
 	vector<size_t>vv;
-	for (int i = 0; i < 7; ++i)vv.push_back(1);
-	for (int i = 0; i < 11; ++i)vv.push_back(t.get_event(2));
+	for (int i = 0; i < 5; ++i)vv.push_back(1);
+	for (int i = 0; i < 8; ++i)vv.push_back(t.get_event(2));
 	for (int i = 0; i < 5; ++i)vv.push_back(t.get_event(3));
-	for (int i = 0; i < 12; ++i)vv.push_back(t.get_event(4));
+	for (int i = 0; i < 17; ++i)vv.push_back(t.get_event(4));
 	bool no_player = true;
 	uniform_int_distribution<int>ran_pos(0, static_cast<int>(vv.size() - 1));
 	for (int i = 0; i < MAP_WIDTH; ++i)
@@ -173,7 +173,7 @@ void explore_system::create_map(std::size_t map_type)
 				{
 					pos = ran_pos(ee);
 				} while (pos >= vv.size());
-				data.explore_map[j][i] = vv[pos];
+				data.explore_map[j][i] = 15;
 				vv.erase(vv.begin() + pos);
 			}
 		}

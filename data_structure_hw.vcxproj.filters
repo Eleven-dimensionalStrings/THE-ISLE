@@ -39,7 +39,7 @@
     <ClCompile Include="message.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="t_draw_sys.cpp">
+    <ClCompile Include="render_sys.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,10 +65,10 @@
     <ClInclude Include="message.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="t_draw_sys.h">
+    <ClInclude Include="container.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="container.h">
+    <ClInclude Include="render_sys.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

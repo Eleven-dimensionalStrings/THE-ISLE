@@ -1445,7 +1445,7 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 	}
 	case 21://皇家图书馆
 	{
-		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 43),
+		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 43, 19),
 			e_action(explore_action_type::SELECTION, event_type::PROCEED, 1026, 19),
 			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, 1026)});
 		break;
@@ -1466,11 +1466,11 @@ info_to_explore_sys data_sys::event_effect(std::size_t id)
 			e_action(explore_action_type::EVENT_BODY, event_type::SET_MANDETORY, MEANINGLESS_VALUE)});
 		break;
 	}
-	case 1028://皇家图书馆part3
+	case 1028://皇家图书馆part4
 	{
 		return info_to_explore_sys(my_vector<e_action>{e_action(explore_action_type::EVENT_BODY, event_type::PURE_TEXT, MEANINGLESS_VALUE, 46),
 			e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_CARD_FROM_SELECTION, 5),
-			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END, 19),
+			e_action(explore_action_type::NEXT_PHASE, event_type::PROCEED, END),
 			e_action(explore_action_type::EVENT_BODY, event_type::SET_MANDETORY, MEANINGLESS_VALUE)});
 		break;
 	}

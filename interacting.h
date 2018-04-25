@@ -86,11 +86,11 @@ private:
 	bool require_target;
 };
 
-class t_draw_sys;
+class render_sys;
 class b_select_state : public b_state
 {
 public:
-	friend class t_draw_sys;
+	friend class render_sys;
 	b_select_state(battle_context*, std::size_t tmax, std::size_t, bool);
 	void click_a_card(std::size_t);
 	void click_an_enemy(std::size_t);

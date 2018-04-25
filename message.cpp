@@ -1257,4 +1257,24 @@ artifact::artifact(std::size_t id)
 {
 }
 
+void info_to_render_sys::append(info_to_render_sys t)
 
+{
+	{
+		for (auto &i : t.action_set)
+		{
+			action_set.push_back(i);
+		}
+	}
+}
+
+info_to_render_sys::info_to_render_sys()
+	:info(), action_set() {}
+
+info_to_render_sys::info_to_render_sys(r_action ichange)
+	: info()
+{
+	action_set.push_back(ichange);
+}
+
+info_to_render_sys::info_to_render_sys(my_container::my_vector<r_action> ichange) : action_set(std::move(ichange)) {}

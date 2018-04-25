@@ -2,7 +2,7 @@
 #include "message.h"
 #include "interacting.h"
 #include "battle_system.h"
-#include "t_draw_sys.h"
+#include "render_sys.h"
 #include "explore_system.h"
 using namespace std; using namespace my_container;
 int main()
@@ -12,12 +12,12 @@ int main()
 	interacting_sys i(d);
 	explore_system e(d);
 	IMAGE buffer(gra_size::window_width, gra_size::window_height);
-	t_draw_sys dr(d);
+	render_sys dr(d);
 	d.b = &b;
 	dr.load_all();
 
 	//easyx
-	initgraph(gra_size::window_width, gra_size::window_height, SHOWCONSOLE);
+	initgraph(gra_size::window_width, gra_size::window_height);
 	setbkcolor(WHITE);
 	settextstyle(20, 0, "Airial");
 	cleardevice();
@@ -49,7 +49,7 @@ int main()
 	d.artifacts.push_back(artifact(16));
 	d.artifacts.push_back(artifact(17));
 	d.artifacts.push_back(artifact(18));
-	d.artifacts.push_back(artifact(19));
+	//d.artifacts.push_back(artifact(19));
 	d.artifacts.push_back(artifact(20));
 
 	e.create_map();
@@ -66,7 +66,7 @@ explore:
 	{
 		e.update();
 		dr.draw_explore();
-		dr.t_draw_e();
+		//dr.t_draw_e();
 		i.update();
 		e.update();
 		Sleep(100);
@@ -87,13 +87,9 @@ battle:
 	{
 		settextstyle(20, 0, "Airial");
 		b.update();
-		dr.update();
-		dr.draw_battle();
-		dr.t_draw_b();
 		i.update();
 		dr.update();
 		dr.draw_battle();
-		dr.t_draw_b();
 
 		//enemy act
 		Sleep(30);
