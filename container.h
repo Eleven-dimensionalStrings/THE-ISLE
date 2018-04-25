@@ -408,14 +408,14 @@ namespace my_container
 		iterator erase(iterator l, iterator r)
 		{
 #ifdef _DEBUG
-			if (l._begin != val || l._end != val + vsize || r._begin != val || r._end != val + vsize)
+			/*if (l._begin != val || l._end != val + vsize || r._begin != val || r._end != val + vsize)
 			{
 				throw invalid_argument("iterator failure,its begin or end is expired");
 			}
 			if (l._now < val || l._now >= val + vsize || r._now < val || r._now > val + vsize)
 			{
 				throw out_of_range("iterator out of range");
-			}
+			}*/
 #endif // _DEBUG
 			if (l + 1 == r)
 			{

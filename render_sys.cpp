@@ -48,11 +48,7 @@ void render_sys::process()
 				render_card_manifest[render_queue.front().value] = NOT_IN_HAND;
 				for (int i = render_queue.front().value; i < render_card_manifest.size(); ++i)
 				{
-					if (i == 0)
-					{
-						render_card_manifest[i] = NOT_IN_HAND;
-					}
-					else if (i == render_card_manifest.size() - 1)
+					if (i == render_card_manifest.size() - 1)
 					{
 						render_card_manifest[i] = NOT_IN_HAND;
 					}

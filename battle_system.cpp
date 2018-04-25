@@ -40,7 +40,8 @@ void battle_system::initiate_battle()
 	{
 		if (deck[i].inherent)
 		{
-			deck.push_back(deck[i]);
+			auto j = deck[i];
+			deck.push_back(j);
 			deck.erase(deck.begin() + i);
 		}
 	}
