@@ -176,6 +176,11 @@ void battle_system::deal_an_action()
 			}
 		}
 		send_message(data.player_data.performing_action(temp));
+		data.render_pipe.push(info_to_render_sys(r_action(render_functions::DRAW_A_CARD)));
+		for (int i = 0; i < t.action_set.begin()->value - 1; ++i)
+		{
+			data.render_pipe.push(info_to_render_sys(r_action(render_functions::DRAW_A_CARD)));
+		}
 		break;
 	}
 	case ADD_BUFF:
@@ -249,6 +254,7 @@ void battle_system::deal_an_action()
 		c_removed.push_back(c_in_hand[temp.value]);
 		c_in_hand.erase(c_in_hand.begin() + temp.value);
 		send_message(data.player_data.performing_action(temp));
+		data.render_pipe.push(info_to_render_sys(r_action(render_functions::LOSE_A_CARD, MEANINGLESS_VALUE, temp.value)));
 		break;
 	}
 	case P_DISCARD_A_CARD:
@@ -260,18 +266,19 @@ void battle_system::deal_an_action()
 		c_grave.push_back(c_in_hand[temp.value]);
 		c_in_hand.erase(c_in_hand.begin() + temp.value);
 		send_message(data.player_data.performing_action(temp));
+		data.render_pipe.push(info_to_render_sys(r_action(render_functions::LOSE_A_CARD, MEANINGLESS_VALUE, temp.value)));
 		break;
 	}
 
 	case TURN_END:
 	{
-		for (auto&i : data.render_select_card)i = 0;
+		data.render_pipe.push(info_to_render_sys(render_functions::CLEAR_DRAW));
 		send_message(data.player_data.on_turn_end());
-		//deal_an_action();
 		process();
 		enemies_action();
 		process();
 		send_message(data.player_data.on_turn_begin());
+		data.render_pipe.push(info_to_render_sys(render_functions::RESET));
 		data.b_to_i_pipe = info_battle_to_interacting(interact_action_type::BATTLE_TO_VACCANT, MEANINGLESS_VALUE, MEANINGLESS_VALUE);
 		break;
 	}
@@ -399,6 +406,7 @@ void battle_system::deal_an_action()
 		my_vector<card>& c_grave = data.cards_grave;
 		c_grave.push_back(c_in_hand[temp.value]);
 		c_in_hand.erase(c_in_hand.begin() + temp.value);
+		data.render_pipe.push(info_to_render_sys(r_action(render_functions::LOSE_A_CARD, MEANINGLESS_VALUE, temp.value)));
 		break;
 	}
 	case ADD_CARD_TO_GRAVE:
@@ -423,12 +431,19 @@ void battle_system::process()
 
 bool battle_system::battle_succ()
 {
-	if (!data.player_data.is_alive())return 1;
+	if (!data.player_data.is_alive())return 0;
 	for (auto& i : data.enemies_data)
 	{
 		if (i.is_alive())return 0;
 	}
 	return 1;
+}
+
+bool battle_system::battle_fail()
+{
+	if (data.player_data.is_alive())
+		return false;
+	return true;
 }
 
 void battle_system::enemies_action()

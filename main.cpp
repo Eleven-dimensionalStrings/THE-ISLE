@@ -32,9 +32,9 @@ int main()
 	//d.enemies_data.push_back(enemy(d, 1));
 	//d.enemies_data.push_back(enemy(d, 1));
 
-	d.cards_pool.push_back(card(61));
-	d.cards_pool.push_back(card(61));
-	d.cards_pool.push_back(card(61));
+	d.cards_pool.push_back(card(4));
+	d.cards_pool.push_back(card(4));
+	d.cards_pool.push_back(card(4));
 	d.cards_pool.push_back(card(61));
 	d.cards_pool.push_back(card(62));
 	d.cards_pool.push_back(card(63));
@@ -44,11 +44,11 @@ int main()
 	d.cards_pool.push_back(card(90));
 	d.cards_pool.push_back(card(71));
 
-	d.artifacts.push_back(artifact(11));
-	d.artifacts.push_back(artifact(12));
-	d.artifacts.push_back(artifact(13));
-	d.artifacts.push_back(artifact(14));
-	d.artifacts.push_back(artifact(15));
+	d.artifacts.push_back(artifact(16));
+	d.artifacts.push_back(artifact(17));
+	d.artifacts.push_back(artifact(18));
+	d.artifacts.push_back(artifact(19));
+	d.artifacts.push_back(artifact(20));
 
 	e.create_map();
 
@@ -85,9 +85,14 @@ battle:
 	{
 		settextstyle(20, 0, "Airial");
 		b.update();
+		dr.update();
 		dr.draw_battle();
 		dr.t_draw_b();
 		i.update();
+		dr.update();
+		dr.draw_battle();
+		dr.t_draw_b();
+
 		//enemy act
 		Sleep(30);
 		if (d.enemies_data.empty())
@@ -97,6 +102,10 @@ battle:
 			b.update();
 			goto explore;
 		}
+		if (b.battle_fail())break;
 	}
+
+	//game over
+	dr.game_over();
 	return 0;
 }

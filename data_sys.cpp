@@ -10,7 +10,6 @@ data_sys::data_sys() :b(nullptr), player_data(*this), all_enemies(*this, MEANING
 {
 	background_pic = 0;
 	map_text = 0;
-	for (auto&i : render_select_card)i = 0;
 }
 
 info_to_battle_sys data_sys::card_effect(std::size_t id)
@@ -2714,7 +2713,7 @@ info_to_explore_sys data_sys::artifact_on_end_event(std::size_t atf_id)
 		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_MAX_HIT_POINTS, 1));
 		break;
 	case 19:
-		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_CARD_FROM_SELECTION, 3));
+		return info_to_explore_sys();
 		break;
 	case 20:
 		return info_to_explore_sys(e_action(explore_action_type::EVENT_BODY, event_type::AQUIRE_HIT_POINTS, 3));

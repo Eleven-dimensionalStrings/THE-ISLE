@@ -66,13 +66,14 @@ public:
 	my_container::my_vector<IMAGE> select;
 	my_container::my_vector<IMAGE> artifact_pics;
 	my_container::my_vector<IMAGE> buff_pics;
-	std::array<bool, MAX_CARDS_IN_HAND>render_select_card;
+	//std::array<bool, MAX_CARDS_IN_HAND>render_select_card;
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
 	info_to_explore_sys i_to_e_pipe;
 	info_explore_to_interacting e_to_i_pipe;
 	info_to_battle_sys e_to_b_pipe;
 	info_to_explore_sys b_to_e_pipe;
+	my_container::my_queue<info_to_render_sys> render_pipe;
 	my_container::my_vector<std::pair<std::size_t, std::size_t>>b_to_d;
 	std::size_t explore_map[MAP_LENGTH][MAP_WIDTH];
 	int map_marks[MAP_LENGTH][MAP_WIDTH];

@@ -14,20 +14,27 @@ namespace my_container
 		std::size_t vcap;
 	public:
 		//ini
-		my_vector() :val(nullptr), vsize(0), vcap(0)
+		my_vector() :alloc(Alloc()), val(nullptr), vsize(0), vcap(0)
 		{
 		}
-		explicit my_vector(std::size_t tsize) :val(new T[tsize]), vsize(tsize), vcap(tsize)
+		explicit my_vector(std::size_t tsize, const Alloc& talloc = Alloc()) :alloc(talloc), val(alloc.allocate(tsize)), vsize(tsize), vcap(tsize)
 		{
+			for (std::size_t i = 0; i < vsize; ++i)
+			{
+				std::allocator_traits<Alloc>::construct(alloc, val + i);
+			}
 
 		}
 		explicit my_vector(std::size_t tsize, const T& a, const Alloc& talloc = Alloc()) :
 			alloc(talloc), val(alloc.allocate(tsize)), vsize(tsize), vcap(tsize)
 		{
-			std::uninitialized_fill_n(val, vsize, a);
+			for (std::size_t i = 0; i < vsize; ++i)
+			{
+				std::allocator_traits<Alloc>::construct(alloc, val + i, a);
+			}
 		}
 
-		my_vector(std::initializer_list<T> ini) :alloc(std::allocator<T>()),
+		my_vector(std::initializer_list<T> ini) :alloc(Alloc()),
 			val(alloc.allocate(ini.size())), vsize(ini.size()), vcap(vsize)
 		{
 			auto p = ini.begin();
@@ -658,11 +665,11 @@ namespace my_container
 		{
 
 		}
-		insert_sort_vector(const insert_sort_vector& other):vec(other.vec)
+		insert_sort_vector(const insert_sort_vector& other) :vec(other.vec)
 		{
 
 		}
-		insert_sort_vector(insert_sort_vector&& other):vec(std::move(other.vec))
+		insert_sort_vector(insert_sort_vector&& other) :vec(std::move(other.vec))
 		{
 
 		}

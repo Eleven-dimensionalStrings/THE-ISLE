@@ -26,7 +26,7 @@ void t_draw_sys::__draw_entities()
 		this->__draw_an_enemy(i);
 	}
 	this->__draw_player();
-	if (timer >= 7) { timer = 0; is_drawing = 0; if (!draw_queue.empty())draw_queue.pop(); }
+	if (timer >= 5) { timer = 0; is_drawing = 0; if (!draw_queue.empty())draw_queue.pop(); }
 }
 void t_draw_sys::__draw_battle_info()
 {
@@ -291,15 +291,28 @@ void t_draw_sys::__draw_an_enemy(std::size_t pos)
 void t_draw_sys::__draw_a_card(std::size_t pos, int x, int y)
 {
 	x += gra_size::card_starting_pos;
-	if (data.render_select_card[pos])
+	switch (render_card_manifest[pos])
 	{
+	case NOT_IN_HAND:
+		break;
+	case HOLD_ONE:
+		putimage(x, y - 5, &data.get_pic(data.cards_in_hand[pos].id), SRCPAINT);
+		putimage(x, y - 5, &data.get_mask_pic(data.cards_in_hand[pos].id), SRCAND);
+		break;
+	case HOLD_TWO:
+		putimage(x, y - 10, &data.get_pic(data.cards_in_hand[pos].id), SRCPAINT);
+		putimage(x, y - 10, &data.get_mask_pic(data.cards_in_hand[pos].id), SRCAND);
+		break;
+	case HOLD_UP:
 		putimage(x, y - 15, &data.get_pic(data.cards_in_hand[pos].id), SRCPAINT);
 		putimage(x, y - 15, &data.get_mask_pic(data.cards_in_hand[pos].id), SRCAND);
-	}
-	else
-	{
+		break;
+	case IN_HAND:
 		putimage(x, y, &data.get_pic(data.cards_in_hand[pos].id), SRCPAINT);
 		putimage(x, y, &data.get_mask_pic(data.cards_in_hand[pos].id), SRCAND);
+		break;
+	default:
+		break;
 	}
 }
 
@@ -480,9 +493,9 @@ void t_draw_sys::check_view()
 }
 
 t_draw_sys::t_draw_sys(data_sys &d) :data(d),
-buffer(gra_size::window_width, gra_size::window_height), timer(0), is_drawing(0)
+buffer(gra_size::window_width, gra_size::window_height), timer(0), p_timer(0), is_drawing(0), render_card_manifest(MAX_CARDS_IN_HAND), current_rendered_cards(0)
 {
-	// settextstyle(20, 0, _T("Arial"));
+	
 }
 
 void t_draw_sys::load_all()
@@ -514,7 +527,7 @@ void t_draw_sys::load_all()
 		loadimage(&data.cards_thumbnail[i], &(".\\resource\\cards_thumbnail\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
 	}
-	for (int i = 0; i < 14; ++i)
+	for (int i = 0; i < 15; ++i)
 	{
 		loadimage(&data.backgrounds[i], &(".\\resource\\backgrounds\\"
 			+ to_string(i) + ".bmp" + '\0')[0]);
@@ -744,4 +757,14 @@ void t_draw_sys::end_battle()
 {
 	data.b_to_d.clear();
 	while (!draw_queue.empty())draw_queue.pop();
+}
+
+void t_draw_sys::game_over()
+{
+	putimage(0, 0, &data.backgrounds[13]);
+	auto hit = GetMouseMsg();
+	while (!hit.mkLButton)
+	{
+		hit = GetMouseMsg();
+	}
 }

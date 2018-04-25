@@ -13,6 +13,7 @@ public:
 	void initiate_battle();
 	void send_message(info_to_battle_sys);
 	void enemies_action();
+	bool battle_fail();
 private:
 	data_sys & data;
 	my_container::my_stack<action> process_stack;

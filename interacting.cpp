@@ -354,7 +354,7 @@ void b_vaccant_state::click_a_card(size_t card_pos)
 {
 	if (card_pos < get_data().cards_in_hand.size() && get_data().player_data.current_ap >= get_data().cards_in_hand[card_pos].cost)
 	{
-		get_data().render_select_card[card_pos] = 1;
+		get_data().render_pipe.push(r_action(render_functions::SELECT_A_CARD, MEANINGLESS_VALUE, card_pos));
 		ctx->set_state(new b_confirm_state(ctx, card_pos, get_data().cards_in_hand[card_pos].cost));
 	}
 }
@@ -393,19 +393,19 @@ void b_confirm_state::click_a_card(size_t card_pos)
 {
 	if (card_pos == selected_card)
 	{
-		get_data().render_select_card[selected_card] = 0;
+		get_data().render_pipe.push(r_action(render_functions::DE_SELECT_A_CARD, MEANINGLESS_VALUE, card_pos));
 		ctx->set_state(new b_vaccant_state(ctx));
 	}
 	else if (get_data().cards_in_hand.size() > card_pos &&
 		get_data().player_data.current_ap >= get_data().cards_in_hand[card_pos].cost)
 	{
-		get_data().render_select_card[card_pos] = 1;
-		get_data().render_select_card[selected_card] = 0;
+		get_data().render_pipe.push(r_action(render_functions::SELECT_A_CARD, MEANINGLESS_VALUE, card_pos));
+		get_data().render_pipe.push(r_action(render_functions::DE_SELECT_A_CARD, MEANINGLESS_VALUE, selected_card));
 		ctx->set_state(new b_confirm_state(ctx, card_pos, get_data().cards_in_hand[card_pos].cost));
 	}
 	else
 	{
-		get_data().render_select_card[selected_card] = 0;
+		get_data().render_pipe.push(r_action(render_functions::DE_SELECT_A_CARD, MEANINGLESS_VALUE, card_pos));
 		ctx->set_state(new b_vaccant_state(ctx));
 	}
 }
@@ -415,7 +415,7 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 	if (require_target)
 	{
 		game_entity* target;
-		get_data().render_select_card[selected_card] = 0;
+		get_data().render_pipe.push(r_action(render_functions::IMMEDIATE_DE_SELECT, MEANINGLESS_VALUE, selected_card));
 		if (get_data().enemies_data[enemy_pos].is_alive())
 		{
 			target = &get_data().enemies_data[enemy_pos];
@@ -455,7 +455,7 @@ void b_confirm_state::click_an_enemy(size_t enemy_pos)
 		}
 		else
 		{
-			get_data().render_select_card[selected_card] = 0;
+			get_data().render_pipe.push(r_action(render_functions::DE_SELECT_A_CARD, MEANINGLESS_VALUE, selected_card));
 			ctx->set_state(new b_vaccant_state(ctx));
 		}
 	}
@@ -490,7 +490,7 @@ void b_confirm_state::click_confirm()
 			}
 		}
 		send_to_battle_sys(temp);
-		get_data().render_select_card[selected_card] = 0;
+		get_data().render_pipe.push(r_action(render_functions::IMMEDIATE_DE_SELECT, MEANINGLESS_VALUE, selected_card));
 		get_data().player_data.current_ap -= cost;
 		ctx->set_state(new b_vaccant_state(ctx));
 	}
@@ -498,9 +498,9 @@ void b_confirm_state::click_confirm()
 
 void b_confirm_state::click_cancel()
 {
-	for (int i = 0; i < get_data().render_select_card.size(); ++i)
+	for (int i = 0; i < MAX_CARDS_IN_HAND; ++i)
 	{
-		get_data().render_select_card[i] = 0;
+		get_data().render_pipe.push(info_to_render_sys(r_action(render_functions::IMMEDIATE_DE_SELECT, MEANINGLESS_VALUE, i)));
 	}
 	ctx->set_state(new b_vaccant_state(ctx));
 }
@@ -554,14 +554,14 @@ void b_select_state::click_a_card(std::size_t card_pos)
 	{
 		if (*i == card_pos)
 		{
-			get_data().render_select_card[card_pos] = 0;
+			get_data().render_pipe.push(r_action(render_functions::DE_SELECT_A_CARD, MEANINGLESS_VALUE, card_pos));
 			selected_cards.erase(i);
 			return;
 		}
 	}
 	if (selected_cards.size() == max)return;
 	selected_cards.push_back(card_pos);
-	get_data().render_select_card[card_pos] = 1;
+	get_data().render_pipe.push(r_action(render_functions::SELECT_A_CARD, MEANINGLESS_VALUE, card_pos));
 }
 
 void b_select_state::click_an_enemy(std::size_t)

@@ -160,7 +160,8 @@ void explore_system::create_map(std::size_t map_type)
 			else
 			{
 				data.map_marks[j][i] = map_mark_type::UNKNOWN;
-				data.explore_map[j][i] = t.get_event(map_type);
+				//data.explore_map[j][i] = t.get_event(map_type);
+				data.explore_map[j][i] = 16;//TODO
 			}
 		}
 	}

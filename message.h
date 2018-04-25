@@ -177,9 +177,36 @@ namespace buff_type
 	const std::size_t CULTIST_RITE = 35;
 	const std::size_t PAIN_CURSE = 36;
 	const std::size_t CORRUPT = 37;
-	const std::size_t FEAST = 38; 
+	const std::size_t FEAST = 38;
 	const std::size_t MARK = 39;
 	const std::size_t ANGER = 40;
+}
+
+namespace render_functions
+{
+	const int DRAW_A_CARD = 1;
+	const int LOSE_A_CARD = 2;
+	const int SELECT_A_CARD = 3;
+	const int DE_SELECT_A_CARD = 4;
+	const int IMMEDIATE_DE_SELECT = 5;
+	const int ACTION_ATTACK = 6;
+	const int ACTION_BUFF = 7;
+	const int ACTION_DEBUFF = 8;
+	const int ADD_CARD = 9;
+	const int CLEAR_DRAW = 10;
+	const int RESET = 11;
+}
+
+namespace render_marks
+{
+	const int NOT_IN_HAND = 0;
+	const int IN_HAND = 1;
+	const int HOLD_ONE = 2;
+	const int HOLD_TWO = 3;
+	const int HOLD_UP = 4;
+	const int FADE_ONE = 5;
+	const int FADE_TWO = 6;
+	const int FADE_THREE = 7;
 }
 
 namespace gra_size
@@ -190,7 +217,7 @@ namespace gra_size
 	const std::size_t max_cards = 7;
 
 	const std::size_t buff_side_len = 30;
-	const std::size_t buff_closure = 10	;
+	const std::size_t buff_closure = 10;
 	const std::size_t card_starting_pos = 200;
 	const std::size_t card_width = 135;
 	const std::size_t card_closure = 10;
@@ -351,7 +378,7 @@ public:
 	card selected_card;
 	int text;
 	int end_text;
-	bool(*restriction)(data_sys*); 
+	bool(*restriction)(data_sys*);
 
 	e_action to_event_body();
 };
@@ -406,7 +433,46 @@ public:
 	void clear();
 };
 
+class r_action
+{
+public:
+	r_action(int id)
+		:action_id(id), caller(nullptr), listener(nullptr), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE) {}
+	r_action(int id, int ttype, int tvalue)
+		:action_id(id), caller(nullptr), listener(nullptr), type(ttype), value(tvalue) {}
+	r_action(int id, game_entity* tcaller, game_entity* tlistener, std::size_t ttype, std::size_t tvalue)
+		:action_id(id), caller(tcaller), listener(tlistener), type(ttype), value(tvalue) {}
+	std::size_t action_id;
+	game_entity* caller;
+	game_entity* listener;
+	std::size_t type;
+	std::size_t value;
+};
 
+class info_to_render_sys : public info
+{
+public:
+	my_container::my_vector<r_action> action_set;
+
+	info_to_render_sys()
+		:info(), action_set() {}
+	info_to_render_sys(r_action ichange)
+		: info()
+	{
+		action_set.push_back(ichange);
+	}
+	info_to_render_sys(my_container::my_vector<r_action> ichange)
+		: action_set(std::move(ichange)) {}
+	void append(info_to_render_sys t)
+	{
+		{
+			for (auto &i : t.action_set)
+			{
+				action_set.push_back(i);
+			}
+		}
+	}
+};
 
 
 
