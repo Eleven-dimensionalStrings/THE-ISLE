@@ -14,44 +14,21 @@ int main()
 	IMAGE buffer(gra_size::window_width, gra_size::window_height);
 	render_sys dr(d);
 	d.b = &b;
-	dr.load_all();
 
 	//easyx
 	initgraph(gra_size::window_width, gra_size::window_height);
-	setbkcolor(WHITE);
 	settextstyle(20, 0, "Airial");
 	cleardevice();
+	setbkcolor(WHITE);
+	IMAGE timage;
+	loadimage(&timage, ".\\resource\\cover\\loading.bmp\0");
+	putimage(0, 0, &timage);
 
-	d.gold = 200;
+	dr.load_all();
+	d.gold = 120;
 	d.food = 5;
 	d.player_s_class = player_class::WAR;
-	/*d.strength = 20;
-	d.vitality = 20;
-	d.dexterity = 20;*/
-
-	//d.enemies_data.push_back(enemy(d, 35));
-	//d.enemies_data.push_back(enemy(d, 1));
-	//d.enemies_data.push_back(enemy(d, 1));
-	//d.enemies_data.push_back(enemy(d, 1));
-	//d.enemies_data.push_back(enemy(d, 1));
-
-	d.cards_pool.push_back(card(4));
-	d.cards_pool.push_back(card(4));
-	d.cards_pool.push_back(card(4));
-	d.cards_pool.push_back(card(61));
-	d.cards_pool.push_back(card(62));
-	d.cards_pool.push_back(card(63));
-	d.cards_pool.push_back(card(90));
-	d.cards_pool.push_back(card(90));
-	d.cards_pool.push_back(card(90));
-	d.cards_pool.push_back(card(71));
-
-	d.artifacts.push_back(artifact(16));
-	d.artifacts.push_back(artifact(17));
-	d.artifacts.push_back(artifact(18));
-	//d.artifacts.push_back(artifact(19));
-	d.artifacts.push_back(artifact(20));
-
+	d.create_starting_deck();
 	e.create_map();
 
 explore:
@@ -92,7 +69,7 @@ battle:
 		dr.draw_battle();
 
 		//enemy act
-		Sleep(30);
+		Sleep(40);
 		if (d.enemies_data.empty())
 		{
 			e.end_battle();

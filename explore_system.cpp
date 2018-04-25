@@ -173,7 +173,7 @@ void explore_system::create_map(std::size_t map_type)
 				{
 					pos = ran_pos(ee);
 				} while (pos >= vv.size());
-				data.explore_map[j][i] = 15;
+				data.explore_map[j][i] = vv[pos];
 				vv.erase(vv.begin() + pos);
 			}
 		}

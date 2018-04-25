@@ -14,10 +14,6 @@ class render_sys
 	my_container::my_vector<int> render_card_manifest;
 	my_container::my_queue<r_action> render_queue;
 	void process();
-
-
-
-
 	data_sys& data;
 	IMAGE buffer;
 

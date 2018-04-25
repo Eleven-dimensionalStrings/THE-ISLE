@@ -66,24 +66,26 @@ public:
 	my_container::my_vector<IMAGE> select;
 	my_container::my_vector<IMAGE> artifact_pics;
 	my_container::my_vector<IMAGE> buff_pics;
-	//std::array<bool, MAX_CARDS_IN_HAND>render_select_card;
+	my_container::my_queue<info_to_render_sys> render_pipe;
+	my_container::my_vector<std::pair<std::size_t, std::size_t>>b_to_d;
+	my_container::my_vector<e_action> choice_list;
+	my_container::my_vector<int> choice_name_list;
+
 	info_to_battle_sys i_to_b_pipe;
 	info_battle_to_interacting b_to_i_pipe;
 	info_to_explore_sys i_to_e_pipe;
 	info_explore_to_interacting e_to_i_pipe;
 	info_to_battle_sys e_to_b_pipe;
 	info_to_explore_sys b_to_e_pipe;
-	my_container::my_queue<info_to_render_sys> render_pipe;
-	my_container::my_vector<std::pair<std::size_t, std::size_t>>b_to_d;
+	
 	std::size_t explore_map[MAP_LENGTH][MAP_WIDTH];
 	int map_marks[MAP_LENGTH][MAP_WIDTH];
 	std::size_t map_event_type[MAP_LENGTH][MAP_WIDTH];
 	std::pair<int, int> player_location;
-	my_container::my_vector<e_action> choice_list;
-	my_container::my_vector<int> choice_name_list;
+	
 	int text_to_be_displayed;
 	int map_text;
-	//to determine explore context
+	int background_pic;
 	std::size_t current_select_page;//indicates the position of the first selection in choice_list. 
 	std::size_t next_event_id;//for "SKIP" button
 	std::size_t player_s_class;
@@ -101,7 +103,6 @@ public:
 	IMAGE& get_entity_mask_pic(int id, int status);
 	IMAGE& get_buff_pic(int id);
 	IMAGE& get_buff_mask_pic(int id);
-	int background_pic;
 
 	info_to_explore_sys artifact_on_create(std::size_t atf_id);
 	info_to_explore_sys artifact_on_remove(std::size_t atf_id);
@@ -109,5 +110,7 @@ public:
 	info_to_explore_sys artifact_on_event_body(std::size_t atf_id);
 	info_to_battle_sys artifact_on_start_battle(std::size_t atf_id);
 	info_to_explore_sys artifact_on_end_event(std::size_t atf_id);
+
+	void create_starting_deck();
 };
 

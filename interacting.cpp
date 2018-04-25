@@ -176,17 +176,20 @@ void explore_context::read_input()
 				get_data().view_cards = 1;
 			}
 			else if (hit.x > gra_size::r_deck_pic_x && hit.y > gra_size::r_deck_pic_y
-				&& hit.x < gra_size::r_deck_pic_x + gra_size::deck_width && hit.y < gra_size::r_deck_pic_y + gra_size::deck_height)
+				&& hit.x < gra_size::r_deck_pic_x + gra_size::deck_width && hit.y < gra_size::r_deck_pic_y + gra_size::deck_height
+				&& get_data().is_battle)
 			{
 				get_data().view_cards = 2;
 			}
 			else if (hit.x > gra_size::grave_pic_x && hit.y > gra_size::grave_pic_y
-				&& hit.x < gra_size::grave_pic_x + gra_size::deck_width && hit.y < gra_size::grave_pic_y + gra_size::deck_height)
+				&& hit.x < gra_size::grave_pic_x + gra_size::deck_width && hit.y < gra_size::grave_pic_y + gra_size::deck_height
+				&& get_data().is_battle)
 			{
 				get_data().view_cards = 3;
 			}
 			else if (hit.x > gra_size::remove_pic_x && hit.y > gra_size::remove_pic_y
-				&& hit.x < gra_size::remove_pic_x + gra_size::deck_width && hit.y < gra_size::remove_pic_y + gra_size::deck_height)
+				&& hit.x < gra_size::remove_pic_x + gra_size::deck_width && hit.y < gra_size::remove_pic_y + gra_size::deck_height
+				&& get_data().is_battle)
 			{
 				get_data().view_cards = 4;
 			}
@@ -223,6 +226,18 @@ void explore_context::read_input()
 						size_t x = (hit.x - gra_size::map_start_x) / (gra_size::map_block_size + gra_size::map_closure);
 						size_t y = (hit.y - gra_size::map_start_y) / (gra_size::map_block_size + gra_size::map_closure);
 						cur_state->click_map_location(x, y);
+					}
+				}
+				//检测点击食物
+				else if (hit.x > gra_size::food_pic_x && hit.x < gra_size::food_pic_x + 90
+					&& hit.y > gra_size::food_pic_y && hit.y < gra_size::food_pic_y + 90)
+				{
+					if (get_data().food > 0 && get_data().player_data.current_hp < get_data().player_data.max_hp)
+					{
+						get_data().food--;
+						get_data().player_data.current_hp += 3;
+						if (get_data().player_data.current_hp >= get_data().player_data.max_hp)
+							get_data().player_data.current_hp = get_data().player_data.max_hp;
 					}
 				}
 			}//点击card_deck等

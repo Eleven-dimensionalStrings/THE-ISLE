@@ -436,12 +436,9 @@ public:
 class r_action
 {
 public:
-	r_action(int id)
-		:action_id(id), caller(nullptr), listener(nullptr), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE) {}
-	r_action(int id, int ttype, int tvalue)
-		:action_id(id), caller(nullptr), listener(nullptr), type(ttype), value(tvalue) {}
-	r_action(int id, game_entity* tcaller, game_entity* tlistener, std::size_t ttype, std::size_t tvalue)
-		:action_id(id), caller(tcaller), listener(tlistener), type(ttype), value(tvalue) {}
+	r_action(int id);
+	r_action(int id, int ttype, int tvalue);
+	r_action(int id, game_entity* tcaller, game_entity* tlistener, std::size_t ttype, std::size_t tvalue);
 	std::size_t action_id;
 	game_entity* caller;
 	game_entity* listener;
@@ -452,13 +449,11 @@ public:
 class info_to_render_sys : public info
 {
 public:
-	my_container::my_vector<r_action> action_set;
-
 	info_to_render_sys();
 	info_to_render_sys(r_action ichange);
 	info_to_render_sys(my_container::my_vector<r_action> ichange);
-
-	void append(info_to_render_sys t)
+	void append(info_to_render_sys t);
+	my_container::my_vector<r_action> action_set;
 };
 
 

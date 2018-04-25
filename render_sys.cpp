@@ -156,7 +156,13 @@ void render_sys::__draw_entities()
 		this->__draw_an_enemy(i);
 	}
 	this->__draw_player();
-	if (timer >= 5) { timer = 0; is_drawing = 0; if (!draw_queue.empty())draw_queue.pop(); }
+	if (timer >= 7)
+	{
+		timer = 0;
+		is_drawing = 0;
+		if (!draw_queue.empty())
+			draw_queue.pop();
+	}
 }
 void render_sys::__draw_battle_info()
 {
@@ -371,6 +377,14 @@ void render_sys::__draw_player()
 			putimage(gra_size::player_x + 40, gra_size::player_y, &data.entities[29], SRCPAINT);
 			putimage(gra_size::player_x + 40, gra_size::player_y, &data.entities[2], SRCAND);
 			break;
+		case 6:
+			putimage(gra_size::player_x + 40, gra_size::player_y, &data.entities[29], SRCPAINT);
+			putimage(gra_size::player_x + 40, gra_size::player_y, &data.entities[2], SRCAND);
+			break;
+		case 7:
+			putimage(gra_size::player_x + 40, gra_size::player_y, &data.entities[29], SRCPAINT);
+			putimage(gra_size::player_x + 40, gra_size::player_y, &data.entities[2], SRCAND);
+			break;
 		}
 	}
 	else if (drawing.second == 666)
@@ -394,6 +408,14 @@ void render_sys::__draw_player()
 			putimage(gra_size::player_x - 16, gra_size::player_y, &data.entities[3], SRCAND);
 			break;
 		case 5:
+			putimage(gra_size::player_x - 20, gra_size::player_y, &data.entities[30], SRCPAINT);
+			putimage(gra_size::player_x - 20, gra_size::player_y, &data.entities[3], SRCAND);
+			break;
+		case 6:
+			putimage(gra_size::player_x - 20, gra_size::player_y, &data.entities[30], SRCPAINT);
+			putimage(gra_size::player_x - 20, gra_size::player_y, &data.entities[3], SRCAND);
+			break;
+		case 7:
 			putimage(gra_size::player_x - 20, gra_size::player_y, &data.entities[30], SRCPAINT);
 			putimage(gra_size::player_x - 20, gra_size::player_y, &data.entities[3], SRCAND);
 			break;
@@ -440,6 +462,14 @@ void render_sys::__draw_an_enemy(std::size_t pos)
 				putimage(enemy_pos(pos).first + 20, enemy_pos(pos).second, &data.get_entity_mask_pic(p->enemy_id, 2), SRCPAINT);
 				putimage(enemy_pos(pos).first + 20, enemy_pos(pos).second, &data.get_entity_pic(p->enemy_id, 2), SRCAND);
 				break;
+			case 6:
+				putimage(enemy_pos(pos).first + 20, enemy_pos(pos).second, &data.get_entity_mask_pic(p->enemy_id, 2), SRCPAINT);
+				putimage(enemy_pos(pos).first + 20, enemy_pos(pos).second, &data.get_entity_pic(p->enemy_id, 2), SRCAND);
+				break;
+			case 7:
+				putimage(enemy_pos(pos).first + 20, enemy_pos(pos).second, &data.get_entity_mask_pic(p->enemy_id, 2), SRCPAINT);
+				putimage(enemy_pos(pos).first + 20, enemy_pos(pos).second, &data.get_entity_pic(p->enemy_id, 2), SRCAND);
+				break;
 			}
 		}
 		else if (p - b == drawing.first)
@@ -463,6 +493,14 @@ void render_sys::__draw_an_enemy(std::size_t pos)
 				putimage(enemy_pos(pos).first - 12, enemy_pos(pos).second, &data.get_entity_pic(p->enemy_id, 1), SRCAND);
 				break;
 			case 5:
+				putimage(enemy_pos(pos).first - 15, enemy_pos(pos).second, &data.get_entity_mask_pic(p->enemy_id, 1), SRCPAINT);
+				putimage(enemy_pos(pos).first - 15, enemy_pos(pos).second, &data.get_entity_pic(p->enemy_id, 1), SRCAND);
+				break;
+			case 6:
+				putimage(enemy_pos(pos).first - 15, enemy_pos(pos).second, &data.get_entity_mask_pic(p->enemy_id, 1), SRCPAINT);
+				putimage(enemy_pos(pos).first - 15, enemy_pos(pos).second, &data.get_entity_pic(p->enemy_id, 1), SRCAND);
+				break;
+			case 7:
 				putimage(enemy_pos(pos).first - 15, enemy_pos(pos).second, &data.get_entity_mask_pic(p->enemy_id, 1), SRCPAINT);
 				putimage(enemy_pos(pos).first - 15, enemy_pos(pos).second, &data.get_entity_pic(p->enemy_id, 1), SRCAND);
 				break;
@@ -968,10 +1006,14 @@ void render_sys::view_cards(Container&v, int is_art)
 	}
 }
 
-
 void render_sys::end_battle()
 {
 	data.b_to_d.clear();
+	current_rendered_cards = 0;
+	for (int i = 0; i < MAX_CARDS_IN_HAND; ++i)
+	{
+		render_card_manifest[i] = NOT_IN_HAND;
+	}
 	while (!draw_queue.empty())draw_queue.pop();
 }
 

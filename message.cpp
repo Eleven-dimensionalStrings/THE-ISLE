@@ -1278,3 +1278,12 @@ info_to_render_sys::info_to_render_sys(r_action ichange)
 }
 
 info_to_render_sys::info_to_render_sys(my_container::my_vector<r_action> ichange) : action_set(std::move(ichange)) {}
+
+r_action::r_action(int id)
+	: action_id(id), caller(nullptr), listener(nullptr), type(MEANINGLESS_VALUE), value(MEANINGLESS_VALUE) {}
+
+r_action::r_action(int id, int ttype, int tvalue)
+	: action_id(id), caller(nullptr), listener(nullptr), type(ttype), value(tvalue) {}
+
+r_action::r_action(int id, game_entity * tcaller, game_entity * tlistener, std::size_t ttype, std::size_t tvalue)
+	: action_id(id), caller(tcaller), listener(tlistener), type(ttype), value(tvalue) {}

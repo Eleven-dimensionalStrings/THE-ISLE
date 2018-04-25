@@ -2745,6 +2745,25 @@ info_to_explore_sys data_sys::artifact_on_end_event(std::size_t atf_id)
 	}
 }
 
+void data_sys::create_starting_deck()
+{
+	cards_pool.clear();
+	cards_pool.push_back(card(1));
+	cards_pool.push_back(card(1));
+	cards_pool.push_back(card(21));
+	cards_pool.push_back(card(2));
+	cards_pool.push_back(card(3));
+	cards_pool.push_back(card(4));
+	cards_pool.push_back(card(4));
+	cards_pool.push_back(card(4));
+	cards_pool.push_back(card(52));
+	cards_pool.push_back(card(7));
+	cards_pool.push_back(card(14));
+	cards_pool.push_back(card(107));
+	artifacts.clear();
+	artifacts.push_back(artifact(6));
+}
+
 random_engine::random_engine(data_sys * d)
 	:data(d), e(static_cast<int>(time(0)))
 {
