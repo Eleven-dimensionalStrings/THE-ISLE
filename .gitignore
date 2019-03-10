@@ -8,3 +8,11 @@ x64/
 EasyXWithGDIPlus/
 
 resource/
+
+*.sln
+
+*.vcxproj
+
+*.filters
+
+*.user

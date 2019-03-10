@@ -13,6 +13,7 @@ namespace my_container
 		std::size_t vsize;
 		std::size_t vcap;
 	public:
+		using value_type = T;
 		//ini
 		my_vector() :alloc(Alloc()), val(nullptr), vsize(0), vcap(0)
 		{
@@ -25,12 +26,12 @@ namespace my_container
 			}
 
 		}
-		explicit my_vector(std::size_t tsize, const T& a, const Alloc& talloc = Alloc()) :
+		explicit my_vector(std::size_t tsize, const T& callableObj, const Alloc& talloc = Alloc()) :
 			alloc(talloc), val(alloc.allocate(tsize)), vsize(tsize), vcap(tsize)
 		{
 			for (std::size_t i = 0; i < vsize; ++i)
 			{
-				std::allocator_traits<Alloc>::construct(alloc, val + i, a);
+				std::allocator_traits<Alloc>::construct(alloc, val + i, callableObj);
 			}
 		}
 
@@ -56,11 +57,11 @@ namespace my_container
 			other.val = nullptr;
 			other.vsize = 0;
 			other.vcap = 0;
-			other.~my_vector();
+			other.clear();
 		}
 		my_vector& operator=(const my_vector& other)
 		{
-			this->~my_vector();
+			this->clear();
 			alloc = other.alloc;
 			val = alloc.allocate(other.capacity());
 			vsize = other.size();
@@ -73,7 +74,7 @@ namespace my_container
 		}
 		my_vector& operator=(my_vector&& other)
 		{
-			this->~my_vector();
+			this->clear();
 			alloc = std::move(other.alloc);
 			val = other.val;
 			vsize = other.size();
@@ -81,13 +82,11 @@ namespace my_container
 			other.val = nullptr;
 			other.vsize = 0;
 			other.vcap = 0;
-			other.~my_vector();
 			return *this;
 		}
 		~my_vector()
 		{
 			clear();
-			alloc.deallocate(val, capacity());
 		}
 
 		//iterator
@@ -176,7 +175,7 @@ namespace my_container
 			{
 
 			}
-			const_iterator(const iterator&t) :_begin(t.begin), _now(t._now), _end(t._end)
+			const_iterator(const iterator&t) :_begin(t._begin), _now(t._now), _end(t._end)
 			{
 
 			}
@@ -200,7 +199,7 @@ namespace my_container
 				--_now;
 				return iterator(_begin, _now + 1, _end);
 			}
-			bool operator==(const const_iterator& other)const
+			bool operator==(const const_iterator& _other)const
 			{
 				if (_now != _other._now)return 0;
 				if (_begin != _other._begin)return 0;
@@ -244,7 +243,7 @@ namespace my_container
 			reverse_iterator operator++(int)
 			{
 				--_now;
-				return iterator(_rbegin, _now + 1, _rend);
+				return reverse_iterator(_rbegin, _now + 1, _rend);
 			}
 			reverse_iterator& operator--()
 			{
@@ -254,19 +253,19 @@ namespace my_container
 			reverse_iterator operator--(int)
 			{
 				++_now;
-				return iterator(_rbegin, _now - 1, _rend);
+				return reverse_iterator(_rbegin, _now - 1, _rend);
 			}
-			bool operator==(const reverse_iterator& other)const
+			bool operator==(const reverse_iterator& _other)const
 			{
 				if (_now != _other._now)return 0;
 				if (_rbegin != _other._rbegin)return 0;
 				if (_rend != _other._rend)return 0;
 				return 1;
 			}
-			bool operator!=(const reverse_iterator& other)const
+			bool operator!=(const reverse_iterator& _other)const
 			{
 				//maybe should check something on _DEBUG
-				return _now != other._now;
+				return _now != _other._now;
 			}
 			T& operator*()
 			{
@@ -341,11 +340,11 @@ namespace my_container
 #ifdef _DEBUG
 			if (i._begin != val || i._end != val + vsize)
 			{
-				throw invalid_argument("iterator failure,its begin or end is expired");
+				throw std::invalid_argument("iterator failure,its begin or end is expired");
 			}
 			if (i._now < val || i._now > val + vsize)
 			{
-				throw out_of_range("iterator out of range");
+				throw std::out_of_range("iterator out of range");
 			}
 #endif // _DEBUG
 			std::size_t os = i._now - i._begin;
@@ -365,11 +364,11 @@ namespace my_container
 #ifdef _DEBUG
 			if (i._begin != val || i._end != val + vsize)
 			{
-				throw invalid_argument("iterator failure,its begin or end is expired");
+				throw std::invalid_argument("iterator failure,its begin or end is expired");
 			}
 			if (i._now < val || i._now > val + vsize)
 			{
-				throw out_of_range("iterator out of range");
+				throw std::out_of_range("iterator out of range");
 			}
 #endif // _DEBUG
 			std::size_t os = i._now - i._begin;
@@ -389,11 +388,11 @@ namespace my_container
 #ifdef _DEBUG
 			if (i._begin != val || i._end != val + vsize)
 			{
-				throw invalid_argument("iterator failure,its begin or end is expired");
+				throw std::invalid_argument("iterator failure,its begin or end is expired");
 			}
 			if (i._now < val || i._now >= val + vsize)
 			{
-				throw out_of_range("iterator out of range");
+				throw std::out_of_range("iterator out of range");
 			}
 #endif // _DEBUG
 			for (auto* j = i._now; j != i._end - 1; ++j)
@@ -443,6 +442,8 @@ namespace my_container
 				(val + i)->~T();
 			}
 			vsize = 0;
+			alloc.deallocate(val, capacity());
+			vcap = 0;
 		}
 		void swap(my_vector&other)noexcept
 		{
@@ -456,7 +457,7 @@ namespace my_container
 		{
 #ifdef _DEBUG
 			if (pos < 0 || pos >= vsize)
-				throw out_of_range("my_vector out of range");
+				throw std::out_of_range("my_vector out of range");
 #endif // _DEBUG
 			return *(val + pos);
 		}
@@ -464,7 +465,7 @@ namespace my_container
 		{
 #ifdef _DEBUG
 			if (pos < 0 || pos >= vsize)
-				throw out_of_range("my_vector out of range");
+				throw std::out_of_range("my_vector out of range");
 #endif // _DEBUG
 			return *(val + pos);
 		}
@@ -472,7 +473,7 @@ namespace my_container
 		{
 			if (pos < 0 || pos >= size())
 			{
-				throw out_of_range("my_vector out of range");
+				throw std::out_of_range("my_vector out of range");
 			}
 			return *(val + pos);
 		}
@@ -510,7 +511,7 @@ namespace my_container
 				for (std::size_t i = 0; i < this->size(); ++i)
 				{
 					//*(p + i) = std::move(*(val + i));
-					std::allocator_traits<Alloc>::construct(alloc, p + i, std::move(*(val + i)));
+					std::allocator_traits<Alloc>::construct(alloc, p + i, std::move_if_noexcept(*(val + i)));
 				}
 				alloc.deallocate(val, this->capacity());
 				val = p;
